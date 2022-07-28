@@ -4,9 +4,12 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
+import cpw.mods.fml.common.Optional;
+import gregtech.common.blocks.GT_TileEntity_Ores;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
+import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
 import WayofTime.alchemicalWizardry.AlchemicalWizardry;
 
@@ -123,7 +126,9 @@ public class MeteorParadigm
                             ItemStack blockStack = mpc.getValidBlockParadigm();
                             if(blockStack != null && blockStack.getItem() instanceof ItemBlock)
                             {
-                            	((ItemBlock)blockStack.getItem()).placeBlockAt(blockStack, null, world, x + i, y + j, z + k, 0, 0, 0, 0, blockStack.getItemDamage());
+                                ((ItemBlock)blockStack.getItem()).placeBlockAt(blockStack, null, world, x + i, y + j, z + k, 0, 0, 0, 0, blockStack.getItemDamage());
+                                if (AlchemicalWizardry.isGregTechLoaded)
+                                    setGTOresNaturalIfNeeded(world, x + i, y + j, z + k);
                             	world.markBlockForUpdate(x + i, y + j, z + k);
                                 hasPlacedBlock = true;
                                 break;
@@ -177,6 +182,14 @@ public class MeteorParadigm
                     }
                 }
             }
+        }
+    }
+
+    @Optional.Method(modid = "gregtech")
+    private static void setGTOresNaturalIfNeeded(World world, int x, int y, int z) {
+        final TileEntity tileEntity = world.getTileEntity(x, y, z);
+        if (tileEntity instanceof GT_TileEntity_Ores) {
+            ((GT_TileEntity_Ores) tileEntity).mNatural = true;
         }
     }
 }

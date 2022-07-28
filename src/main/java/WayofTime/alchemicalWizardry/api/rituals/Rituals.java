@@ -8,6 +8,7 @@ import java.util.Map;
 import net.minecraft.block.Block;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.StatCollector;
 import net.minecraft.world.World;
 import net.minecraftforge.common.MinecraftForge;
 import WayofTime.alchemicalWizardry.api.event.RitualRunEvent;
@@ -21,6 +22,7 @@ public class Rituals
     public final int actCost;
     public final RitualEffect effect;
     public final String name;
+    public String localizedName = "";
 
     public final MRSRenderer customRenderer;
 
@@ -64,6 +66,7 @@ public class Rituals
             ritual.removeRitualFromList();
             ritualMap.put(key, ritual);
             keyList.add(key);
+            ritual.setRitualLocalizedName(StatCollector.translateToLocal("ritual." + key + ".name"));
             return true;
         }
     }
@@ -79,6 +82,7 @@ public class Rituals
             ritual.removeRitualFromList();
             ritualMap.put(key, ritual);
             keyList.add(key);
+            ritual.setRitualLocalizedName(StatCollector.translateToLocal("ritual." + key + ".name"));
             return true;
         }
     }
@@ -291,6 +295,15 @@ public class Rituals
     {
         return this.name;
     }
+    
+    public void setRitualLocalizedName(String localizedName)
+    {
+        this.localizedName = localizedName;
+    }
+    public String getRitualLocalizedName()
+    {
+        return localizedName.isEmpty() ? this.name : localizedName;
+    }
 
     public static String getNameOfRitual(String id)
     {
@@ -300,6 +313,20 @@ public class Rituals
             if (ritual != null)
             {
                 return ritual.getRitualName();
+            }
+        }
+
+        return "";
+    }
+    
+    public static String getLocalizedNameOfRitual(String id)
+    {
+        if (ritualMap.containsKey(id))
+        {
+            Rituals ritual = ritualMap.get(id);
+            if (ritual != null)
+            {
+                return ritual.getRitualLocalizedName();
             }
         }
 
