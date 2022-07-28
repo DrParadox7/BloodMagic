@@ -17,18 +17,5 @@ public class MineTweakerIntegration
         MineTweakerAPI.registerClass(BloodOrb.class);
         MineTweakerAPI.registerClass(FallingTower.class);
         MineTweakerAPI.registerClass(HarvestMoon.class);
-
-        MineTweakerImplementationAPI.onRollbackEvent(new HandleLateAdditionsAndRemovals());
-        MineTweakerImplementationAPI.onPostReload(new HandleLateAdditionsAndRemovals());
     }
-    public static class HandleLateAdditionsAndRemovals implements IEventHandler<MineTweakerImplementationAPI.ReloadEvent>
-    {
-        @Override
-        public void handle(MineTweakerImplementationAPI.ReloadEvent event)
-        {
-            BloodOrb.applyAdditionsAndRemovals();
-        }
-    }
-
-
 }
