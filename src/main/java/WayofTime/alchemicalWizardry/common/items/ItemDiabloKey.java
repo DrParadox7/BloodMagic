@@ -50,7 +50,7 @@ public class ItemDiabloKey extends EnergyItems
     public ItemStack onItemRightClick(ItemStack par1ItemStack, World par2World, EntityPlayer par3EntityPlayer)
     {
         World world = par3EntityPlayer.worldObj;
-        if (!EnergyItems.checkAndSetItemOwner(par1ItemStack, par3EntityPlayer) || par3EntityPlayer instanceof FakePlayer || par3EntityPlayer instanceof EntityPlayerMP)
+        if (!EnergyItems.checkAndSetItemOwner(par1ItemStack, par3EntityPlayer) || par3EntityPlayer instanceof FakePlayer)
         {
             return par1ItemStack;
         }
@@ -64,7 +64,7 @@ public class ItemDiabloKey extends EnergyItems
             SpellHelper.sendIndexedParticleToAllAround(world, posX, posY, posZ, 20, world.provider.dimensionId, 4, posX, posY, posZ);
         }
 
-        if (!par3EntityPlayer.worldObj.isRemote && !(par3EntityPlayer.getClass().equals(EntityPlayerMP.class)))
+        if (par3EntityPlayer.worldObj.isRemote)
         {
             return par1ItemStack;
         }
@@ -103,6 +103,7 @@ public class ItemDiabloKey extends EnergyItems
                 EnergyItems.checkAndSetItemOwner(itemStack, ownerName);
             }
         }
+        par3EntityPlayer.inventoryContainer.detectAndSendChanges();
 
         return par1ItemStack;
     }
