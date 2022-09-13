@@ -75,9 +75,16 @@ public class DaggerOfSacrifice extends EnergyItems
         	this.findAndNotifyAltarOfDemon(world, par2EntityLivingBase);
         }
 
-        int lifeEssence = AlchemicalWizardry.lpPerSactificeCustom.containsKey(par2EntityLivingBase.getClass()) ?
-                          AlchemicalWizardry.lpPerSactificeCustom.get(par2EntityLivingBase.getClass()) :
-                          AlchemicalWizardry.lpPerSacrificeBase;
+        int lifePerHp = AlchemicalWizardry.lpPerHpCustom.containsKey(par2EntityLivingBase.getClass()) ?
+                          AlchemicalWizardry.lpPerHpCustom.get(par2EntityLivingBase.getClass()) :
+                          AlchemicalWizardry.lpPerHpBase;
+        
+        if (lifePerHp <= 0)
+        {
+            return false;
+        }
+        
+        int lifeEssence = (int)(par2EntityLivingBase).getHealth() * lifePerHp;
 
         if (findAndFillAltar(par2EntityLivingBase.worldObj, par2EntityLivingBase, lifeEssence))
         {

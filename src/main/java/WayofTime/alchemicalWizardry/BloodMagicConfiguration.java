@@ -274,7 +274,7 @@ public class BloodMagicConfiguration
 		AlchemicalWizardry.lpPerSelfSacrifice = config.get("sacrifice", "LP per self-sacrifice", AlchemicalWizardry.lpPerSelfSacrifice).getInt(AlchemicalWizardry.lpPerSelfSacrifice);
 		AlchemicalWizardry.lpPerSelfSacrificeSoulFray = config.get("sacrifice", "LP per self-sacrifice (when Soul Fray potion is active)", AlchemicalWizardry.lpPerSelfSacrificeSoulFray).getInt(AlchemicalWizardry.lpPerSelfSacrificeSoulFray);
 		AlchemicalWizardry.lpPerSelfSacrificeFeatheredKnife = config.get("sacrifice", "LP per self-sacrifice with Ritual of Feathered Knife", AlchemicalWizardry.lpPerSelfSacrificeFeatheredKnife).getInt(AlchemicalWizardry.lpPerSelfSacrificeFeatheredKnife);
-		AlchemicalWizardry.lpPerSacrificeBase = config.get("sacrifice", "LP per sacrifice", AlchemicalWizardry.lpPerSacrificeBase).getInt(AlchemicalWizardry.lpPerSacrificeBase);
+		AlchemicalWizardry.lpPerHpBase = config.get("sacrifice", "LP gained per HP from sacrifice", AlchemicalWizardry.lpPerHpBase).getInt(AlchemicalWizardry.lpPerHpBase);
 		AlchemicalWizardry.lpPerSacrificeWellOfSuffering = config.get("sacrifice", "LP per sacrifice with Well of Suffering ritual", AlchemicalWizardry.lpPerSacrificeWellOfSuffering).getInt(AlchemicalWizardry.lpPerSacrificeWellOfSuffering);
 		AlchemicalWizardry.lpPerSacrificeIncense = config.get("sacrifice", "LP per (self-)sacrifice with incense", AlchemicalWizardry.lpPerSacrificeIncense).getDouble(AlchemicalWizardry.lpPerSacrificeIncense);
 
@@ -405,7 +405,7 @@ public class BloodMagicConfiguration
 	}
 	public static void loadCustomLPValues()
 	{
-		AlchemicalWizardry.lpPerSactificeCustom = new HashMap<Class<?>, Integer>();
+		AlchemicalWizardry.lpPerHpCustom = new HashMap<Class<?>, Integer>();
 		for (Object object : EntityList.stringToClassMapping.entrySet())
 		{
 			Entry entry = (Entry)object;
@@ -413,25 +413,25 @@ public class BloodMagicConfiguration
 			Class entityClass = (Class) entry.getValue();
 			if (EntityLivingBase.class.isAssignableFrom(entityClass) && !Modifier.isAbstract(entityClass.getModifiers()))
 			{
-				int lpAmount = 500;
+				int lpPerHp = 50;
 				if (EntityVillager.class.isAssignableFrom(entityClass))
 				{
-					lpAmount = 2000;
+					lpPerHp = 150;
 				}
 				if (EntitySlime.class.isAssignableFrom(entityClass))
 				{
-					lpAmount = 150;
+					lpPerHp = 25;
 				}
 				if (EntityEnderman.class.isAssignableFrom(entityClass))
 				{
-					lpAmount = 200;
+					lpPerHp = 100;
 				}
 				if (EntityAnimal.class.isAssignableFrom(entityClass))
 				{
-					lpAmount = 250;
+					lpPerHp = 25;
 				}
-				lpAmount = config.get("sacrifice.custom values", entityName, lpAmount).getInt(lpAmount);
-				AlchemicalWizardry.lpPerSactificeCustom.put(entityClass, lpAmount);
+				lpPerHp = config.get("sacrifice.custom values", entityName, lpPerHp).getInt(lpPerHp);
+				AlchemicalWizardry.lpPerHpCustom.put(entityClass, lpPerHp);
 			}
 		}
 		config.save();

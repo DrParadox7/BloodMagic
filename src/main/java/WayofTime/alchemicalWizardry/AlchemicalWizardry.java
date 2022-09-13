@@ -303,10 +303,10 @@ public class AlchemicalWizardry
     public static int lpPerSelfSacrifice = 200;
     public static int lpPerSelfSacrificeSoulFray = 20;
     public static int lpPerSelfSacrificeFeatheredKnife = 100;
-    public static int lpPerSacrificeBase = 500;
+    public static int lpPerHpBase = 50;
     public static int lpPerSacrificeWellOfSuffering = 10;
     public static double lpPerSacrificeIncense = 100.0D;
-    public static HashMap<Class<?>, Integer> lpPerSactificeCustom;
+    public static HashMap<Class<?>, Integer> lpPerHpCustom;
 
     public static int energyBlastDamage = 12;
     public static int energyBlastLPPerShot = 150;
