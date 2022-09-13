@@ -123,10 +123,6 @@ public class RitualEffectDemonPortal extends RitualEffect
     @Override
     public boolean startRitual(IMasterRitualStone ritualStone, EntityPlayer player)
     {
-        for (int dim : AlchemicalWizardry.demonRitualDimensionBlacklist) {
-            if (player.dimension == dim) return false;
-        }
-
     	if(!checkJars(ritualStone))
     	{
     		player.addChatMessage(new ChatComponentTranslation("message.ritualdemonportal.missingjar"));
