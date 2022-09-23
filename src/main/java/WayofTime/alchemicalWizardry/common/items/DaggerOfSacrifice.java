@@ -3,6 +3,7 @@ package WayofTime.alchemicalWizardry.common.items;
 import java.util.List;
 
 import WayofTime.alchemicalWizardry.AlchemicalWizardry;
+import WayofTime.alchemicalWizardry.api.sacrifice.PlayerSacrificeHandler;
 import WayofTime.alchemicalWizardry.api.tile.IBloodAltar;
 import WayofTime.alchemicalWizardry.common.IDemon;
 import WayofTime.alchemicalWizardry.common.demonVillage.demonHoard.demon.IHoardDemon;
@@ -13,6 +14,7 @@ import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.renderer.texture.IIconRegister;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.ai.attributes.AttributeModifier;
@@ -20,6 +22,8 @@ import net.minecraft.entity.boss.IBossDisplayData;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.potion.PotionEffect;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.StatCollector;
@@ -43,7 +47,14 @@ public class DaggerOfSacrifice extends EnergyItems
     {
         this.itemIcon = iconRegister.registerIcon("AlchemicalWizardry:DaggerOfSacrifice");
     }
-
+    @Override
+    public void onUpdate(ItemStack stack, World world, Entity entity, int par4, boolean par5)
+    {
+        if(!world.isRemote && entity instanceof EntityPlayer)
+        {
+            this.setUseForSacrifice(stack, this.isPlayerPreparedForSacrifice(world, (EntityPlayer)entity));
+        }
+    }
     @Override
     public boolean hitEntity(ItemStack par1ItemStack, EntityLivingBase par2EntityLivingBase, EntityLivingBase par3EntityLivingBase)
     {
@@ -83,8 +94,36 @@ public class DaggerOfSacrifice extends EnergyItems
         {
             return false;
         }
-        
-        int lifeEssence = (int)(par2EntityLivingBase).getHealth() * lifePerHp;
+
+        double incenseBonus = 1;
+        //Calculations if creature is above 4 health and player has Soul Frail
+        int lifeEssence = (int) (4 * lifePerHp * incenseBonus);
+
+        //Checks level of Incense the player has
+        int incenseLv = (int)(PlayerSacrificeHandler.getPlayerIncense((EntityPlayer) par3EntityLivingBase));
+
+        if (par2EntityLivingBase.getHealth()< 4)
+        {
+            lifeEssence = (int)(par2EntityLivingBase.getHealth() * lifePerHp * incenseBonus);
+        }
+
+        //Preparing for bonuses, ensure player has no SoulFray
+        if (!par3EntityLivingBase.isPotionActive(AlchemicalWizardry.customPotionSoulFray))
+        {
+            //Incense Bonus Multiplier
+            if (incenseLv > 0) {
+                if (incenseLv == 5) {
+                    incenseBonus = 4;
+                } else if (incenseLv == 4) {
+                    incenseBonus = 3;
+                } else if (incenseLv == 3) {
+                    incenseBonus = 2.2;
+                } else if (incenseLv == 2) {
+                    incenseBonus = 1.6;
+                }
+            }
+            lifeEssence = (int) (((par2EntityLivingBase).getHealth()+2) * lifePerHp * incenseBonus);
+        }
 
         if (findAndFillAltar(par2EntityLivingBase.worldObj, par2EntityLivingBase, lifeEssence))
         {
@@ -96,9 +135,19 @@ public class DaggerOfSacrifice extends EnergyItems
             {
                 SpellHelper.sendIndexedParticleToAllAround(world, posX, posY, posZ, 20, world.provider.dimensionId, 1, posX, posY, posZ);
             }
-
-            par2EntityLivingBase.setHealth(-1);
-            par2EntityLivingBase.onDeath(DamageSource.generic);
+            if (!par3EntityLivingBase.isPotionActive(AlchemicalWizardry.customPotionSoulFray)) {
+                int soulFrayDuration = Math.min((int)((par2EntityLivingBase).getHealth()+2) * 20, 6000);
+                //apply Soul Fray based on Sacrifice health. Capped at 5 min
+                par3EntityLivingBase.addPotionEffect(new PotionEffect(new PotionEffect(AlchemicalWizardry.customPotionSoulFray.id, soulFrayDuration, 0)));
+                par2EntityLivingBase.setHealth(-1);
+                par2EntityLivingBase.onDeath(DamageSource.generic);
+                PlayerSacrificeHandler.setPlayerIncense((EntityPlayer) par3EntityLivingBase, 0);
+            } else if (par2EntityLivingBase.getHealth() <= 4) {
+                par2EntityLivingBase.setHealth(-1);
+                par2EntityLivingBase.onDeath(DamageSource.generic);
+            } else {
+                par2EntityLivingBase.setHealth(par2EntityLivingBase.getHealth() - 4);
+            }
         }
 
         return false;
@@ -108,7 +157,6 @@ public class DaggerOfSacrifice extends EnergyItems
     {
         return 4.0F;
     }
-
     @Override
     public void addInformation(ItemStack par1ItemStack, EntityPlayer par2EntityPlayer, List par3List, boolean par4)
     {
@@ -198,5 +246,35 @@ public class DaggerOfSacrifice extends EnergyItems
         }
 
         return null;
+    }
+    public boolean isPlayerPreparedForSacrifice(World world, EntityPlayer player)
+    {
+        return !world.isRemote && (PlayerSacrificeHandler.getPlayerIncense(player) > 0);
+    }
+
+    public boolean canUseForSacrifice(ItemStack stack)
+    {
+        NBTTagCompound tag = stack.getTagCompound();
+
+        return tag != null && tag.getBoolean("sacrifice");
+    }
+
+    public void setUseForSacrifice(ItemStack stack, boolean sacrifice)
+    {
+        NBTTagCompound tag = stack.getTagCompound();
+        if(tag == null)
+        {
+            tag = new NBTTagCompound();
+            stack.setTagCompound(tag);
+        }
+
+        tag.setBoolean("sacrifice", sacrifice);
+    }
+
+    @Override
+    @SideOnly(Side.CLIENT)
+    public boolean hasEffect(ItemStack stack, int pass)
+    {
+        return this.canUseForSacrifice(stack) || super.hasEffect(stack, pass);
     }
 }
