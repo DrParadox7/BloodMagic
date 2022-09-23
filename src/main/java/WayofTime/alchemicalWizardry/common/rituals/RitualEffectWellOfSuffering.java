@@ -25,6 +25,8 @@ public class RitualEffectWellOfSuffering extends RitualEffect
     private static final int potentiaDrain = 10;
     private static final int offensaDrain = 3;
 
+    private static final int sanctusDrain = 20;
+
     @Override
     public void performEffect(IMasterRitualStone ritualStone)
     {
@@ -74,6 +76,7 @@ public class RitualEffectWellOfSuffering extends RitualEffect
         int entityCount = 0;
         boolean hasTennebrae = this.canDrainReagent(ritualStone, ReagentRegistry.tenebraeReagent, tennebraeDrain, false);
         boolean hasOffensa = this.canDrainReagent(ritualStone, ReagentRegistry.offensaReagent, offensaDrain, false);
+        boolean hasSanctus = this.canDrainReagent(ritualStone, ReagentRegistry.sanctusReagent, sanctusDrain, false);
 
         if (currentEssence < this.getCostPerRefresh() * list.size())
         {
@@ -84,6 +87,13 @@ public class RitualEffectWellOfSuffering extends RitualEffect
             {
                 if (!livingEntity.isEntityAlive() || livingEntity instanceof EntityPlayer || AlchemicalWizardry.wellBlacklist.contains(livingEntity.getClass()))
                 {
+                    continue;
+                }
+
+
+                if (hasSanctus && livingEntity.getHealth() < (livingEntity.getMaxHealth() * 0.7))
+                {
+                    this.canDrainReagent(ritualStone, ReagentRegistry.sanctusReagent, sanctusDrain, true);
                     continue;
                 }
 
