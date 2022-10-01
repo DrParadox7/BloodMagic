@@ -301,7 +301,6 @@ public class AlchemicalWizardry
     public static BlockStack[] specialAltarBlock = new BlockStack[7];
 
     public static int lpPerSelfSacrifice = 200;
-    public static int lpPerSelfSacrificeSoulFray = 20;
     public static int lpPerSelfSacrificeFeatheredKnife = 100;
     public static int lpPerHpBase = 50;
     public static int lpPerSacrificeWellOfSuffering = 10;

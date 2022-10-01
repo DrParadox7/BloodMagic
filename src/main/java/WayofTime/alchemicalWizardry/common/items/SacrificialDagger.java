@@ -68,12 +68,60 @@ public class SacrificialDagger extends Item
     @Override
     public void onPlayerStoppedUsing(ItemStack stack, World world, EntityPlayer player, int itemInUseCount)
     {
-//        if(itemInUseCount < 32)
-//        {
-//        	return;
-//        }
+        int usageCount = this.getMaxItemUseDuration(stack) - itemInUseCount;
+        int hpCount = (int) Math.min(((usageCount * 0.35)), player.getMaxHealth());
+        System.out.println("itemusecount: " + (this.getMaxItemUseDuration(stack) - itemInUseCount) + ", hpCount: " + hpCount);
 
-        PlayerSacrificeHandler.sacrificePlayerHealth(player);
+        if (this.canUseForSacrifice(stack)) {
+            PlayerSacrificeHandler.sacrificePlayerHealth(player);
+        } else
+        {
+            SacrificeKnifeUsedEvent evt = new SacrificeKnifeUsedEvent(player, true, true, hpCount);
+
+            if (MinecraftForge.EVENT_BUS.post(evt)) {
+                return;
+            }
+
+            if (hpCount < 1) {
+                return;
+            }
+
+            if (!player.capabilities.isCreativeMode && evt.shouldDrainHealth) {
+                player.setHealth(player.getHealth() - hpCount);
+                player.addPotionEffect(new PotionEffect(new PotionEffect(AlchemicalWizardry.customPotionSoulFray.id, (1 + hpCount * 10), 0)));
+            }
+
+            if (!evt.shouldFillAltar) {
+                return;
+            }
+
+            if (player instanceof FakePlayer) {
+                return;
+            }
+
+            double posX = player.posX;
+            double posY = player.posY;
+            double posZ = player.posZ;
+            world.playSoundEffect(((float) posX + 0.5F), (double) ((float) posY + 0.5F), (double) ((float) posZ + 0.5F), "random.fizz", 0.5F, 2.6F + (world.rand.nextFloat() - world.rand.nextFloat()) * 0.8F);
+            float f = 1.0F;
+            float f1 = f * 0.6F + 0.4F;
+            float f2 = f * f * 0.7F - 0.5F;
+            float f3 = f * f * 0.6F - 0.7F;
+
+            for (int l = 0; l < 8; ++l) {
+                world.spawnParticle("reddust", posX + Math.random() - Math.random(), posY + Math.random() - Math.random(), posZ + Math.random() - Math.random(), f1, f2, f3);
+            }
+
+            if (!world.isRemote && SpellHelper.isFakePlayer(world, player)) {
+                return;
+            }
+
+            findAndFillAltar(world, player, (hpCount * AlchemicalWizardry.lpPerSelfSacrifice));
+
+            if (player.getHealth() <= 0.001f) {
+                player.onDeath(DamageSource.generic);
+            }
+        }
     }
 
     @Override
@@ -94,70 +142,11 @@ public class SacrificialDagger extends Item
     @Override
     public ItemStack onItemRightClick(ItemStack stack, World world, EntityPlayer player)
     {
-    	if (this.canUseForSacrifice(stack))
+        if (!player.isPotionActive(AlchemicalWizardry.customPotionSoulFray))
         {
             player.setItemInUse(stack, this.getMaxItemUseDuration(stack));
             return stack;
         }
-
-        if (!player.capabilities.isCreativeMode)
-        {
-        	SacrificeKnifeUsedEvent evt = new SacrificeKnifeUsedEvent(player, true, true, 2);
-        	if(MinecraftForge.EVENT_BUS.post(evt))
-        	{
-        		return stack;
-        	}
-
-        	if(evt.shouldDrainHealth)
-        	{
-                player.setHealth(player.getHealth() - 2);
-                player.addPotionEffect(new PotionEffect(new PotionEffect(AlchemicalWizardry.customPotionSoulFray.id, 40, 0)));
-
-            }
-
-        	if(!evt.shouldFillAltar)
-        	{
-        		return stack;
-        	}
-        }
-
-        if (player instanceof FakePlayer)
-        {
-            return stack;
-        }
-
-        double posX = player.posX;
-        double posY = player.posY;
-        double posZ = player.posZ;
-        world.playSoundEffect((double) ((float) posX + 0.5F), (double) ((float) posY + 0.5F), (double) ((float) posZ + 0.5F), "random.fizz", 0.5F, 2.6F + (world.rand.nextFloat() - world.rand.nextFloat()) * 0.8F);
-        float f = 1.0F;
-        float f1 = f * 0.6F + 0.4F;
-        float f2 = f * f * 0.7F - 0.5F;
-        float f3 = f * f * 0.6F - 0.7F;
-
-        for (int l = 0; l < 8; ++l)
-        {
-            world.spawnParticle("reddust", posX + Math.random() - Math.random(), posY + Math.random() - Math.random(), posZ + Math.random() - Math.random(), f1, f2, f3);
-        }
-
-        if (!world.isRemote && SpellHelper.isFakePlayer(world, player))
-        {
-            return stack;
-        }
-
-        if (player.isPotionActive(AlchemicalWizardry.customPotionSoulFray))
-        {
-            findAndFillAltar(world, player, AlchemicalWizardry.lpPerSelfSacrificeSoulFray);
-        } else
-        {
-            findAndFillAltar(world, player, AlchemicalWizardry.lpPerSelfSacrifice);
-        }
-
-        if (player.getHealth() <= 0.001f)
-        {
-            player.onDeath(DamageSource.generic);
-        }
-
         return stack;
     }
 

@@ -89,40 +89,17 @@ public class DaggerOfSacrifice extends EnergyItems
         int lifePerHp = AlchemicalWizardry.lpPerHpCustom.containsKey(par2EntityLivingBase.getClass()) ?
                           AlchemicalWizardry.lpPerHpCustom.get(par2EntityLivingBase.getClass()) :
                           AlchemicalWizardry.lpPerHpBase;
-        
-        if (lifePerHp <= 0)
+
+        // Only count for HP without modifiers
+        double hpCap = par2EntityLivingBase.getEntityAttribute(SharedMonsterAttributes.maxHealth).getBaseValue();
+        double hpMob = Math.min((par2EntityLivingBase).getHealth() + 2, hpCap);
+        float incenseModifier = PlayerSacrificeHandler.getModifier(PlayerSacrificeHandler.getPlayerIncense((EntityPlayer) par3EntityLivingBase));
+
+        int lifeEssence = (int) (hpMob * lifePerHp * incenseModifier);
+
+        if (lifePerHp < 1 || par3EntityLivingBase.isPotionActive(AlchemicalWizardry.customPotionSoulFray))
         {
             return false;
-        }
-
-        double incenseBonus = 1;
-        //Calculations if creature is above 4 health and player has Soul Frail
-        int lifeEssence = (int) (4 * lifePerHp * incenseBonus);
-
-        //Checks level of Incense the player has
-        int incenseLv = (int)(PlayerSacrificeHandler.getPlayerIncense((EntityPlayer) par3EntityLivingBase));
-
-        if (par2EntityLivingBase.getHealth()< 4)
-        {
-            lifeEssence = (int)(par2EntityLivingBase.getHealth() * lifePerHp * incenseBonus);
-        }
-
-        //Preparing for bonuses, ensure player has no SoulFray
-        if (!par3EntityLivingBase.isPotionActive(AlchemicalWizardry.customPotionSoulFray))
-        {
-            //Incense Bonus Multiplier
-            if (incenseLv > 0) {
-                if (incenseLv == 5) {
-                    incenseBonus = 4;
-                } else if (incenseLv == 4) {
-                    incenseBonus = 3;
-                } else if (incenseLv == 3) {
-                    incenseBonus = 2.2;
-                } else if (incenseLv == 2) {
-                    incenseBonus = 1.6;
-                }
-            }
-            lifeEssence = (int) (((par2EntityLivingBase).getHealth()+2) * lifePerHp * incenseBonus);
         }
 
         if (findAndFillAltar(par2EntityLivingBase.worldObj, par2EntityLivingBase, lifeEssence))
@@ -136,17 +113,13 @@ public class DaggerOfSacrifice extends EnergyItems
                 SpellHelper.sendIndexedParticleToAllAround(world, posX, posY, posZ, 20, world.provider.dimensionId, 1, posX, posY, posZ);
             }
             if (!par3EntityLivingBase.isPotionActive(AlchemicalWizardry.customPotionSoulFray)) {
-                int soulFrayDuration = Math.min((int)((par2EntityLivingBase).getHealth()+2) * 20, 6000);
-                //apply Soul Fray based on Sacrifice health. Capped at 5 min
-                par3EntityLivingBase.addPotionEffect(new PotionEffect(new PotionEffect(AlchemicalWizardry.customPotionSoulFray.id, soulFrayDuration, 0)));
+                if (hpMob > 20) {
+                    int soulFrayDuration = Math.min((int)(hpMob * 20), 6000);
+                    par3EntityLivingBase.addPotionEffect(new PotionEffect(new PotionEffect(AlchemicalWizardry.customPotionSoulFray.id, soulFrayDuration, 0)));
+                }
                 par2EntityLivingBase.setHealth(-1);
                 par2EntityLivingBase.onDeath(DamageSource.generic);
                 PlayerSacrificeHandler.setPlayerIncense((EntityPlayer) par3EntityLivingBase, 0);
-            } else if (par2EntityLivingBase.getHealth() <= 4) {
-                par2EntityLivingBase.setHealth(-1);
-                par2EntityLivingBase.onDeath(DamageSource.generic);
-            } else {
-                par2EntityLivingBase.setHealth(par2EntityLivingBase.getHealth() - 4);
             }
         }
 

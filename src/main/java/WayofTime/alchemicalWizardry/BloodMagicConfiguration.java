@@ -272,8 +272,7 @@ public class BloodMagicConfiguration
 		AlchemicalWizardry.ritualWeakCostZombie = config.get(lpCosts, "[Weak Ritual] Zombie", 5000).getInt();
 
 		AlchemicalWizardry.lpPerSelfSacrifice = config.get("sacrifice", "LP per self-sacrifice", AlchemicalWizardry.lpPerSelfSacrifice).getInt(AlchemicalWizardry.lpPerSelfSacrifice);
-		AlchemicalWizardry.lpPerSelfSacrificeSoulFray = config.get("sacrifice", "LP per self-sacrifice (when Soul Fray potion is active)", AlchemicalWizardry.lpPerSelfSacrificeSoulFray).getInt(AlchemicalWizardry.lpPerSelfSacrificeSoulFray);
-		AlchemicalWizardry.lpPerSelfSacrificeFeatheredKnife = config.get("sacrifice", "LP per self-sacrifice with Ritual of Feathered Knife", AlchemicalWizardry.lpPerSelfSacrificeFeatheredKnife).getInt(AlchemicalWizardry.lpPerSelfSacrificeFeatheredKnife);
+ 		AlchemicalWizardry.lpPerSelfSacrificeFeatheredKnife = config.get("sacrifice", "LP per self-sacrifice with Ritual of Feathered Knife", AlchemicalWizardry.lpPerSelfSacrificeFeatheredKnife).getInt(AlchemicalWizardry.lpPerSelfSacrificeFeatheredKnife);
 		AlchemicalWizardry.lpPerHpBase = config.get("sacrifice", "LP gained per HP from sacrifice", AlchemicalWizardry.lpPerHpBase).getInt(AlchemicalWizardry.lpPerHpBase);
 		AlchemicalWizardry.lpPerSacrificeWellOfSuffering = config.get("sacrifice", "LP per sacrifice with Well of Suffering ritual", AlchemicalWizardry.lpPerSacrificeWellOfSuffering).getInt(AlchemicalWizardry.lpPerSacrificeWellOfSuffering);
 		AlchemicalWizardry.lpPerSacrificeIncense = config.get("sacrifice", "LP per (self-)sacrifice with incense", AlchemicalWizardry.lpPerSacrificeIncense).getDouble(AlchemicalWizardry.lpPerSacrificeIncense);
