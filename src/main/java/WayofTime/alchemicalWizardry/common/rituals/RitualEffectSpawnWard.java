@@ -7,17 +7,14 @@ import WayofTime.alchemicalWizardry.api.rituals.RitualEffect;
 import WayofTime.alchemicalWizardry.api.soulNetwork.SoulNetworkHandler;
 import WayofTime.alchemicalWizardry.common.AlchemicalWizardryEventHooks;
 import WayofTime.alchemicalWizardry.common.CoordAndRange;
-import net.minecraft.world.World;
-
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
+import net.minecraft.world.World;
 
-public class RitualEffectSpawnWard extends RitualEffect
-{
+public class RitualEffectSpawnWard extends RitualEffect {
     @Override
-    public void performEffect(IMasterRitualStone ritualStone)
-    {
+    public void performEffect(IMasterRitualStone ritualStone) {
         String owner = ritualStone.getOwner();
 
         int currentEssence = SoulNetworkHandler.getCurrentEssence(owner);
@@ -26,32 +23,25 @@ public class RitualEffectSpawnWard extends RitualEffect
         int y = ritualStone.getYCoord();
         int z = ritualStone.getZCoord();
 
-        if (currentEssence < this.getCostPerRefresh())
-        {
+        if (currentEssence < this.getCostPerRefresh()) {
             SoulNetworkHandler.causeNauseaToPlayer(owner);
-        } else
-        {
+        } else {
             int horizRange = 32;
             int vertRange = 32;
 
             int dimension = world.provider.dimensionId;
 
-            if (AlchemicalWizardryEventHooks.respawnMap.containsKey(new Integer(dimension)))
-            {
+            if (AlchemicalWizardryEventHooks.respawnMap.containsKey(new Integer(dimension))) {
                 List<CoordAndRange> list = AlchemicalWizardryEventHooks.respawnMap.get(new Integer(dimension));
-                if (list != null)
-                {
-                    if (!list.contains(new CoordAndRange(x, y, z, horizRange, vertRange)))
-                    {
+                if (list != null) {
+                    if (!list.contains(new CoordAndRange(x, y, z, horizRange, vertRange))) {
                         boolean hasFoundAndRemoved = false;
-                        for (CoordAndRange coords : list)
-                        {
+                        for (CoordAndRange coords : list) {
                             int xLocation = coords.xCoord;
                             int yLocation = coords.yCoord;
                             int zLocation = coords.zCoord;
 
-                            if (xLocation == x && yLocation == y && zLocation == z)
-                            {
+                            if (xLocation == x && yLocation == y && zLocation == z) {
                                 list.remove(coords);
                                 hasFoundAndRemoved = true;
                                 break;
@@ -59,39 +49,32 @@ public class RitualEffectSpawnWard extends RitualEffect
                         }
                         list.add(new CoordAndRange(x, y, z, horizRange, vertRange));
                     }
-                } else
-                {
+                } else {
                     list = new LinkedList();
                     list.add(new CoordAndRange(x, y, z, horizRange, vertRange));
                     AlchemicalWizardryEventHooks.respawnMap.put(new Integer(dimension), list);
                 }
-            } else
-            {
+            } else {
                 List<CoordAndRange> list = new LinkedList();
                 list.add(new CoordAndRange(x, y, z, horizRange, vertRange));
                 AlchemicalWizardryEventHooks.respawnMap.put(new Integer(dimension), list);
             }
-
 
             SoulNetworkHandler.syphonFromNetwork(owner, this.getCostPerRefresh());
         }
     }
 
     @Override
-    public int getCostPerRefresh()
-    {
+    public int getCostPerRefresh() {
         return AlchemicalWizardry.ritualCostSpawnWard[1];
     }
 
     @Override
-    public List<RitualComponent> getRitualComponentList()
-    {
+    public List<RitualComponent> getRitualComponentList() {
         ArrayList<RitualComponent> wardRitualRitual = new ArrayList();
 
-        for (int i = 2; i <= 4; i++)
-        {
-            if (i <= 3)
-            {
+        for (int i = 2; i <= 4; i++) {
+            if (i <= 3) {
                 wardRitualRitual.add(new RitualComponent(0, 0, i, RitualComponent.AIR));
                 wardRitualRitual.add(new RitualComponent(0, 0, -i, RitualComponent.AIR));
                 wardRitualRitual.add(new RitualComponent(i, 0, 0, RitualComponent.AIR));

@@ -6,12 +6,12 @@ import net.minecraftforge.common.config.Configuration;
 import pneumaticCraft.api.client.IGuiAnimatedStat;
 
 /**
- * To add upgrades for in the Pneumatic Helmet implement this interface. You can add members to this class, however these can only 
+ * To add upgrades for in the Pneumatic Helmet implement this interface. You can add members to this class, however these can only
  * be client sided members as this class will be used as singleton. Therefore, only one of these instances exist at the server side
  * so any member that is used server side will affect every player.
  *
  */
-public interface IUpgradeRenderHandler{
+public interface IUpgradeRenderHandler {
 
     /**
      * Return here the name of the upgrade. This is displayed in the formatting [upgradeName] + " " + "found"/"not found"  on
@@ -84,7 +84,7 @@ public interface IUpgradeRenderHandler{
 
     /**
      * When you have some options for your upgrade handler you could return a new instance of an IOptionsPage.
-     * When you do so, it will automatically get picked up by the options handler, and it will be added to the 
+     * When you do so, it will automatically get picked up by the options handler, and it will be added to the
      * options GUI when this upgrade returns true when calling isEnabled(). Returning null is valid.
      * @return
      */

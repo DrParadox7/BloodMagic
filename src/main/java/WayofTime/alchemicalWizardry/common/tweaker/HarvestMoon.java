@@ -17,56 +17,48 @@ import stanhebben.zenscript.annotations.ZenMethod;
  * MineTweaker3 Harvest Moon Handler by hilburn *
  */
 @ZenClass("mods.bloodmagic.HarvestMoon")
-public class HarvestMoon
-{
+public class HarvestMoon {
 
     @ZenMethod
-    public static void addHarvestable(IItemStack block, IItemStack seed)
-    {
-        addHarvestable(block,block.getDamage(),seed);
+    public static void addHarvestable(IItemStack block, IItemStack seed) {
+        addHarvestable(block, block.getDamage(), seed);
     }
 
     @ZenMethod
-    public static void addHarvestable(IItemStack block, int meta, IItemStack seed)
-    {
+    public static void addHarvestable(IItemStack block, int meta, IItemStack seed) {
         ItemStack seedStack = MTHelper.toStack(seed);
         Block plantBlock = Block.getBlockFromItem(MTHelper.toStack(block).getItem());
-        if (!(plantBlock==null || plantBlock== Blocks.air || seedStack==null || !(seedStack.getItem() instanceof IPlantable)))
-        {
+        if (!(plantBlock == null
+                || plantBlock == Blocks.air
+                || seedStack == null
+                || !(seedStack.getItem() instanceof IPlantable))) {
             MineTweakerAPI.apply(new Add(plantBlock, meta, seedStack));
-        }
-        else
-        {
+        } else {
             throw new IllegalArgumentException("Invalid Harvest Block or Seed");
         }
     }
 
-    private static class Add implements IUndoableAction
-    {
+    private static class Add implements IUndoableAction {
         private IHarvestHandler handler;
         private String name;
 
-        public Add(Block block, int meta, ItemStack seed)
-        {
-            handler = new GenericItemStackHarvestHandler(block,meta,seed);
+        public Add(Block block, int meta, ItemStack seed) {
+            handler = new GenericItemStackHarvestHandler(block, meta, seed);
             name = seed.getDisplayName();
         }
 
         @Override
-        public void apply()
-        {
+        public void apply() {
             HarvestRegistry.registerHarvestHandler(handler);
         }
 
         @Override
-        public boolean canUndo()
-        {
-            return HarvestRegistry.handlerList!=null;
+        public boolean canUndo() {
+            return HarvestRegistry.handlerList != null;
         }
 
         @Override
-        public void undo()
-        {
+        public void undo() {
             HarvestRegistry.handlerList.remove(handler);
         }
 
@@ -76,14 +68,12 @@ public class HarvestMoon
         }
 
         @Override
-        public String describeUndo()
-        {
+        public String describeUndo() {
             return "Removing Harvest Moon Support for " + name;
         }
 
         @Override
-        public Object getOverrideKey()
-        {
+        public Object getOverrideKey() {
             return null;
         }
     }

@@ -19,20 +19,16 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.common.util.ForgeDirection;
 import org.lwjgl.opengl.GL11;
 
-public class RenderAlchemicCalcinator extends TileEntitySpecialRenderer
-{
+public class RenderAlchemicCalcinator extends TileEntitySpecialRenderer {
     private final RenderItem customRenderItem;
     private ModelAlchemicalCalcinator modelConduit = new ModelAlchemicalCalcinator();
 
     private ResourceLocation resourceLocation = new ResourceLocation("alchemicalwizardry:textures/models/Reagent.png");
 
-    public RenderAlchemicCalcinator()
-    {
-        customRenderItem = new RenderItem()
-        {
+    public RenderAlchemicCalcinator() {
+        customRenderItem = new RenderItem() {
             @Override
-            public boolean shouldBob()
-            {
+            public boolean shouldBob() {
                 return false;
             }
         };
@@ -40,10 +36,8 @@ public class RenderAlchemicCalcinator extends TileEntitySpecialRenderer
     }
 
     @Override
-    public void renderTileEntityAt(TileEntity tileEntity, double d0, double d1, double d2, float f)
-    {
-        if (tileEntity instanceof TEAlchemicCalcinator)
-        {
+    public void renderTileEntityAt(TileEntity tileEntity, double d0, double d1, double d2, float f) {
+        if (tileEntity instanceof TEAlchemicCalcinator) {
             TEAlchemicCalcinator tileAltar = (TEAlchemicCalcinator) tileEntity;
 
             GL11.glPushMatrix();
@@ -58,8 +52,7 @@ public class RenderAlchemicCalcinator extends TileEntitySpecialRenderer
 
             GL11.glPushMatrix();
 
-            if (tileAltar.getStackInSlot(1) != null)
-            {
+            if (tileAltar.getStackInSlot(1) != null) {
 
                 boolean fancySaved = Minecraft.isFancyGraphicsEnabled();
                 Minecraft.getMinecraft().gameSettings.fancyGraphics = true;
@@ -70,17 +63,17 @@ public class RenderAlchemicCalcinator extends TileEntitySpecialRenderer
                 ghostEntityItem.setEntityItemStack(tileAltar.getStackInSlot(1));
                 float displacement = 0.2F;
 
-                if (ghostEntityItem.getEntityItem().getItem() instanceof ItemBlock)
-                {
+                if (ghostEntityItem.getEntityItem().getItem() instanceof ItemBlock) {
                     GL11.glTranslatef((float) d0 + 0.5F, (float) d1 + displacement + 0.7F, (float) d2 + 0.5F);
-                } else
-                {
-                    GL11.glTranslatef((float) d0 + 0.5F, (float) d1 + displacement + 10.4f / 16.0f, (float) d2 + 0.5F - 0.0625f * 2f);
+                } else {
+                    GL11.glTranslatef(
+                            (float) d0 + 0.5F,
+                            (float) d1 + displacement + 10.4f / 16.0f,
+                            (float) d2 + 0.5F - 0.0625f * 2f);
                 }
                 GL11.glScalef(scaleFactor, scaleFactor, scaleFactor);
 
-                if (!(ghostEntityItem.getEntityItem().getItem() instanceof ItemBlock))
-                {
+                if (!(ghostEntityItem.getEntityItem().getItem() instanceof ItemBlock)) {
                     GL11.glRotatef(90f, 1.0f, 0.0f, 0.0F);
                 }
 
@@ -88,12 +81,10 @@ public class RenderAlchemicCalcinator extends TileEntitySpecialRenderer
                 Minecraft.getMinecraft().gameSettings.fancyGraphics = fancySaved;
             }
 
-
             GL11.glPopMatrix();
             GL11.glPushMatrix();
 
-            if (tileAltar.getStackInSlot(0) != null)
-            {
+            if (tileAltar.getStackInSlot(0) != null) {
 
                 boolean fancySaved = Minecraft.isFancyGraphicsEnabled();
                 Minecraft.getMinecraft().gameSettings.fancyGraphics = true;
@@ -104,17 +95,17 @@ public class RenderAlchemicCalcinator extends TileEntitySpecialRenderer
                 ghostEntityItem.setEntityItemStack(tileAltar.getStackInSlot(0));
                 float displacement = -0.5F;
 
-                if (ghostEntityItem.getEntityItem().getItem() instanceof ItemBlock)
-                {
+                if (ghostEntityItem.getEntityItem().getItem() instanceof ItemBlock) {
                     GL11.glTranslatef((float) d0 + 0.5F, (float) d1 + displacement + 0.7F, (float) d2 + 0.5F);
-                } else
-                {
-                    GL11.glTranslatef((float) d0 + 0.5F, (float) d1 + displacement + 10.4f / 16.0f, (float) d2 + 0.5F - 0.0625f * 2f);
+                } else {
+                    GL11.glTranslatef(
+                            (float) d0 + 0.5F,
+                            (float) d1 + displacement + 10.4f / 16.0f,
+                            (float) d2 + 0.5F - 0.0625f * 2f);
                 }
                 GL11.glScalef(scaleFactor, scaleFactor, scaleFactor);
 
-                if (!(ghostEntityItem.getEntityItem().getItem() instanceof ItemBlock))
-                {
+                if (!(ghostEntityItem.getEntityItem().getItem() instanceof ItemBlock)) {
                     GL11.glRotatef(90f, 1.0f, 0.0f, 0.0F);
                 }
 
@@ -124,23 +115,27 @@ public class RenderAlchemicCalcinator extends TileEntitySpecialRenderer
 
             GL11.glPopMatrix();
 
-
             ReagentContainerInfo[] info = tileAltar.getContainerInfo(ForgeDirection.UNKNOWN);
-            if (info.length >= 1 && info[0] != null)
-            {
+            if (info.length >= 1 && info[0] != null) {
                 ReagentStack reagentStack = info[0].reagent;
                 int capacity = info[0].capacity;
-                if (reagentStack != null && reagentStack.reagent != null)
-                {
+                if (reagentStack != null && reagentStack.reagent != null) {
                     Reagent reagent = reagentStack.reagent;
-                    this.renderTankContents(d0, d1, d2, reagent.getColourRed(), reagent.getColourGreen(), reagent.getColourBlue(), 200 * reagentStack.amount / capacity);
+                    this.renderTankContents(
+                            d0,
+                            d1,
+                            d2,
+                            reagent.getColourRed(),
+                            reagent.getColourGreen(),
+                            reagent.getColourBlue(),
+                            200 * reagentStack.amount / capacity);
                 }
             }
         }
     }
 
-    private void renderTankContents(double x, double y, double z, int colourRed, int colourGreen, int colourBlue, int colourIntensity)
-    {
+    private void renderTankContents(
+            double x, double y, double z, int colourRed, int colourGreen, int colourBlue, int colourIntensity) {
         GL11.glPushMatrix();
         Tessellator tessellator = Tessellator.instance;
         this.bindTexture(resourceLocation);
@@ -196,16 +191,12 @@ public class RenderAlchemicCalcinator extends TileEntitySpecialRenderer
         GL11.glPopMatrix();
     }
 
-    private float getGhostItemScaleFactor(ItemStack itemStack)
-    {
+    private float getGhostItemScaleFactor(ItemStack itemStack) {
         float scaleFactor = 1.5F;
 
-        if (itemStack != null)
-        {
-            if (itemStack.getItem() instanceof ItemBlock)
-            {
-                switch (customRenderItem.getMiniBlockCount(itemStack, (byte) 1))
-                {
+        if (itemStack != null) {
+            if (itemStack.getItem() instanceof ItemBlock) {
+                switch (customRenderItem.getMiniBlockCount(itemStack, (byte) 1)) {
                     case 1:
                         return 0.90F * scaleFactor;
 
@@ -224,10 +215,8 @@ public class RenderAlchemicCalcinator extends TileEntitySpecialRenderer
                     default:
                         return 0.90F * scaleFactor;
                 }
-            } else
-            {
-                switch (customRenderItem.getMiniItemCount(itemStack, (byte) 1))
-                {
+            } else {
+                switch (customRenderItem.getMiniItemCount(itemStack, (byte) 1)) {
                     case 1:
                         return 0.65F * scaleFactor;
 
@@ -249,10 +238,8 @@ public class RenderAlchemicCalcinator extends TileEntitySpecialRenderer
         return scaleFactor;
     }
 
-    private float getXDisplacementForSlot(int slot)
-    {
-        switch (slot)
-        {
+    private float getXDisplacementForSlot(int slot) {
+        switch (slot) {
             case 0:
                 return 0.0f;
 
@@ -276,10 +263,8 @@ public class RenderAlchemicCalcinator extends TileEntitySpecialRenderer
         }
     }
 
-    private float getYDisplacementForSlot(int slot)
-    {
-        switch (slot)
-        {
+    private float getYDisplacementForSlot(int slot) {
+        switch (slot) {
             case 0:
                 return 0.4f;
 
@@ -294,10 +279,8 @@ public class RenderAlchemicCalcinator extends TileEntitySpecialRenderer
         }
     }
 
-    private float getZDisplacementForSlot(int slot)
-    {
-        switch (slot)
-        {
+    private float getZDisplacementForSlot(int slot) {
+        switch (slot) {
             case 0:
                 return 0.0f;
 
@@ -321,108 +304,85 @@ public class RenderAlchemicCalcinator extends TileEntitySpecialRenderer
         }
     }
 
-    private void translateGhostItemByOrientation(ItemStack ghostItemStack, double x, double y, double z, ForgeDirection forgeDirection)
-    {
-        if (ghostItemStack != null)
-        {
-            if (ghostItemStack.getItem() instanceof ItemBlock)
-            {
-                switch (forgeDirection)
-                {
-                    case DOWN:
-                    {
+    private void translateGhostItemByOrientation(
+            ItemStack ghostItemStack, double x, double y, double z, ForgeDirection forgeDirection) {
+        if (ghostItemStack != null) {
+            if (ghostItemStack.getItem() instanceof ItemBlock) {
+                switch (forgeDirection) {
+                    case DOWN: {
                         GL11.glTranslatef((float) x + 0.5F, (float) y + 2.7F, (float) z + 0.5F);
                         return;
                     }
 
-                    case UP:
-                    {
+                    case UP: {
                         GL11.glTranslatef((float) x + 0.5F, (float) y + 0.25F, (float) z + 0.5F);
                         return;
                     }
 
-                    case NORTH:
-                    {
+                    case NORTH: {
                         GL11.glTranslatef((float) x + 0.5F, (float) y + 0.5F, (float) z + 0.7F);
                         return;
                     }
 
-                    case SOUTH:
-                    {
+                    case SOUTH: {
                         GL11.glTranslatef((float) x + 0.5F, (float) y + 0.5F, (float) z + 0.3F);
                         return;
                     }
 
-                    case EAST:
-                    {
+                    case EAST: {
                         GL11.glTranslatef((float) x + 0.3F, (float) y + 0.5F, (float) z + 0.5F);
                         return;
                     }
 
-                    case WEST:
-                    {
+                    case WEST: {
                         GL11.glTranslatef((float) x + 0.70F, (float) y + 0.5F, (float) z + 0.5F);
                         return;
                     }
 
-                    case UNKNOWN:
-                    {
+                    case UNKNOWN: {
                         return;
                     }
 
-                    default:
-                    {
-
+                    default: {
                     }
                 }
-            } else
-            {
-                switch (forgeDirection)
-                {
-                    case DOWN:
-                    {
+            } else {
+                switch (forgeDirection) {
+                    case DOWN: {
                         GL11.glTranslatef((float) x + 0.5F, (float) y + 0.6F, (float) z + 0.5F);
                         return;
                     }
 
-                    case UP:
-                    {
+                    case UP: {
                         GL11.glTranslatef((float) x + 0.5F, (float) y + 0.20F, (float) z + 0.5F);
                         return;
                     }
 
-                    case NORTH:
-                    {
+                    case NORTH: {
                         GL11.glTranslatef((float) x + 0.5F, (float) y + 0.4F, (float) z + 0.7F);
                         return;
                     }
 
-                    case SOUTH:
-                    {
+                    case SOUTH: {
                         GL11.glTranslatef((float) x + 0.5F, (float) y + 0.4F, (float) z + 0.3F);
                         return;
                     }
 
-                    case EAST:
-                    {
+                    case EAST: {
                         GL11.glTranslatef((float) x + 0.3F, (float) y + 0.4F, (float) z + 0.5F);
                         return;
                     }
 
-                    case WEST:
-                    {
+                    case WEST: {
                         GL11.glTranslatef((float) x + 0.70F, (float) y + 0.4F, (float) z + 0.5F);
                         return;
                     }
 
-                    case UNKNOWN:
-                    {
+                    case UNKNOWN: {
                         return;
                     }
 
-                    default:
-                    {
-
+                    default: {
                     }
                 }
             }

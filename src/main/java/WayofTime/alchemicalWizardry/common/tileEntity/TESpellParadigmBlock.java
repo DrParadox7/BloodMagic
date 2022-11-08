@@ -1,23 +1,20 @@
 package WayofTime.alchemicalWizardry.common.tileEntity;
 
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.item.ItemStack;
-import net.minecraft.world.World;
-import net.minecraftforge.common.util.ForgeDirection;
 import WayofTime.alchemicalWizardry.api.spell.SpellParadigm;
 import WayofTime.alchemicalWizardry.api.spell.SpellParadigmMelee;
 import WayofTime.alchemicalWizardry.api.spell.SpellParadigmProjectile;
 import WayofTime.alchemicalWizardry.api.spell.SpellParadigmSelf;
 import WayofTime.alchemicalWizardry.api.spell.SpellParadigmTool;
 import WayofTime.alchemicalWizardry.api.tile.ISpellParadigmTile;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.ItemStack;
+import net.minecraft.world.World;
+import net.minecraftforge.common.util.ForgeDirection;
 
-public class TESpellParadigmBlock extends TESpellBlock implements ISpellParadigmTile
-{
-    public SpellParadigm getSpellParadigm()
-    {
+public class TESpellParadigmBlock extends TESpellBlock implements ISpellParadigmTile {
+    public SpellParadigm getSpellParadigm() {
         int meta = worldObj.getBlockMetadata(xCoord, yCoord, zCoord);
-        switch (meta)
-        {
+        switch (meta) {
             case 0:
                 return new SpellParadigmProjectile();
             case 1:
@@ -31,19 +28,14 @@ public class TESpellParadigmBlock extends TESpellBlock implements ISpellParadigm
     }
 
     @Override
-    protected void applySpellChange(SpellParadigm parad)
-    {
+    protected void applySpellChange(SpellParadigm parad) {}
 
-    }
-
-    public boolean canInputRecieve()
-    {
+    public boolean canInputRecieve() {
         return false;
     }
 
     @Override
-    public void castSpell(World world, EntityPlayer entity, ItemStack spellCasterStack)
-    {
+    public void castSpell(World world, EntityPlayer entity, ItemStack spellCasterStack) {
         SpellParadigm parad = this.getSpellParadigm();
         this.modifySpellParadigm(parad);
         parad.applyAllSpellEffects();
@@ -51,10 +43,8 @@ public class TESpellParadigmBlock extends TESpellBlock implements ISpellParadigm
     }
 
     @Override
-    public String getResourceLocationForMeta(int meta)
-    {
-        switch (meta)
-        {
+    public String getResourceLocationForMeta(int meta) {
+        switch (meta) {
             case 0:
                 return "alchemicalwizardry:textures/models/SpellParadigmProjectile.png";
             case 1:
@@ -68,14 +58,10 @@ public class TESpellParadigmBlock extends TESpellBlock implements ISpellParadigm
     }
 
     @Override
-    public void setInputDirection(ForgeDirection direction)
-    {
-
-    }
+    public void setInputDirection(ForgeDirection direction) {}
 
     @Override
-    public ForgeDirection getInputDirection()
-    {
+    public ForgeDirection getInputDirection() {
         return ForgeDirection.UNKNOWN;
     }
 }

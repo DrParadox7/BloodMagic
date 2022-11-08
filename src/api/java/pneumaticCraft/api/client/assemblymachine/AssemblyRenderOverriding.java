@@ -1,23 +1,23 @@
 package pneumaticCraft.api.client.assemblymachine;
 
 import java.util.HashMap;
-
 import net.minecraft.block.Block;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 
-public class AssemblyRenderOverriding{
-    public static final HashMap<Integer, IAssemblyRenderOverriding> renderOverrides = new HashMap<Integer, IAssemblyRenderOverriding>();
+public class AssemblyRenderOverriding {
+    public static final HashMap<Integer, IAssemblyRenderOverriding> renderOverrides =
+            new HashMap<Integer, IAssemblyRenderOverriding>();
 
-    public static void addRenderOverride(Block block, IAssemblyRenderOverriding renderOverride){
+    public static void addRenderOverride(Block block, IAssemblyRenderOverriding renderOverride) {
         renderOverrides.put(Block.getIdFromBlock(block), renderOverride);
     }
 
-    public static void addRenderOverride(Item item, IAssemblyRenderOverriding renderOverride){
+    public static void addRenderOverride(Item item, IAssemblyRenderOverriding renderOverride) {
         renderOverrides.put(Item.getIdFromItem(item), renderOverride);
     }
 
-    public static interface IAssemblyRenderOverriding{
+    public static interface IAssemblyRenderOverriding {
         /**
          * This method will be called just before the IO Unit's held stack is being rendered. You can insert GL11 calls here to
          * rotate the model for example. push and pop matrices are not needed, this is done for you.
@@ -50,6 +50,5 @@ public class AssemblyRenderOverriding{
          * @return
          */
         public float getPlatformClawShift(ItemStack renderedStack);
-
     }
 }

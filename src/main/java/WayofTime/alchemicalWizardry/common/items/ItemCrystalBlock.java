@@ -4,29 +4,22 @@ import net.minecraft.block.Block;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
 
-public class ItemCrystalBlock extends ItemBlock
-{
-    public ItemCrystalBlock(Block par1)
-    {
+public class ItemCrystalBlock extends ItemBlock {
+    public ItemCrystalBlock(Block par1) {
         super(par1);
         setHasSubtypes(true);
-
     }
 
-    public String getUnlocalizedName(ItemStack itemstack)
-    {
+    public String getUnlocalizedName(ItemStack itemstack) {
         String name;
 
-        switch (itemstack.getItemDamage())
-        {
-            case 0:
-            {
+        switch (itemstack.getItemDamage()) {
+            case 0: {
                 name = "fullCrystal";
                 break;
             }
 
-            case 1:
-            {
+            case 1: {
                 name = "crystalBrick";
                 break;
             }
@@ -38,9 +31,8 @@ public class ItemCrystalBlock extends ItemBlock
         return getUnlocalizedName() + "." + name;
     }
 
-    public int getMetadata(int par1)
+    public int getMetadata(int par1) {
 
-    {
         return par1;
     }
 }

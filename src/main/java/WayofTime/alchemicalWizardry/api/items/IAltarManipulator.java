@@ -1,6 +1,3 @@
 package WayofTime.alchemicalWizardry.api.items;
 
-public interface IAltarManipulator 
-{
-
-}
+public interface IAltarManipulator {}

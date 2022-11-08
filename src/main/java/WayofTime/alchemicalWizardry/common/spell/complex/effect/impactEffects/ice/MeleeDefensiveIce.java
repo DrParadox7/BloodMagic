@@ -8,16 +8,13 @@ import net.minecraft.util.Vec3;
 import net.minecraft.world.World;
 import net.minecraftforge.common.util.ForgeDirection;
 
-public class MeleeDefensiveIce extends MeleeSpellWorldEffect
-{
-    public MeleeDefensiveIce(int power, int potency, int cost)
-    {
+public class MeleeDefensiveIce extends MeleeSpellWorldEffect {
+    public MeleeDefensiveIce(int power, int potency, int cost) {
         super(power, potency, cost);
     }
 
     @Override
-    public void onWorldEffect(World world, EntityPlayer entityPlayer)
-    {
+    public void onWorldEffect(World world, EntityPlayer entityPlayer) {
         ForgeDirection look = SpellHelper.getCompassDirectionForLookVector(entityPlayer.getLookVec());
 
         int width = this.powerUpgrades;
@@ -34,12 +31,9 @@ public class MeleeDefensiveIce extends MeleeSpellWorldEffect
         int zStart = (int) (lookVec.zCoord) + range * zOffset;
         int yStart = (int) (lookVec.yCoord);
 
-        for (int i = -width; i <= width; i++)
-        {
-            for (int j = 0; j < height; j++)
-            {
-                if (world.isAirBlock(xStart + i * (zOffset), yStart + j, zStart + i * (xOffset)))
-                {
+        for (int i = -width; i <= width; i++) {
+            for (int j = 0; j < height; j++) {
+                if (world.isAirBlock(xStart + i * (zOffset), yStart + j, zStart + i * (xOffset))) {
                     world.setBlock(xStart + i * (zOffset), yStart + j, zStart + i * (xOffset), Blocks.ice);
                 }
             }

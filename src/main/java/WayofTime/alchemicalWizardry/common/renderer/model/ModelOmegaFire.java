@@ -8,8 +8,7 @@ import net.minecraft.entity.Entity;
  * OmegaFire - WayofTime
  * Created using Tabula 4.1.0
  */
-public class ModelOmegaFire extends ModelBiped 
-{
+public class ModelOmegaFire extends ModelBiped {
     public ModelRenderer facePlate1;
     public ModelRenderer facePlate2;
     public ModelRenderer facePlate3;
@@ -72,8 +71,7 @@ public class ModelOmegaFire extends ModelBiped
     public ModelRenderer rightBoot2;
     public ModelRenderer rightBoot3;
 
-    public ModelOmegaFire(float f, boolean addHelmet, boolean addChestPiece, boolean addLeggings, boolean addBoots)
-    {
+    public ModelOmegaFire(float f, boolean addHelmet, boolean addChestPiece, boolean addLeggings, boolean addBoots) {
         super(f, 0.0f, 128, 128);
         this.textureWidth = 128;
         this.textureHeight = 128;
@@ -330,9 +328,8 @@ public class ModelOmegaFire extends ModelBiped
         this.bipedLeftLeg.cubeList.clear();
         this.bipedRightArm.cubeList.clear();
         this.bipedRightLeg.cubeList.clear();
-        
-        if(addChestPiece)
-        {
+
+        if (addChestPiece) {
             this.bipedBody.addChild(this.bodyPlate5);
             this.bipedBody.addChild(this.leftSpacer1);
             this.bipedBody.addChild(this.bodyPlate2);
@@ -360,12 +357,11 @@ public class ModelOmegaFire extends ModelBiped
             this.bipedBody.addChild(this.rightSpacer1);
             this.bipedBody.addChild(this.bodyPlate1);
             this.bipedBody.addChild(this.bodyPlate4);
-            this.bipedBody.addChild(this.bodyPlate3);  
+            this.bipedBody.addChild(this.bodyPlate3);
             this.bipedBody.addChild(this.chestMain);
         }
-        
-        if(addLeggings)
-        {
+
+        if (addLeggings) {
             this.bipedBody.addChild(this.belt);
             this.bipedRightLeg.addChild(this.rightLeg);
             this.bipedRightLeg.addChild(this.rightLegPlate3);
@@ -384,9 +380,8 @@ public class ModelOmegaFire extends ModelBiped
             this.bipedRightLeg.addChild(this.rightLegPlate5);
             this.bipedLeftLeg.addChild(this.leftLegPlate1);
         }
-        
-        if(addBoots)
-        {
+
+        if (addBoots) {
             this.bipedLeftLeg.addChild(this.leftBoot1);
             this.bipedRightLeg.addChild(this.rightBoot1);
             this.bipedRightLeg.addChild(this.rightBoot2);
@@ -394,10 +389,9 @@ public class ModelOmegaFire extends ModelBiped
             this.bipedLeftLeg.addChild(this.leftBoot2);
             this.bipedRightLeg.addChild(this.rightBoot3);
         }
-        
-        if(addHelmet)
-        {
-        	this.bipedHead.addChild(this.facePlate3);
+
+        if (addHelmet) {
+            this.bipedHead.addChild(this.facePlate3);
             this.bipedHead.addChild(this.facePlate1);
             this.bipedHead.addChild(this.facePlate6);
             this.bipedHead.addChild(this.facePlate2);
@@ -407,13 +401,12 @@ public class ModelOmegaFire extends ModelBiped
             this.bipedHead.addChild(this.backPlate);
             this.bipedHead.addChild(this.facePlate4);
             this.bipedHead.addChild(this.facePlate7);
-        } 
+        }
     }
 
     @Override
-    public void render(Entity entity, float f, float f1, float f2, float f3, float f4, float f5) 
-    {
-    	setRotationAngles(f, f1, f2, f3, f4, f5, entity);
+    public void render(Entity entity, float f, float f1, float f2, float f3, float f4, float f5) {
+        setRotationAngles(f, f1, f2, f3, f4, f5, entity);
         this.bipedRightLeg.render(f5);
         this.bipedRightArm.render(f5);
         this.bipedLeftArm.render(f5);
@@ -425,8 +418,7 @@ public class ModelOmegaFire extends ModelBiped
     /**
      * This is a helper function from Tabula to set the rotation of model parts
      */
-    public void setRotateAngle(ModelRenderer modelRenderer, float x, float y, float z) 
-    {
+    public void setRotateAngle(ModelRenderer modelRenderer, float x, float y, float z) {
         modelRenderer.rotateAngleX = x;
         modelRenderer.rotateAngleY = y;
         modelRenderer.rotateAngleZ = z;

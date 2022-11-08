@@ -1,9 +1,9 @@
 package pneumaticCraft.api.universalSensor;
 
-import net.minecraft.tileentity.TileEntity;
 import cpw.mods.fml.common.eventhandler.Event;
+import net.minecraft.tileentity.TileEntity;
 
-public interface IEventSensorSetting extends ISensorSetting{
+public interface IEventSensorSetting extends ISensorSetting {
 
     /**
      * This method is only invoked when a subscribed event is triggered.

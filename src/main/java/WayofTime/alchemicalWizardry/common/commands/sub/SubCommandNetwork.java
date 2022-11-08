@@ -2,13 +2,12 @@ package WayofTime.alchemicalWizardry.common.commands.sub;
 
 import WayofTime.alchemicalWizardry.api.command.SubCommandBase;
 import WayofTime.alchemicalWizardry.api.soulNetwork.SoulNetworkHandler;
+import java.util.Locale;
 import net.minecraft.command.ICommand;
 import net.minecraft.command.ICommandSender;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.ChatComponentText;
 import net.minecraft.util.StatCollector;
-
-import java.util.Locale;
 
 public class SubCommandNetwork extends SubCommandBase {
 
@@ -37,8 +36,7 @@ public class SubCommandNetwork extends SubCommandBase {
 
         if (args.length > 0) {
 
-            if (args[0].equalsIgnoreCase("help"))
-                return;
+            if (args[0].equalsIgnoreCase("help")) return;
 
             String givenName = commandSender.getCommandSenderName();
             EntityPlayer player = getPlayer(commandSender, givenName);
@@ -62,7 +60,8 @@ public class SubCommandNetwork extends SubCommandBase {
                             if (isInteger(args[2])) {
                                 int amount = Integer.parseInt(args[2]);
                                 SoulNetworkHandler.syphonAndDamageFromNetwork(givenName, player, amount);
-                                displaySuccessString(commandSender, "commands.network.syphon.success", amount, givenName);
+                                displaySuccessString(
+                                        commandSender, "commands.network.syphon.success", amount, givenName);
                             } else {
                                 displayErrorString(commandSender, "commands.error.arg.invalid");
                             }
@@ -81,7 +80,8 @@ public class SubCommandNetwork extends SubCommandBase {
                         if (args.length == 3) {
                             if (isInteger(args[2])) {
                                 int amount = Integer.parseInt(args[2]);
-                                int maxOrb = SoulNetworkHandler.getMaximumForOrbTier(SoulNetworkHandler.getCurrentMaxOrb(givenName));
+                                int maxOrb = SoulNetworkHandler.getMaximumForOrbTier(
+                                        SoulNetworkHandler.getCurrentMaxOrb(givenName));
                                 SoulNetworkHandler.addCurrentEssenceToMaximum(givenName, amount, maxOrb);
                                 displaySuccessString(commandSender, "commands.network.add.success", amount, givenName);
                             } else {
@@ -120,7 +120,9 @@ public class SubCommandNetwork extends SubCommandBase {
                         }
 
                         if (args.length > 1)
-                            commandSender.addChatMessage(new ChatComponentText(StatCollector.translateToLocal("message.divinationsigil.currentessence") + " " + SoulNetworkHandler.getCurrentEssence(givenName) + "LP"));
+                            commandSender.addChatMessage(new ChatComponentText(
+                                    StatCollector.translateToLocal("message.divinationsigil.currentessence") + " "
+                                            + SoulNetworkHandler.getCurrentEssence(givenName) + "LP"));
 
                         break;
                     }
@@ -144,7 +146,8 @@ public class SubCommandNetwork extends SubCommandBase {
                         }
 
                         if (args.length > 1) {
-                            int maxOrb = SoulNetworkHandler.getMaximumForOrbTier(SoulNetworkHandler.getCurrentMaxOrb(givenName));
+                            int maxOrb = SoulNetworkHandler.getMaximumForOrbTier(
+                                    SoulNetworkHandler.getCurrentMaxOrb(givenName));
                             SoulNetworkHandler.setCurrentEssence(givenName, maxOrb);
                             displaySuccessString(commandSender, "commands.network.cap.success", givenName);
                         }
@@ -177,9 +180,9 @@ public class SubCommandNetwork extends SubCommandBase {
     private static boolean isInteger(String s) {
         try {
             Integer.parseInt(s);
-        } catch(NumberFormatException e) {
+        } catch (NumberFormatException e) {
             return false;
-        } catch(NullPointerException e) {
+        } catch (NullPointerException e) {
             return false;
         }
         // only got here if we didn't return false

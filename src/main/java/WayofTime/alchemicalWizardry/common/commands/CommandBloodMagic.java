@@ -5,14 +5,12 @@ import WayofTime.alchemicalWizardry.common.commands.sub.SubCommandBind;
 import WayofTime.alchemicalWizardry.common.commands.sub.SubCommandHelp;
 import WayofTime.alchemicalWizardry.common.commands.sub.SubCommandNetwork;
 import WayofTime.alchemicalWizardry.common.commands.sub.SubCommandOrb;
+import java.util.*;
 import net.minecraft.command.CommandBase;
 import net.minecraft.command.ICommandSender;
-import net.minecraft.util.ChatComponentText;
 import net.minecraft.util.ChatComponentTranslation;
 import net.minecraft.util.ChatStyle;
 import net.minecraft.util.EnumChatFormatting;
-
-import java.util.*;
 
 public class CommandBloodMagic extends CommandBase {
 
@@ -59,12 +57,13 @@ public class CommandBloodMagic extends CommandBase {
             ISubCommand subCommand = subCommands.get(args[0]);
             String[] subArgs = Arrays.copyOfRange(args, 1, args.length);
 
-            if (subCommand.canSenderUseSubCommand(commandSender))
-                subCommand.processSubCommand(commandSender, subArgs);
+            if (subCommand.canSenderUseSubCommand(commandSender)) subCommand.processSubCommand(commandSender, subArgs);
             else
-                commandSender.addChatMessage(new ChatComponentTranslation("commands.error.perm").setChatStyle(new ChatStyle().setColor(EnumChatFormatting.RED)));
+                commandSender.addChatMessage(new ChatComponentTranslation("commands.error.perm")
+                        .setChatStyle(new ChatStyle().setColor(EnumChatFormatting.RED)));
         } else {
-            commandSender.addChatMessage(new ChatComponentTranslation("commands.error.unknown").setChatStyle(new ChatStyle().setColor(EnumChatFormatting.RED)));
+            commandSender.addChatMessage(new ChatComponentTranslation("commands.error.unknown")
+                    .setChatStyle(new ChatStyle().setColor(EnumChatFormatting.RED)));
         }
     }
 

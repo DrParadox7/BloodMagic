@@ -1,9 +1,13 @@
 package WayofTime.alchemicalWizardry.common.rituals;
 
+import WayofTime.alchemicalWizardry.AlchemicalWizardry;
+import WayofTime.alchemicalWizardry.api.rituals.IMasterRitualStone;
+import WayofTime.alchemicalWizardry.api.rituals.RitualComponent;
+import WayofTime.alchemicalWizardry.api.rituals.RitualEffect;
+import WayofTime.alchemicalWizardry.api.soulNetwork.SoulNetworkHandler;
+import WayofTime.alchemicalWizardry.common.spell.complex.effect.SpellHelper;
 import java.util.ArrayList;
 import java.util.List;
-
-import WayofTime.alchemicalWizardry.AlchemicalWizardry;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemFood;
@@ -12,18 +16,11 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.FoodStats;
 import net.minecraft.world.World;
-import WayofTime.alchemicalWizardry.api.rituals.IMasterRitualStone;
-import WayofTime.alchemicalWizardry.api.rituals.RitualComponent;
-import WayofTime.alchemicalWizardry.api.rituals.RitualEffect;
-import WayofTime.alchemicalWizardry.api.soulNetwork.SoulNetworkHandler;
-import WayofTime.alchemicalWizardry.common.spell.complex.effect.SpellHelper;
 
-public class RitualEffectFullStomach extends RitualEffect
-{
+public class RitualEffectFullStomach extends RitualEffect {
 
     @Override
-    public void performEffect(IMasterRitualStone ritualStone)
-    {
+    public void performEffect(IMasterRitualStone ritualStone) {
         String owner = ritualStone.getOwner();
 
         int currentEssence = SoulNetworkHandler.getCurrentEssence(owner);
@@ -32,66 +29,55 @@ public class RitualEffectFullStomach extends RitualEffect
         int y = ritualStone.getYCoord();
         int z = ritualStone.getZCoord();
 
-        if (world.getWorldTime() % 20 != 0)
-        {
+        if (world.getWorldTime() % 20 != 0) {
             return;
         }
 
         double horizRange = 16;
         double vertRange = 16;
 
-        List<EntityPlayer> playerList = SpellHelper.getPlayersInRange(world, x + 0.5, y + 0.5, z + 0.5, horizRange, vertRange);
+        List<EntityPlayer> playerList =
+                SpellHelper.getPlayersInRange(world, x + 0.5, y + 0.5, z + 0.5, horizRange, vertRange);
 
-        if (playerList == null)
-        {
+        if (playerList == null) {
             return;
         }
 
-        if (currentEssence < this.getCostPerRefresh() * playerList.size())
-        {
+        if (currentEssence < this.getCostPerRefresh() * playerList.size()) {
             SoulNetworkHandler.causeNauseaToPlayer(owner);
-        } else
-        {
+        } else {
             TileEntity tile = world.getTileEntity(x, y + 1, z);
             IInventory inventory = null;
-            if (tile instanceof IInventory)
-            {
+            if (tile instanceof IInventory) {
                 inventory = (IInventory) tile;
-            } else
-            {
+            } else {
                 tile = world.getTileEntity(x, y - 1, z);
-                if (tile instanceof IInventory)
-                {
+                if (tile instanceof IInventory) {
                     inventory = (IInventory) tile;
                 }
             }
 
             int count = 0;
 
-            if (inventory != null)
-            {
-                for (EntityPlayer player : playerList)
-                {
+            if (inventory != null) {
+                for (EntityPlayer player : playerList) {
                     FoodStats foodStats = player.getFoodStats();
                     float satLevel = foodStats.getSaturationLevel();
 
-                    for (int i = 0; i < inventory.getSizeInventory(); i++)
-                    {
+                    for (int i = 0; i < inventory.getSizeInventory(); i++) {
                         ItemStack stack = inventory.getStackInSlot(i);
 
-                        if (stack != null && stack.getItem() instanceof ItemFood)
-                        {
+                        if (stack != null && stack.getItem() instanceof ItemFood) {
                             ItemFood foodItem = (ItemFood) stack.getItem();
 
                             int regularHeal = foodItem.func_150905_g(stack);
                             float saturatedHeal = foodItem.func_150906_h(stack) * regularHeal * 2.0f;
 
-                            if (saturatedHeal + satLevel <= 20)
-                            {
-                            	NBTTagCompound nbt = new NBTTagCompound();
-                            	foodStats.writeNBT(nbt);
-                            	nbt.setFloat("foodSaturationLevel", saturatedHeal + satLevel);
-                            	foodStats.readNBT(nbt);
+                            if (saturatedHeal + satLevel <= 20) {
+                                NBTTagCompound nbt = new NBTTagCompound();
+                                foodStats.writeNBT(nbt);
+                                nbt.setFloat("foodSaturationLevel", saturatedHeal + satLevel);
+                                foodStats.readNBT(nbt);
 
                                 inventory.decrStackSize(i, 1);
                                 count++;
@@ -107,14 +93,12 @@ public class RitualEffectFullStomach extends RitualEffect
     }
 
     @Override
-    public int getCostPerRefresh()
-    {
+    public int getCostPerRefresh() {
         return AlchemicalWizardry.ritualCostFullStomach[1];
     }
 
     @Override
-    public List<RitualComponent> getRitualComponentList()
-    {
+    public List<RitualComponent> getRitualComponentList() {
         ArrayList<RitualComponent> fullRitual = new ArrayList();
         fullRitual.add(new RitualComponent(0, 0, 3, RitualComponent.FIRE));
         fullRitual.add(new RitualComponent(0, 0, -3, RitualComponent.FIRE));

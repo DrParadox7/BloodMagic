@@ -13,9 +13,9 @@ import net.minecraftforge.common.util.ForgeDirection;
 import net.minecraftforge.fluids.IFluidTank;
 import pneumaticCraft.api.item.IPressurizable;
 
-public interface IDrone extends IPressurizable{
+public interface IDrone extends IPressurizable {
     /**
-     * 
+     *
      * @param upgradeIndex metadata value of the upgrade item
      * @return amount of inserted upgrades in the drone
      */

@@ -1,35 +1,29 @@
 package WayofTime.alchemicalWizardry.common.spell.complex.effect.impactEffects.tool;
 
+import WayofTime.alchemicalWizardry.common.spell.complex.effect.SpellHelper;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Random;
-
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.util.Vec3;
 import net.minecraft.world.World;
 import net.minecraftforge.common.util.ForgeDirection;
-import WayofTime.alchemicalWizardry.common.spell.complex.effect.SpellHelper;
 
-public class RightClickTunnel extends RightClickEffect
-{
+public class RightClickTunnel extends RightClickEffect {
     Random rand = new Random();
 
-    public RightClickTunnel(int power, int potency, int cost)
-    {
+    public RightClickTunnel(int power, int potency, int cost) {
         super(power, potency, cost);
     }
 
     @Override
-    public int onRightClickBlock(ItemStack stack, EntityLivingBase weilder, World world, MovingObjectPosition mop)
-    {
-        if (weilder.worldObj.isRemote)
-        {
+    public int onRightClickBlock(ItemStack stack, EntityLivingBase weilder, World world, MovingObjectPosition mop) {
+        if (weilder.worldObj.isRemote) {
             return 0;
         }
-        if (!mop.typeOfHit.equals(MovingObjectPosition.MovingObjectType.BLOCK))
-        {
+        if (!mop.typeOfHit.equals(MovingObjectPosition.MovingObjectType.BLOCK)) {
             return 0;
         }
 
@@ -43,7 +37,8 @@ public class RightClickTunnel extends RightClickEffect
 
         double initialLength = this.getRandomVectorLength();
 
-        Vec3 initialVector = SpellHelper.createVec3(opposite.offsetX * initialLength, opposite.offsetY * initialLength, opposite.offsetZ * initialLength);
+        Vec3 initialVector = SpellHelper.createVec3(
+                opposite.offsetX * initialLength, opposite.offsetY * initialLength, opposite.offsetZ * initialLength);
 
         Vec3 lastVec = SpellHelper.createVec3(initialVector.xCoord, initialVector.yCoord, initialVector.zCoord);
         vectorLine.add(initialVector);
@@ -51,15 +46,17 @@ public class RightClickTunnel extends RightClickEffect
         double currentLength = lastVec.lengthVector();
         double totalLength = this.totalLength();
 
-        while (currentLength < totalLength - 0.01)
-        {
+        while (currentLength < totalLength - 0.01) {
             Vec3 tempVec = lastVec.addVector(0, 0, 0);
 
             tempVec = tempVec.normalize();
 
             double varr = this.varyRate();
 
-            tempVec = tempVec.addVector(varr * (rand.nextFloat() - rand.nextFloat()), varr * (rand.nextFloat() - rand.nextFloat()), varr * (rand.nextFloat() - rand.nextFloat()));
+            tempVec = tempVec.addVector(
+                    varr * (rand.nextFloat() - rand.nextFloat()),
+                    varr * (rand.nextFloat() - rand.nextFloat()),
+                    varr * (rand.nextFloat() - rand.nextFloat()));
 
             tempVec = tempVec.normalize();
 
@@ -76,8 +73,7 @@ public class RightClickTunnel extends RightClickEffect
             currentLength += tempVec.lengthVector();
         }
 
-        for (Vec3 testVec : vectorLine)
-        {
+        for (Vec3 testVec : vectorLine) {
             this.travelVector(testVec, world, initialX, initialY, initialZ);
 
             initialX += testVec.xCoord;
@@ -91,51 +87,39 @@ public class RightClickTunnel extends RightClickEffect
     }
 
     @Override
-    public int onRightClickAir(ItemStack stack, EntityLivingBase weilder)
-    {
+    public int onRightClickAir(ItemStack stack, EntityLivingBase weilder) {
         return 0;
     }
 
-    public double totalLength()
-    {
+    public double totalLength() {
         return 100;
     }
 
-    public double getStepSize()
-    {
+    public double getStepSize() {
         return 1;
     }
 
-    public double varyRate()
-    {
+    public double varyRate() {
         return 0.5;
     }
 
-    public double getRandomVectorLength()
-    {
+    public double getRandomVectorLength() {
         return 10;
     }
 
-    public double getRandomStepLength()
-    {
+    public double getRandomStepLength() {
         return 0.5;
     }
 
-    public int getRandomRadius()
-    {
+    public int getRandomRadius() {
         return 3;
     }
 
-    public void destroySphereOfMundane(World world, double x, double y, double z, int radius)
-    {
-        for (int i = -radius; i <= radius; i++)
-        {
-            for (int j = -radius; j <= radius; j++)
-            {
-                for (int k = -radius; k <= radius; k++)
-                {
-                    if (i * i + j * j + k * k >= (radius + 0.50f) * (radius + 0.50f))
-                    {
+    public void destroySphereOfMundane(World world, double x, double y, double z, int radius) {
+        for (int i = -radius; i <= radius; i++) {
+            for (int j = -radius; j <= radius; j++) {
+                for (int k = -radius; k <= radius; k++) {
+                    if (i * i + j * j + k * k >= (radius + 0.50f) * (radius + 0.50f)) {
                         continue;
                     }
 
@@ -149,13 +133,11 @@ public class RightClickTunnel extends RightClickEffect
         }
     }
 
-    public void destroyMunadeAt(World world, int x, int y, int z)
-    {
+    public void destroyMunadeAt(World world, int x, int y, int z) {
         world.setBlockToAir(x, y, z);
     }
 
-    public void travelVector(Vec3 vector, World world, double x, double y, double z)
-    {
+    public void travelVector(Vec3 vector, World world, double x, double y, double z) {
         double vecLength = vector.lengthVector();
 
         Vec3 normVec = SpellHelper.createVec3(vector.xCoord, vector.yCoord, vector.zCoord);
@@ -164,13 +146,13 @@ public class RightClickTunnel extends RightClickEffect
         Vec3 prevVec = SpellHelper.createVec3(0, 0, 0);
         double distanceTravelled = 0;
 
-        while (distanceTravelled < vecLength)
-        {
+        while (distanceTravelled < vecLength) {
             double stepLength = this.getRandomStepLength();
 
             prevVec = prevVec.addVector(stepLength * normVec.xCoord, stepLength * normVec.yCoord, normVec.zCoord);
 
-            this.destroySphereOfMundane(world, prevVec.xCoord + x, prevVec.yCoord + y, prevVec.zCoord + z, this.getRandomRadius());
+            this.destroySphereOfMundane(
+                    world, prevVec.xCoord + x, prevVec.yCoord + y, prevVec.zCoord + z, this.getRandomRadius());
 
             distanceTravelled = prevVec.lengthVector();
         }

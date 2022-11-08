@@ -1,7 +1,6 @@
 package pneumaticCraft.api;
 
 import java.util.List;
-
 import net.minecraft.block.Block;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityCreature;
@@ -20,7 +19,7 @@ import pneumaticCraft.api.item.IInventoryItem;
 /**
  * This class can be used to register and access various things to and from the mod.
  */
-public class PneumaticRegistry{
+public class PneumaticRegistry {
     /**
      * This field, which is initialized in PneumaticCraft's preInit, will give you access to various registration and access options.
      * @deprecated This field isn't going to be removed, but it'll be marked private. use getInstance().
@@ -28,15 +27,15 @@ public class PneumaticRegistry{
     @Deprecated
     public static IPneumaticCraftInterface instance;
 
-    public static IPneumaticCraftInterface getInstance(){
+    public static IPneumaticCraftInterface getInstance() {
         return instance;
     }
 
-    public static void init(IPneumaticCraftInterface inter){
-        if(instance == null) instance = inter;//only allow initialization once; by PneumaticCraft
+    public static void init(IPneumaticCraftInterface inter) {
+        if (instance == null) instance = inter; // only allow initialization once; by PneumaticCraft
     }
 
-    public static interface IPneumaticCraftInterface{
+    public static interface IPneumaticCraftInterface {
 
         /*
          * ------------- Pneumatic Helmet --------------
@@ -83,10 +82,10 @@ public class PneumaticRegistry{
          * y level, and drop the deliveredStacks. When there isn't a clear path for the items to fall these 5 blocks the Drone will deliver at a
          * y level above the specified y that _is_ clear. If no clear blocks can be found (when there are only solid blocks), the Drone will
          * drop the items very high up in the air instead, and drop them there.
-         * 
+         *
          * When the Drone is tried to be catched by a player (by wrenching it), the drone will only the drop the items that it was delivering (or
          * none if it dropped those items already). The Drone itself never will be dropped.
-         * 
+         *
          * @param x
          * @param y
          * @param z
@@ -138,7 +137,8 @@ public class PneumaticRegistry{
          * @return The amount of Security Stations that disallow interaction for the given player.
          * This method throws an IllegalArgumentException when tried to be called from the client side!
          */
-        public int getProtectingSecurityStations(World world, int x, int y, int z, EntityPlayer player, boolean showRangeLines);
+        public int getProtectingSecurityStations(
+                World world, int x, int y, int z, EntityPlayer player, boolean showRangeLines);
 
         /**
          * Use this to register ISimpleBlockRenderHandler render id's of full blocks, those of which should be able to be used for the Pneumatic Door Base camouflage.
@@ -153,6 +153,5 @@ public class PneumaticRegistry{
          * @param liquidToPointRatio The amount of liquid (in mB) used to get one XP point. In OpenBlocks this is 20 (mB/point).
          */
         public void registerXPLiquid(Fluid fluid, int liquidToPointRatio);
-
     }
 }

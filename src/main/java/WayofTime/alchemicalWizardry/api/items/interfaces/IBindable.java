@@ -1,5 +1,3 @@
 package WayofTime.alchemicalWizardry.api.items.interfaces;
 
-public interface IBindable
-{
-}
+public interface IBindable {}

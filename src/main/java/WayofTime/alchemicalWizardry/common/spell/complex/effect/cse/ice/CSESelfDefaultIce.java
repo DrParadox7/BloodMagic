@@ -7,40 +7,35 @@ import WayofTime.alchemicalWizardry.api.spell.SpellParadigm;
 import WayofTime.alchemicalWizardry.api.spell.SpellParadigmSelf;
 import WayofTime.alchemicalWizardry.common.spell.complex.effect.impactEffects.ice.SelfDefaultIce;
 
-public class CSESelfDefaultIce extends ComplexSpellEffect
-{
-	public CSESelfDefaultIce() 
-	{
-		super(ComplexSpellType.ICE, ComplexSpellModifier.DEFAULT);
-	}
-	
-	public CSESelfDefaultIce(int power, int cost, int potency)
-	{
-		this();
-		
-		this.powerEnhancement = power;
-		this.costEnhancement = cost;
-		this.potencyEnhancement = potency;
-	}
+public class CSESelfDefaultIce extends ComplexSpellEffect {
+    public CSESelfDefaultIce() {
+        super(ComplexSpellType.ICE, ComplexSpellModifier.DEFAULT);
+    }
 
-	@Override
-	public void modifyParadigm(SpellParadigm parad) 
-	{
-		if(parad instanceof SpellParadigmSelf)
-		{
-			((SpellParadigmSelf)parad).addSelfSpellEffect(new SelfDefaultIce(this.powerEnhancement, this.potencyEnhancement, this.costEnhancement));
-		}
-	}
+    public CSESelfDefaultIce(int power, int cost, int potency) {
+        this();
 
-	@Override
-	public ComplexSpellEffect copy(int power, int cost, int potency) 
-	{
-		return new CSESelfDefaultIce(power, cost, potency);
-	}
+        this.powerEnhancement = power;
+        this.costEnhancement = cost;
+        this.potencyEnhancement = potency;
+    }
 
-	@Override
-	public int getCostOfEffect() 
-	{
+    @Override
+    public void modifyParadigm(SpellParadigm parad) {
+        if (parad instanceof SpellParadigmSelf) {
+            ((SpellParadigmSelf) parad)
+                    .addSelfSpellEffect(
+                            new SelfDefaultIce(this.powerEnhancement, this.potencyEnhancement, this.costEnhancement));
+        }
+    }
+
+    @Override
+    public ComplexSpellEffect copy(int power, int cost, int potency) {
+        return new CSESelfDefaultIce(power, cost, potency);
+    }
+
+    @Override
+    public int getCostOfEffect() {
         return (int) (20 * (this.powerEnhancement + 1) * Math.pow(0.85, costEnhancement));
-	}
+    }
 }

@@ -1,7 +1,6 @@
 package pneumaticCraft.api.item;
 
 import java.util.List;
-
 import net.minecraft.item.ItemStack;
 
 /**
@@ -10,7 +9,7 @@ import net.minecraft.item.ItemStack;
  *  This will then will be used in the Pneumatic Helmet's item search.
  *
  */
-public interface IInventoryItem{
+public interface IInventoryItem {
 
     /**
      *  @parm stack: Item that potentially has an inventory.

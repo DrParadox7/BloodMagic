@@ -5,10 +5,8 @@ import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.client.renderer.texture.IIconRegister;
 
-public class EfficiencyRune extends BloodRune
-{
-    public EfficiencyRune()
-    {
+public class EfficiencyRune extends BloodRune {
+    public EfficiencyRune() {
         super();
         this.setBlockName("efficiencyRune");
         setCreativeTab(AlchemicalWizardry.tabBloodMagic);
@@ -18,14 +16,12 @@ public class EfficiencyRune extends BloodRune
 
     @Override
     @SideOnly(Side.CLIENT)
-    public void registerBlockIcons(IIconRegister iconRegister)
-    {
+    public void registerBlockIcons(IIconRegister iconRegister) {
         this.blockIcon = iconRegister.registerIcon("AlchemicalWizardry:EfficiencyRune");
     }
 
     @Override
-    public int getRuneEffect(int metaData)
-    {
+    public int getRuneEffect(int metaData) {
         return 2;
     }
 }

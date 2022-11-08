@@ -7,23 +7,20 @@ import WayofTime.alchemicalWizardry.api.rituals.RitualComponent;
 import WayofTime.alchemicalWizardry.api.rituals.RitualEffect;
 import WayofTime.alchemicalWizardry.api.soulNetwork.SoulNetworkHandler;
 import WayofTime.alchemicalWizardry.common.spell.complex.effect.SpellHelper;
+import java.util.ArrayList;
+import java.util.List;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.world.World;
 
-import java.util.ArrayList;
-import java.util.List;
-
-public class RitualEffectFlight extends RitualEffect
-{
+public class RitualEffectFlight extends RitualEffect {
     public static final int aetherDrain = 10;
     public static final int reductusDrain = 5;
     public static final int reagentCooldown = 50;
 
     @Override
-    public void performEffect(IMasterRitualStone ritualStone)
-    {
+    public void performEffect(IMasterRitualStone ritualStone) {
         String owner = ritualStone.getOwner();
 
         int currentEssence = SoulNetworkHandler.getCurrentEssence(owner);
@@ -34,7 +31,8 @@ public class RitualEffectFlight extends RitualEffect
 
         int range = 20;
         int verticalRange = 30;
-        AxisAlignedBB axis = AxisAlignedBB.getBoundingBox(x, y, z, x + 1, y + 1, z + 1).expand(range, verticalRange, range);
+        AxisAlignedBB axis =
+                AxisAlignedBB.getBoundingBox(x, y, z, x + 1, y + 1, z + 1).expand(range, verticalRange, range);
         axis.maxY = 256;
         axis.minY = 0;
         List<EntityPlayer> entities = world.getEntitiesWithinAABB(EntityPlayer.class, axis);
@@ -43,36 +41,29 @@ public class RitualEffectFlight extends RitualEffect
         boolean hasAether = this.canDrainReagent(ritualStone, ReagentRegistry.aetherReagent, aetherDrain, false);
         boolean hasReductus = this.canDrainReagent(ritualStone, ReagentRegistry.reductusReagent, reductusDrain, false);
 
-        for (EntityPlayer entity : entities)
-        {
+        for (EntityPlayer entity : entities) {
             entityCount++;
         }
 
-        if (currentEssence < this.getCostPerRefresh() * entityCount)
-        {
+        if (currentEssence < this.getCostPerRefresh() * entityCount) {
             SoulNetworkHandler.causeNauseaToPlayer(owner);
-        } else
-        {
+        } else {
             entityCount = 0;
             EntityPlayer ownerEntity = SpellHelper.getPlayerForUsername(owner);
-            for (EntityPlayer entity : entities)
-            {
-                if (hasReductus && entity != ownerEntity)
-                {
+            for (EntityPlayer entity : entities) {
+                if (hasReductus && entity != ownerEntity) {
                     continue;
                 }
-                entity.addPotionEffect(new PotionEffect(AlchemicalWizardry.customPotionFlight.id, hasAether ? 30 * 20 : 20, 0));
+                entity.addPotionEffect(
+                        new PotionEffect(AlchemicalWizardry.customPotionFlight.id, hasAether ? 30 * 20 : 20, 0));
                 entityCount++;
             }
 
-            if (entityCount > 0 && world.getWorldTime() % reagentCooldown == 0)
-            {
-                if (hasAether)
-                {
+            if (entityCount > 0 && world.getWorldTime() % reagentCooldown == 0) {
+                if (hasAether) {
                     this.canDrainReagent(ritualStone, ReagentRegistry.aetherReagent, aetherDrain, true);
                 }
-                if (hasReductus)
-                {
+                if (hasReductus) {
                     this.canDrainReagent(ritualStone, ReagentRegistry.reductusReagent, reductusDrain, true);
                 }
             }
@@ -82,20 +73,17 @@ public class RitualEffectFlight extends RitualEffect
     }
 
     @Override
-    public int getCostPerRefresh()
-    {
+    public int getCostPerRefresh() {
         return AlchemicalWizardry.ritualCostCondor[1];
     }
 
     @Override
-    public int getInitialCooldown()
-    {
+    public int getInitialCooldown() {
         return 1;
     }
 
     @Override
-    public List<RitualComponent> getRitualComponentList()
-    {
+    public List<RitualComponent> getRitualComponentList() {
         ArrayList<RitualComponent> flightRitual = new ArrayList();
         flightRitual.add(new RitualComponent(1, 0, 0, RitualComponent.DUSK));
         flightRitual.add(new RitualComponent(-1, 0, 0, RitualComponent.DUSK));
@@ -146,8 +134,7 @@ public class RitualEffectFlight extends RitualEffect
         flightRitual.add(new RitualComponent(0, 0, 5, RitualComponent.DUSK));
         flightRitual.add(new RitualComponent(0, 0, -5, RitualComponent.DUSK));
 
-        for (int i = 2; i <= 4; i++)
-        {
+        for (int i = 2; i <= 4; i++) {
             flightRitual.add(new RitualComponent(-i, 2, 0, RitualComponent.EARTH));
             flightRitual.add(new RitualComponent(i, 2, 0, RitualComponent.EARTH));
             flightRitual.add(new RitualComponent(0, 2, -i, RitualComponent.EARTH));
@@ -171,8 +158,7 @@ public class RitualEffectFlight extends RitualEffect
         flightRitual.add(new RitualComponent(4, 2, -4, RitualComponent.FIRE));
         flightRitual.add(new RitualComponent(-4, 2, 4, RitualComponent.FIRE));
 
-        for (int i = -1; i <= 1; i++)
-        {
+        for (int i = -1; i <= 1; i++) {
             flightRitual.add(new RitualComponent(3, 4, i, RitualComponent.EARTH));
             flightRitual.add(new RitualComponent(-3, 4, i, RitualComponent.EARTH));
             flightRitual.add(new RitualComponent(i, 4, 3, RitualComponent.EARTH));

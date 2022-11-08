@@ -5,9 +5,8 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.world.World;
 
-public interface IRightClickEffect
-{
-    //public abstract int onRightClickEntity(ItemStack stack, EntityLivingBase attacked, EntityLivingBase weilder);
+public interface IRightClickEffect {
+    // public abstract int onRightClickEntity(ItemStack stack, EntityLivingBase attacked, EntityLivingBase weilder);
 
     int onRightClickBlock(ItemStack stack, EntityLivingBase weilder, World world, MovingObjectPosition mop);
 

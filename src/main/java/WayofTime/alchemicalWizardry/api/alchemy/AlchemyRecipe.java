@@ -4,116 +4,96 @@ import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.oredict.OreDictionary;
 
-public class AlchemyRecipe
-{
+public class AlchemyRecipe {
     private ItemStack output;
     private ItemStack[] recipe;
     private int bloodOrbLevel;
     private int amountNeeded;
 
-    public AlchemyRecipe(ItemStack output, int amountNeeded, ItemStack[] recipe, int bloodOrbLevel)
-    {
+    public AlchemyRecipe(ItemStack output, int amountNeeded, ItemStack[] recipe, int bloodOrbLevel) {
         this.output = output;
         this.recipe = recipe;
         this.amountNeeded = amountNeeded;
         this.bloodOrbLevel = bloodOrbLevel;
     }
 
-    public boolean doesRecipeMatch(ItemStack[] items, int slottedBloodOrbLevel)
-    {
-        if (slottedBloodOrbLevel < bloodOrbLevel)
-        {
+    public boolean doesRecipeMatch(ItemStack[] items, int slottedBloodOrbLevel) {
+        if (slottedBloodOrbLevel < bloodOrbLevel) {
             return false;
         }
 
         ItemStack[] recipe;
 
-        if (items.length < 5)
-        {
+        if (items.length < 5) {
             return false;
         }
 
-        if (this.recipe.length != 5)
-        {
+        if (this.recipe.length != 5) {
             ItemStack[] newRecipe = new ItemStack[5];
 
-            for (int i = 0; i < 5; i++)
-            {
-                if (i + 1 > this.recipe.length)
-                {
+            for (int i = 0; i < 5; i++) {
+                if (i + 1 > this.recipe.length) {
                     newRecipe[i] = null;
-                } else
-                {
+                } else {
                     newRecipe[i] = this.recipe[i];
                 }
             }
 
             recipe = newRecipe;
-        } else
-        {
+        } else {
             recipe = this.recipe;
         }
 
         boolean[] checkList = new boolean[5];
 
-        for (int i = 0; i < 5; i++)
-        {
+        for (int i = 0; i < 5; i++) {
             checkList[i] = false;
         }
 
-        for (int i = 0; i < 5; i++)
-        {
+        for (int i = 0; i < 5; i++) {
             ItemStack recipeItemStack = recipe[i];
 
-            if (recipeItemStack == null)
-            {
+            if (recipeItemStack == null) {
                 continue;
             }
 
             boolean test = false;
 
-            for (int j = 0; j < 5; j++)
-            {
-                if (checkList[j])
-                {
+            for (int j = 0; j < 5; j++) {
+                if (checkList[j]) {
                     continue;
                 }
 
                 ItemStack checkedItemStack = items[j];
 
-                if (checkedItemStack == null)
-                {
+                if (checkedItemStack == null) {
                     continue;
                 }
 
                 boolean quickTest = false;
 
-                if (recipeItemStack.getItem() instanceof ItemBlock)
-                {
-                    if (checkedItemStack.getItem() instanceof ItemBlock)
-                    {
+                if (recipeItemStack.getItem() instanceof ItemBlock) {
+                    if (checkedItemStack.getItem() instanceof ItemBlock) {
                         quickTest = true;
                     }
-                } else if (!(checkedItemStack.getItem() instanceof ItemBlock))
-                {
+                } else if (!(checkedItemStack.getItem() instanceof ItemBlock)) {
                     quickTest = true;
                 }
 
-                if (!quickTest)
-                {
+                if (!quickTest) {
                     continue;
                 }
 
-                if ((checkedItemStack.getItemDamage() == recipeItemStack.getItemDamage() || OreDictionary.WILDCARD_VALUE == recipeItemStack.getItemDamage()) && checkedItemStack.getItem() == recipeItemStack.getItem())
-                {
+                if ((checkedItemStack.getItemDamage() == recipeItemStack.getItemDamage()
+                                || OreDictionary.WILDCARD_VALUE == recipeItemStack.getItemDamage())
+                        && checkedItemStack.getItem() == recipeItemStack.getItem()) {
                     test = true;
                     checkList[j] = true;
                     break;
                 }
             }
 
-            if (!test)
-            {
+            if (!test) {
                 return false;
             }
         }
@@ -121,23 +101,19 @@ public class AlchemyRecipe
         return true;
     }
 
-    public ItemStack getResult()
-    {
+    public ItemStack getResult() {
         return output.copy();
     }
 
-    public int getAmountNeeded()
-    {
+    public int getAmountNeeded() {
         return this.amountNeeded;
     }
 
-    public ItemStack[] getRecipe()
-    {
+    public ItemStack[] getRecipe() {
         return this.recipe;
     }
 
-    public int getOrbLevel()
-    {
+    public int getOrbLevel() {
         return this.bloodOrbLevel;
     }
 }

@@ -7,16 +7,13 @@ import net.minecraft.init.Blocks;
 import net.minecraft.util.Vec3;
 import net.minecraft.world.World;
 
-public class SelfDefaultIce extends SelfSpellEffect
-{
-    public SelfDefaultIce(int power, int potency, int cost)
-    {
+public class SelfDefaultIce extends SelfSpellEffect {
+    public SelfDefaultIce(int power, int potency, int cost) {
         super(power, potency, cost);
     }
 
     @Override
-    public void onSelfUse(World world, EntityPlayer player)
-    {
+    public void onSelfUse(World world, EntityPlayer player) {
         Vec3 blockVector = SpellHelper.getEntityBlockVector(player);
 
         int posX = (int) (blockVector.xCoord);
@@ -26,10 +23,8 @@ public class SelfDefaultIce extends SelfSpellEffect
         double yVel = 1 * (0.4 * this.powerUpgrades + 0.75);
         SpellHelper.setPlayerSpeedFromServer(player, player.motionX, yVel, player.motionZ);
 
-        for (int i = 0; i < 2; i++)
-        {
-            if (world.isAirBlock(posX, posY + i, posZ))
-            {
+        for (int i = 0; i < 2; i++) {
+            if (world.isAirBlock(posX, posY + i, posZ)) {
                 world.setBlock(posX, posY + i, posZ, Blocks.ice);
             }
         }

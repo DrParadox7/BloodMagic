@@ -1,15 +1,12 @@
 package pneumaticCraft.api.universalSensor;
 
+import cpw.mods.fml.common.eventhandler.Event;
 import java.util.List;
-
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.tileentity.TileEntity;
-
 import org.lwjgl.util.Rectangle;
 
-import cpw.mods.fml.common.eventhandler.Event;
-
-public interface IBlockAndCoordinateEventSensor{
+public interface IBlockAndCoordinateEventSensor {
     /**
      * See {@link ISensorSetting#getSensorPath()}
      * @return

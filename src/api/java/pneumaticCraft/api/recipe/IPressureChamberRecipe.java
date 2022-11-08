@@ -2,7 +2,7 @@ package pneumaticCraft.api.recipe;
 
 import net.minecraft.item.ItemStack;
 
-public interface IPressureChamberRecipe{
+public interface IPressureChamberRecipe {
 
     /**
      * Returns the threshold which is minimal to craft the recipe. Negative pressures also work.

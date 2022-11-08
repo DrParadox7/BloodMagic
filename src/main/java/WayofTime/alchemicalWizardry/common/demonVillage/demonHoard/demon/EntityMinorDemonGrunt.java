@@ -1,5 +1,19 @@
 package WayofTime.alchemicalWizardry.common.demonVillage.demonHoard.demon;
 
+import WayofTime.alchemicalWizardry.AlchemicalWizardry;
+import WayofTime.alchemicalWizardry.ModItems;
+import WayofTime.alchemicalWizardry.api.Int3;
+import WayofTime.alchemicalWizardry.api.rituals.IMasterRitualStone;
+import WayofTime.alchemicalWizardry.api.rituals.LocalRitualStorage;
+import WayofTime.alchemicalWizardry.common.EntityAITargetAggroCloaking;
+import WayofTime.alchemicalWizardry.common.demonVillage.ai.EntityAIOccasionalRangedAttack;
+import WayofTime.alchemicalWizardry.common.demonVillage.ai.EntityDemonAIHurtByTarget;
+import WayofTime.alchemicalWizardry.common.demonVillage.ai.IOccasionalRangedAttackMob;
+import WayofTime.alchemicalWizardry.common.demonVillage.tileEntity.TEDemonPortal;
+import WayofTime.alchemicalWizardry.common.entity.mob.EntityDemon;
+import WayofTime.alchemicalWizardry.common.entity.projectile.HolyProjectile;
+import WayofTime.alchemicalWizardry.common.rituals.LocalStorageAlphaPact;
+import WayofTime.alchemicalWizardry.common.spell.complex.effect.SpellHelper;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.SharedMonsterAttributes;
@@ -22,36 +36,22 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.DamageSource;
 import net.minecraft.world.World;
-import WayofTime.alchemicalWizardry.AlchemicalWizardry;
-import WayofTime.alchemicalWizardry.ModItems;
-import WayofTime.alchemicalWizardry.api.Int3;
-import WayofTime.alchemicalWizardry.api.rituals.IMasterRitualStone;
-import WayofTime.alchemicalWizardry.api.rituals.LocalRitualStorage;
-import WayofTime.alchemicalWizardry.common.EntityAITargetAggroCloaking;
-import WayofTime.alchemicalWizardry.common.demonVillage.ai.EntityAIOccasionalRangedAttack;
-import WayofTime.alchemicalWizardry.common.demonVillage.ai.EntityDemonAIHurtByTarget;
-import WayofTime.alchemicalWizardry.common.demonVillage.ai.IOccasionalRangedAttackMob;
-import WayofTime.alchemicalWizardry.common.demonVillage.tileEntity.TEDemonPortal;
-import WayofTime.alchemicalWizardry.common.entity.mob.EntityDemon;
-import WayofTime.alchemicalWizardry.common.entity.projectile.HolyProjectile;
-import WayofTime.alchemicalWizardry.common.rituals.LocalStorageAlphaPact;
-import WayofTime.alchemicalWizardry.common.spell.complex.effect.SpellHelper;
 
-public class EntityMinorDemonGrunt extends EntityDemon implements IOccasionalRangedAttackMob, IHoardDemon
-{
-    private EntityAIOccasionalRangedAttack aiArrowAttack = new EntityAIOccasionalRangedAttack(this, 1.0D, 40, 40, 15.0F, 5);
-    private EntityAIAttackOnCollide aiAttackOnCollide = new EntityAIAttackOnCollide(this, EntityPlayer.class, 1.2D, false);
+public class EntityMinorDemonGrunt extends EntityDemon implements IOccasionalRangedAttackMob, IHoardDemon {
+    private EntityAIOccasionalRangedAttack aiArrowAttack =
+            new EntityAIOccasionalRangedAttack(this, 1.0D, 40, 40, 15.0F, 5);
+    private EntityAIAttackOnCollide aiAttackOnCollide =
+            new EntityAIAttackOnCollide(this, EntityPlayer.class, 1.2D, false);
 
     private boolean isAngry = true;
     private Int3 demonPortal;
-    
+
     private static float maxTamedHealth = 200.0F;
     private static float maxUntamedHealth = 200.0F;
-    
+
     private boolean enthralled = false;
 
-    public EntityMinorDemonGrunt(World par1World)
-    {
+    public EntityMinorDemonGrunt(World par1World) {
         super(par1World, AlchemicalWizardry.entityMinorDemonGruntID);
         this.setSize(0.7F, 1.8F);
         this.getNavigator().setAvoidsWater(true);
@@ -67,98 +67,82 @@ public class EntityMinorDemonGrunt extends EntityDemon implements IOccasionalRan
         this.targetTasks.addTask(4, new EntityAITargetAggroCloaking(this, EntityPlayer.class, 0, false, 0));
         this.setAggro(false);
         this.setTamed(false);
-        
-        demonPortal = new Int3(0,0,0);
 
-        if (par1World != null && !par1World.isRemote)
-        {
+        demonPortal = new Int3(0, 0, 0);
+
+        if (par1World != null && !par1World.isRemote) {
             this.setCombatTask();
         }
 
-        //this.isImmuneToFire = true;
+        // this.isImmuneToFire = true;
     }
 
-    public boolean isTameable()
-    {
-    	return false;
+    public boolean isTameable() {
+        return false;
     }
-    
+
     @Override
-    protected void applyEntityAttributes()
-    {
+    protected void applyEntityAttributes() {
         super.applyEntityAttributes();
-        //This line affects the speed of the monster
+        // This line affects the speed of the monster
         this.getEntityAttribute(SharedMonsterAttributes.movementSpeed).setBaseValue(0.30000001192092896D);
 
-        if (this.isTamed())
-        {
+        if (this.isTamed()) {
             this.getEntityAttribute(SharedMonsterAttributes.maxHealth).setBaseValue(maxTamedHealth);
-        } else
-        {
+        } else {
             this.getEntityAttribute(SharedMonsterAttributes.maxHealth).setBaseValue(maxUntamedHealth);
         }
     }
-    
+
     @Override
-    protected void dropFewItems(boolean par1, int par2)
-    {
-    	if(!this.getDoesDropCrystal())
-    	{
-    		ItemStack lifeShardStack = new ItemStack(ModItems.baseItems, 1, 28);
+    protected void dropFewItems(boolean par1, int par2) {
+        if (!this.getDoesDropCrystal()) {
+            ItemStack lifeShardStack = new ItemStack(ModItems.baseItems, 1, 28);
             ItemStack soulShardStack = new ItemStack(ModItems.baseItems, 1, 29);
-            
+
             int dropAmount = 0;
-            
-            for(int i=0; i<=par2; i++)
-            {
-            	dropAmount += this.worldObj.rand.nextFloat() < 0.6f ? 1 : 0;
+
+            for (int i = 0; i <= par2; i++) {
+                dropAmount += this.worldObj.rand.nextFloat() < 0.6f ? 1 : 0;
             }
-            
+
             ItemStack drop = this.worldObj.rand.nextBoolean() ? lifeShardStack : soulShardStack;
             drop.stackSize = dropAmount;
 
-            if(dropAmount > 0)
-            {
+            if (dropAmount > 0) {
                 this.entityDropItem(drop, 0.0f);
             }
-    	}else
-    	{
-    		super.dropFewItems(par1, par2);
-    	}
+        } else {
+            super.dropFewItems(par1, par2);
+        }
     }
-    
+
     @Override
-    public void setPortalLocation(Int3 position)
-    {
-    	this.demonPortal = position;
+    public void setPortalLocation(Int3 position) {
+        this.demonPortal = position;
     }
-    
+
     @Override
-    public Int3 getPortalLocation()
-    {
-    	return this.demonPortal;
+    public Int3 getPortalLocation() {
+        return this.demonPortal;
     }
 
     /**
      * Returns true if the newer Entity AI code should be run
      */
-    public boolean isAIEnabled()
-    {
+    public boolean isAIEnabled() {
         return true;
     }
 
     /**
      * Sets the active target the Task system uses for tracking
      */
-    public void setAttackTarget(EntityLivingBase par1EntityLivingBase)
-    {
+    public void setAttackTarget(EntityLivingBase par1EntityLivingBase) {
         super.setAttackTarget(par1EntityLivingBase);
 
-        if (par1EntityLivingBase == null)
-        {
+        if (par1EntityLivingBase == null) {
             this.setAngry(false);
-        } else if (!this.isTamed())
-        {
+        } else if (!this.isTamed()) {
             this.setAngry(true);
         }
     }
@@ -166,21 +150,20 @@ public class EntityMinorDemonGrunt extends EntityDemon implements IOccasionalRan
     /**
      * main AI tick function, replaces updateEntityActionState
      */
-//    @Override
-//    protected void updateAITick()
-//    {
-//        this.dataWatcher.updateObject(18, Float.valueOf(this.getHealth()));
-//    }
+    //    @Override
+    //    protected void updateAITick()
+    //    {
+    //        this.dataWatcher.updateObject(18, Float.valueOf(this.getHealth()));
+    //    }
 
     /**
      * (abstract) Protected helper method to write subclass entity data to NBT.
      */
     @Override
-    public void writeEntityToNBT(NBTTagCompound par1NBTTagCompound)
-    {
+    public void writeEntityToNBT(NBTTagCompound par1NBTTagCompound) {
         super.writeEntityToNBT(par1NBTTagCompound);
         par1NBTTagCompound.setBoolean("Angry", this.isAngry());
-        
+
         this.demonPortal.writeToNBT(par1NBTTagCompound);
     }
 
@@ -188,12 +171,11 @@ public class EntityMinorDemonGrunt extends EntityDemon implements IOccasionalRan
      * (abstract) Protected helper method to read subclass entity data from NBT.
      */
     @Override
-    public void readEntityFromNBT(NBTTagCompound par1NBTTagCompound)
-    {
+    public void readEntityFromNBT(NBTTagCompound par1NBTTagCompound) {
         super.readEntityFromNBT(par1NBTTagCompound);
         this.setAngry(par1NBTTagCompound.getBoolean("Angry"));
         this.demonPortal = Int3.readFromNBT(par1NBTTagCompound);
-        
+
         this.setCombatTask();
     }
 
@@ -201,9 +183,8 @@ public class EntityMinorDemonGrunt extends EntityDemon implements IOccasionalRan
      * Returns the sound this mob makes while it's alive.
      */
     @Override
-    protected String getLivingSound()
-    {
-        //TODO change sounds
+    protected String getLivingSound() {
+        // TODO change sounds
         return "none";
     }
 
@@ -211,8 +192,7 @@ public class EntityMinorDemonGrunt extends EntityDemon implements IOccasionalRan
      * Returns the sound this mob makes when it is hurt.
      */
     @Override
-    protected String getHurtSound()
-    {
+    protected String getHurtSound() {
         return "none";
     }
 
@@ -220,8 +200,7 @@ public class EntityMinorDemonGrunt extends EntityDemon implements IOccasionalRan
      * Returns the sound this mob makes on death.
      */
     @Override
-    protected String getDeathSound()
-    {
+    protected String getDeathSound() {
         return "mob.wolf.death";
     }
 
@@ -229,8 +208,7 @@ public class EntityMinorDemonGrunt extends EntityDemon implements IOccasionalRan
      * Returns the volume for the sounds this mob makes.
      */
     @Override
-    protected float getSoundVolume()
-    {
+    protected float getSoundVolume() {
         return 0.4F;
     }
 
@@ -239,8 +217,7 @@ public class EntityMinorDemonGrunt extends EntityDemon implements IOccasionalRan
      * use this to react to sunlight and start to burn.
      */
     @Override
-    public void onLivingUpdate()
-    {
+    public void onLivingUpdate() {
         super.onLivingUpdate();
     }
 
@@ -248,33 +225,28 @@ public class EntityMinorDemonGrunt extends EntityDemon implements IOccasionalRan
      * Called to update the entity's position/logic.
      */
     @Override
-    public void onUpdate()
-    {
-    	if(!this.enthralled)
-    	{
-            TileEntity tile = this.worldObj.getTileEntity(this.demonPortal.xCoord, this.demonPortal.yCoord, this.demonPortal.zCoord);
-            if(tile instanceof TEDemonPortal)
-            {
-            	((TEDemonPortal) tile).enthrallDemon(this);
-            	this.enthralled = true;
-            }else if(tile instanceof IMasterRitualStone)
-            {
-            	IMasterRitualStone stone = (IMasterRitualStone)tile;
-            	LocalRitualStorage stor = stone.getLocalStorage();
-            	if(stor instanceof LocalStorageAlphaPact)
-            	{
-            		LocalStorageAlphaPact storage = (LocalStorageAlphaPact)stor;
-            		
-            		storage.thrallDemon(this);
-            	}
+    public void onUpdate() {
+        if (!this.enthralled) {
+            TileEntity tile = this.worldObj.getTileEntity(
+                    this.demonPortal.xCoord, this.demonPortal.yCoord, this.demonPortal.zCoord);
+            if (tile instanceof TEDemonPortal) {
+                ((TEDemonPortal) tile).enthrallDemon(this);
+                this.enthralled = true;
+            } else if (tile instanceof IMasterRitualStone) {
+                IMasterRitualStone stone = (IMasterRitualStone) tile;
+                LocalRitualStorage stor = stone.getLocalStorage();
+                if (stor instanceof LocalStorageAlphaPact) {
+                    LocalStorageAlphaPact storage = (LocalStorageAlphaPact) stor;
+
+                    storage.thrallDemon(this);
+                }
             }
-    	}
+        }
         super.onUpdate();
     }
 
     @Override
-    public float getEyeHeight()
-    {
+    public float getEyeHeight() {
         return this.height * 0.8F;
     }
 
@@ -283,21 +255,17 @@ public class EntityMinorDemonGrunt extends EntityDemon implements IOccasionalRan
      * use in wolves.
      */
     @Override
-    public int getVerticalFaceSpeed()
-    {
+    public int getVerticalFaceSpeed() {
         return this.isSitting() ? 20 : super.getVerticalFaceSpeed();
     }
 
     @Override
-    public void setTamed(boolean par1)
-    {
+    public void setTamed(boolean par1) {
         super.setTamed(par1);
 
-        if (par1)
-        {
+        if (par1) {
             this.getEntityAttribute(SharedMonsterAttributes.maxHealth).setBaseValue(maxTamedHealth);
-        } else
-        {
+        } else {
             this.getEntityAttribute(SharedMonsterAttributes.maxHealth).setBaseValue(maxUntamedHealth);
         }
     }
@@ -306,30 +274,25 @@ public class EntityMinorDemonGrunt extends EntityDemon implements IOccasionalRan
      * Called when a player interacts with a mob. e.g. gets milk from a cow, gets into the saddle on a pig.
      */
     @Override
-    public boolean interact(EntityPlayer par1EntityPlayer)
-    {
+    public boolean interact(EntityPlayer par1EntityPlayer) {
         ItemStack itemstack = par1EntityPlayer.inventory.getCurrentItem();
 
-        if (this.isTamed())
-        {
-            if (itemstack != null)
-            {
-                if (itemstack.getItem() instanceof ItemFood)
-                {
+        if (this.isTamed()) {
+            if (itemstack != null) {
+                if (itemstack.getItem() instanceof ItemFood) {
                     ItemFood itemfood = (ItemFood) itemstack.getItem();
 
-                    if (itemfood.isWolfsFavoriteMeat() && this.dataWatcher.getWatchableObjectFloat(18) < maxTamedHealth)
-                    {
-                        if (!par1EntityPlayer.capabilities.isCreativeMode)
-                        {
+                    if (itemfood.isWolfsFavoriteMeat()
+                            && this.dataWatcher.getWatchableObjectFloat(18) < maxTamedHealth) {
+                        if (!par1EntityPlayer.capabilities.isCreativeMode) {
                             --itemstack.stackSize;
                         }
 
                         this.heal((float) itemfood.func_150905_g(itemstack));
 
-                        if (itemstack.stackSize <= 0)
-                        {
-                            par1EntityPlayer.inventory.setInventorySlotContents(par1EntityPlayer.inventory.currentItem, null);
+                        if (itemstack.stackSize <= 0) {
+                            par1EntityPlayer.inventory.setInventorySlotContents(
+                                    par1EntityPlayer.inventory.currentItem, null);
                         }
 
                         return true;
@@ -337,10 +300,11 @@ public class EntityMinorDemonGrunt extends EntityDemon implements IOccasionalRan
                 }
             }
 
-            if (this.getOwner() instanceof EntityPlayer && SpellHelper.getUsername(par1EntityPlayer).equalsIgnoreCase(SpellHelper.getUsername((EntityPlayer) this.getOwner())) && !this.isBreedingItem(itemstack))
-            {
-                if (!this.worldObj.isRemote)
-                {
+            if (this.getOwner() instanceof EntityPlayer
+                    && SpellHelper.getUsername(par1EntityPlayer)
+                            .equalsIgnoreCase(SpellHelper.getUsername((EntityPlayer) this.getOwner()))
+                    && !this.isBreedingItem(itemstack)) {
+                if (!this.worldObj.isRemote) {
                     this.aiSit.setSitting(!this.isSitting());
                     this.isJumping = false;
                     this.setPathToEntity(null);
@@ -350,22 +314,20 @@ public class EntityMinorDemonGrunt extends EntityDemon implements IOccasionalRan
 
                 this.sendSittingMessageToPlayer(par1EntityPlayer, !this.isSitting());
             }
-        } else if (this.isTameable() && itemstack != null && itemstack.getItem().equals(ModItems.weakBloodOrb) && !this.isAngry())
-        {
-            if (!par1EntityPlayer.capabilities.isCreativeMode)
-            {
+        } else if (this.isTameable()
+                && itemstack != null
+                && itemstack.getItem().equals(ModItems.weakBloodOrb)
+                && !this.isAngry()) {
+            if (!par1EntityPlayer.capabilities.isCreativeMode) {
                 --itemstack.stackSize;
             }
 
-            if (itemstack.stackSize <= 0)
-            {
+            if (itemstack.stackSize <= 0) {
                 par1EntityPlayer.inventory.setInventorySlotContents(par1EntityPlayer.inventory.currentItem, null);
             }
 
-            if (!this.worldObj.isRemote)
-            {
-                if (this.rand.nextInt(1) == 0)
-                {
+            if (!this.worldObj.isRemote) {
+                if (this.rand.nextInt(1) == 0) {
                     this.setTamed(true);
                     this.setPathToEntity(null);
                     this.setAttackTarget(null);
@@ -374,8 +336,7 @@ public class EntityMinorDemonGrunt extends EntityDemon implements IOccasionalRan
                     this.func_152115_b(par1EntityPlayer.getUniqueID().toString());
                     this.playTameEffect(true);
                     this.worldObj.setEntityState(this, (byte) 7);
-                } else
-                {
+                } else {
                     this.playTameEffect(false);
                     this.worldObj.setEntityState(this, (byte) 6);
                 }
@@ -387,46 +348,38 @@ public class EntityMinorDemonGrunt extends EntityDemon implements IOccasionalRan
         return super.interact(par1EntityPlayer);
     }
 
-
-    public boolean isBreedingItem(ItemStack par1ItemStack)
-    {
+    public boolean isBreedingItem(ItemStack par1ItemStack) {
         return false;
     }
 
     /**
      * Determines whether this wolf is angry or not.
      */
-    public boolean isAngry()
-    {
+    public boolean isAngry() {
         return this.isAngry;
     }
 
     /**
      * Sets whether this wolf is angry or not.
      */
-    public void setAngry(boolean angry)
-    {
+    public void setAngry(boolean angry) {
         this.isAngry = angry;
     }
-
 
     /**
      * Returns true if the mob is currently able to mate with the specified mob.
      */
     @Override
-    public boolean canMateWith(EntityAnimal par1EntityAnimal)
-    {
+    public boolean canMateWith(EntityAnimal par1EntityAnimal) {
         return false;
     }
-
 
     /**
      * Determines if an entity can be despawned, used on idle far away entities
      */
     @Override
-    protected boolean canDespawn()
-    {
-        //return !this.isTamed() && this.ticksExisted > 2400;
+    protected boolean canDespawn() {
+        // return !this.isTamed() && this.ticksExisted > 2400;
         return false;
     }
 
@@ -434,49 +387,45 @@ public class EntityMinorDemonGrunt extends EntityDemon implements IOccasionalRan
      * A call to determine if this entity should attack the other entity
      */
     @Override
-    public boolean func_142018_a(EntityLivingBase par1EntityLivingBase, EntityLivingBase par2EntityLivingBase)
-    {
-        if (!(par1EntityLivingBase instanceof EntityCreeper) && !(par1EntityLivingBase instanceof EntityGhast))
-        {
-            if (par1EntityLivingBase instanceof EntityDemon)
-            {
+    public boolean func_142018_a(EntityLivingBase par1EntityLivingBase, EntityLivingBase par2EntityLivingBase) {
+        if (!(par1EntityLivingBase instanceof EntityCreeper) && !(par1EntityLivingBase instanceof EntityGhast)) {
+            if (par1EntityLivingBase instanceof EntityDemon) {
                 EntityDemon entitywolf = (EntityDemon) par1EntityLivingBase;
 
-                if (entitywolf.isTamed() && entitywolf.getOwner() == par2EntityLivingBase)
-                {
+                if (entitywolf.isTamed() && entitywolf.getOwner() == par2EntityLivingBase) {
                     return false;
                 }
             }
 
-            return par1EntityLivingBase instanceof EntityPlayer && par2EntityLivingBase instanceof EntityPlayer && !((EntityPlayer) par2EntityLivingBase).canAttackPlayer((EntityPlayer) par1EntityLivingBase) ? false : !(par1EntityLivingBase instanceof EntityHorse) || !((EntityHorse) par1EntityLivingBase).isTame();
-        } else
-        {
+            return par1EntityLivingBase instanceof EntityPlayer
+                            && par2EntityLivingBase instanceof EntityPlayer
+                            && !((EntityPlayer) par2EntityLivingBase)
+                                    .canAttackPlayer((EntityPlayer) par1EntityLivingBase)
+                    ? false
+                    : !(par1EntityLivingBase instanceof EntityHorse) || !((EntityHorse) par1EntityLivingBase).isTame();
+        } else {
             return false;
         }
     }
 
     @Override
-    public boolean attackEntityAsMob(Entity par1Entity)
-    {
+    public boolean attackEntityAsMob(Entity par1Entity) {
         int i = this.isTamed() ? 20 : 20;
-        
-        if(par1Entity instanceof IHoardDemon && ((IHoardDemon) par1Entity).isSamePortal(this))
-        {
-        	return false;
+
+        if (par1Entity instanceof IHoardDemon && ((IHoardDemon) par1Entity).isSamePortal(this)) {
+            return false;
         }
-        
+
         return par1Entity.attackEntityFrom(DamageSource.causeMobDamage(this), (float) i);
     }
-    
+
     /**
      * Attack the specified entity using a ranged attack.
      */
     @Override
-    public void attackEntityWithRangedAttack(EntityLivingBase par1EntityLivingBase, float par2)
-    {
-    	if(par1EntityLivingBase instanceof IHoardDemon && ((IHoardDemon) par1EntityLivingBase).isSamePortal(this))
-        {
-        	return;
+    public void attackEntityWithRangedAttack(EntityLivingBase par1EntityLivingBase, float par2) {
+        if (par1EntityLivingBase instanceof IHoardDemon && ((IHoardDemon) par1EntityLivingBase).isSamePortal(this)) {
+            return;
         }
         HolyProjectile hol = new HolyProjectile(worldObj, this, par1EntityLivingBase, 1.8f, 0f, 15, 600);
         this.worldObj.spawnEntityInWorld(hol);
@@ -485,33 +434,32 @@ public class EntityMinorDemonGrunt extends EntityDemon implements IOccasionalRan
     /**
      * sets this entity's combat AI.
      */
-    public void setCombatTask()
-    {
+    public void setCombatTask() {
         this.tasks.removeTask(this.aiAttackOnCollide);
         this.tasks.removeTask(this.aiArrowAttack);
         this.tasks.addTask(4, this.aiArrowAttack);
         this.tasks.addTask(5, this.aiAttackOnCollide);
     }
 
-	@Override
-	public boolean shouldUseRangedAttack() 
-	{
-		return true;
-	}
+    @Override
+    public boolean shouldUseRangedAttack() {
+        return true;
+    }
 
-	@Override
-	public boolean thrallDemon(Int3 location) 
-	{
-		this.setPortalLocation(location);
-		return true;
-	}
+    @Override
+    public boolean thrallDemon(Int3 location) {
+        this.setPortalLocation(location);
+        return true;
+    }
 
-	@Override
-	public boolean isSamePortal(IHoardDemon demon) 
-	{
-		Int3 position = demon.getPortalLocation();
-		TileEntity portal = worldObj.getTileEntity(this.demonPortal.xCoord, this.demonPortal.yCoord, this.demonPortal.zCoord);
-		
-		return portal instanceof TEDemonPortal ? portal == worldObj.getTileEntity(position.xCoord, position.yCoord, position.zCoord) : false;
-	}
+    @Override
+    public boolean isSamePortal(IHoardDemon demon) {
+        Int3 position = demon.getPortalLocation();
+        TileEntity portal =
+                worldObj.getTileEntity(this.demonPortal.xCoord, this.demonPortal.yCoord, this.demonPortal.zCoord);
+
+        return portal instanceof TEDemonPortal
+                ? portal == worldObj.getTileEntity(position.xCoord, position.yCoord, position.zCoord)
+                : false;
+    }
 }

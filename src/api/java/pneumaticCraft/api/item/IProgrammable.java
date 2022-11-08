@@ -7,7 +7,7 @@ import net.minecraft.item.ItemStack;
  * For now the only thing you can do with this is make program storages, later more interaction with programming puzzles is planned.
  * Puzzle pieces will be written onto the implementer's itemstack NBT, using the "progWidget" tag.
  */
-public interface IProgrammable{
+public interface IProgrammable {
 
     /**
      * When returned true, this stack is allowed to be programmed.
@@ -30,5 +30,4 @@ public interface IProgrammable{
      * @return
      */
     public boolean showProgramTooltip();
-
 }

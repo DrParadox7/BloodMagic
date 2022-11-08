@@ -4,30 +4,26 @@ import WayofTime.alchemicalWizardry.ModBlocks;
 import WayofTime.alchemicalWizardry.ModItems;
 import WayofTime.alchemicalWizardry.common.items.ItemRitualDiviner;
 import WayofTime.alchemicalWizardry.common.items.armour.BoundArmour;
-import net.minecraft.item.Item;
-import net.minecraft.block.Block;
-import net.minecraft.stats.Achievement;
-
 import java.util.ArrayList;
 import java.util.List;
+import net.minecraft.block.Block;
+import net.minecraft.item.Item;
+import net.minecraft.stats.Achievement;
 
-public class AchievementsRegistry
-{
-    public final static List<Item> craftinglist = new ArrayList<Item>();
-    public final static List<Item> pickupList = new ArrayList<Item>();
-    public final static List<Block> blockCraftingList = new ArrayList<Block>();
-//    public final static List<Block> blockPickupList = new ArrayList<Block>();
+public class AchievementsRegistry {
+    public static final List<Item> craftinglist = new ArrayList<Item>();
+    public static final List<Item> pickupList = new ArrayList<Item>();
+    public static final List<Block> blockCraftingList = new ArrayList<Block>();
+    //    public final static List<Block> blockPickupList = new ArrayList<Block>();
 
-    public static void init()
-    {
+    public static void init() {
         addItemsToCraftingList();
         addBlocksToCraftingList();
         addItemsToPickupList();
-//        addBlocksToPickupList();
+        //        addBlocksToPickupList();
     }
 
-    public static void addItemsToCraftingList()
-    {
+    public static void addItemsToCraftingList() {
         craftinglist.add(ModItems.sacrificialDagger);
         craftinglist.add(ModItems.itemBloodPack);
         craftinglist.add(ModItems.waterSigil);
@@ -39,15 +35,13 @@ public class AchievementsRegistry
         craftinglist.add(ModItems.energyBazooka);
     }
 
-    public static void addBlocksToCraftingList()
-    {
+    public static void addBlocksToCraftingList() {
         blockCraftingList.add(ModBlocks.bloodRune);
         blockCraftingList.add(ModBlocks.blockWritingTable);
         blockCraftingList.add(ModBlocks.blockTeleposer);
     }
 
-    public static void addItemsToPickupList()
-    {
+    public static void addItemsToPickupList() {
         pickupList.add(ModItems.weakBloodOrb);
         pickupList.add(ModItems.apprenticeBloodOrb);
         pickupList.add(ModItems.daggerOfSacrifice);
@@ -63,13 +57,9 @@ public class AchievementsRegistry
         pickupList.add(ModItems.transcendentBloodOrb);
     }
 
-    public static void addBlocksToPickupList()
-    {
+    public static void addBlocksToPickupList() {}
 
-    }
-
-    public static Achievement getAchievementForItem(Item item)
-    {
+    public static Achievement getAchievementForItem(Item item) {
         if (item == ModItems.sacrificialDagger) return ModAchievements.firstPrick;
         if (item == ModItems.weakBloodOrb) return ModAchievements.weakOrb;
         if (item == ModItems.itemBloodPack) return ModAchievements.bloodLettersPack;
@@ -92,9 +82,8 @@ public class AchievementsRegistry
 
         return null;
     }
-    
-    public static Achievement getAchievementForBlock(Block block)
-    {
+
+    public static Achievement getAchievementForBlock(Block block) {
         if (block == ModBlocks.bloodRune) return ModAchievements.blankRunes;
         if (block == ModBlocks.blockWritingTable) return ModAchievements.brewingPotions;
         if (block == ModBlocks.blockTeleposer) return ModAchievements.teleposer;

@@ -6,9 +6,8 @@ import net.minecraft.entity.Entity;
 import net.minecraft.util.MathHelper;
 import org.lwjgl.opengl.GL11;
 
-public class ModelBileDemon extends ModelBase
-{
-    //fields
+public class ModelBileDemon extends ModelBase {
+    // fields
     ModelRenderer belly;
     ModelRenderer chest;
     ModelRenderer head;
@@ -24,8 +23,7 @@ public class ModelBileDemon extends ModelBase
     ModelRenderer rightArmSpacer;
     ModelRenderer rightArm;
 
-    public ModelBileDemon()
-    {
+    public ModelBileDemon() {
         textureWidth = 128;
         textureHeight = 64;
         belly = new ModelRenderer(this, 0, 31);
@@ -124,8 +122,7 @@ public class ModelBileDemon extends ModelBase
         rightArm.mirror = false;
     }
 
-    public void render(Entity entity, float f, float f1, float f2, float f3, float f4, float f5)
-    {
+    public void render(Entity entity, float f, float f1, float f2, float f3, float f4, float f5) {
         super.render(entity, f, f1, f2, f3, f4, f5);
         setRotationAngles(f, f1, f2, f3, f4, f5, entity);
         float scale = 1.3f;
@@ -147,15 +144,13 @@ public class ModelBileDemon extends ModelBase
         rightArm.render(f5);
     }
 
-    private void setRotation(ModelRenderer model, float x, float y, float z)
-    {
+    private void setRotation(ModelRenderer model, float x, float y, float z) {
         model.rotateAngleX = x;
         model.rotateAngleY = y;
         model.rotateAngleZ = z;
     }
 
-    public void setRotationAngles(float f, float f1, float f2, float f3, float f4, float f5, Entity entity)
-    {
+    public void setRotationAngles(float f, float f1, float f2, float f3, float f4, float f5, Entity entity) {
         super.setRotationAngles(f, f1, f2, f3, f4, f5, entity);
         this.head.rotateAngleX = f4 / (180F / (float) Math.PI);
         this.head.rotateAngleY = f3 / (180F / (float) Math.PI);

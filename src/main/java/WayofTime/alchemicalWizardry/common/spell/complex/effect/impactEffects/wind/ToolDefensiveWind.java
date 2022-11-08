@@ -5,16 +5,13 @@ import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.Vec3;
 
-public class ToolDefensiveWind extends LeftClickEffect
-{
-    public ToolDefensiveWind(int power, int potency, int cost)
-    {
+public class ToolDefensiveWind extends LeftClickEffect {
+    public ToolDefensiveWind(int power, int potency, int cost) {
         super(power, potency, cost);
     }
 
     @Override
-    public int onLeftClickEntity(ItemStack stack, EntityLivingBase attacked, EntityLivingBase weilder)
-    {
+    public int onLeftClickEntity(ItemStack stack, EntityLivingBase attacked, EntityLivingBase weilder) {
         Vec3 vec = weilder.getLookVec();
         vec.yCoord = 0;
         vec.normalize();

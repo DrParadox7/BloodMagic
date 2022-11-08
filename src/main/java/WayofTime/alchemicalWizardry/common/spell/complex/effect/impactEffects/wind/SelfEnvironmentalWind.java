@@ -1,24 +1,20 @@
 package WayofTime.alchemicalWizardry.common.spell.complex.effect.impactEffects.wind;
 
+import WayofTime.alchemicalWizardry.api.spell.SelfSpellEffect;
+import WayofTime.alchemicalWizardry.common.spell.complex.effect.SpellHelper;
 import java.util.List;
-
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.world.World;
-import WayofTime.alchemicalWizardry.api.spell.SelfSpellEffect;
-import WayofTime.alchemicalWizardry.common.spell.complex.effect.SpellHelper;
 
-public class SelfEnvironmentalWind extends SelfSpellEffect
-{
-    public SelfEnvironmentalWind(int power, int potency, int cost)
-    {
+public class SelfEnvironmentalWind extends SelfSpellEffect {
+    public SelfEnvironmentalWind(int power, int potency, int cost) {
         super(power, potency, cost);
     }
 
     @Override
-    public void onSelfUse(World world, EntityPlayer player)
-    {
+    public void onSelfUse(World world, EntityPlayer player) {
         double radius = 1.5d * this.potencyUpgrades + 1;
         double posX = player.posX;
         double posY = player.posY - 0.7d;
@@ -27,10 +23,8 @@ public class SelfEnvironmentalWind extends SelfSpellEffect
 
         List<Entity> entities = SpellHelper.getEntitiesInRange(world, posX, posY, posZ, radius, radius);
 
-        for (Entity entity : entities)
-        {
-            if ((!entity.equals(player)) && entity instanceof EntityLivingBase)
-            {
+        for (Entity entity : entities) {
+            if ((!entity.equals(player)) && entity instanceof EntityLivingBase) {
                 double dist = Math.sqrt(entity.getDistanceToEntity(player));
                 double xVel = wantedVel * (entity.posX - posX) / dist;
                 double yVel = wantedVel * (entity.posY - posY) / dist;

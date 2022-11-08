@@ -1,13 +1,11 @@
 package pneumaticCraft.api.universalSensor;
 
 import java.util.List;
-
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.world.World;
-
 import org.lwjgl.util.Rectangle;
 
-public interface IBlockAndCoordinatePollSensor{
+public interface IBlockAndCoordinatePollSensor {
     /**
      * See {@link ISensorSetting#getSensorPath()}
      * @return
@@ -46,7 +44,8 @@ public interface IBlockAndCoordinatePollSensor{
      * @param toolZ
      * @return
      */
-    public int getRedstoneValue(World world, int x, int y, int z, int sensorRange, String textBoxText, int toolX, int toolY, int toolZ);
+    public int getRedstoneValue(
+            World world, int x, int y, int z, int sensorRange, String textBoxText, int toolX, int toolY, int toolZ);
 
     /**
      * See {@link IPollSensorSetting#getPollFrequency()}
@@ -59,5 +58,4 @@ public interface IBlockAndCoordinatePollSensor{
      * @param fontRenderer
      */
     public void drawAdditionalInfo(FontRenderer fontRenderer);
-
 }

@@ -8,8 +8,7 @@ import net.minecraft.entity.Entity;
  * OmegaWind.tcn - TechneToTabulaImporter
  * Created using Tabula 4.1.0
  */
-public class ModelOmegaWind extends ModelBiped
-{
+public class ModelOmegaWind extends ModelBiped {
     public ModelRenderer facePlate1;
     public ModelRenderer facePlate2;
     public ModelRenderer facePlate3;
@@ -66,8 +65,7 @@ public class ModelOmegaWind extends ModelBiped
     public ModelRenderer leftFoot2;
     public ModelRenderer leftFootPlate;
 
-    public ModelOmegaWind(float f, boolean addHelmet, boolean addChestPiece, boolean addLeggings, boolean addBoots)
-    {
+    public ModelOmegaWind(float f, boolean addHelmet, boolean addChestPiece, boolean addLeggings, boolean addBoots) {
         super(f, 0.0f, 128, 128);
         this.rightWingPlate2 = new ModelRenderer(this, 33, 82);
         this.rightWingPlate2.mirror = true;
@@ -309,9 +307,8 @@ public class ModelOmegaWind extends ModelBiped
         this.bipedLeftLeg.cubeList.clear();
         this.bipedRightArm.cubeList.clear();
         this.bipedRightLeg.cubeList.clear();
-        
-        if(addChestPiece)
-        {
+
+        if (addChestPiece) {
             this.bipedLeftArm.addChild(this.leftFloater1);
             this.bipedRightArm.addChild(this.rightArmPlate1);
             this.bipedLeftArm.addChild(this.leftShoulder);
@@ -339,9 +336,8 @@ public class ModelOmegaWind extends ModelBiped
             this.bipedBody.addChild(this.chestPlate5);
             this.bipedLeftArm.addChild(this.leftArmPlate1);
         }
-        
-        if(addLeggings)
-        {
+
+        if (addLeggings) {
             this.bipedLeftLeg.addChild(this.leftLegFloater3);
             this.bipedLeftLeg.addChild(this.leftLegFloater1);
             this.bipedRightLeg.addChild(this.rightLegFloater2);
@@ -352,9 +348,8 @@ public class ModelOmegaWind extends ModelBiped
             this.bipedLeftLeg.addChild(this.leftLegFloater2);
             this.bipedLeftLeg.addChild(this.leftLeg);
         }
-        
-        if(addBoots)
-        {
+
+        if (addBoots) {
             this.bipedLeftLeg.addChild(this.leftFoot1);
             this.bipedRightLeg.addChild(this.rightFoot2);
             this.bipedRightLeg.addChild(this.rightFootPlate);
@@ -362,9 +357,8 @@ public class ModelOmegaWind extends ModelBiped
             this.bipedLeftLeg.addChild(this.leftFoot2);
             this.bipedLeftLeg.addChild(this.leftFootPlate);
         }
-        
-        if(addHelmet)
-        {
+
+        if (addHelmet) {
             this.bipedHead.addChild(this.rightWingPlate2);
             this.bipedHead.addChild(this.leftWingPlate3);
             this.bipedHead.addChild(this.topPlate);
@@ -383,9 +377,8 @@ public class ModelOmegaWind extends ModelBiped
     }
 
     @Override
-    public void render(Entity entity, float f, float f1, float f2, float f3, float f4, float f5) 
-    { 
-    	this.setRotationAngles(f, f1, f2, f3, f4, f5, entity);
+    public void render(Entity entity, float f, float f1, float f2, float f3, float f4, float f5) {
+        this.setRotationAngles(f, f1, f2, f3, f4, f5, entity);
         this.bipedBody.render(f5);
         this.bipedRightLeg.render(f5);
         this.bipedLeftLeg.render(f5);

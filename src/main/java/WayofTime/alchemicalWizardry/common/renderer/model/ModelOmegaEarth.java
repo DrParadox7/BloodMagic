@@ -8,7 +8,7 @@ import net.minecraft.entity.Entity;
  * OmegaEarth.tcn - TechneToTabulaImporter
  * Created using Tabula 4.1.0
  */
-public class ModelOmegaEarth extends ModelBiped{
+public class ModelOmegaEarth extends ModelBiped {
 
     public ModelRenderer backPlate;
     public ModelRenderer topPlate;
@@ -82,8 +82,7 @@ public class ModelOmegaEarth extends ModelBiped{
     public ModelRenderer leftBoot2;
     public ModelRenderer leftBoot3;
 
-    public ModelOmegaEarth(float f, boolean addHelmet, boolean addChestPiece, boolean addLeggings, boolean addBoots)
-  {
+    public ModelOmegaEarth(float f, boolean addHelmet, boolean addChestPiece, boolean addLeggings, boolean addBoots) {
         super(f, 0.0f, 256, 128);
         this.leftShoulder = new ModelRenderer(this, 29, 33);
         this.leftShoulder.setRotationPoint(0.0F, 0.0F, 0.0F);
@@ -101,7 +100,7 @@ public class ModelOmegaEarth extends ModelBiped{
         this.setRotateAngle(facePlate3, -0.17453292012214658F, -0.15707963705062866F, 0.0F);
         this.leftArm = new ModelRenderer(this, 29, 45);
         this.leftArm.setRotationPoint(0.0F, 0.0F, 0.0F);
-        this.leftArm.addBox(-1.0F-0.5f, 2.0F, -2.5F, 5, 9, 5, 0.0F);
+        this.leftArm.addBox(-1.0F - 0.5f, 2.0F, -2.5F, 5, 9, 5, 0.0F);
         this.leftLegPlate11 = new ModelRenderer(this, 0, 91);
         this.leftLegPlate11.setRotationPoint(0.0F, 0.0F, 0.0F);
         this.leftLegPlate11.addBox(1.0F, 1.5F, -2.5F, 1, 3, 5, 0.0F);
@@ -164,7 +163,7 @@ public class ModelOmegaEarth extends ModelBiped{
         this.setRotateAngle(facePlate2, 0.05235987901687623F, 0.34906584024429316F, 0.0F);
         this.rightArm = new ModelRenderer(this, 29, 45);
         this.rightArm.mirror = true;
-        this.rightArm.setRotationPoint(0.0F+0.5f, 0.0F, 0.0F);
+        this.rightArm.setRotationPoint(0.0F + 0.5f, 0.0F, 0.0F);
         this.rightArm.addBox(-4.0F, 2.0F, -2.5F, 5, 9, 5, 0.0F);
 
         this.rightLegPlate11 = new ModelRenderer(this, 0, 91);
@@ -189,7 +188,7 @@ public class ModelOmegaEarth extends ModelBiped{
         this.rightArmSymbol = new ModelRenderer(this, 50, 45);
         this.rightArmSymbol.mirror = true;
         this.rightArmSymbol.setRotationPoint(0.0F, 0.0F, 0.0F);
-        this.rightArmSymbol.addBox(-5.0F+0.5f, 4.0F, -2.0F, 1, 4, 4, 0.0F);
+        this.rightArmSymbol.addBox(-5.0F + 0.5f, 4.0F, -2.0F, 1, 4, 4, 0.0F);
         this.leftLegPlate1 = new ModelRenderer(this, 0, 86);
         this.leftLegPlate1.setRotationPoint(0.0F, 0.0F, 0.0F);
         this.leftLegPlate1.addBox(-2.5F, 1.5F, -2.3F, 5, 3, 1, 0.0F);
@@ -301,7 +300,7 @@ public class ModelOmegaEarth extends ModelBiped{
         this.setRotateAngle(rightBoot3, 0.10471975511965977F, -0.0F, 0.2617993877991494F);
         this.leftArmSymbol = new ModelRenderer(this, 50, 45);
         this.leftArmSymbol.setRotationPoint(0.0F, 0.0F, 0.0F);
-        this.leftArmSymbol.addBox(4.0F-0.5f, 4.0F, -2.0F, 1, 4, 4, 0.0F);
+        this.leftArmSymbol.addBox(4.0F - 0.5f, 4.0F, -2.0F, 1, 4, 4, 0.0F);
         this.sidePlate6 = new ModelRenderer(this, 13, 110);
         this.sidePlate6.setRotationPoint(0.0F, 0.5F, 6.0F);
         this.sidePlate6.addBox(4.0F, -8.5F, -5.0F, 1, 7, 4, 0.0F);
@@ -389,7 +388,7 @@ public class ModelOmegaEarth extends ModelBiped{
         this.leftLegPlate2.setRotationPoint(0.0F, 2.5F, 0.0F);
         this.leftLegPlate2.addBox(-2.5F, 1.5F, -2.3F, 5, 3, 1, 0.0F);
         this.setRotateAngle(leftLegPlate2, -0.40142572795869574F, -0.0F, 0.0F);
-        
+
         this.bipedBody.cubeList.clear();
         this.bipedHead.cubeList.clear();
         this.bipedHeadwear.cubeList.clear();
@@ -397,9 +396,8 @@ public class ModelOmegaEarth extends ModelBiped{
         this.bipedLeftLeg.cubeList.clear();
         this.bipedRightArm.cubeList.clear();
         this.bipedRightLeg.cubeList.clear();
-        
-        if(addChestPiece)
-        {
+
+        if (addChestPiece) {
             this.bipedLeftArm.addChild(this.leftShoulder);
             this.bipedLeftArm.addChild(this.leftArm);
             this.bipedLeftArm.addChild(this.leftArmPlate1);
@@ -424,9 +422,8 @@ public class ModelOmegaEarth extends ModelBiped{
             this.bipedRightArm.addChild(this.rightArmPlate3);
             this.bipedRightArm.addChild(this.rightArmPlate2);
         }
-        
-        if(addLeggings)
-        {
+
+        if (addLeggings) {
             this.bipedLeftLeg.addChild(this.leftLegPlate9);
             this.bipedLeftLeg.addChild(this.leftLegPlate11);
             this.bipedLeftLeg.addChild(this.leftLegPlate5);
@@ -457,9 +454,8 @@ public class ModelOmegaEarth extends ModelBiped{
             this.bipedLeftLeg.addChild(this.leftLegPlate6);
             this.bipedRightLeg.addChild(this.rightLegPlate9);
         }
-        
-        if(addBoots)
-        {
+
+        if (addBoots) {
             this.bipedLeftLeg.addChild(this.leftBoot1);
             this.bipedLeftLeg.addChild(this.leftBoot3);
             this.bipedRightLeg.addChild(this.rightBoot2);
@@ -467,9 +463,8 @@ public class ModelOmegaEarth extends ModelBiped{
             this.bipedRightLeg.addChild(this.rightBoot1);
             this.bipedRightLeg.addChild(this.rightBoot3);
         }
-        
-        if(addHelmet)
-        {
+
+        if (addHelmet) {
             this.bipedHead.addChild(this.facePlate3);
             this.bipedHead.addChild(this.facePlate2);
             this.bipedHead.addChild(this.backPlate);
@@ -487,9 +482,8 @@ public class ModelOmegaEarth extends ModelBiped{
     }
 
     @Override
-    public void render(Entity entity, float f, float f1, float f2, float f3, float f4, float f5) 
-    {
-    	setRotationAngles(f, f1, f2, f3, f4, f5, entity);
+    public void render(Entity entity, float f, float f1, float f2, float f3, float f4, float f5) {
+        setRotationAngles(f, f1, f2, f3, f4, f5, entity);
         this.bipedLeftArm.render(f5);
         this.bipedRightArm.render(f5);
         this.bipedLeftLeg.render(f5);

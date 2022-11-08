@@ -8,12 +8,10 @@ import net.minecraft.inventory.Container;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
 
-public class ContainerWritingTable extends Container
-{
+public class ContainerWritingTable extends Container {
     protected TEWritingTable tileEntity;
 
-    public ContainerWritingTable(InventoryPlayer inventoryPlayer, TEWritingTable te)
-    {
+    public ContainerWritingTable(InventoryPlayer inventoryPlayer, TEWritingTable te) {
         tileEntity = te;
         addSlotToContainer(new Slot(tileEntity, 0, 152, 110));
         addSlotToContainer(new Slot(tileEntity, 1, 80, 18));
@@ -26,63 +24,48 @@ public class ContainerWritingTable extends Container
     }
 
     @Override
-    public boolean canInteractWith(EntityPlayer player)
-    {
+    public boolean canInteractWith(EntityPlayer player) {
         return tileEntity.isUseableByPlayer(player);
     }
 
-    protected void bindPlayerInventory(InventoryPlayer inventoryPlayer)
-    {
-        for (int i = 0; i < 3; i++)
-        {
-            for (int j = 0; j < 9; j++)
-            {
+    protected void bindPlayerInventory(InventoryPlayer inventoryPlayer) {
+        for (int i = 0; i < 3; i++) {
+            for (int j = 0; j < 9; j++) {
                 addSlotToContainer(new Slot(inventoryPlayer, j + i * 9 + 9, 8 + j * 18, 140 + i * 18));
             }
         }
 
-        for (int i = 0; i < 9; i++)
-        {
+        for (int i = 0; i < 9; i++) {
             addSlotToContainer(new Slot(inventoryPlayer, i, 8 + i * 18, 198));
         }
     }
 
     @Override
-    public ItemStack transferStackInSlot(EntityPlayer player, int slot)
-    {
+    public ItemStack transferStackInSlot(EntityPlayer player, int slot) {
         ItemStack stack = null;
         Slot slotObject = (Slot) inventorySlots.get(slot);
-        if (slotObject != null && slotObject.getHasStack())
-        {
+        if (slotObject != null && slotObject.getHasStack()) {
             ItemStack stackInSlot = slotObject.getStack();
             stack = stackInSlot.copy();
-            if (slot <= 6)
-            {
-                if (!this.mergeItemStack(stackInSlot, 7, 43, true))
-                {
+            if (slot <= 6) {
+                if (!this.mergeItemStack(stackInSlot, 7, 43, true)) {
                     return null;
                 }
-            } else if (stack.getItem() instanceof IBloodOrb)
-            {
-                if (!this.mergeItemStack(stackInSlot, 0, 1, false))
-                {
+            } else if (stack.getItem() instanceof IBloodOrb) {
+                if (!this.mergeItemStack(stackInSlot, 0, 1, false)) {
                     return null;
                 }
-            } else if (!this.mergeItemStack(stackInSlot, 1, 6, false))
-            {
+            } else if (!this.mergeItemStack(stackInSlot, 1, 6, false)) {
                 return null;
             }
 
-            if (stackInSlot.stackSize == 0)
-            {
+            if (stackInSlot.stackSize == 0) {
                 slotObject.putStack(null);
-            } else
-            {
+            } else {
                 slotObject.onSlotChanged();
             }
 
-            if (stackInSlot.stackSize == stack.stackSize)
-            {
+            if (stackInSlot.stackSize == stack.stackSize) {
                 return null;
             }
 

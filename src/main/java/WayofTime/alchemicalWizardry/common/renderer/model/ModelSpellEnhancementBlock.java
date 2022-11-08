@@ -5,10 +5,8 @@ import net.minecraft.client.model.ModelRenderer;
 import net.minecraft.entity.Entity;
 import net.minecraftforge.common.util.ForgeDirection;
 
-
-public class ModelSpellEnhancementBlock extends ModelBase
-{
-    //fields
+public class ModelSpellEnhancementBlock extends ModelBase {
+    // fields
     ModelRenderer core;
     ModelRenderer frame1;
     ModelRenderer frame2;
@@ -34,8 +32,7 @@ public class ModelSpellEnhancementBlock extends ModelBase
     ModelRenderer input4;
     ModelRenderer outputSecond;
 
-    public ModelSpellEnhancementBlock()
-    {
+    public ModelSpellEnhancementBlock() {
         textureWidth = 128;
         textureHeight = 64;
 
@@ -185,8 +182,16 @@ public class ModelSpellEnhancementBlock extends ModelBase
         setRotation(outputSecond, 0F, 0F, 0F);
     }
 
-    public void render(Entity entity, float f, float f1, float f2, float f3, float f4, float f5, ForgeDirection input, ForgeDirection output)
-    {
+    public void render(
+            Entity entity,
+            float f,
+            float f1,
+            float f2,
+            float f3,
+            float f4,
+            float f5,
+            ForgeDirection input,
+            ForgeDirection output) {
         super.render(entity, f, f1, f2, f3, f4, f5);
         setRotationAngles(f, f1, f2, f3, f4, f5, entity);
 
@@ -197,8 +202,7 @@ public class ModelSpellEnhancementBlock extends ModelBase
         float yOutputRot = 0.0f;
         float zOutputRot = 0.0f;
 
-        switch (input)
-        {
+        switch (input) {
             case NORTH:
                 xInputRot = 0.0f;
                 yInputRot = 0.0f;
@@ -239,8 +243,7 @@ public class ModelSpellEnhancementBlock extends ModelBase
                 break;
         }
 
-        switch (output)
-        {
+        switch (output) {
             case NORTH:
                 xOutputRot = 0.0f;
                 yOutputRot = (float) (0.5f * Math.PI);
@@ -319,16 +322,13 @@ public class ModelSpellEnhancementBlock extends ModelBase
         outputSecond.render(f5);
     }
 
-    private void setRotation(ModelRenderer model, float x, float y, float z)
-    {
+    private void setRotation(ModelRenderer model, float x, float y, float z) {
         model.rotateAngleX = x;
         model.rotateAngleY = y;
         model.rotateAngleZ = z;
     }
 
-    public void setRotationAngles(float f, float f1, float f2, float f3, float f4, float f5, Entity entity)
-    {
+    public void setRotationAngles(float f, float f1, float f2, float f3, float f4, float f5, Entity entity) {
         super.setRotationAngles(f, f1, f2, f3, f4, f5, entity);
     }
-
 }

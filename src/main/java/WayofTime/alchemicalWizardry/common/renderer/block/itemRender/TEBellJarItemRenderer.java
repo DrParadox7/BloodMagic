@@ -1,5 +1,11 @@
 package WayofTime.alchemicalWizardry.common.renderer.block.itemRender;
 
+import WayofTime.alchemicalWizardry.api.alchemy.energy.Reagent;
+import WayofTime.alchemicalWizardry.api.alchemy.energy.ReagentContainerInfo;
+import WayofTime.alchemicalWizardry.api.alchemy.energy.ReagentStack;
+import WayofTime.alchemicalWizardry.common.renderer.model.ModelCrystalBelljar;
+import WayofTime.alchemicalWizardry.common.tileEntity.TEBellJar;
+import cpw.mods.fml.client.FMLClientHandler;
 import net.minecraft.client.renderer.ItemRenderer;
 import net.minecraft.client.renderer.RenderBlocks;
 import net.minecraft.client.renderer.Tessellator;
@@ -7,25 +13,17 @@ import net.minecraft.entity.Entity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.client.IItemRenderer;
-
 import org.lwjgl.opengl.GL11;
 
-import WayofTime.alchemicalWizardry.api.alchemy.energy.Reagent;
-import WayofTime.alchemicalWizardry.api.alchemy.energy.ReagentContainerInfo;
-import WayofTime.alchemicalWizardry.api.alchemy.energy.ReagentStack;
-import WayofTime.alchemicalWizardry.common.renderer.model.ModelCrystalBelljar;
-import WayofTime.alchemicalWizardry.common.tileEntity.TEBellJar;
-import cpw.mods.fml.client.FMLClientHandler;
-
-public class TEBellJarItemRenderer implements IItemRenderer
-{
+public class TEBellJarItemRenderer implements IItemRenderer {
     ItemRenderer d;
     private ModelCrystalBelljar modelConduit = new ModelCrystalBelljar();
-    private ResourceLocation mainResource = new ResourceLocation("alchemicalwizardry:textures/models/CrystalBelljar.png");
+    private ResourceLocation mainResource =
+            new ResourceLocation("alchemicalwizardry:textures/models/CrystalBelljar.png");
     private ResourceLocation resourceLocation = new ResourceLocation("alchemicalwizardry:textures/models/Reagent.png");
 
-    private void renderConduitItem(RenderBlocks render, ItemStack item, float translateX, float translateY, float translateZ)
-    {
+    private void renderConduitItem(
+            RenderBlocks render, ItemStack item, float translateX, float translateY, float translateZ) {
         GL11.glPushMatrix();
         GL11.glTranslatef((float) translateX + 0.5F, (float) translateY + 1.5F, (float) translateZ + 0.5F);
         FMLClientHandler.instance().getClient().renderEngine.bindTexture(mainResource);
@@ -36,17 +34,22 @@ public class TEBellJarItemRenderer implements IItemRenderer
         GL11.glPopMatrix();
 
         ReagentContainerInfo[] info = TEBellJar.getContainerInfoFromItem(item);
-        if (info.length >= 1 && info[0] != null)
-        {
+        if (info.length >= 1 && info[0] != null) {
             ReagentStack reagentStack = info[0].reagent;
             int capacity = info[0].capacity;
-            if (reagentStack != null && reagentStack.reagent != null)
-            {
+            if (reagentStack != null && reagentStack.reagent != null) {
                 Reagent reagent = reagentStack.reagent;
-                this.renderTankContents(translateX, translateY, translateZ, reagent.getColourRed(), reagent.getColourGreen(), reagent.getColourBlue(), 200 * reagentStack.amount / capacity);
+                this.renderTankContents(
+                        translateX,
+                        translateY,
+                        translateZ,
+                        reagent.getColourRed(),
+                        reagent.getColourGreen(),
+                        reagent.getColourBlue(),
+                        200 * reagentStack.amount / capacity);
             }
         }
-        
+
         GL11.glEnable(GL11.GL_BLEND);
         GL11.glEnable(GL11.GL_CULL_FACE);
         GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
@@ -64,8 +67,8 @@ public class TEBellJarItemRenderer implements IItemRenderer
         GL11.glDisable(GL11.GL_BLEND);
     }
 
-    private void renderTankContents(double x, double y, double z, int colourRed, int colourGreen, int colourBlue, int colourIntensity)
-    {
+    private void renderTankContents(
+            double x, double y, double z, int colourRed, int colourGreen, int colourBlue, int colourIntensity) {
         GL11.glPushMatrix();
         Tessellator tessellator = Tessellator.instance;
         FMLClientHandler.instance().getClient().renderEngine.bindTexture(resourceLocation);
@@ -133,10 +136,8 @@ public class TEBellJarItemRenderer implements IItemRenderer
      * IItemRenderer implementation *
      */
     @Override
-    public boolean handleRenderType(ItemStack item, ItemRenderType type)
-    {
-        switch (type)
-        {
+    public boolean handleRenderType(ItemStack item, ItemRenderType type) {
+        switch (type) {
             case ENTITY:
                 return true;
             case EQUIPPED:
@@ -150,19 +151,14 @@ public class TEBellJarItemRenderer implements IItemRenderer
         }
     }
 
-
     @Override
-    public boolean shouldUseRenderHelper(ItemRenderType type, ItemStack item, ItemRendererHelper helper)
-    {
+    public boolean shouldUseRenderHelper(ItemRenderType type, ItemStack item, ItemRendererHelper helper) {
         return true;
     }
 
-
     @Override
-    public void renderItem(ItemRenderType type, ItemStack item, Object... data)
-    {
-        switch (type)
-        {
+    public void renderItem(ItemRenderType type, ItemStack item, Object... data) {
+        switch (type) {
             case ENTITY:
                 renderConduitItem((RenderBlocks) data[0], item, -0.5f, -0.5f, -0.5f);
                 break;

@@ -16,10 +16,8 @@ import net.minecraft.potion.Potion;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.world.World;
 
-public class ImperfectRitualStone extends Block
-{
-    public ImperfectRitualStone()
-    {
+public class ImperfectRitualStone extends Block {
+    public ImperfectRitualStone() {
         super(Material.iron);
         setHardness(2.0F);
         setResistance(5.0F);
@@ -29,37 +27,31 @@ public class ImperfectRitualStone extends Block
 
     @Override
     @SideOnly(Side.CLIENT)
-    public void registerBlockIcons(IIconRegister iconRegister)
-    {
+    public void registerBlockIcons(IIconRegister iconRegister) {
         this.blockIcon = iconRegister.registerIcon("AlchemicalWizardry:ImperfectRitualStone");
     }
 
     @Override
-    public boolean onBlockActivated(World world, int x, int y, int z, EntityPlayer player, int side, float xOff, float yOff, float zOff)
-    {
-    	if(SpellHelper.isFakePlayer(player))
-    	{
-    		return false;
-    	}
+    public boolean onBlockActivated(
+            World world, int x, int y, int z, EntityPlayer player, int side, float xOff, float yOff, float zOff) {
+        if (SpellHelper.isFakePlayer(player)) {
+            return false;
+        }
         {
             Block block = world.getBlock(x, y + 1, z);
 
-            if (block == Blocks.water && !AlchemicalWizardry.ritualWeakDisabledThunderstorm)
-            {
-                if (!player.capabilities.isCreativeMode && !world.isRemote)
-                {
+            if (block == Blocks.water && !AlchemicalWizardry.ritualWeakDisabledThunderstorm) {
+                if (!player.capabilities.isCreativeMode && !world.isRemote) {
                     EnergyItems.drainPlayerNetwork(player, AlchemicalWizardry.ritualWeakCostThunderstorm);
                 }
 
-                if (!world.isRemote)
-                {
+                if (!world.isRemote) {
                     world.addWeatherEffect(new EntityLightningBolt(world, x, y + 2, z));
                 }
 
                 world.getWorldInfo().setRaining(true);
 
-                if (world.isRemote)
-                {
+                if (world.isRemote) {
                     world.setRainStrength(1.0F);
                     world.setThunderStrength(1.0f);
                 }
@@ -68,8 +60,7 @@ public class ImperfectRitualStone extends Block
                 world.getWorldInfo().setThundering(true);
                 return true;
             } else if (block == Blocks.coal_block && !AlchemicalWizardry.ritualWeakDisabledZombie) {
-                if (!player.capabilities.isCreativeMode && !world.isRemote)
-                {
+                if (!player.capabilities.isCreativeMode && !world.isRemote) {
                     EnergyItems.drainPlayerNetwork(player, AlchemicalWizardry.ritualWeakCostZombie);
                 }
 
@@ -79,34 +70,27 @@ public class ImperfectRitualStone extends Block
                 zomb.addPotionEffect(new PotionEffect(Potion.damageBoost.id, 20000, 7));
                 zomb.addPotionEffect(new PotionEffect(Potion.resistance.id, 20000, 3));
 
-                if (!world.isRemote)
-                {
+                if (!world.isRemote) {
                     world.spawnEntityInWorld(zomb);
                     world.addWeatherEffect(new EntityLightningBolt(world, x, y + 2, z));
                 }
 
                 return true;
-            } else if (block == Blocks.lapis_block && !AlchemicalWizardry.ritualWeakDisabledNight)
-            {
-                if (!player.capabilities.isCreativeMode && !world.isRemote)
-                {
+            } else if (block == Blocks.lapis_block && !AlchemicalWizardry.ritualWeakDisabledNight) {
+                if (!player.capabilities.isCreativeMode && !world.isRemote) {
                     EnergyItems.drainPlayerNetwork(player, AlchemicalWizardry.ritualWeakCostNight);
                 }
 
-                if (!world.isRemote)
-                {
+                if (!world.isRemote) {
                     world.addWeatherEffect(new EntityLightningBolt(world, x, y + 2, z));
                     world.setWorldTime((world.getWorldTime() / 24000) * 24000 + 13800);
                 }
-            } else if (block == Blocks.bedrock && !AlchemicalWizardry.ritualWeakDisabledResistance)
-            {
-                if (!player.capabilities.isCreativeMode && !world.isRemote)
-                {
+            } else if (block == Blocks.bedrock && !AlchemicalWizardry.ritualWeakDisabledResistance) {
+                if (!player.capabilities.isCreativeMode && !world.isRemote) {
                     EnergyItems.drainPlayerNetwork(player, AlchemicalWizardry.ritualWeakCostResistance);
                 }
 
-                if (!world.isRemote)
-                {
+                if (!world.isRemote) {
                     world.addWeatherEffect(new EntityLightningBolt(world, x, y + 2, z));
                 }
 

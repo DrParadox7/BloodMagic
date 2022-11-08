@@ -1,6 +1,11 @@
 package WayofTime.alchemicalWizardry.api.items;
 
 import WayofTime.alchemicalWizardry.api.items.interfaces.IBloodOrb;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
 import net.minecraft.block.Block;
 import net.minecraft.inventory.InventoryCrafting;
 import net.minecraft.item.Item;
@@ -10,60 +15,39 @@ import net.minecraft.item.crafting.ShapelessRecipes;
 import net.minecraft.world.World;
 import net.minecraftforge.oredict.OreDictionary;
 
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
-import java.util.Map.Entry;
-
 /**
  * Shapeless Blood Orb Recipe Handler by joshie *
  */
-public class ShapelessBloodOrbRecipe implements IRecipe
-{
+public class ShapelessBloodOrbRecipe implements IRecipe {
     private ItemStack output = null;
     private ArrayList<Object> input = new ArrayList<Object>();
 
-    public ShapelessBloodOrbRecipe(Block result, Object... recipe)
-    {
+    public ShapelessBloodOrbRecipe(Block result, Object... recipe) {
         this(new ItemStack(result), recipe);
     }
 
-    public ShapelessBloodOrbRecipe(Item result, Object... recipe)
-    {
+    public ShapelessBloodOrbRecipe(Item result, Object... recipe) {
         this(new ItemStack(result), recipe);
     }
 
-    public ShapelessBloodOrbRecipe(ItemStack result, Object... recipe)
-    {
+    public ShapelessBloodOrbRecipe(ItemStack result, Object... recipe) {
         output = result.copy();
-        for (Object in : recipe)
-        {
-            if (in instanceof IBloodOrb)
-            { //If the item is an instanceof IBloodOrb then save the level of the orb
+        for (Object in : recipe) {
+            if (in instanceof IBloodOrb) { // If the item is an instanceof IBloodOrb then save the level of the orb
                 input.add(((IBloodOrb) in).getOrbLevel());
-            }
-            else if (in instanceof ItemStack)
-            {
-                if (((ItemStack)in).getItem() instanceof IBloodOrb)
-                {
-                    input.add(((IBloodOrb) ((ItemStack)in).getItem()).getOrbLevel());
-                }
-                else input.add(((ItemStack) in).copy());
-            } else if (in instanceof Item)
-            {
+            } else if (in instanceof ItemStack) {
+                if (((ItemStack) in).getItem() instanceof IBloodOrb) {
+                    input.add(((IBloodOrb) ((ItemStack) in).getItem()).getOrbLevel());
+                } else input.add(((ItemStack) in).copy());
+            } else if (in instanceof Item) {
                 input.add(new ItemStack((Item) in));
-            } else if (in instanceof Block)
-            {
+            } else if (in instanceof Block) {
                 input.add(new ItemStack((Block) in));
-            } else if (in instanceof String)
-            {
+            } else if (in instanceof String) {
                 input.add(OreDictionary.getOres((String) in));
-            } else
-            {
+            } else {
                 String ret = "Invalid shapeless ore recipe: ";
-                for (Object tmp : recipe)
-                {
+                for (Object tmp : recipe) {
                     ret += tmp + ", ";
                 }
                 ret += output;
@@ -73,17 +57,13 @@ public class ShapelessBloodOrbRecipe implements IRecipe
     }
 
     @SuppressWarnings("unchecked")
-    ShapelessBloodOrbRecipe(ShapelessRecipes recipe, Map<ItemStack, String> replacements)
-    {
+    ShapelessBloodOrbRecipe(ShapelessRecipes recipe, Map<ItemStack, String> replacements) {
         output = recipe.getRecipeOutput();
 
-        for (ItemStack ingred : ((List<ItemStack>) recipe.recipeItems))
-        {
+        for (ItemStack ingred : ((List<ItemStack>) recipe.recipeItems)) {
             Object finalObj = ingred;
-            for (Entry<ItemStack, String> replace : replacements.entrySet())
-            {
-                if (OreDictionary.itemMatches(replace.getKey(), ingred, false))
-                {
+            for (Entry<ItemStack, String> replace : replacements.entrySet()) {
+                if (OreDictionary.itemMatches(replace.getKey(), ingred, false)) {
                     finalObj = OreDictionary.getOres(replace.getValue());
                     break;
                 }
@@ -93,78 +73,63 @@ public class ShapelessBloodOrbRecipe implements IRecipe
     }
 
     @Override
-    public int getRecipeSize()
-    {
+    public int getRecipeSize() {
         return input.size();
     }
 
     @Override
-    public ItemStack getRecipeOutput()
-    {
+    public ItemStack getRecipeOutput() {
         return output;
     }
 
     @Override
-    public ItemStack getCraftingResult(InventoryCrafting var1)
-    {
+    public ItemStack getCraftingResult(InventoryCrafting var1) {
         return output.copy();
     }
 
     @SuppressWarnings("unchecked")
     @Override
-    public boolean matches(InventoryCrafting var1, World world)
-    {
+    public boolean matches(InventoryCrafting var1, World world) {
         ArrayList<Object> required = new ArrayList<Object>(input);
 
-        for (int x = 0; x < var1.getSizeInventory(); x++)
-        {
+        for (int x = 0; x < var1.getSizeInventory(); x++) {
             ItemStack slot = var1.getStackInSlot(x);
 
-            if (slot != null)
-            {
+            if (slot != null) {
                 boolean inRecipe = false;
                 Iterator<Object> req = required.iterator();
 
-                while (req.hasNext())
-                {
+                while (req.hasNext()) {
                     boolean match = false;
 
                     Object next = req.next();
 
-                    //If target is integer, then we should be check the blood orb value of the item instead
-                    if (next instanceof Integer)
-                    {
-                        if (slot != null && slot.getItem() instanceof IBloodOrb)
-                        {
+                    // If target is integer, then we should be check the blood orb value of the item instead
+                    if (next instanceof Integer) {
+                        if (slot != null && slot.getItem() instanceof IBloodOrb) {
                             IBloodOrb orb = (IBloodOrb) slot.getItem();
-                            if (orb.getOrbLevel() < (Integer) next)
-                            {
+                            if (orb.getOrbLevel() < (Integer) next) {
                                 return false;
                             }
                         } else return false;
                         match = true;
-                    } else if (next instanceof ItemStack)
-                    {
+                    } else if (next instanceof ItemStack) {
                         match = OreDictionary.itemMatches((ItemStack) next, slot, false);
-                    } else if (next instanceof ArrayList)
-                    {
+                    } else if (next instanceof ArrayList) {
                         Iterator<ItemStack> itr = ((ArrayList<ItemStack>) next).iterator();
-                        while (itr.hasNext() && !match)
-                        {
+                        while (itr.hasNext() && !match) {
                             match = OreDictionary.itemMatches(itr.next(), slot, false);
                         }
                     }
 
-                    if (match)
-                    {
+                    if (match) {
                         inRecipe = true;
                         required.remove(next);
                         break;
                     }
                 }
 
-                if (!inRecipe)
-                {
+                if (!inRecipe) {
                     return false;
                 }
             }
@@ -173,8 +138,7 @@ public class ShapelessBloodOrbRecipe implements IRecipe
         return required.isEmpty();
     }
 
-    public ArrayList<Object> getInput()
-    {
+    public ArrayList<Object> getInput() {
         return this.input;
     }
 }

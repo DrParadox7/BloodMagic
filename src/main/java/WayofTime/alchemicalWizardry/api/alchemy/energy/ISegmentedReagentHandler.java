@@ -2,8 +2,7 @@ package WayofTime.alchemicalWizardry.api.alchemy.energy;
 
 import java.util.Map;
 
-public interface ISegmentedReagentHandler extends IReagentHandler
-{
+public interface ISegmentedReagentHandler extends IReagentHandler {
     int getNumberOfTanks();
 
     int getTanksTunedToReagent(Reagent reagent);

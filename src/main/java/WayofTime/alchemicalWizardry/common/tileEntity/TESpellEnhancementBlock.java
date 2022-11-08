@@ -6,15 +6,12 @@ import WayofTime.alchemicalWizardry.api.spell.SpellEnhancementPotency;
 import WayofTime.alchemicalWizardry.api.spell.SpellEnhancementPower;
 import WayofTime.alchemicalWizardry.api.spell.SpellParadigm;
 
-public class TESpellEnhancementBlock extends TESpellBlock
-{
+public class TESpellEnhancementBlock extends TESpellBlock {
     @Override
-    protected void applySpellChange(SpellParadigm parad)
-    {
+    protected void applySpellChange(SpellParadigm parad) {
         int i = -1;
 
-        switch (this.enhancementType())
-        {
+        switch (this.enhancementType()) {
             case 0:
                 i = parad.getBufferedEffectPower();
                 break;
@@ -26,20 +23,16 @@ public class TESpellEnhancementBlock extends TESpellBlock
                 break;
         }
 
-        if (i != -1 && i < this.getLimit())
-        {
+        if (i != -1 && i < this.getLimit()) {
             parad.applyEnhancement(getSpellEnhancement());
-        } else if (i < this.getLimit())
-        {
+        } else if (i < this.getLimit()) {
             this.doBadStuff();
         }
     }
 
-    public SpellEnhancement getSpellEnhancement()
-    {
+    public SpellEnhancement getSpellEnhancement() {
         int meta = worldObj.getBlockMetadata(xCoord, yCoord, zCoord);
-        switch (meta)
-        {
+        switch (meta) {
             case 0:
             case 1:
             case 2:
@@ -62,11 +55,9 @@ public class TESpellEnhancementBlock extends TESpellBlock
         return new SpellEnhancementCost();
     }
 
-    public int getLimit()
-    {
+    public int getLimit() {
         int meta = worldObj.getBlockMetadata(xCoord, yCoord, zCoord);
-        switch (meta)
-        {
+        switch (meta) {
             case 0:
                 return 1;
             case 1:
@@ -101,11 +92,10 @@ public class TESpellEnhancementBlock extends TESpellBlock
         return 0;
     }
 
-    public int enhancementType() //0 is power, 1 is cost, 2 is potency
-    {
+    public int enhancementType() // 0 is power, 1 is cost, 2 is potency
+            {
         int meta = worldObj.getBlockMetadata(xCoord, yCoord, zCoord);
-        switch (meta)
-        {
+        switch (meta) {
             case 0:
             case 1:
             case 2:
@@ -128,16 +118,11 @@ public class TESpellEnhancementBlock extends TESpellBlock
         return 1;
     }
 
-    public void doBadStuff()
-    {
-
-    }
+    public void doBadStuff() {}
 
     @Override
-    public String getResourceLocationForMeta(int meta)
-    {
-        switch (meta)
-        {
+    public String getResourceLocationForMeta(int meta) {
+        switch (meta) {
             case 0:
                 return "alchemicalwizardry:textures/models/SpellEnhancementPower1.png";
             case 1:
@@ -145,13 +130,13 @@ public class TESpellEnhancementBlock extends TESpellBlock
             case 2:
                 return "alchemicalwizardry:textures/models/SpellEnhancementPower3.png";
             case 3:
-            	return "alchemicalwizardry:textures/models/SpellEnhancementPower4.png";
+                return "alchemicalwizardry:textures/models/SpellEnhancementPower4.png";
             case 5:
                 return "alchemicalwizardry:textures/models/SpellEnhancementCost1.png";
             case 6:
                 return "alchemicalwizardry:textures/models/SpellEnhancementCost2.png";
             case 7:
-            	return "alchemicalwizardry:textures/models/SpellEnhancementCost3.png";
+                return "alchemicalwizardry:textures/models/SpellEnhancementCost3.png";
             case 8:
                 return "alchemicalwizardry:textures/models/SpellEnhancementCost4.png";
             case 10:
@@ -162,7 +147,6 @@ public class TESpellEnhancementBlock extends TESpellBlock
                 return "alchemicalwizardry:textures/models/SpellEnhancementPotency3.png";
             case 13:
                 return "alchemicalwizardry:textures/models/SpellEnhancementPotency4.png";
-
         }
         return "alchemicalwizardry:textures/models/SpellEnhancementPower1.png";
     }

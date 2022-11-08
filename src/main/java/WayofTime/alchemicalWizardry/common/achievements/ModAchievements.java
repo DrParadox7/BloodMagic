@@ -1,14 +1,13 @@
 package WayofTime.alchemicalWizardry.common.achievements;
 
 import WayofTime.alchemicalWizardry.ModBlocks;
+import WayofTime.alchemicalWizardry.ModItems;
+import cpw.mods.fml.common.FMLCommonHandler;
 import net.minecraft.item.ItemStack;
 import net.minecraft.stats.Achievement;
 import net.minecraftforge.common.AchievementPage;
-import WayofTime.alchemicalWizardry.ModItems;
-import cpw.mods.fml.common.FMLCommonHandler;
 
-public class ModAchievements
-{
+public class ModAchievements {
     public static AchievementPage alchemicalWizardryPage;
 
     public static Achievement firstPrick;
@@ -36,8 +35,7 @@ public class ModAchievements
     public static Achievement demons;
     public static Achievement transcendentOrb;
 
-    public static void init()
-    {
+    public static void init() {
         firstPrick = new AchievementsMod("firstPrick", 0, 0, ModItems.sacrificialDagger, null).setSpecial();
         weakOrb = new AchievementsMod("weakOrb", 3, 0, ModItems.weakBloodOrb, firstPrick);
         bloodLettersPack = new AchievementsMod("bloodLettersPack", 3, 2, ModItems.itemBloodPack, weakOrb);
@@ -60,10 +58,13 @@ public class ModAchievements
         suppressionSigil = new AchievementsMod("suppressionSigil", 6, -2, ModItems.itemSigilOfSupression, masterOrb);
         archmageOrb = new AchievementsMod("archmageOrb", -1, 2, ModItems.archmageBloodOrb, masterOrb);
         energyBazooka = new AchievementsMod("energyBazooka", -3, 2, ModItems.energyBazooka, archmageOrb);
-        demons = new AchievementsMod("demons", 0, 3, new ItemStack(ModItems.baseItems, 1, 29), archmageOrb).setSpecial();
+        demons =
+                new AchievementsMod("demons", 0, 3, new ItemStack(ModItems.baseItems, 1, 29), archmageOrb).setSpecial();
         transcendentOrb = new AchievementsMod("trancsendentOrb", 0, 5, ModItems.transcendentBloodOrb, demons);
 
-        alchemicalWizardryPage = new AchievementPage("Blood Magic", AchievementsMod.achievements.toArray(new Achievement[AchievementsMod.achievements.size()]));
+        alchemicalWizardryPage = new AchievementPage(
+                "Blood Magic",
+                AchievementsMod.achievements.toArray(new Achievement[AchievementsMod.achievements.size()]));
         AchievementPage.registerAchievementPage(alchemicalWizardryPage);
         AchievementsRegistry.init();
         FMLCommonHandler.instance().bus().register(new AchievementTrigger());

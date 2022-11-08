@@ -2,8 +2,7 @@ package WayofTime.alchemicalWizardry.common.bloodAltarUpgrade;
 
 import net.minecraft.block.Block;
 
-public class AltarComponent
-{
+public class AltarComponent {
     private int x;
     private int y;
     private int z;
@@ -12,8 +11,7 @@ public class AltarComponent
     private boolean isBloodRune;
     private boolean isUpgradeSlot;
 
-    public AltarComponent(int x, int y, int z, Block block, int metadata, boolean isBloodRune, boolean isUpgradeSlot)
-    {
+    public AltarComponent(int x, int y, int z, Block block, int metadata, boolean isBloodRune, boolean isUpgradeSlot) {
         this.x = x;
         this.y = y;
         this.z = z;
@@ -23,38 +21,31 @@ public class AltarComponent
         this.isUpgradeSlot = isUpgradeSlot;
     }
 
-    public int getX()
-    {
+    public int getX() {
         return x;
     }
 
-    public int getY()
-    {
+    public int getY() {
         return y;
     }
 
-    public int getZ()
-    {
+    public int getZ() {
         return z;
     }
 
-    public Block getBlock()
-    {
+    public Block getBlock() {
         return block;
     }
 
-    public int getMetadata()
-    {
+    public int getMetadata() {
         return metadata;
     }
 
-    public boolean isBloodRune()
-    {
+    public boolean isBloodRune() {
         return isBloodRune;
     }
 
-    public boolean isUpgradeSlot()
-    {
+    public boolean isUpgradeSlot() {
         return isUpgradeSlot;
     }
 }

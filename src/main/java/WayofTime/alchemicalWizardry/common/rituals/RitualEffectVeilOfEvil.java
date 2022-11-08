@@ -7,17 +7,14 @@ import WayofTime.alchemicalWizardry.api.rituals.RitualEffect;
 import WayofTime.alchemicalWizardry.api.soulNetwork.SoulNetworkHandler;
 import WayofTime.alchemicalWizardry.common.AlchemicalWizardryEventHooks;
 import WayofTime.alchemicalWizardry.common.CoordAndRange;
-import net.minecraft.world.World;
-
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
+import net.minecraft.world.World;
 
-public class RitualEffectVeilOfEvil extends RitualEffect
-{
+public class RitualEffectVeilOfEvil extends RitualEffect {
     @Override
-    public void performEffect(IMasterRitualStone ritualStone)
-    {
+    public void performEffect(IMasterRitualStone ritualStone) {
         String owner = ritualStone.getOwner();
 
         int currentEssence = SoulNetworkHandler.getCurrentEssence(owner);
@@ -26,32 +23,25 @@ public class RitualEffectVeilOfEvil extends RitualEffect
         int y = ritualStone.getYCoord();
         int z = ritualStone.getZCoord();
 
-        if (currentEssence < this.getCostPerRefresh())
-        {
+        if (currentEssence < this.getCostPerRefresh()) {
             SoulNetworkHandler.causeNauseaToPlayer(owner);
-        } else
-        {
+        } else {
             int horizRange = 32;
             int vertRange = 32;
 
             int dimension = world.provider.dimensionId;
 
-            if (AlchemicalWizardryEventHooks.forceSpawnMap.containsKey(new Integer(dimension)))
-            {
+            if (AlchemicalWizardryEventHooks.forceSpawnMap.containsKey(new Integer(dimension))) {
                 List<CoordAndRange> list = AlchemicalWizardryEventHooks.forceSpawnMap.get(new Integer(dimension));
-                if (list != null)
-                {
-                    if (!list.contains(new CoordAndRange(x, y, z, horizRange, vertRange)))
-                    {
+                if (list != null) {
+                    if (!list.contains(new CoordAndRange(x, y, z, horizRange, vertRange))) {
                         boolean hasFoundAndRemoved = false;
-                        for (CoordAndRange coords : list)
-                        {
+                        for (CoordAndRange coords : list) {
                             int xLocation = coords.xCoord;
                             int yLocation = coords.yCoord;
                             int zLocation = coords.zCoord;
 
-                            if (xLocation == x && yLocation == y && zLocation == z)
-                            {
+                            if (xLocation == x && yLocation == y && zLocation == z) {
                                 list.remove(coords);
                                 hasFoundAndRemoved = true;
                                 break;
@@ -59,33 +49,28 @@ public class RitualEffectVeilOfEvil extends RitualEffect
                         }
                         list.add(new CoordAndRange(x, y, z, horizRange, vertRange));
                     }
-                } else
-                {
+                } else {
                     list = new LinkedList();
                     list.add(new CoordAndRange(x, y, z, horizRange, vertRange));
                     AlchemicalWizardryEventHooks.forceSpawnMap.put(new Integer(dimension), list);
                 }
-            } else
-            {
+            } else {
                 List<CoordAndRange> list = new LinkedList();
                 list.add(new CoordAndRange(x, y, z, horizRange, vertRange));
                 AlchemicalWizardryEventHooks.forceSpawnMap.put(new Integer(dimension), list);
             }
-
 
             SoulNetworkHandler.syphonFromNetwork(owner, this.getCostPerRefresh());
         }
     }
 
     @Override
-    public int getCostPerRefresh()
-    {
+    public int getCostPerRefresh() {
         return AlchemicalWizardry.ritualCostVeilOfEvil[1];
     }
 
     @Override
-    public List<RitualComponent> getRitualComponentList()
-    {
+    public List<RitualComponent> getRitualComponentList() {
         ArrayList<RitualComponent> veilRitual = new ArrayList();
 
         veilRitual.add(new RitualComponent(1, 0, 2, RitualComponent.DUSK));
@@ -102,8 +87,7 @@ public class RitualEffectVeilOfEvil extends RitualEffect
         veilRitual.add(new RitualComponent(3, 0, -3, RitualComponent.FIRE));
         veilRitual.add(new RitualComponent(-3, 0, -3, RitualComponent.FIRE));
 
-        for (int i = 0; i <= 1; i++)
-        {
+        for (int i = 0; i <= 1; i++) {
             veilRitual.add(new RitualComponent((4 + i), i, 0, RitualComponent.DUSK));
             veilRitual.add(new RitualComponent((4 + i), i, -1, RitualComponent.BLANK));
             veilRitual.add(new RitualComponent((4 + i), i, 1, RitualComponent.BLANK));

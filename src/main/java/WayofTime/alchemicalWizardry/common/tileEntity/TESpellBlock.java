@@ -5,15 +5,12 @@ import WayofTime.alchemicalWizardry.api.tile.ISpellTile;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraftforge.common.util.ForgeDirection;
 
-public abstract class TESpellBlock extends TEOrientable implements ISpellTile
-{
-	@Override
-    public void modifySpellParadigm(SpellParadigm parad)
-    {
+public abstract class TESpellBlock extends TEOrientable implements ISpellTile {
+    @Override
+    public void modifySpellParadigm(SpellParadigm parad) {
         this.applySpellChange(parad);
         TileEntity tile = this.getTileAtOutput();
-        if (tile instanceof TESpellBlock)
-        {
+        if (tile instanceof TESpellBlock) {
             TESpellBlock outputBlock = (TESpellBlock) tile;
             outputBlock.modifySpellParadigm(parad);
         }
@@ -21,8 +18,7 @@ public abstract class TESpellBlock extends TEOrientable implements ISpellTile
 
     protected abstract void applySpellChange(SpellParadigm parad);
 
-    public TESpellBlock getTileAtOutput()
-    {
+    public TESpellBlock getTileAtOutput() {
         ForgeDirection output = this.getOutputDirection();
         int xOffset = output.offsetX;
         int yOffset = output.offsetY;
@@ -30,22 +26,19 @@ public abstract class TESpellBlock extends TEOrientable implements ISpellTile
 
         TileEntity tile = worldObj.getTileEntity(xCoord + xOffset, yCoord + yOffset, zCoord + zOffset);
 
-        if (tile instanceof TESpellBlock && ((TESpellBlock) tile).canInputRecieveOutput(output))
-        {
+        if (tile instanceof TESpellBlock && ((TESpellBlock) tile).canInputRecieveOutput(output)) {
             return (TESpellBlock) tile;
         }
 
         return null;
     }
 
-    public boolean canInputRecieve()
-    {
+    public boolean canInputRecieve() {
         return true;
     }
 
     @Override
-    public boolean canInputRecieveOutput(ForgeDirection output)
-    {
+    public boolean canInputRecieveOutput(ForgeDirection output) {
         return this.canInputRecieve() && this.getInputDirection().getOpposite() == output;
     }
 }

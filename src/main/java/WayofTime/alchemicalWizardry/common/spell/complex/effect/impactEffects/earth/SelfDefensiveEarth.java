@@ -7,17 +7,14 @@ import net.minecraft.potion.Potion;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.world.World;
 
-public class SelfDefensiveEarth extends SelfSpellEffect
-{
+public class SelfDefensiveEarth extends SelfSpellEffect {
 
-    public SelfDefensiveEarth(int power, int potency, int cost)
-    {
+    public SelfDefensiveEarth(int power, int potency, int cost) {
         super(power, potency, cost);
     }
 
     @Override
-    public void onSelfUse(World world, EntityPlayer player)
-    {
+    public void onSelfUse(World world, EntityPlayer player) {
         int pot = 2 * this.potencyUpgrades + 1;
         int duration = 20 * 60 * (this.powerUpgrades + 1);
 

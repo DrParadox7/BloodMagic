@@ -4,19 +4,15 @@ import WayofTime.alchemicalWizardry.api.spell.ComplexSpellType;
 import WayofTime.alchemicalWizardry.api.spell.SpellEffect;
 import WayofTime.alchemicalWizardry.api.spell.SpellParadigm;
 
-public class TESpellEffectBlock extends TESpellBlock
-{
+public class TESpellEffectBlock extends TESpellBlock {
     @Override
-    protected void applySpellChange(SpellParadigm parad)
-    {
+    protected void applySpellChange(SpellParadigm parad) {
         parad.addBufferedEffect(this.getSpellEffect());
     }
 
-    public SpellEffect getSpellEffect()
-    {
+    public SpellEffect getSpellEffect() {
         int meta = worldObj.getBlockMetadata(xCoord, yCoord, zCoord);
-        switch (meta)
-        {
+        switch (meta) {
             case 0:
                 return new SpellEffect(ComplexSpellType.FIRE);
             case 1:
@@ -30,10 +26,8 @@ public class TESpellEffectBlock extends TESpellBlock
     }
 
     @Override
-    public String getResourceLocationForMeta(int meta)
-    {
-        switch (meta)
-        {
+    public String getResourceLocationForMeta(int meta) {
+        switch (meta) {
             case 0:
                 return "alchemicalwizardry:textures/models/SpellEffectFire.png";
             case 1:

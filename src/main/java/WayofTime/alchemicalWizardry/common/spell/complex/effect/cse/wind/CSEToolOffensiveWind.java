@@ -7,40 +7,35 @@ import WayofTime.alchemicalWizardry.api.spell.SpellParadigm;
 import WayofTime.alchemicalWizardry.api.spell.SpellParadigmTool;
 import WayofTime.alchemicalWizardry.common.spell.complex.effect.impactEffects.wind.ToolOffensiveWind;
 
-public class CSEToolOffensiveWind extends ComplexSpellEffect
-{
-	public CSEToolOffensiveWind() 
-	{
-		super(ComplexSpellType.WIND, ComplexSpellModifier.OFFENSIVE);
-	}
-	
-	public CSEToolOffensiveWind(int power, int cost, int potency)
-	{
-		this();
-		
-		this.powerEnhancement = power;
-		this.costEnhancement = cost;
-		this.potencyEnhancement = potency;
-	}
+public class CSEToolOffensiveWind extends ComplexSpellEffect {
+    public CSEToolOffensiveWind() {
+        super(ComplexSpellType.WIND, ComplexSpellModifier.OFFENSIVE);
+    }
 
-	@Override
-	public void modifyParadigm(SpellParadigm parad) 
-	{
-		if(parad instanceof SpellParadigmTool)
-		{
-	        ((SpellParadigmTool)parad).addLeftClickEffect(new ToolOffensiveWind(this.powerEnhancement, this.potencyEnhancement, this.costEnhancement));
-		}
-	}
+    public CSEToolOffensiveWind(int power, int cost, int potency) {
+        this();
 
-	@Override
-	public ComplexSpellEffect copy(int power, int cost, int potency) 
-	{
-		return new CSEToolOffensiveWind(power, cost, potency);
-	}
+        this.powerEnhancement = power;
+        this.costEnhancement = cost;
+        this.potencyEnhancement = potency;
+    }
 
-	@Override
-	public int getCostOfEffect() 
-	{
-        return 0; //Cost is on the attack method
-	}
+    @Override
+    public void modifyParadigm(SpellParadigm parad) {
+        if (parad instanceof SpellParadigmTool) {
+            ((SpellParadigmTool) parad)
+                    .addLeftClickEffect(new ToolOffensiveWind(
+                            this.powerEnhancement, this.potencyEnhancement, this.costEnhancement));
+        }
+    }
+
+    @Override
+    public ComplexSpellEffect copy(int power, int cost, int potency) {
+        return new CSEToolOffensiveWind(power, cost, potency);
+    }
+
+    @Override
+    public int getCostOfEffect() {
+        return 0; // Cost is on the attack method
+    }
 }

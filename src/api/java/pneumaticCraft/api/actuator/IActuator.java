@@ -1,10 +1,9 @@
 package pneumaticCraft.api.actuator;
 
 import java.util.List;
-
 import net.minecraft.tileentity.TileEntity;
 
-public interface IActuator{
+public interface IActuator {
     /**
      * Same as {@link pneumaticCraft.api.universalSensor.ISensorSetting#getSensorPath()}
      * @return
@@ -25,7 +24,7 @@ public interface IActuator{
     public List<String> getDescription();
 
     /**
-     * 
+     *
      * @param universalActuator
      */
     public void actuate(TileEntity universalActuator);

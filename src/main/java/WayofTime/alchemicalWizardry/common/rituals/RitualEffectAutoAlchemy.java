@@ -1,16 +1,6 @@
 package WayofTime.alchemicalWizardry.common.rituals;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import WayofTime.alchemicalWizardry.AlchemicalWizardry;
-import net.minecraft.inventory.IInventory;
-import net.minecraft.inventory.ISidedInventory;
-import net.minecraft.item.ItemStack;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.world.World;
-import net.minecraftforge.common.util.ForgeDirection;
-import net.minecraftforge.oredict.OreDictionary;
 import WayofTime.alchemicalWizardry.api.alchemy.AlchemyRecipeRegistry;
 import WayofTime.alchemicalWizardry.api.alchemy.energy.ReagentRegistry;
 import WayofTime.alchemicalWizardry.api.rituals.IMasterRitualStone;
@@ -19,16 +9,23 @@ import WayofTime.alchemicalWizardry.api.rituals.RitualEffect;
 import WayofTime.alchemicalWizardry.api.soulNetwork.SoulNetworkHandler;
 import WayofTime.alchemicalWizardry.api.tile.IBloodAltar;
 import WayofTime.alchemicalWizardry.common.tileEntity.TEWritingTable;
+import java.util.ArrayList;
+import java.util.List;
+import net.minecraft.inventory.IInventory;
+import net.minecraft.inventory.ISidedInventory;
+import net.minecraft.item.ItemStack;
+import net.minecraft.tileentity.TileEntity;
+import net.minecraft.world.World;
+import net.minecraftforge.common.util.ForgeDirection;
+import net.minecraftforge.oredict.OreDictionary;
 
-public class RitualEffectAutoAlchemy extends RitualEffect
-{
+public class RitualEffectAutoAlchemy extends RitualEffect {
     public static final boolean fillToOne = true;
 
     public static final int potentiaDrain = 2;
 
     @Override
-    public void performEffect(IMasterRitualStone ritualStone)
-    {
+    public void performEffect(IMasterRitualStone ritualStone) {
         String owner = ritualStone.getOwner();
 
         int currentEssence = SoulNetworkHandler.getCurrentEssence(owner);
@@ -37,31 +34,27 @@ public class RitualEffectAutoAlchemy extends RitualEffect
         int y = ritualStone.getYCoord();
         int z = ritualStone.getZCoord();
 
-        if (currentEssence < this.getCostPerRefresh() * 6)
-        {
+        if (currentEssence < this.getCostPerRefresh() * 6) {
             SoulNetworkHandler.causeNauseaToPlayer(owner);
-        } else
-        {
-            boolean hasPotentia = this.canDrainReagent(ritualStone, ReagentRegistry.potentiaReagent, potentiaDrain, false);
+        } else {
+            boolean hasPotentia =
+                    this.canDrainReagent(ritualStone, ReagentRegistry.potentiaReagent, potentiaDrain, false);
 
             int flag = 0;
 
             TileEntity topEntity = world.getTileEntity(x, y + 1, z);
-            if (!(topEntity instanceof IBloodAltar) || !(topEntity instanceof IBloodAltar))
-            {
+            if (!(topEntity instanceof IBloodAltar) || !(topEntity instanceof IBloodAltar)) {
                 return;
             }
 
             IBloodAltar altar = (IBloodAltar) topEntity;
-            ItemStack targetStack = ((IInventory)altar).getStackInSlot(0);
-            if (targetStack == null)
-            {
+            ItemStack targetStack = ((IInventory) altar).getStackInSlot(0);
+            if (targetStack == null) {
                 return;
             }
 
             ItemStack[] recipe = AlchemyRecipeRegistry.getRecipeForItemStack(targetStack);
-            if (recipe != null)
-            {
+            if (recipe != null) {
                 TEWritingTable alchemyEntity;
                 IInventory outputInv = null;
                 IInventory inputInv1 = null;
@@ -72,113 +65,87 @@ public class RitualEffectAutoAlchemy extends RitualEffect
                 TileEntity eastEntity = world.getTileEntity(x + 1, y, z);
                 TileEntity westEntity = world.getTileEntity(x - 1, y, z);
 
-                if (northEntity instanceof TEWritingTable)
-                {
+                if (northEntity instanceof TEWritingTable) {
                     alchemyEntity = (TEWritingTable) northEntity;
-                    if (southEntity instanceof IInventory && !(southEntity instanceof TEWritingTable))
-                    {
+                    if (southEntity instanceof IInventory && !(southEntity instanceof TEWritingTable)) {
                         outputInv = (IInventory) southEntity;
                     }
-                    if (eastEntity instanceof IInventory && !(eastEntity instanceof TEWritingTable))
-                    {
+                    if (eastEntity instanceof IInventory && !(eastEntity instanceof TEWritingTable)) {
                         inputInv1 = (IInventory) eastEntity;
                     }
-                    if (westEntity instanceof IInventory && !(westEntity instanceof TEWritingTable))
-                    {
+                    if (westEntity instanceof IInventory && !(westEntity instanceof TEWritingTable)) {
                         inputInv2 = (IInventory) westEntity;
                     }
-                } else if (southEntity instanceof TEWritingTable)
-                {
+                } else if (southEntity instanceof TEWritingTable) {
                     alchemyEntity = (TEWritingTable) southEntity;
-                    if (northEntity instanceof IInventory && !(northEntity instanceof TEWritingTable))
-                    {
+                    if (northEntity instanceof IInventory && !(northEntity instanceof TEWritingTable)) {
                         outputInv = (IInventory) northEntity;
                     }
-                    if (eastEntity instanceof IInventory && !(eastEntity instanceof TEWritingTable))
-                    {
+                    if (eastEntity instanceof IInventory && !(eastEntity instanceof TEWritingTable)) {
                         inputInv1 = (IInventory) eastEntity;
                     }
-                    if (westEntity instanceof IInventory && !(westEntity instanceof TEWritingTable))
-                    {
+                    if (westEntity instanceof IInventory && !(westEntity instanceof TEWritingTable)) {
                         inputInv2 = (IInventory) westEntity;
                     }
-                } else if (eastEntity instanceof TEWritingTable)
-                {
+                } else if (eastEntity instanceof TEWritingTable) {
                     alchemyEntity = (TEWritingTable) eastEntity;
-                    if (westEntity instanceof IInventory && !(westEntity instanceof TEWritingTable))
-                    {
+                    if (westEntity instanceof IInventory && !(westEntity instanceof TEWritingTable)) {
                         outputInv = (IInventory) westEntity;
                     }
-                    if (northEntity instanceof IInventory && !(northEntity instanceof TEWritingTable))
-                    {
+                    if (northEntity instanceof IInventory && !(northEntity instanceof TEWritingTable)) {
                         inputInv1 = (IInventory) northEntity;
                     }
-                    if (southEntity instanceof IInventory && !(southEntity instanceof TEWritingTable))
-                    {
+                    if (southEntity instanceof IInventory && !(southEntity instanceof TEWritingTable)) {
                         inputInv2 = (IInventory) southEntity;
                     }
-                } else if (westEntity instanceof TEWritingTable)
-                {
+                } else if (westEntity instanceof TEWritingTable) {
                     alchemyEntity = (TEWritingTable) westEntity;
-                    if (eastEntity instanceof IInventory && !(eastEntity instanceof TEWritingTable))
-                    {
+                    if (eastEntity instanceof IInventory && !(eastEntity instanceof TEWritingTable)) {
                         outputInv = (IInventory) eastEntity;
                     }
-                    if (northEntity instanceof IInventory && !(northEntity instanceof TEWritingTable))
-                    {
+                    if (northEntity instanceof IInventory && !(northEntity instanceof TEWritingTable)) {
                         inputInv1 = (IInventory) northEntity;
                     }
-                    if (southEntity instanceof IInventory && !(southEntity instanceof TEWritingTable))
-                    {
+                    if (southEntity instanceof IInventory && !(southEntity instanceof TEWritingTable)) {
                         inputInv2 = (IInventory) southEntity;
                     }
-                } else
-                {
+                } else {
                     return;
                 }
 
-                if (alchemyEntity != null && hasPotentia)
-                {
+                if (alchemyEntity != null && hasPotentia) {
                     alchemyEntity.setAccelerationTime(5);
-                    if (alchemyEntity.isWorking())
-                    {
+                    if (alchemyEntity.isWorking()) {
                         this.canDrainReagent(ritualStone, ReagentRegistry.potentiaReagent, potentiaDrain, true);
                     }
                 }
 
-                if (outputInv != null)
-                {
+                if (outputInv != null) {
                     ItemStack outputStack = alchemyEntity.getStackInSlot(6);
-                    if (outputStack != null)
-                    {
-                        for (int i = 0; i < outputInv.getSizeInventory(); i++)
-                        {
+                    if (outputStack != null) {
+                        for (int i = 0; i < outputInv.getSizeInventory(); i++) {
                             ItemStack curStack = outputInv.getStackInSlot(i);
-                            if (curStack == null)
-                            {
+                            if (curStack == null) {
                                 ItemStack copyStack = outputStack.copy();
                                 copyStack.stackSize = 1;
 
                                 outputStack.stackSize--;
-                                if (outputStack.stackSize <= 0)
-                                {
+                                if (outputStack.stackSize <= 0) {
                                     alchemyEntity.setInventorySlotContents(6, null);
-                                } else
-                                {
+                                } else {
                                     alchemyEntity.setInventorySlotContents(6, outputStack);
                                 }
 
                                 outputInv.setInventorySlotContents(i, copyStack);
                                 flag++;
                                 break;
-                            } else if (curStack.isItemEqual(outputStack) && curStack.stackSize < curStack.getMaxStackSize() && ItemStack.areItemStackTagsEqual(outputStack, curStack))
-                            {
+                            } else if (curStack.isItemEqual(outputStack)
+                                    && curStack.stackSize < curStack.getMaxStackSize()
+                                    && ItemStack.areItemStackTagsEqual(outputStack, curStack)) {
                                 outputStack.stackSize--;
-                                if (outputStack.stackSize <= 0)
-                                {
+                                if (outputStack.stackSize <= 0) {
                                     alchemyEntity.setInventorySlotContents(6, null);
-                                } else
-                                {
+                                } else {
                                     alchemyEntity.setInventorySlotContents(6, outputStack);
                                 }
 
@@ -190,48 +157,40 @@ public class RitualEffectAutoAlchemy extends RitualEffect
                         }
                     }
 
-                    for (int i = 0; i < 5; i++)
-                    {
+                    for (int i = 0; i < 5; i++) {
                         ItemStack recItem;
-                        if (recipe.length <= i)
-                        {
+                        if (recipe.length <= i) {
                             recItem = null;
-                        } else
-                        {
+                        } else {
                             recItem = recipe[i];
                         }
 
                         ItemStack alchStack = alchemyEntity.getStackInSlot(i + 1);
-                        if ((recItem == null && alchStack != null) || (alchStack != null && !(areItemStacksEqualWithWildcard(recItem, alchStack))))
-                        {
-                            for (int j = 0; j < outputInv.getSizeInventory(); j++)
-                            {
+                        if ((recItem == null && alchStack != null)
+                                || (alchStack != null && !(areItemStacksEqualWithWildcard(recItem, alchStack)))) {
+                            for (int j = 0; j < outputInv.getSizeInventory(); j++) {
                                 ItemStack curStack = outputInv.getStackInSlot(j);
-                                if (curStack == null)
-                                {
+                                if (curStack == null) {
                                     ItemStack copyStack = alchStack.copy();
                                     copyStack.stackSize = 1;
 
                                     alchStack.stackSize--;
-                                    if (alchStack.stackSize <= 0)
-                                    {
+                                    if (alchStack.stackSize <= 0) {
                                         alchemyEntity.setInventorySlotContents(i + 1, null);
-                                    } else
-                                    {
+                                    } else {
                                         alchemyEntity.setInventorySlotContents(i + 1, alchStack);
                                     }
 
                                     outputInv.setInventorySlotContents(j, copyStack);
                                     flag++;
                                     break;
-                                } else if (curStack.isItemEqual(alchStack) && curStack.stackSize < curStack.getMaxStackSize() && ItemStack.areItemStackTagsEqual(alchStack, curStack))
-                                {
+                                } else if (curStack.isItemEqual(alchStack)
+                                        && curStack.stackSize < curStack.getMaxStackSize()
+                                        && ItemStack.areItemStackTagsEqual(alchStack, curStack)) {
                                     alchStack.stackSize--;
-                                    if (alchStack.stackSize <= 0)
-                                    {
+                                    if (alchStack.stackSize <= 0) {
                                         alchemyEntity.setInventorySlotContents(i + 1, null);
-                                    } else
-                                    {
+                                    } else {
                                         alchemyEntity.setInventorySlotContents(i + 1, alchStack);
                                     }
 
@@ -244,71 +203,60 @@ public class RitualEffectAutoAlchemy extends RitualEffect
                             continue;
                         }
                     }
-
                 }
 
-                if (world.getWorldTime() % 10 == 0)
-                {
-                    if (flag == 0 && inputInv1 != null)
-                    {
-                        for (int i = 0; i < recipe.length; i++)
-                        {
+                if (world.getWorldTime() % 10 == 0) {
+                    if (flag == 0 && inputInv1 != null) {
+                        for (int i = 0; i < recipe.length; i++) {
                             ItemStack recItem = recipe[i];
-                            if (recItem == null)
-                            {
+                            if (recItem == null) {
                                 continue;
                             }
                             ItemStack alchStack = alchemyEntity.getStackInSlot(i + 1);
 
-                            if (alchStack != null && ((!areItemStacksEqualWithWildcard(recItem, alchStack)) || alchStack.stackSize >= (fillToOne ? 1 : alchStack.getMaxStackSize())))
-                            {
+                            if (alchStack != null
+                                    && ((!areItemStacksEqualWithWildcard(recItem, alchStack))
+                                            || alchStack.stackSize >= (fillToOne ? 1 : alchStack.getMaxStackSize()))) {
                                 continue;
                             }
 
-                            for (int j = 0; j < inputInv1.getSizeInventory(); j++)
-                            {
+                            for (int j = 0; j < inputInv1.getSizeInventory(); j++) {
                                 ItemStack curItem = inputInv1.getStackInSlot(j);
-                                if (curItem == null)
-                                {
+                                if (curItem == null) {
                                     continue;
                                 }
-                                
-                            	if(!inputInv1.isItemValidForSlot(j, curItem) || (inputInv1 instanceof ISidedInventory && !((ISidedInventory) inputInv1).canExtractItem(j, curItem, ForgeDirection.DOWN.ordinal())))
-                            	{
-                            		continue;
-                            	}
-                                
-                                if (areItemStacksEqualWithWildcard(recItem, curItem))
-                                {
-                                    if (alchStack == null)
-                                    {
+
+                                if (!inputInv1.isItemValidForSlot(j, curItem)
+                                        || (inputInv1 instanceof ISidedInventory
+                                                && !((ISidedInventory) inputInv1)
+                                                        .canExtractItem(j, curItem, ForgeDirection.DOWN.ordinal()))) {
+                                    continue;
+                                }
+
+                                if (areItemStacksEqualWithWildcard(recItem, curItem)) {
+                                    if (alchStack == null) {
                                         ItemStack copyStack = recItem.copy();
                                         copyStack.stackSize = 1;
                                         alchemyEntity.setInventorySlotContents(i + 1, copyStack);
 
                                         curItem.stackSize--;
-                                        if (curItem.stackSize <= 0)
-                                        {
+                                        if (curItem.stackSize <= 0) {
                                             inputInv1.setInventorySlotContents(j, null);
-                                        } else
-                                        {
+                                        } else {
                                             inputInv1.setInventorySlotContents(j, curItem);
                                         }
 
                                         flag++;
                                         break;
 
-                                    } else
-                                    {
+                                    } else {
                                         alchStack.stackSize++;
                                         alchemyEntity.setInventorySlotContents(i + 1, alchStack);
 
                                         curItem.stackSize--;
-                                        if (curItem.stackSize <= 0)
-                                        {
+                                        if (curItem.stackSize <= 0) {
                                             inputInv1.setInventorySlotContents(j, null);
-                                        } else
-                                        {
+                                        } else {
                                             inputInv1.setInventorySlotContents(j, curItem);
                                         }
 
@@ -319,59 +267,48 @@ public class RitualEffectAutoAlchemy extends RitualEffect
                             }
                         }
                     }
-                    if (flag == 0 && inputInv2 != null)
-                    {
-                        for (int i = 0; i < recipe.length; i++)
-                        {
+                    if (flag == 0 && inputInv2 != null) {
+                        for (int i = 0; i < recipe.length; i++) {
                             ItemStack recItem = recipe[i];
-                            if (recItem == null)
-                            {
+                            if (recItem == null) {
                                 continue;
                             }
                             ItemStack alchStack = alchemyEntity.getStackInSlot(i + 1);
-                            if (alchStack != null && ((!areItemStacksEqualWithWildcard(recItem, alchStack)) || alchStack.stackSize >= (fillToOne ? 1 : alchStack.getMaxStackSize())))
-                            {
+                            if (alchStack != null
+                                    && ((!areItemStacksEqualWithWildcard(recItem, alchStack))
+                                            || alchStack.stackSize >= (fillToOne ? 1 : alchStack.getMaxStackSize()))) {
                                 continue;
                             }
 
-                            for (int j = 0; j < inputInv2.getSizeInventory(); j++)
-                            {
+                            for (int j = 0; j < inputInv2.getSizeInventory(); j++) {
                                 ItemStack curItem = inputInv2.getStackInSlot(j);
-                                if (curItem == null)
-                                {
+                                if (curItem == null) {
                                     continue;
                                 }
-                                if (areItemStacksEqualWithWildcard(recItem, curItem))
-                                {
-                                    if (alchStack == null)
-                                    {
+                                if (areItemStacksEqualWithWildcard(recItem, curItem)) {
+                                    if (alchStack == null) {
                                         ItemStack copyStack = recItem.copy();
                                         copyStack.stackSize = 1;
                                         alchemyEntity.setInventorySlotContents(i + 1, copyStack);
 
                                         curItem.stackSize--;
-                                        if (curItem.stackSize <= 0)
-                                        {
+                                        if (curItem.stackSize <= 0) {
                                             inputInv2.setInventorySlotContents(j, null);
-                                        } else
-                                        {
+                                        } else {
                                             inputInv2.setInventorySlotContents(j, curItem);
                                         }
 
                                         flag++;
                                         break;
 
-                                    } else
-                                    {
+                                    } else {
                                         alchStack.stackSize++;
                                         alchemyEntity.setInventorySlotContents(i + 1, alchStack);
 
                                         curItem.stackSize--;
-                                        if (curItem.stackSize <= 0)
-                                        {
+                                        if (curItem.stackSize <= 0) {
                                             inputInv2.setInventorySlotContents(j, null);
-                                        } else
-                                        {
+                                        } else {
                                             inputInv2.setInventorySlotContents(j, curItem);
                                         }
 
@@ -385,8 +322,7 @@ public class RitualEffectAutoAlchemy extends RitualEffect
                 }
             }
 
-            if (flag > 0)
-            {
+            if (flag > 0) {
                 world.markBlockForUpdate(x, y, z + 1);
                 world.markBlockForUpdate(x, y, z - 1);
                 world.markBlockForUpdate(x + 1, y, z);
@@ -397,14 +333,12 @@ public class RitualEffectAutoAlchemy extends RitualEffect
     }
 
     @Override
-    public int getCostPerRefresh()
-    {
+    public int getCostPerRefresh() {
         return AlchemicalWizardry.ritualCostBalladOfAlchemy[1];
     }
 
     @Override
-    public List<RitualComponent> getRitualComponentList()
-    {
+    public List<RitualComponent> getRitualComponentList() {
         ArrayList<RitualComponent> autoAlchemyRitual = new ArrayList();
         autoAlchemyRitual.add(new RitualComponent(1, 0, 1, RitualComponent.DUSK));
         autoAlchemyRitual.add(new RitualComponent(1, 0, -1, RitualComponent.DUSK));
@@ -425,8 +359,9 @@ public class RitualEffectAutoAlchemy extends RitualEffect
         return autoAlchemyRitual;
     }
 
-    public boolean areItemStacksEqualWithWildcard(ItemStack recipeStack, ItemStack comparedStack)
-    {
-        return recipeStack.isItemEqual(comparedStack) || (recipeStack.getItemDamage() == OreDictionary.WILDCARD_VALUE && recipeStack.getItem() == comparedStack.getItem());
+    public boolean areItemStacksEqualWithWildcard(ItemStack recipeStack, ItemStack comparedStack) {
+        return recipeStack.isItemEqual(comparedStack)
+                || (recipeStack.getItemDamage() == OreDictionary.WILDCARD_VALUE
+                        && recipeStack.getItem() == comparedStack.getItem());
     }
 }

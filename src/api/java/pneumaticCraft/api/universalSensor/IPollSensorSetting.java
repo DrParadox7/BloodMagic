@@ -2,7 +2,7 @@ package pneumaticCraft.api.universalSensor;
 
 import net.minecraft.world.World;
 
-public interface IPollSensorSetting extends ISensorSetting{
+public interface IPollSensorSetting extends ISensorSetting {
 
     /**
      * The value returned here is the interval between every check in ticks (the interval of calling getRedstoneValue()).
@@ -23,5 +23,4 @@ public interface IPollSensorSetting extends ISensorSetting{
      * @return
      */
     public int getRedstoneValue(World world, int x, int y, int z, int sensorRange, String textBoxText);
-
 }

@@ -7,8 +7,7 @@ import net.minecraft.util.DamageSource;
 import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.world.World;
 
-public class EntityMeteor extends EnergyBlastProjectile
-{
+public class EntityMeteor extends EnergyBlastProjectile {
     private int meteorID;
 
     public boolean hasTerrae;
@@ -17,21 +16,18 @@ public class EntityMeteor extends EnergyBlastProjectile
     public boolean hasIncendium;
     public boolean hasTennebrae;
 
-    public EntityMeteor(World par1World)
-    {
+    public EntityMeteor(World par1World) {
         super(par1World);
         this.meteorID = 0;
     }
 
-    public EntityMeteor(World par1World, double par2, double par4, double par6, int meteorID)
-    {
+    public EntityMeteor(World par1World, double par2, double par4, double par6, int meteorID) {
         super(par1World, par2, par4, par6);
         this.meteorID = meteorID;
     }
 
     @Override
-    public void writeEntityToNBT(NBTTagCompound par1NBTTagCompound)
-    {
+    public void writeEntityToNBT(NBTTagCompound par1NBTTagCompound) {
         super.writeEntityToNBT(par1NBTTagCompound);
 
         par1NBTTagCompound.setInteger("meteorID", meteorID);
@@ -43,8 +39,7 @@ public class EntityMeteor extends EnergyBlastProjectile
     }
 
     @Override
-    public void readEntityFromNBT(NBTTagCompound par1NBTTagCompound)
-    {
+    public void readEntityFromNBT(NBTTagCompound par1NBTTagCompound) {
         super.readEntityFromNBT(par1NBTTagCompound);
 
         meteorID = par1NBTTagCompound.getInteger("meteorID");
@@ -56,34 +51,34 @@ public class EntityMeteor extends EnergyBlastProjectile
     }
 
     @Override
-    public DamageSource getDamageSource()
-    {
+    public DamageSource getDamageSource() {
         return DamageSource.fallingBlock;
     }
 
     @Override
-    public void onImpact(MovingObjectPosition mop)
-    {
-        if (worldObj.isRemote)
-        {
+    public void onImpact(MovingObjectPosition mop) {
+        if (worldObj.isRemote) {
             return;
         }
 
-        if (mop.typeOfHit == MovingObjectPosition.MovingObjectType.ENTITY && mop.entityHit != null)
-        {
+        if (mop.typeOfHit == MovingObjectPosition.MovingObjectType.ENTITY && mop.entityHit != null) {
             this.onImpact(mop.entityHit);
-        } else if (mop.typeOfHit == MovingObjectPosition.MovingObjectType.BLOCK)
-        {
-            MeteorRegistry.createMeteorImpact(worldObj, mop.blockX, mop.blockY, mop.blockZ, this.meteorID, new boolean[]{hasTerrae, hasOrbisTerrae, hasCrystallos, hasIncendium, hasTennebrae});
+        } else if (mop.typeOfHit == MovingObjectPosition.MovingObjectType.BLOCK) {
+            MeteorRegistry.createMeteorImpact(
+                    worldObj, mop.blockX, mop.blockY, mop.blockZ, this.meteorID, new boolean[] {
+                        hasTerrae, hasOrbisTerrae, hasCrystallos, hasIncendium, hasTennebrae
+                    });
         }
 
         this.setDead();
     }
 
     @Override
-    public void onImpact(Entity mop)
-    {
-        MeteorRegistry.createMeteorImpact(worldObj, (int) this.posX, (int) this.posY, (int) this.posZ, meteorID, new boolean[]{hasTerrae, hasOrbisTerrae, hasCrystallos, hasIncendium, hasTennebrae});
+    public void onImpact(Entity mop) {
+        MeteorRegistry.createMeteorImpact(
+                worldObj, (int) this.posX, (int) this.posY, (int) this.posZ, meteorID, new boolean[] {
+                    hasTerrae, hasOrbisTerrae, hasCrystallos, hasIncendium, hasTennebrae
+                });
 
         this.setDead();
     }

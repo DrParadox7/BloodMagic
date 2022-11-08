@@ -4,8 +4,7 @@ import WayofTime.alchemicalWizardry.api.alchemy.energy.ISegmentedReagentHandler;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.world.World;
 
-public interface IMasterRitualStone extends ISegmentedReagentHandler
-{
+public interface IMasterRitualStone extends ISegmentedReagentHandler {
     void performRitual(World world, int x, int y, int z, String ritualID);
 
     String getOwner();
@@ -33,12 +32,12 @@ public interface IMasterRitualStone extends ISegmentedReagentHandler
     NBTTagCompound getCustomRitualTag();
 
     void setCustomRitualTag(NBTTagCompound tag);
-    
+
     boolean areTanksEmpty();
-    
+
     int getRunningTime();
-    
+
     LocalRitualStorage getLocalStorage();
-    
+
     void setLocalStorage(LocalRitualStorage storage);
 }

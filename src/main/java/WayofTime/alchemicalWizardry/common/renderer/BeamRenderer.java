@@ -8,8 +8,7 @@ import net.minecraft.util.MathHelper;
 import net.minecraft.util.ResourceLocation;
 import org.lwjgl.opengl.GL11;
 
-public class BeamRenderer
-{
+public class BeamRenderer {
     private static final ResourceLocation field_110629_a = new ResourceLocation("textures/entity/beacon_beam.png");
 
     public int xInit;
@@ -27,15 +26,13 @@ public class BeamRenderer
 
     public double size;
 
-    public void setInitialPosition(int x, int y, int z)
-    {
+    public void setInitialPosition(int x, int y, int z) {
         this.xInit = x;
         this.yInit = y;
         this.zInit = z;
     }
 
-    public void setColourAndFinalPosition(ColourAndCoords col)
-    {
+    public void setColourAndFinalPosition(ColourAndCoords col) {
         this.colourRed = col.colourRed;
         this.colourGreen = col.colourGreen;
         this.colourBlue = col.colourBlue;
@@ -46,31 +43,27 @@ public class BeamRenderer
         this.zFinal = col.zCoord;
     }
 
-    public void setSize(double size)
-    {
+    public void setSize(double size) {
         this.size = size;
     }
 
-    protected static void bindTexture(ResourceLocation p_147499_1_)
-    {
+    protected static void bindTexture(ResourceLocation p_147499_1_) {
         TextureManager texturemanager = TileEntityRendererDispatcher.instance.field_147553_e;
 
-        if (texturemanager != null)
-        {
+        if (texturemanager != null) {
             texturemanager.bindTexture(p_147499_1_);
         }
     }
 
-    public void render(double d0, double d1, double d2)
-    {
+    public void render(double d0, double d1, double d2) {
         int xDiff = this.xFinal - this.xInit;
         int yDiff = this.yFinal - this.yInit;
         int zDiff = this.zFinal - this.zInit;
 
-        float planarAngle = (float) (Math.atan2(-zDiff, xDiff) * 180d / Math.PI); //Radians
+        float planarAngle = (float) (Math.atan2(-zDiff, xDiff) * 180d / Math.PI); // Radians
         float verticalAngle = (float) (Math.atan2(yDiff, Math.sqrt(xDiff * xDiff + zDiff + zDiff)) * 180d / Math.PI);
 
-        float distance = (float) Math.sqrt(xDiff * xDiff + yDiff * yDiff + zDiff * zDiff); //Total distance
+        float distance = (float) Math.sqrt(xDiff * xDiff + yDiff * yDiff + zDiff * zDiff); // Total distance
 
         GL11.glPushMatrix();
         float f1 = 1.0f;
@@ -84,7 +77,6 @@ public class BeamRenderer
         float f3 = -f2 * 0.2F - (float) MathHelper.floor_float(-f2 * 0.1F);
         GL11.glEnable(GL11.GL_BLEND);
         GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
-
 
         GL11.glDepthMask(false);
 
@@ -102,7 +94,7 @@ public class BeamRenderer
         double d23 = outside;
         double d24 = outside;
         double d25 = outside;
-        double d26 = (double) (distance * f1);// + 0.2;
+        double d26 = (double) (distance * f1); // + 0.2;
         double d27 = 0.0D;
         double d28 = 1.0D;
         double d29 = (double) (-1.0F + f3);
@@ -110,9 +102,9 @@ public class BeamRenderer
 
         GL11.glTranslated(d0 + 0.5, d1 + 0.5, d2 + 0.5);
 
-        GL11.glRotatef(planarAngle, 0F, 1F, 0F); //Rotate on planar axis
-        GL11.glRotatef(verticalAngle, 0F, 0F, 1F); //Rotate vertical axis
-        //GL11.glRotatef(tileAltar.getWorldObj().getWorldTime()*2f, 1F, 0F, 0F); //Rotate cylindrically
+        GL11.glRotatef(planarAngle, 0F, 1F, 0F); // Rotate on planar axis
+        GL11.glRotatef(verticalAngle, 0F, 0F, 1F); // Rotate vertical axis
+        // GL11.glRotatef(tileAltar.getWorldObj().getWorldTime()*2f, 1F, 0F, 0F); //Rotate cylindrically
 
         double offset = 0;
 

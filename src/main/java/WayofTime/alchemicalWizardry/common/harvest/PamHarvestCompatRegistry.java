@@ -2,10 +2,8 @@ package WayofTime.alchemicalWizardry.common.harvest;
 
 import WayofTime.alchemicalWizardry.api.harvest.HarvestRegistry;
 
-public class PamHarvestCompatRegistry
-{
-    public static void registerPamHandlers()
-    {
+public class PamHarvestCompatRegistry {
+    public static void registerPamHandlers() {
         registerSeededHandler("blackberry", 7);
         registerSeededHandler("blueberry", 7);
         registerSeededHandler("candleberry", 7);
@@ -100,25 +98,22 @@ public class PamHarvestCompatRegistry
         registerFruitHandler("Walnut", 7, 0);
     }
 
-    public static void registerSeededHandler(String name, int meta)
-    {
+    public static void registerSeededHandler(String name, int meta) {
         String block = "harvestcraft:pam" + name + "Crop";
         String seed = "harvestcraft:" + name + "Item";
 
         GenericSeededHarvestHandler handler = new GenericSeededHarvestHandler(block, meta, seed);
-        if (handler.isHarvesterValid())
-        {
+        if (handler.isHarvesterValid()) {
             HarvestRegistry.registerHarvestHandler(handler);
         }
     }
 
-    public static void registerFruitHandler(String name, int harvestMeta, int resetMeta)
-    {
+    public static void registerFruitHandler(String name, int harvestMeta, int resetMeta) {
         String block = "harvestcraft:pam" + name;
 
-        GenericPamSeedlessFruitHarvestHandler handler = new GenericPamSeedlessFruitHarvestHandler(block, harvestMeta, resetMeta);
-        if (handler.isHarvesterValid())
-        {
+        GenericPamSeedlessFruitHarvestHandler handler =
+                new GenericPamSeedlessFruitHarvestHandler(block, harvestMeta, resetMeta);
+        if (handler.isHarvesterValid()) {
             HarvestRegistry.registerHarvestHandler(handler);
         }
     }

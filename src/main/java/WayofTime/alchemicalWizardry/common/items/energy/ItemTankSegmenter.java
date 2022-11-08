@@ -5,6 +5,8 @@ import WayofTime.alchemicalWizardry.api.alchemy.energy.*;
 import WayofTime.alchemicalWizardry.api.items.interfaces.IReagentManipulator;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
+import java.util.LinkedList;
+import java.util.List;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
@@ -18,18 +20,14 @@ import net.minecraft.util.StatCollector;
 import net.minecraft.world.World;
 import net.minecraftforge.common.util.ForgeDirection;
 
-import java.util.LinkedList;
-import java.util.List;
-
-public class ItemTankSegmenter extends Item implements IReagentManipulator
-{
+public class ItemTankSegmenter extends Item implements IReagentManipulator {
     @SideOnly(Side.CLIENT)
     public IIcon crystalBody;
+
     @SideOnly(Side.CLIENT)
     public IIcon crystalLabel;
 
-    public ItemTankSegmenter()
-    {
+    public ItemTankSegmenter() {
         super();
         this.setCreativeTab(AlchemicalWizardry.tabBloodMagic);
         this.hasSubtypes = true;
@@ -37,28 +35,23 @@ public class ItemTankSegmenter extends Item implements IReagentManipulator
     }
 
     @Override
-    public String getItemStackDisplayName(ItemStack stack)
-    {
+    public String getItemStackDisplayName(ItemStack stack) {
         Reagent reagent = this.getReagent(stack);
         String name = super.getItemStackDisplayName(stack);
-        if (reagent != null)
-        {
+        if (reagent != null) {
             name = name + " (" + reagent.name + ")";
         }
         return name;
     }
 
     @Override
-    public void addInformation(ItemStack par1ItemStack, EntityPlayer par2EntityPlayer, List par3List, boolean par4)
-    {
+    public void addInformation(ItemStack par1ItemStack, EntityPlayer par2EntityPlayer, List par3List, boolean par4) {
         par3List.add(StatCollector.translateToLocal("tooltip.tanksegmenter.desc1"));
         par3List.add(StatCollector.translateToLocal("tooltip.tanksegmenter.desc2"));
 
-        if (!(par1ItemStack.getTagCompound() == null))
-        {
+        if (!(par1ItemStack.getTagCompound() == null)) {
             Reagent reagent = this.getReagent(par1ItemStack);
-            if (reagent != null)
-            {
+            if (reagent != null) {
                 par3List.add(StatCollector.translateToLocal("tooltip.reagent.selectedreagent") + " " + reagent.name);
             }
         }
@@ -66,25 +59,23 @@ public class ItemTankSegmenter extends Item implements IReagentManipulator
 
     @Override
     @SideOnly(Side.CLIENT)
-    public void registerIcons(IIconRegister iconRegister)
-    {
+    public void registerIcons(IIconRegister iconRegister) {
         this.crystalBody = iconRegister.registerIcon("AlchemicalWizardry:TankSegmenter1");
         this.crystalLabel = iconRegister.registerIcon("AlchemicalWizardry:TankSegmenter2");
     }
 
     @Override
     @SideOnly(Side.CLIENT)
-    public int getColorFromItemStack(ItemStack stack, int pass)
-    {
-        switch (pass)
-        {
+    public int getColorFromItemStack(ItemStack stack, int pass) {
+        switch (pass) {
             case 0:
                 return 256 * (256 * 255 + 255) + 255;
             case 1:
                 Reagent reagent = this.getReagent(stack);
-                if (reagent != null)
-                {
-                    return (reagent.getColourRed() * 256 * 256 + reagent.getColourGreen() * 256 + reagent.getColourBlue());
+                if (reagent != null) {
+                    return (reagent.getColourRed() * 256 * 256
+                            + reagent.getColourGreen() * 256
+                            + reagent.getColourBlue());
                 }
                 break;
         }
@@ -94,24 +85,20 @@ public class ItemTankSegmenter extends Item implements IReagentManipulator
 
     @Override
     @SideOnly(Side.CLIENT)
-    public boolean requiresMultipleRenderPasses()
-    {
+    public boolean requiresMultipleRenderPasses() {
         return true;
     }
 
     @Override
     @SideOnly(Side.CLIENT)
-    public int getRenderPasses(int meta)
-    {
+    public int getRenderPasses(int meta) {
         return 2;
     }
 
     @Override
     @SideOnly(Side.CLIENT)
-    public IIcon getIcon(ItemStack stack, int pass)
-    {
-        switch (pass)
-        {
+    public IIcon getIcon(ItemStack stack, int pass) {
+        switch (pass) {
             case 0:
                 return this.crystalBody;
             case 1:
@@ -121,47 +108,35 @@ public class ItemTankSegmenter extends Item implements IReagentManipulator
     }
 
     @Override
-    public ItemStack onItemRightClick(ItemStack itemStack, World world, EntityPlayer player)
-    {
-        if (world.isRemote)
-        {
+    public ItemStack onItemRightClick(ItemStack itemStack, World world, EntityPlayer player) {
+        if (world.isRemote) {
             return itemStack;
         }
         MovingObjectPosition movingobjectposition = this.getMovingObjectPositionFromPlayer(world, player, false);
 
-        if (movingobjectposition == null)
-        {
+        if (movingobjectposition == null) {
             return itemStack;
-        } else
-        {
-            if (movingobjectposition.typeOfHit == MovingObjectPosition.MovingObjectType.BLOCK)
-            {
+        } else {
+            if (movingobjectposition.typeOfHit == MovingObjectPosition.MovingObjectType.BLOCK) {
                 int x = movingobjectposition.blockX;
                 int y = movingobjectposition.blockY;
                 int z = movingobjectposition.blockZ;
                 TileEntity tile = world.getTileEntity(x, y, z);
-                if (!(tile instanceof ISegmentedReagentHandler))
-                {
+                if (!(tile instanceof ISegmentedReagentHandler)) {
                     return itemStack;
                 }
                 ISegmentedReagentHandler reagentHandler = (ISegmentedReagentHandler) tile;
 
-                if (player.isSneaking())
-                {
+                if (player.isSneaking()) {
                     ReagentContainerInfo[] infos = reagentHandler.getContainerInfo(ForgeDirection.UNKNOWN);
-                    if (infos != null)
-                    {
+                    if (infos != null) {
                         List<Reagent> reagentList = new LinkedList();
-                        for (ReagentContainerInfo info : infos)
-                        {
-                            if (info != null)
-                            {
+                        for (ReagentContainerInfo info : infos) {
+                            if (info != null) {
                                 ReagentStack reagentStack = info.reagent;
-                                if (reagentStack != null)
-                                {
+                                if (reagentStack != null) {
                                     Reagent reagent = reagentStack.reagent;
-                                    if (reagent != null)
-                                    {
+                                    if (reagent != null) {
                                         reagentList.add(reagent);
                                     }
                                 }
@@ -170,57 +145,49 @@ public class ItemTankSegmenter extends Item implements IReagentManipulator
                         Reagent pastReagent = this.getReagent(itemStack);
                         boolean goForNext = false;
                         boolean hasFound = false;
-                        for (Reagent reagent : reagentList)
-                        {
-                            if (goForNext)
-                            {
+                        for (Reagent reagent : reagentList) {
+                            if (goForNext) {
                                 goForNext = false;
                                 break;
                             }
 
-                            if (reagent == pastReagent)
-                            {
+                            if (reagent == pastReagent) {
                                 goForNext = true;
                                 hasFound = true;
                             }
                         }
-                        if (hasFound)
-                        {
-                            if (goForNext)
-                            {
+                        if (hasFound) {
+                            if (goForNext) {
                                 this.setReagentWithNotification(itemStack, reagentList.get(0), player);
                             }
-                        } else
-                        {
-                            if (reagentList.size() >= 1)
-                            {
+                        } else {
+                            if (reagentList.size() >= 1) {
                                 this.setReagentWithNotification(itemStack, reagentList.get(0), player);
                             }
                         }
                     }
-                } else
-                {
+                } else {
                     Reagent reagent = this.getReagent(itemStack);
-                    if (reagent == null)
-                    {
-                        //TODO: Send message that "All are wiped"
+                    if (reagent == null) {
+                        // TODO: Send message that "All are wiped"
                         reagentHandler.getAttunedTankMap().clear();
                         return itemStack;
                     }
                     int totalTankSize = reagentHandler.getNumberOfTanks();
                     int numberAssigned = reagentHandler.getTanksTunedToReagent(reagent) + 1;
 
-                    if (numberAssigned > totalTankSize)
-                    {
+                    if (numberAssigned > totalTankSize) {
                         numberAssigned = 0;
                     }
 
-                    player.addChatComponentMessage(new ChatComponentText(StatCollector.translateToLocal("message.tanksegmenter.nowhas") + " " + numberAssigned + " " + StatCollector.translateToLocal("message.tanksegmenter.tankssetto") + " " + reagent.name));
+                    player.addChatComponentMessage(new ChatComponentText(
+                            StatCollector.translateToLocal("message.tanksegmenter.nowhas") + " " + numberAssigned + " "
+                                    + StatCollector.translateToLocal("message.tanksegmenter.tankssetto") + " "
+                                    + reagent.name));
 
                     reagentHandler.setTanksTunedToReagent(reagent, numberAssigned);
                 }
-            } else if (movingobjectposition.typeOfHit == MovingObjectPosition.MovingObjectType.MISS)
-            {
+            } else if (movingobjectposition.typeOfHit == MovingObjectPosition.MovingObjectType.MISS) {
                 this.setReagent(itemStack, null);
             }
         }
@@ -228,10 +195,8 @@ public class ItemTankSegmenter extends Item implements IReagentManipulator
         return itemStack;
     }
 
-    public Reagent getReagent(ItemStack stack)
-    {
-        if (!stack.hasTagCompound())
-        {
+    public Reagent getReagent(ItemStack stack) {
+        if (!stack.hasTagCompound()) {
             stack.setTagCompound(new NBTTagCompound());
         }
 
@@ -240,10 +205,8 @@ public class ItemTankSegmenter extends Item implements IReagentManipulator
         return ReagentRegistry.getReagentForKey(tag.getString("reagent"));
     }
 
-    public void setReagent(ItemStack stack, Reagent reagent)
-    {
-        if (!stack.hasTagCompound())
-        {
+    public void setReagent(ItemStack stack, Reagent reagent) {
+        if (!stack.hasTagCompound()) {
             stack.setTagCompound(new NBTTagCompound());
         }
 
@@ -252,13 +215,12 @@ public class ItemTankSegmenter extends Item implements IReagentManipulator
         tag.setString("reagent", ReagentRegistry.getKeyForReagent(reagent));
     }
 
-    public void setReagentWithNotification(ItemStack stack, Reagent reagent, EntityPlayer player)
-    {
+    public void setReagentWithNotification(ItemStack stack, Reagent reagent, EntityPlayer player) {
         this.setReagent(stack, reagent);
 
-        if (reagent != null)
-        {
-            player.addChatComponentMessage(new ChatComponentText(StatCollector.translateToLocal("message.tanksegmenter.setto") + " " + reagent.name));
+        if (reagent != null) {
+            player.addChatComponentMessage(new ChatComponentText(
+                    StatCollector.translateToLocal("message.tanksegmenter.setto") + " " + reagent.name));
         }
     }
 }

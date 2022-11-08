@@ -9,6 +9,8 @@ import WayofTime.alchemicalWizardry.common.spell.complex.effect.SpellHelper;
 import WayofTime.alchemicalWizardry.common.tileEntity.TESocket;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
+import java.util.ArrayList;
+import java.util.List;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.renderer.texture.IIconRegister;
@@ -21,18 +23,13 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
 
-import java.util.ArrayList;
-import java.util.List;
-
-public class ArmourForge extends Block
-{
+public class ArmourForge extends Block {
     public static List<ArmourComponent> helmetList = new ArrayList();
     public static List<ArmourComponent> plateList = new ArrayList();
     public static List<ArmourComponent> leggingsList = new ArrayList();
     public static List<ArmourComponent> bootsList = new ArrayList();
 
-    public ArmourForge()
-    {
+    public ArmourForge() {
         super(Material.iron);
         setHardness(2.0F);
         setResistance(5.0F);
@@ -42,38 +39,33 @@ public class ArmourForge extends Block
 
     @Override
     @SideOnly(Side.CLIENT)
-    public void registerBlockIcons(IIconRegister iconRegister)
-    {
+    public void registerBlockIcons(IIconRegister iconRegister) {
         this.blockIcon = iconRegister.registerIcon("AlchemicalWizardry:SoulForge");
     }
 
     @Override
-    public boolean onBlockActivated(World world, int x, int y, int z, EntityPlayer player, int idk, float what, float these, float are)
-    {
-        if (world.isRemote)
-        {
+    public boolean onBlockActivated(
+            World world, int x, int y, int z, EntityPlayer player, int idk, float what, float these, float are) {
+        if (world.isRemote) {
             return false;
         }
 
         int armourType = getArmourType(world, x, y, z);
 
-        if (armourType == -1)
-        {
+        if (armourType == -1) {
             return false;
         }
 
         int direction = getDirectionForArmourType(world, x, y, z, armourType);
 
-        if (!isParadigmValid(armourType, direction, world, x, y, z))
-        {
+        if (!isParadigmValid(armourType, direction, world, x, y, z)) {
             return false;
         }
 
         List<ArmourComponent> list = null;
         ItemStack armourPiece = null;
 
-        switch (armourType)
-        {
+        switch (armourType) {
             case 0:
                 list = plateList;
                 armourPiece = new ItemStack(ModItems.boundPlate, 1, 0);
@@ -95,29 +87,24 @@ public class ArmourForge extends Block
                 break;
         }
 
-        if (list == null)
-        {
+        if (list == null) {
             return false;
         }
 
-        if (armourPiece == null)
-        {
+        if (armourPiece == null) {
             return false;
         }
 
-        if (armourPiece.getTagCompound() == null)
-        {
+        if (armourPiece.getTagCompound() == null) {
             armourPiece.setTagCompound(new NBTTagCompound());
         }
 
-        for (ArmourComponent ac : list)
-        {
+        for (ArmourComponent ac : list) {
             int xOff = ac.getXOff();
             int zOff = ac.getZOff();
             TileEntity tileEntity;
 
-            switch (direction)
-            {
+            switch (direction) {
                 case 1:
                     tileEntity = world.getTileEntity(x + xOff, y, z - zOff);
                     break;
@@ -146,8 +133,7 @@ public class ArmourForge extends Block
                     tileEntity = null;
             }
 
-            if (tileEntity instanceof TESocket)
-            {
+            if (tileEntity instanceof TESocket) {
                 ItemStack itemStack = ((TESocket) tileEntity).getStackInSlot(0);
                 int xCoord = tileEntity.xCoord;
                 int yCoord = tileEntity.yCoord;
@@ -155,17 +141,15 @@ public class ArmourForge extends Block
                 ((TESocket) tileEntity).setInventorySlotContents(0, null);
                 world.setBlockToAir(tileEntity.xCoord, tileEntity.yCoord, tileEntity.zCoord);
 
-                for (int i = 0; i < 8; i++)
-                {
-                    SpellHelper.sendIndexedParticleToAllAround(world, xCoord, yCoord, zCoord, 20, world.provider.dimensionId, 1, xCoord, yCoord, zCoord);
+                for (int i = 0; i < 8; i++) {
+                    SpellHelper.sendIndexedParticleToAllAround(
+                            world, xCoord, yCoord, zCoord, 20, world.provider.dimensionId, 1, xCoord, yCoord, zCoord);
                 }
 
-                if (itemStack != null)
-                {
+                if (itemStack != null) {
                     Item item = itemStack.getItem();
 
-                    if (item instanceof ArmourUpgrade)
-                    {
+                    if (item instanceof ArmourUpgrade) {
                         ((BoundArmour) armourPiece.getItem()).hasAddedToInventory(armourPiece, itemStack.copy());
                         ((TESocket) tileEntity).setInventorySlotContents(0, null);
                     }
@@ -173,8 +157,7 @@ public class ArmourForge extends Block
             }
         }
 
-        if (armourPiece != null)
-        {
+        if (armourPiece != null) {
             int xOff = (world.rand.nextInt(11) - 5);
             int zOff = (int) (Math.sqrt(25 - xOff * xOff) * (world.rand.nextInt(2) - 0.5) * 2);
             world.addWeatherEffect(new EntityLightningBolt(world, x + xOff, y + 5, z + zOff));
@@ -184,13 +167,10 @@ public class ArmourForge extends Block
         return true;
     }
 
-    //0 for plate, 1 for leggings, 2 for helmet, 3 for boots
-    public int getArmourType(World world, int x, int y, int z)
-    {
-        for (int i = 0; i <= 3; i++)
-        {
-            if (getDirectionForArmourType(world, x, y, z, i) != -1)
-            {
+    // 0 for plate, 1 for leggings, 2 for helmet, 3 for boots
+    public int getArmourType(World world, int x, int y, int z) {
+        for (int i = 0; i <= 3; i++) {
+            if (getDirectionForArmourType(world, x, y, z, i) != -1) {
                 return i;
             }
         }
@@ -198,12 +178,9 @@ public class ArmourForge extends Block
         return -1;
     }
 
-    public int getDirectionForArmourType(World world, int x, int y, int z, int armourType)
-    {
-        for (int i = 1; i <= 6; i++)
-        {
-            if (isParadigmValid(armourType, i, world, x, y, z))
-            {
+    public int getDirectionForArmourType(World world, int x, int y, int z, int armourType) {
+        for (int i = 1; i <= 6; i++) {
+            if (isParadigmValid(armourType, i, world, x, y, z)) {
                 return i;
             }
         }
@@ -211,12 +188,10 @@ public class ArmourForge extends Block
         return -1;
     }
 
-    public boolean isParadigmValid(int armourType, int direction, World world, int x, int y, int z)
-    {
+    public boolean isParadigmValid(int armourType, int direction, World world, int x, int y, int z) {
         List<ArmourComponent> list = null;
 
-        switch (armourType)
-        {
+        switch (armourType) {
             case 0:
                 list = plateList;
                 break;
@@ -234,61 +209,52 @@ public class ArmourForge extends Block
                 break;
         }
 
-        if (list == null)
-        {
+        if (list == null) {
             return false;
         }
 
-        for (ArmourComponent ac : list)
-        {
+        for (ArmourComponent ac : list) {
             int xOff = ac.getXOff();
             int zOff = ac.getZOff();
 
-            switch (direction)
-            {
+            switch (direction) {
                 case 1:
-                    if (!(world.getTileEntity(x + xOff, y, z - zOff) instanceof TESocket))
-                    {
+                    if (!(world.getTileEntity(x + xOff, y, z - zOff) instanceof TESocket)) {
                         return false;
                     }
 
                     break;
 
                 case 2:
-                    if (!(world.getTileEntity(x + zOff, y, z + xOff) instanceof TESocket))
-                    {
+                    if (!(world.getTileEntity(x + zOff, y, z + xOff) instanceof TESocket)) {
                         return false;
                     }
 
                     break;
 
                 case 3:
-                    if (!(world.getTileEntity(x - xOff, y, z + zOff) instanceof TESocket))
-                    {
+                    if (!(world.getTileEntity(x - xOff, y, z + zOff) instanceof TESocket)) {
                         return false;
                     }
 
                     break;
 
                 case 4:
-                    if (!(world.getTileEntity(x - zOff, y, z - xOff) instanceof TESocket))
-                    {
+                    if (!(world.getTileEntity(x - zOff, y, z - xOff) instanceof TESocket)) {
                         return false;
                     }
 
                     break;
 
                 case 5:
-                    if (!(world.getTileEntity(x + xOff, y + zOff, z) instanceof TESocket))
-                    {
+                    if (!(world.getTileEntity(x + xOff, y + zOff, z) instanceof TESocket)) {
                         return false;
                     }
 
                     break;
 
                 case 6:
-                    if (!(world.getTileEntity(x, y + zOff, z + xOff) instanceof TESocket))
-                    {
+                    if (!(world.getTileEntity(x, y + zOff, z + xOff) instanceof TESocket)) {
                         return false;
                     }
 
@@ -302,8 +268,7 @@ public class ArmourForge extends Block
         return true;
     }
 
-    public static void initializeRecipes()
-    {
+    public static void initializeRecipes() {
         helmetList.add(new ArmourComponent(-1, 1));
         helmetList.add(new ArmourComponent(0, 1));
         helmetList.add(new ArmourComponent(1, 1));

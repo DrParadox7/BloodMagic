@@ -1,8 +1,5 @@
 package WayofTime.alchemicalWizardry.common.summoning;
 
-import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.entity.passive.EntityPig;
-import net.minecraft.world.World;
 import WayofTime.alchemicalWizardry.AlchemicalWizardry;
 import WayofTime.alchemicalWizardry.api.summoningRegistry.SummoningHelper;
 import WayofTime.alchemicalWizardry.common.demonVillage.demonHoard.demon.EntityMinorDemonGrunt;
@@ -24,116 +21,96 @@ import WayofTime.alchemicalWizardry.common.entity.mob.EntityShadeElemental;
 import WayofTime.alchemicalWizardry.common.entity.mob.EntitySmallEarthGolem;
 import WayofTime.alchemicalWizardry.common.entity.mob.EntityWaterElemental;
 import WayofTime.alchemicalWizardry.common.entity.mob.EntityWingedFireDemon;
+import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.passive.EntityPig;
+import net.minecraft.world.World;
 
-public class SummoningHelperAW extends SummoningHelper
-{
-    public SummoningHelperAW(String id)
-    {
+public class SummoningHelperAW extends SummoningHelper {
+    public SummoningHelperAW(String id) {
         super(id);
     }
 
-    public EntityLivingBase getEntity(World worldObj)
-    {
-        if (this.id.equals(AlchemicalWizardry.entityFallenAngelID))
-        {
+    public EntityLivingBase getEntity(World worldObj) {
+        if (this.id.equals(AlchemicalWizardry.entityFallenAngelID)) {
             return new EntityFallenAngel(worldObj);
         }
 
-        if (this.id.equals(AlchemicalWizardry.entityLowerGuardianID))
-        {
+        if (this.id.equals(AlchemicalWizardry.entityLowerGuardianID)) {
             return new EntityLowerGuardian(worldObj);
         }
 
-        if (this.id.equals(AlchemicalWizardry.entityBileDemonID))
-        {
+        if (this.id.equals(AlchemicalWizardry.entityBileDemonID)) {
             return new EntityBileDemon(worldObj);
         }
 
-        if (this.id.equals(AlchemicalWizardry.entityWingedFireDemonID))
-        {
+        if (this.id.equals(AlchemicalWizardry.entityWingedFireDemonID)) {
             return new EntityWingedFireDemon(worldObj);
         }
 
-        if (this.id.equals(AlchemicalWizardry.entitySmallEarthGolemID))
-        {
+        if (this.id.equals(AlchemicalWizardry.entitySmallEarthGolemID)) {
             return new EntitySmallEarthGolem(worldObj);
         }
 
-        if (this.id.equals(AlchemicalWizardry.entityIceDemonID))
-        {
+        if (this.id.equals(AlchemicalWizardry.entityIceDemonID)) {
             return new EntityIceDemon(worldObj);
         }
 
-        if (this.id.equals(AlchemicalWizardry.entityBoulderFistID))
-        {
+        if (this.id.equals(AlchemicalWizardry.entityBoulderFistID)) {
             return new EntityBoulderFist(worldObj);
         }
 
-        if (this.id.equals(AlchemicalWizardry.entityShadeID))
-        {
+        if (this.id.equals(AlchemicalWizardry.entityShadeID)) {
             return new EntityShade(worldObj);
         }
 
-        if (this.id.equals(AlchemicalWizardry.entityAirElementalID))
-        {
+        if (this.id.equals(AlchemicalWizardry.entityAirElementalID)) {
             return new EntityAirElemental(worldObj);
         }
 
-        if (this.id.equals(AlchemicalWizardry.entityWaterElementalID))
-        {
+        if (this.id.equals(AlchemicalWizardry.entityWaterElementalID)) {
             return new EntityWaterElemental(worldObj);
         }
 
-        if (this.id.equals(AlchemicalWizardry.entityEarthElementalID))
-        {
+        if (this.id.equals(AlchemicalWizardry.entityEarthElementalID)) {
             return new EntityEarthElemental(worldObj);
         }
 
-        if (this.id.equals(AlchemicalWizardry.entityFireElementalID))
-        {
+        if (this.id.equals(AlchemicalWizardry.entityFireElementalID)) {
             return new EntityFireElemental(worldObj);
         }
 
-        if (this.id.equals(AlchemicalWizardry.entityShadeElementalID))
-        {
+        if (this.id.equals(AlchemicalWizardry.entityShadeElementalID)) {
             return new EntityShadeElemental(worldObj);
         }
 
-        if (this.id.equals(AlchemicalWizardry.entityHolyElementalID))
-        {
+        if (this.id.equals(AlchemicalWizardry.entityHolyElementalID)) {
             return new EntityHolyElemental(worldObj);
         }
 
-        if(this.id.equals(AlchemicalWizardry.entityMinorDemonGruntID))
-        {
-        	return new EntityMinorDemonGrunt(worldObj);
+        if (this.id.equals(AlchemicalWizardry.entityMinorDemonGruntID)) {
+            return new EntityMinorDemonGrunt(worldObj);
         }
-        
-        if(this.id.equals(AlchemicalWizardry.entityMinorDemonGruntFireID))
-        {
-        	return new EntityMinorDemonGruntFire(worldObj);
+
+        if (this.id.equals(AlchemicalWizardry.entityMinorDemonGruntFireID)) {
+            return new EntityMinorDemonGruntFire(worldObj);
         }
-        
-        if(this.id.equals(AlchemicalWizardry.entityMinorDemonGruntEarthID))
-        {
-        	return new EntityMinorDemonGruntEarth(worldObj);
+
+        if (this.id.equals(AlchemicalWizardry.entityMinorDemonGruntEarthID)) {
+            return new EntityMinorDemonGruntEarth(worldObj);
         }
-        
-        if(this.id.equals(AlchemicalWizardry.entityMinorDemonGruntWindID))
-        {
-        	return new EntityMinorDemonGruntWind(worldObj);
+
+        if (this.id.equals(AlchemicalWizardry.entityMinorDemonGruntWindID)) {
+            return new EntityMinorDemonGruntWind(worldObj);
         }
-        
-        if(this.id.equals(AlchemicalWizardry.entityMinorDemonGruntIceID))
-        {
-        	return new EntityMinorDemonGruntIce(worldObj);
+
+        if (this.id.equals(AlchemicalWizardry.entityMinorDemonGruntIceID)) {
+            return new EntityMinorDemonGruntIce(worldObj);
         }
-        
+
         return new EntityPig(worldObj);
     }
 
-    public String getSummoningHelperID()
-    {
+    public String getSummoningHelperID() {
         return id;
     }
 }

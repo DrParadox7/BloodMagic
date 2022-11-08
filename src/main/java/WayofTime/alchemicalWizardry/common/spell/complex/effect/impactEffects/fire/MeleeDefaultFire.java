@@ -6,10 +6,8 @@ import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.world.World;
 
-public class MeleeDefaultFire extends ExtrapolatedMeleeEntityEffect
-{
-    public MeleeDefaultFire(int power, int potency, int cost)
-    {
+public class MeleeDefaultFire extends ExtrapolatedMeleeEntityEffect {
+    public MeleeDefaultFire(int power, int potency, int cost) {
         super(power, potency, cost);
         this.setRange(3 + 0.3f * potency);
         this.setRadius(2 + 0.3f * potency);
@@ -17,10 +15,8 @@ public class MeleeDefaultFire extends ExtrapolatedMeleeEntityEffect
     }
 
     @Override
-    protected boolean entityEffect(World world, Entity entity, EntityPlayer entityPlayer)
-    {
-        if (entity instanceof EntityLiving)
-        {
+    protected boolean entityEffect(World world, Entity entity, EntityPlayer entityPlayer) {
+        if (entity instanceof EntityLiving) {
             entity.setFire(3 * this.powerUpgrades + 3);
             return true;
         }

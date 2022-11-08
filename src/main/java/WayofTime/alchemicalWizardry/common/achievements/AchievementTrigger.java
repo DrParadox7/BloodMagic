@@ -7,21 +7,16 @@ import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
 import net.minecraft.stats.Achievement;
 
-public class AchievementTrigger
-{
+public class AchievementTrigger {
     @SubscribeEvent
-    public void onItemPickedUp(PlayerEvent.ItemPickupEvent event)
-    {
-        for (Item item : AchievementsRegistry.pickupList)
-        {
+    public void onItemPickedUp(PlayerEvent.ItemPickupEvent event) {
+        for (Item item : AchievementsRegistry.pickupList) {
             ItemStack stack = event.pickedUp.getEntityItem();
 
-            if (stack != null && stack.getItem() == item)
-            {
+            if (stack != null && stack.getItem() == item) {
                 Achievement achievement = AchievementsRegistry.getAchievementForItem(item);
 
-                if (achievement != null)
-                {
+                if (achievement != null) {
                     event.player.addStat(achievement, 1);
                 }
             }
@@ -29,27 +24,21 @@ public class AchievementTrigger
     }
 
     @SubscribeEvent
-    public void onItemCrafted(PlayerEvent.ItemCraftedEvent event)
-    {
-        for (Item item : AchievementsRegistry.craftinglist)
-        {
-            if (event.crafting != null)
-            {
-                if (event.crafting.getItem() == item)
-                {
+    public void onItemCrafted(PlayerEvent.ItemCraftedEvent event) {
+        for (Item item : AchievementsRegistry.craftinglist) {
+            if (event.crafting != null) {
+                if (event.crafting.getItem() == item) {
                     Achievement achievement = AchievementsRegistry.getAchievementForItem(event.crafting.getItem());
 
-                    if (achievement != null)
-                    {
+                    if (achievement != null) {
                         event.player.addStat(achievement, 1);
                     }
                 }
-                if (event.crafting.getItem() instanceof ItemBlock)
-                {
-                    Achievement achievement = AchievementsRegistry.getAchievementForBlock(((ItemBlock) event.crafting.getItem()).field_150939_a);
+                if (event.crafting.getItem() instanceof ItemBlock) {
+                    Achievement achievement = AchievementsRegistry.getAchievementForBlock(
+                            ((ItemBlock) event.crafting.getItem()).field_150939_a);
 
-                    if (achievement != null)
-                    {
+                    if (achievement != null) {
                         event.player.addStat(achievement, 1);
                     }
                 }

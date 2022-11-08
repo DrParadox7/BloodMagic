@@ -1,14 +1,13 @@
 package pneumaticCraft.api.client.pneumaticHelmet;
 
 import java.util.List;
-
 import net.minecraft.entity.Entity;
 
 /**
  * Implement this class and register it by adding it to the entityTrackEntries class.
  * There needs to be a parameterless constructor. For every entity that's applicable for this definition, an instance is created.
  */
-public interface IEntityTrackEntry{
+public interface IEntityTrackEntry {
     /**
      * Return true if you want to add a tooltip for the given entity.
      * @param entity
@@ -39,11 +38,11 @@ public interface IEntityTrackEntry{
     /**
      * Just a basic implementation class that can be used if an update and render method isn't needed.
      */
-    public static abstract class EntityTrackEntry implements IEntityTrackEntry{
+    public abstract static class EntityTrackEntry implements IEntityTrackEntry {
         @Override
-        public void update(Entity entity){}
+        public void update(Entity entity) {}
 
         @Override
-        public void render(Entity entity, float partialTicks){}
+        public void render(Entity entity, float partialTicks) {}
     }
 }

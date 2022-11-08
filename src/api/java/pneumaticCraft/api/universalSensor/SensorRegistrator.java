@@ -3,7 +3,7 @@ package pneumaticCraft.api.universalSensor;
 /**
  * With this class you can register your own sensors.
  */
-public class SensorRegistrator{
+public class SensorRegistrator {
     /**
      * This field will be initialized in the PreInit phase of PneumaticCraft's loading phase.
      * With this field you can register every Universal Sensor sensor you want. Just pass a new instance
@@ -11,7 +11,7 @@ public class SensorRegistrator{
      */
     public static ISensorRegistrator sensorRegistrator;
 
-    public static interface ISensorRegistrator{
+    public static interface ISensorRegistrator {
         /**
          * Registry for IPollSensorSetting, EntityPollSensor and IEventSensorSetting, and any other instance of ISensorSetting.
          * @param sensor

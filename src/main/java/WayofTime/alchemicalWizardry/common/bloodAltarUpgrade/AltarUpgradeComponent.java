@@ -1,7 +1,6 @@
 package WayofTime.alchemicalWizardry.common.bloodAltarUpgrade;
 
-public class AltarUpgradeComponent
-{
+public class AltarUpgradeComponent {
     private int speedUpgrades;
     private int efficiencyUpgrades;
     private int sacrificeUpgrades;
@@ -12,8 +11,7 @@ public class AltarUpgradeComponent
     private int betterCapacitiveUpgrades;
     private int accelerationUpgrades;
 
-    public AltarUpgradeComponent()
-    {
+    public AltarUpgradeComponent() {
         speedUpgrades = 0;
         efficiencyUpgrades = 0;
         sacrificeUpgrades = 0;
@@ -25,93 +23,75 @@ public class AltarUpgradeComponent
         accelerationUpgrades = 0;
     }
 
-    public void addSpeedUpgrade()
-    {
+    public void addSpeedUpgrade() {
         speedUpgrades++;
     }
 
-    public void addEfficiencyUpgrade()
-    {
+    public void addEfficiencyUpgrade() {
         efficiencyUpgrades++;
     }
 
-    public void addSacrificeUpgrade()
-    {
+    public void addSacrificeUpgrade() {
         sacrificeUpgrades++;
     }
 
-    public void addSelfSacrificeUpgrade()
-    {
+    public void addSelfSacrificeUpgrade() {
         selfSacrificeUpgrades++;
     }
 
-    public void addDisplacementUpgrade()
-    {
+    public void addDisplacementUpgrade() {
         displacementUpgrades++;
     }
 
-    public void addaltarCapacitiveUpgrade()
-    {
+    public void addaltarCapacitiveUpgrade() {
         altarCapacitiveUpgrades++;
     }
 
-    public void addorbCapacitiveUpgrade()
-    {
+    public void addorbCapacitiveUpgrade() {
         orbCapacitiveUpgrades++;
     }
 
-    public void addBetterCapacitiveUpgrade()
-    {
+    public void addBetterCapacitiveUpgrade() {
         betterCapacitiveUpgrades++;
     }
-    
-    public void addAccelerationUpgrade()
-    {
-    	accelerationUpgrades++;
+
+    public void addAccelerationUpgrade() {
+        accelerationUpgrades++;
     }
 
-    public int getSpeedUpgrades()
-    {
+    public int getSpeedUpgrades() {
         return speedUpgrades;
     }
 
-    public int getEfficiencyUpgrades()
-    {
+    public int getEfficiencyUpgrades() {
         return efficiencyUpgrades;
     }
 
-    public int getSacrificeUpgrades()
-    {
+    public int getSacrificeUpgrades() {
         return sacrificeUpgrades;
     }
 
-    public int getSelfSacrificeUpgrades()
-    {
+    public int getSelfSacrificeUpgrades() {
         return selfSacrificeUpgrades;
     }
 
-    public int getDisplacementUpgrades()
-    {
+    public int getDisplacementUpgrades() {
         return displacementUpgrades;
     }
 
-    public int getAltarCapacitiveUpgrades()
-    {
+    public int getAltarCapacitiveUpgrades() {
         return this.altarCapacitiveUpgrades;
     }
 
-    public int getOrbCapacitiveUpgrades()
-    {
+    public int getOrbCapacitiveUpgrades() {
         return this.orbCapacitiveUpgrades;
     }
 
-    public int getBetterCapacitiveUpgrades()
-    {
+    public int getBetterCapacitiveUpgrades() {
         return this.betterCapacitiveUpgrades;
     }
-    
-    public int getAccelerationUpgrades()
-    {
-    	return this.accelerationUpgrades;
+
+    public int getAccelerationUpgrades() {
+        return this.accelerationUpgrades;
     }
 }

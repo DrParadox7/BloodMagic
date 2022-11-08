@@ -3,7 +3,6 @@ package WayofTime.alchemicalWizardry.common.tweaker;
 import static minetweaker.api.minecraft.MineTweakerMC.getItemStack;
 
 import java.util.ArrayList;
-
 import minetweaker.api.item.IIngredient;
 import minetweaker.api.item.IItemStack;
 import minetweaker.api.oredict.IOreDictEntry;
@@ -61,7 +60,7 @@ public class MTHelper {
             prep.add("abc");
             prep.add("def");
             prep.add("ghi");
-            char[][] map = new char[][] { { 'a', 'b', 'c' }, { 'd', 'e', 'f' }, { 'g', 'h', 'i' } };
+            char[][] map = new char[][] {{'a', 'b', 'c'}, {'d', 'e', 'f'}, {'g', 'h', 'i'}};
             for (int x = 0; x < ingredients.length; x++) {
                 if (ingredients[x] != null) {
                     for (int y = 0; y < ingredients[x].length; y++) {

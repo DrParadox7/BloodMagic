@@ -1,11 +1,8 @@
 package WayofTime.alchemicalWizardry;
 
-import WayofTime.alchemicalWizardry.common.items.*;
-import net.minecraft.creativetab.CreativeTabs;
-import net.minecraft.init.Items;
-import net.minecraft.item.Item;
 import WayofTime.alchemicalWizardry.api.items.ItemSpellMultiTool;
 import WayofTime.alchemicalWizardry.api.spell.SpellParadigmTool;
+import WayofTime.alchemicalWizardry.common.items.*;
 import WayofTime.alchemicalWizardry.common.items.armour.BoundArmour;
 import WayofTime.alchemicalWizardry.common.items.armour.OmegaArmourEarth;
 import WayofTime.alchemicalWizardry.common.items.armour.OmegaArmourFire;
@@ -52,6 +49,9 @@ import WayofTime.alchemicalWizardry.common.items.sigil.SigilVoid;
 import WayofTime.alchemicalWizardry.common.items.sigil.SigilWater;
 import WayofTime.alchemicalWizardry.common.items.sigil.holding.SigilOfHolding;
 import cpw.mods.fml.common.registry.GameRegistry;
+import net.minecraft.creativetab.CreativeTabs;
+import net.minecraft.init.Items;
+import net.minecraft.item.Item;
 
 /**
  * Created with IntelliJ IDEA.
@@ -59,8 +59,7 @@ import cpw.mods.fml.common.registry.GameRegistry;
  * Date: 17/01/14
  * Time: 19:48
  */
-public class ModItems
-{
+public class ModItems {
     public static Item weakBloodOrb;
     public static Item apprenticeBloodOrb;
     public static Item magicianBloodOrb;
@@ -207,8 +206,7 @@ public class ModItems
 
     public static Item ritualDismantler;
 
-    public static void init()
-    {
+    public static void init() {
         weakBloodOrb = new EnergyBattery(5000).setUnlocalizedName("weakBloodOrb");
         apprenticeBloodOrb = new ApprenticeBloodOrb(25000).setUnlocalizedName("apprenticeBloodOrb");
         magicianBloodOrb = new MagicianBloodOrb(150000).setUnlocalizedName("magicianBloodOrb");
@@ -270,7 +268,8 @@ public class ModItems
         sigilOfWind = new SigilOfWind().setUnlocalizedName("sigilOfWind");
         telepositionFocus = new TelepositionFocus(1).setUnlocalizedName("telepositionFocus");
         enhancedTelepositionFocus = new EnhancedTelepositionFocus().setUnlocalizedName("enhancedTelepositionFocus");
-        reinforcedTelepositionFocus = new ReinforcedTelepositionFocus().setUnlocalizedName("reinforcedTelepositionFocus");
+        reinforcedTelepositionFocus =
+                new ReinforcedTelepositionFocus().setUnlocalizedName("reinforcedTelepositionFocus");
         demonicTelepositionFocus = new DemonicTelepositionFocus().setUnlocalizedName("demonicTelepositionFocus");
         imbuedSlate = new AWBaseItems().setUnlocalizedName("imbuedSlate");
         demonicSlate = new AWBaseItems().setUnlocalizedName("demonicSlate");
@@ -292,7 +291,10 @@ public class ModItems
         energyBazookaThirdTier = new EnergyBazooka(3).setUnlocalizedName("energyBazookaThirdTier");
         itemBloodLightSigil = new SigilBloodLight().setUnlocalizedName("bloodLightSigil");
         itemComplexSpellCrystal = new ItemComplexSpellCrystal().setUnlocalizedName("itemComplexSpellCrystal");
-        bucketLife = new LifeBucket(ModBlocks.blockLifeEssence).setUnlocalizedName("bucketLife").setContainerItem(Items.bucket).setCreativeTab(CreativeTabs.tabMisc);
+        bucketLife = new LifeBucket(ModBlocks.blockLifeEssence)
+                .setUnlocalizedName("bucketLife")
+                .setContainerItem(Items.bucket)
+                .setCreativeTab(CreativeTabs.tabMisc);
         itemSigilOfEnderSeverance = (new SigilOfEnderSeverance()).setUnlocalizedName("itemSigilOfEnderSeverance");
         baseItems = new ItemComponents().setUnlocalizedName("baseItems");
         baseAlchemyItems = new ItemAlchemyBase().setUnlocalizedName("baseAlchemyItems");
@@ -343,8 +345,7 @@ public class ModItems
         ritualDismantler = new ItemRitualDismantler().setUnlocalizedName("ritualDismantler");
     }
 
-    public static void registerItems()
-    {
+    public static void registerItems() {
         GameRegistry.registerItem(ModItems.weakBloodOrb, "weakBloodOrb");
         GameRegistry.registerItem(ModItems.apprenticeBloodOrb, "apprenticeBloodOrb");
         GameRegistry.registerItem(ModItems.magicianBloodOrb, "magicianBloodOrb");

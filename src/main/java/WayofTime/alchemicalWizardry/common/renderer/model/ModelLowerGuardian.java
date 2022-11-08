@@ -7,9 +7,8 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.util.MathHelper;
 
-public class ModelLowerGuardian extends ModelBase
-{
-    //fields
+public class ModelLowerGuardian extends ModelBase {
+    // fields
     ModelRenderer Body;
     ModelRenderer Torso;
     ModelRenderer Head;
@@ -26,8 +25,7 @@ public class ModelLowerGuardian extends ModelBase
     ModelRenderer hornAppendage3;
     ModelRenderer hornAppendage4;
 
-    public ModelLowerGuardian()
-    {
+    public ModelLowerGuardian() {
         textureWidth = 64;
         textureHeight = 64;
         Body = new ModelRenderer(this, 0, 0);
@@ -134,8 +132,7 @@ public class ModelLowerGuardian extends ModelBase
         hornAppendage4.mirror = false;
     }
 
-    public void render(Entity entity, float f, float f1, float f2, float f3, float f4, float f5)
-    {
+    public void render(Entity entity, float f, float f1, float f2, float f3, float f4, float f5) {
         super.render(entity, f, f1, f2, f3, f4, f5);
         setRotationAngles(f, f1, f2, f3, f4, f5, entity);
         Body.render(f5);
@@ -155,33 +152,28 @@ public class ModelLowerGuardian extends ModelBase
         hornAppendage4.render(f5);
     }
 
-    private void setRotation(ModelRenderer model, float x, float y, float z)
-    {
+    private void setRotation(ModelRenderer model, float x, float y, float z) {
         model.rotateAngleX = x;
         model.rotateAngleY = y;
         model.rotateAngleZ = z;
     }
 
-    public void setLivingAnimations(EntityLivingBase par1EntityLivingBase, float par2, float par3, float par4)
-    {
+    public void setLivingAnimations(EntityLivingBase par1EntityLivingBase, float par2, float par3, float par4) {
         EntityLowerGuardian entityLowerGuardian = (EntityLowerGuardian) par1EntityLivingBase;
         int i = entityLowerGuardian.getAttackTimer();
 
-        if (i > 0)
-        {
+        if (i > 0) {
             this.rightLeg.rotateAngleX = -2.0F + 1.5F * this.func_78172_a((float) i - par4, 10.0F);
             this.rightFoot.rotateAngleX = -2.0F + 1.5F * this.func_78172_a((float) i - par4, 10.0F);
-            //this.ironGolemLeftArm.rotateAngleX = -2.0F + 1.5F * this.func_78172_a((float)i - par4, 10.0F);
+            // this.ironGolemLeftArm.rotateAngleX = -2.0F + 1.5F * this.func_78172_a((float)i - par4, 10.0F);
         }
     }
 
-    private float func_78172_a(float par1, float par2)
-    {
+    private float func_78172_a(float par1, float par2) {
         return (Math.abs(par1 % par2 - par2 * 0.5F) - par2 * 0.25F) / (par2 * 0.25F);
     }
 
-    public void setRotationAngles(float f, float f1, float f2, float f3, float f4, float f5, Entity entity)
-    {
+    public void setRotationAngles(float f, float f1, float f2, float f3, float f4, float f5, Entity entity) {
         super.setRotationAngles(f, f1, f2, f3, f4, f5, entity);
         this.Head.rotateAngleX = f4 / (180F / (float) Math.PI);
         this.Head.rotateAngleY = f3 / (180F / (float) Math.PI);

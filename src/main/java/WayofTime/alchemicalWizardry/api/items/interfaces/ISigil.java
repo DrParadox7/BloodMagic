@@ -1,4 +1,3 @@
 package WayofTime.alchemicalWizardry.api.items.interfaces;
 
-public interface ISigil {
-}
+public interface ISigil {}

@@ -8,18 +8,22 @@ import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.world.World;
 import net.minecraftforge.common.util.ForgeDirection;
 
-public class ToolEnvironmentalEarth extends DigAreaEffect
-{
-    public ToolEnvironmentalEarth(int power, int potency, int cost)
-    {
+public class ToolEnvironmentalEarth extends DigAreaEffect {
+    public ToolEnvironmentalEarth(int power, int potency, int cost) {
         super(power, potency, cost);
     }
 
     @Override
-    public int digSurroundingArea(ItemStack container, World world, EntityPlayer player, MovingObjectPosition blockPos, String usedToolClass, float blockHardness, int harvestLvl, ItemSpellMultiTool itemTool)
-    {
-        if (!blockPos.typeOfHit.equals(MovingObjectPosition.MovingObjectType.BLOCK))
-        {
+    public int digSurroundingArea(
+            ItemStack container,
+            World world,
+            EntityPlayer player,
+            MovingObjectPosition blockPos,
+            String usedToolClass,
+            float blockHardness,
+            int harvestLvl,
+            ItemSpellMultiTool itemTool) {
+        if (!blockPos.typeOfHit.equals(MovingObjectPosition.MovingObjectType.BLOCK)) {
             return 0;
         }
 
@@ -40,8 +44,7 @@ public class ToolEnvironmentalEarth extends DigAreaEffect
         int posZ = radius;
         int negZ = radius;
 
-        switch (sidehit)
-        {
+        switch (sidehit) {
             case UP:
                 posY = 0;
                 negY = depth;
@@ -70,12 +73,9 @@ public class ToolEnvironmentalEarth extends DigAreaEffect
             default:
         }
 
-        for (int xPos = x - negX; xPos <= x + posX; xPos++)
-        {
-            for (int yPos = y - negY; yPos <= y + posY; yPos++)
-            {
-                for (int zPos = z - negZ; zPos <= z + posZ; zPos++)
-                {
+        for (int xPos = x - negX; xPos <= x + posX; xPos++) {
+            for (int yPos = y - negY; yPos <= y + posY; yPos++) {
+                for (int zPos = z - negZ; zPos <= z + posZ; zPos++) {
                     this.breakBlock(container, world, player, blockHardness, xPos, yPos, zPos, itemTool);
                 }
             }

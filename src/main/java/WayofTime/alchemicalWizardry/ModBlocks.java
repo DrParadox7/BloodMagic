@@ -1,6 +1,5 @@
 package WayofTime.alchemicalWizardry;
 
-import net.minecraft.block.Block;
 import WayofTime.alchemicalWizardry.common.block.ArmourForge;
 import WayofTime.alchemicalWizardry.common.block.BlockAlchemicCalcinator;
 import WayofTime.alchemicalWizardry.common.block.BlockAltar;
@@ -50,6 +49,7 @@ import WayofTime.alchemicalWizardry.common.items.ItemSpellModifierBlock;
 import WayofTime.alchemicalWizardry.common.items.ItemSpellParadigmBlock;
 import WayofTime.alchemicalWizardry.common.items.ItemStabilityGlyphBlock;
 import cpw.mods.fml.common.registry.GameRegistry;
+import net.minecraft.block.Block;
 
 /**
  * Created with IntelliJ IDEA.
@@ -57,8 +57,7 @@ import cpw.mods.fml.common.registry.GameRegistry;
  * Date: 17/01/14
  * Time: 19:48
  */
-public class ModBlocks
-{
+public class ModBlocks {
     public static Block bloodStoneBrick;
     public static Block largeBloodStoneBrick;
     public static BlockAltar blockAltar;
@@ -99,8 +98,7 @@ public class ModBlocks
     public static Block blockStabilityGlyph;
     public static Block blockCrucible;
 
-    public static void init()
-    {
+    public static void init() {
         blockAltar = new BlockAltar();
         bloodRune = new BloodRune();
         speedRune = new SpeedRune();
@@ -136,17 +134,19 @@ public class ModBlocks
         blockDemonChest = new BlockDemonChest();
         blockCrystal = new BlockCrystal();
         blockMimic = new MimicBlock();
-        
+
         blockLifeEssence = new LifeEssenceBlock();
         blockEnchantmentGlyph = new BlockEnchantmentGlyph();
         blockStabilityGlyph = new BlockStabilityGlyph();
         blockCrucible = new BlockCrucible();
     }
 
-    public static void registerBlocksInPre()
-    {
+    public static void registerBlocksInPre() {
         GameRegistry.registerBlock(ModBlocks.blockAltar, "Altar");
-        GameRegistry.registerBlock(ModBlocks.bloodRune, ItemBloodRuneBlock.class, "AlchemicalWizardry" + (ModBlocks.bloodRune.getUnlocalizedName().substring(5)));
+        GameRegistry.registerBlock(
+                ModBlocks.bloodRune,
+                ItemBloodRuneBlock.class,
+                "AlchemicalWizardry" + (ModBlocks.bloodRune.getUnlocalizedName().substring(5)));
         GameRegistry.registerBlock(ModBlocks.blockLifeEssence, "lifeEssence");
         GameRegistry.registerBlock(ModBlocks.speedRune, "speedRune");
         GameRegistry.registerBlock(ModBlocks.efficiencyRune, "efficiencyRune");
@@ -170,10 +170,22 @@ public class ModBlocks
         GameRegistry.registerBlock(ModBlocks.blockBloodLight, "bloodLight");
 
         GameRegistry.registerBlock(ModBlocks.blockConduit, "blockConduit");
-        GameRegistry.registerBlock(ModBlocks.blockSpellParadigm, ItemSpellParadigmBlock.class, "AlchemicalWizardry" + (ModBlocks.blockSpellParadigm.getUnlocalizedName()));
-        GameRegistry.registerBlock(ModBlocks.blockSpellEnhancement, ItemSpellEnhancementBlock.class, "AlchemicalWizardry" + (ModBlocks.blockSpellEnhancement.getUnlocalizedName()));
-        GameRegistry.registerBlock(ModBlocks.blockSpellModifier, ItemSpellModifierBlock.class, "AlchemicalWizardry" + (ModBlocks.blockSpellModifier.getUnlocalizedName()));
-        GameRegistry.registerBlock(ModBlocks.blockSpellEffect, ItemSpellEffectBlock.class, "AlchemicalWizardry" + (ModBlocks.blockSpellEffect.getUnlocalizedName()));
+        GameRegistry.registerBlock(
+                ModBlocks.blockSpellParadigm,
+                ItemSpellParadigmBlock.class,
+                "AlchemicalWizardry" + (ModBlocks.blockSpellParadigm.getUnlocalizedName()));
+        GameRegistry.registerBlock(
+                ModBlocks.blockSpellEnhancement,
+                ItemSpellEnhancementBlock.class,
+                "AlchemicalWizardry" + (ModBlocks.blockSpellEnhancement.getUnlocalizedName()));
+        GameRegistry.registerBlock(
+                ModBlocks.blockSpellModifier,
+                ItemSpellModifierBlock.class,
+                "AlchemicalWizardry" + (ModBlocks.blockSpellModifier.getUnlocalizedName()));
+        GameRegistry.registerBlock(
+                ModBlocks.blockSpellEffect,
+                ItemSpellEffectBlock.class,
+                "AlchemicalWizardry" + (ModBlocks.blockSpellEffect.getUnlocalizedName()));
 
         GameRegistry.registerBlock(ModBlocks.blockSpectralContainer, "spectralContainer");
         GameRegistry.registerBlock(ModBlocks.blockDemonPortal, "demonPortalMain");
@@ -184,13 +196,12 @@ public class ModBlocks
         GameRegistry.registerBlock(ModBlocks.blockDemonChest, "blockDemonChest");
         GameRegistry.registerBlock(ModBlocks.blockCrystal, ItemCrystalBlock.class, "blockCrystal");
         GameRegistry.registerBlock(ModBlocks.blockMimic, "blockMimic");
-        GameRegistry.registerBlock(ModBlocks.blockEnchantmentGlyph, ItemEnchantmentGlyphBlock.class, "blockEnchantmentGlyph");
+        GameRegistry.registerBlock(
+                ModBlocks.blockEnchantmentGlyph, ItemEnchantmentGlyphBlock.class, "blockEnchantmentGlyph");
         GameRegistry.registerBlock(ModBlocks.blockStabilityGlyph, ItemStabilityGlyphBlock.class, "blockStabilityGlyph");
-        
+
         GameRegistry.registerBlock(ModBlocks.blockCrucible, "blockCrucible");
     }
 
-    public static void registerBlocksInInit()
-    {
-    }
+    public static void registerBlocksInInit() {}
 }

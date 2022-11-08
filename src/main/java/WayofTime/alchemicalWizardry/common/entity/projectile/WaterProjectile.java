@@ -9,70 +9,65 @@ import net.minecraft.util.DamageSource;
 import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.world.World;
 
-public class WaterProjectile extends EnergyBlastProjectile
-{
-    public WaterProjectile(World par1World)
-    {
+public class WaterProjectile extends EnergyBlastProjectile {
+    public WaterProjectile(World par1World) {
         super(par1World);
     }
 
-    public WaterProjectile(World par1World, double par2, double par4, double par6)
-    {
+    public WaterProjectile(World par1World, double par2, double par4, double par6) {
         super(par1World, par2, par4, par6);
     }
 
-    public WaterProjectile(World par1World, EntityLivingBase par2EntityPlayer, int damage)
-    {
+    public WaterProjectile(World par1World, EntityLivingBase par2EntityPlayer, int damage) {
         super(par1World, par2EntityPlayer, damage);
     }
 
-    public WaterProjectile(World par1World, EntityLivingBase par2EntityPlayer, int damage, int maxTicksInAir, double posX, double posY, double posZ, float rotationYaw, float rotationPitch)
-    {
+    public WaterProjectile(
+            World par1World,
+            EntityLivingBase par2EntityPlayer,
+            int damage,
+            int maxTicksInAir,
+            double posX,
+            double posY,
+            double posZ,
+            float rotationYaw,
+            float rotationPitch) {
         super(par1World, par2EntityPlayer, damage, maxTicksInAir, posX, posY, posZ, rotationYaw, rotationPitch);
     }
 
     @Override
-    public DamageSource getDamageSource()
-    {
+    public DamageSource getDamageSource() {
         return DamageSource.causeMobDamage(shootingEntity);
     }
 
     @Override
-    public void onImpact(MovingObjectPosition mop)
-    {
-        if (mop.typeOfHit == MovingObjectPosition.MovingObjectType.ENTITY && mop.entityHit != null)
-        {
-            if (mop.entityHit == shootingEntity)
-            {
+    public void onImpact(MovingObjectPosition mop) {
+        if (mop.typeOfHit == MovingObjectPosition.MovingObjectType.ENTITY && mop.entityHit != null) {
+            if (mop.entityHit == shootingEntity) {
                 return;
             }
 
             this.onImpact(mop.entityHit);
-        } else if (mop.typeOfHit == MovingObjectPosition.MovingObjectType.BLOCK)
-        {
+        } else if (mop.typeOfHit == MovingObjectPosition.MovingObjectType.BLOCK) {
         }
 
         this.setDead();
     }
 
     @Override
-    public void onImpact(Entity mop)
-    {
-        if (mop == shootingEntity && ticksInAir > 3)
-        {
+    public void onImpact(Entity mop) {
+        if (mop == shootingEntity && ticksInAir > 3) {
             this.setDead();
-        } else
-        {
-            if (mop instanceof EntityLivingBase)
-            {
-                if (((EntityLivingBase) mop).isImmuneToFire())
-                {
+        } else {
+            if (mop instanceof EntityLivingBase) {
+                if (((EntityLivingBase) mop).isImmuneToFire()) {
                     doDamage(projectileDamage * 2, mop);
-                    ((EntityLivingBase) mop).addPotionEffect(new PotionEffect(AlchemicalWizardry.customPotionDrowning.id, 80, 1));
-                } else
-                {
+                    ((EntityLivingBase) mop)
+                            .addPotionEffect(new PotionEffect(AlchemicalWizardry.customPotionDrowning.id, 80, 1));
+                } else {
                     doDamage(projectileDamage, mop);
-                    ((EntityLivingBase) mop).addPotionEffect(new PotionEffect(AlchemicalWizardry.customPotionDrowning.id, 80, 0));
+                    ((EntityLivingBase) mop)
+                            .addPotionEffect(new PotionEffect(AlchemicalWizardry.customPotionDrowning.id, 80, 0));
                 }
             }
         }
@@ -82,9 +77,34 @@ public class WaterProjectile extends EnergyBlastProjectile
     }
 
     @Override
-    public void doFiringParticles()
-    {
-        SpellHelper.sendParticleToAllAround(worldObj, posX, posY, posZ, 30, worldObj.provider.dimensionId, "portal", posX, posY, posZ, -motionX, -motionY, -motionZ);
-        SpellHelper.sendParticleToAllAround(worldObj, posX, posY, posZ, 30, worldObj.provider.dimensionId, "mobSpellAmbient", posX + smallGauss(0.1D), posY + smallGauss(0.1D), posZ + smallGauss(0.1D), 0.5D, 0.5D, 0.5D);
+    public void doFiringParticles() {
+        SpellHelper.sendParticleToAllAround(
+                worldObj,
+                posX,
+                posY,
+                posZ,
+                30,
+                worldObj.provider.dimensionId,
+                "portal",
+                posX,
+                posY,
+                posZ,
+                -motionX,
+                -motionY,
+                -motionZ);
+        SpellHelper.sendParticleToAllAround(
+                worldObj,
+                posX,
+                posY,
+                posZ,
+                30,
+                worldObj.provider.dimensionId,
+                "mobSpellAmbient",
+                posX + smallGauss(0.1D),
+                posY + smallGauss(0.1D),
+                posZ + smallGauss(0.1D),
+                0.5D,
+                0.5D,
+                0.5D);
     }
 }

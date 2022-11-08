@@ -5,16 +5,14 @@ import net.minecraft.client.model.ModelRenderer;
 import net.minecraft.entity.Entity;
 import net.minecraft.world.World;
 
-public class ModelElemental extends ModelBase
-{
-    //fields
+public class ModelElemental extends ModelBase {
+    // fields
     ModelRenderer body;
     ModelRenderer Shape2;
     ModelRenderer Shape1;
     ModelRenderer Shape3;
 
-    public ModelElemental()
-    {
+    public ModelElemental() {
         textureWidth = 64;
         textureHeight = 32;
         body = new ModelRenderer(this, 33, 0);
@@ -43,8 +41,7 @@ public class ModelElemental extends ModelBase
         setRotation(Shape3, ((float) Math.PI / 4F), 0F, ((float) Math.PI / 4F));
     }
 
-    public void render(Entity entity, float f, float f1, float f2, float f3, float f4, float f5)
-    {
+    public void render(Entity entity, float f, float f1, float f2, float f3, float f4, float f5) {
         super.render(entity, f, f1, f2, f3, f4, f5);
         setRotationAngles(f, f1, f2, f3, f4, f5, entity);
         body.render(f5);
@@ -53,20 +50,17 @@ public class ModelElemental extends ModelBase
         Shape3.render(f5);
     }
 
-    private void setRotation(ModelRenderer model, float x, float y, float z)
-    {
+    private void setRotation(ModelRenderer model, float x, float y, float z) {
         model.rotateAngleX = x;
         model.rotateAngleY = y;
         model.rotateAngleZ = z;
     }
 
-    public void setRotationAngles(float f, float f1, float f2, float f3, float f4, float f5, Entity entity)
-    {
+    public void setRotationAngles(float f, float f1, float f2, float f3, float f4, float f5, Entity entity) {
         super.setRotationAngles(f, f1, f2, f3, f4, f5, entity);
         World world = entity.worldObj;
 
-        if (world == null)
-        {
+        if (world == null) {
             return;
         }
 

@@ -1,19 +1,15 @@
 package WayofTime.alchemicalWizardry.common.spell.complex.effect.impactEffects.tool;
 
+import WayofTime.alchemicalWizardry.api.spell.IItemManipulator;
+import java.util.List;
 import net.minecraft.item.ItemStack;
 
-import java.util.List;
-
-import WayofTime.alchemicalWizardry.api.spell.IItemManipulator;
-
-public abstract class ItemManipulator implements IItemManipulator
-{
+public abstract class ItemManipulator implements IItemManipulator {
     protected int powerUpgrades;
     protected int potencyUpgrades;
     protected int costUpgrades;
 
-    public ItemManipulator(int power, int potency, int cost)
-    {
+    public ItemManipulator(int power, int potency, int cost) {
         this.powerUpgrades = power;
         this.potencyUpgrades = potency;
         this.costUpgrades = cost;

@@ -3,6 +3,9 @@ package WayofTime.alchemicalWizardry.common.spell.simple;
 import WayofTime.alchemicalWizardry.common.entity.projectile.WindGustProjectile;
 import WayofTime.alchemicalWizardry.common.items.EnergyItems;
 import WayofTime.alchemicalWizardry.common.spell.complex.effect.SpellHelper;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Random;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
@@ -10,37 +13,29 @@ import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.util.Vec3;
 import net.minecraft.world.World;
 
-import java.util.Iterator;
-import java.util.List;
-import java.util.Random;
-
-public class SpellWindGust extends HomSpell
-{
+public class SpellWindGust extends HomSpell {
     Random itemRand = new Random();
 
-    public SpellWindGust()
-    {
+    public SpellWindGust() {
         super();
         this.setEnergies(300, 400, 300, 500);
     }
 
     @Override
-    public ItemStack onOffensiveRangedRightClick(ItemStack par1ItemStack, World par2World, EntityPlayer par3EntityPlayer)
-    {
-        if (!EnergyItems.checkAndSetItemOwner(par1ItemStack, par3EntityPlayer) || par3EntityPlayer.isSneaking())
-        {
+    public ItemStack onOffensiveRangedRightClick(
+            ItemStack par1ItemStack, World par2World, EntityPlayer par3EntityPlayer) {
+        if (!EnergyItems.checkAndSetItemOwner(par1ItemStack, par3EntityPlayer) || par3EntityPlayer.isSneaking()) {
             return par1ItemStack;
         }
 
-        if (!par3EntityPlayer.capabilities.isCreativeMode)
-        {
-            EnergyItems.syphonAndDamageWhileInContainer(par1ItemStack, par3EntityPlayer, this.getOffensiveRangedEnergy());
+        if (!par3EntityPlayer.capabilities.isCreativeMode) {
+            EnergyItems.syphonAndDamageWhileInContainer(
+                    par1ItemStack, par3EntityPlayer, this.getOffensiveRangedEnergy());
         }
 
         par2World.playSoundAtEntity(par3EntityPlayer, "random.fizz", 0.5F, 0.4F / (itemRand.nextFloat() * 0.4F + 0.8F));
 
-        if (!par2World.isRemote)
-        {
+        if (!par2World.isRemote) {
             par2World.spawnEntityInWorld(new WindGustProjectile(par2World, par3EntityPlayer, 8));
         }
 
@@ -48,16 +43,15 @@ public class SpellWindGust extends HomSpell
     }
 
     @Override
-    public ItemStack onOffensiveMeleeRightClick(ItemStack par1ItemStack, World par2World, EntityPlayer par3EntityPlayer)
-    {
-        if (!EnergyItems.checkAndSetItemOwner(par1ItemStack, par3EntityPlayer) || par3EntityPlayer.isSneaking())
-        {
+    public ItemStack onOffensiveMeleeRightClick(
+            ItemStack par1ItemStack, World par2World, EntityPlayer par3EntityPlayer) {
+        if (!EnergyItems.checkAndSetItemOwner(par1ItemStack, par3EntityPlayer) || par3EntityPlayer.isSneaking()) {
             return par1ItemStack;
         }
 
-        if (!par3EntityPlayer.capabilities.isCreativeMode)
-        {
-            EnergyItems.syphonAndDamageWhileInContainer(par1ItemStack, par3EntityPlayer, this.getOffensiveMeleeEnergy());
+        if (!par3EntityPlayer.capabilities.isCreativeMode) {
+            EnergyItems.syphonAndDamageWhileInContainer(
+                    par1ItemStack, par3EntityPlayer, this.getOffensiveMeleeEnergy());
         }
 
         int distance = 3;
@@ -67,18 +61,22 @@ public class SpellWindGust extends HomSpell
         double yCoord = par3EntityPlayer.posY + par3EntityPlayer.getEyeHeight() + Math.sin(-pitch) * distance;
         double zCoord = par3EntityPlayer.posZ + Math.cos(yaw) * Math.cos(pitch) * distance;
         float d0 = 0.5f;
-        AxisAlignedBB axisalignedbb = AxisAlignedBB.getBoundingBox(par3EntityPlayer.posX - 0.5 + Math.sin(yaw) * Math.cos(pitch) * (-distance), par3EntityPlayer.posY + par3EntityPlayer.getEyeHeight() + Math.sin(-pitch) * distance, par3EntityPlayer.posZ - 0.5 + Math.cos(yaw) * Math.cos(pitch) * distance, par3EntityPlayer.posX + Math.sin(yaw) * Math.cos(pitch) * (-distance) + 0.5, par3EntityPlayer.posY + par3EntityPlayer.getEyeHeight() + Math.sin(-pitch) * distance + 1, par3EntityPlayer.posZ + Math.cos(yaw) * Math.cos(pitch) * distance + 0.5).expand(d0, d0, d0);
+        AxisAlignedBB axisalignedbb = AxisAlignedBB.getBoundingBox(
+                        par3EntityPlayer.posX - 0.5 + Math.sin(yaw) * Math.cos(pitch) * (-distance),
+                        par3EntityPlayer.posY + par3EntityPlayer.getEyeHeight() + Math.sin(-pitch) * distance,
+                        par3EntityPlayer.posZ - 0.5 + Math.cos(yaw) * Math.cos(pitch) * distance,
+                        par3EntityPlayer.posX + Math.sin(yaw) * Math.cos(pitch) * (-distance) + 0.5,
+                        par3EntityPlayer.posY + par3EntityPlayer.getEyeHeight() + Math.sin(-pitch) * distance + 1,
+                        par3EntityPlayer.posZ + Math.cos(yaw) * Math.cos(pitch) * distance + 0.5)
+                .expand(d0, d0, d0);
         List list = par3EntityPlayer.worldObj.getEntitiesWithinAABB(EntityLivingBase.class, axisalignedbb);
         Iterator iterator = list.iterator();
 
-        while (iterator.hasNext())
-        {
+        while (iterator.hasNext()) {
             EntityLivingBase entityLiving = (EntityLivingBase) iterator.next();
 
-            if (entityLiving instanceof EntityPlayer)
-            {
-                if (entityLiving.equals(par3EntityPlayer))
-                {
+            if (entityLiving instanceof EntityPlayer) {
+                if (entityLiving.equals(par3EntityPlayer)) {
                     continue;
                 }
             }
@@ -86,24 +84,32 @@ public class SpellWindGust extends HomSpell
             entityLiving.motionY = 2;
             entityLiving.motionZ = Math.cos(yaw) * 2;
         }
-        for (int i = 0; i < 5; i++)
-        {
-            SpellHelper.sendParticleToAllAround(par2World, xCoord, yCoord, zCoord, 30, par2World.provider.dimensionId, "mobSpell", xCoord + (itemRand.nextFloat() - itemRand.nextFloat()) * 3, yCoord + (itemRand.nextFloat() - itemRand.nextFloat()) * 3, zCoord + (itemRand.nextFloat() - itemRand.nextFloat()) * 3, 0.0F, 0.410F, 1.0F);
-
+        for (int i = 0; i < 5; i++) {
+            SpellHelper.sendParticleToAllAround(
+                    par2World,
+                    xCoord,
+                    yCoord,
+                    zCoord,
+                    30,
+                    par2World.provider.dimensionId,
+                    "mobSpell",
+                    xCoord + (itemRand.nextFloat() - itemRand.nextFloat()) * 3,
+                    yCoord + (itemRand.nextFloat() - itemRand.nextFloat()) * 3,
+                    zCoord + (itemRand.nextFloat() - itemRand.nextFloat()) * 3,
+                    0.0F,
+                    0.410F,
+                    1.0F);
         }
         return par1ItemStack;
     }
 
     @Override
-    public ItemStack onDefensiveRightClick(ItemStack par1ItemStack, World par2World, EntityPlayer par3EntityPlayer)
-    {
-        if (!EnergyItems.checkAndSetItemOwner(par1ItemStack, par3EntityPlayer) || par3EntityPlayer.isSneaking())
-        {
+    public ItemStack onDefensiveRightClick(ItemStack par1ItemStack, World par2World, EntityPlayer par3EntityPlayer) {
+        if (!EnergyItems.checkAndSetItemOwner(par1ItemStack, par3EntityPlayer) || par3EntityPlayer.isSneaking()) {
             return par1ItemStack;
         }
 
-        if (!par3EntityPlayer.capabilities.isCreativeMode)
-        {
+        if (!par3EntityPlayer.capabilities.isCreativeMode) {
             EnergyItems.syphonAndDamageWhileInContainer(par1ItemStack, par3EntityPlayer, this.getDefensiveEnergy());
         }
 
@@ -118,35 +124,58 @@ public class SpellWindGust extends HomSpell
         par3EntityPlayer.motionY = vec.yCoord * wantedVelocity;
         par3EntityPlayer.motionZ = vec.zCoord * wantedVelocity;
         SpellHelper.setPlayerSpeedFromServer(par3EntityPlayer, xVel, yVel, zVel);
-        par2World.playSoundEffect((double) ((float) par3EntityPlayer.posX + 0.5F), (double) ((float) par3EntityPlayer.posY + 0.5F), (double) ((float) par3EntityPlayer.posZ + 0.5F), "random.fizz", 0.5F, 2.6F + (par2World.rand.nextFloat() - par2World.rand.nextFloat()) * 0.8F);
+        par2World.playSoundEffect(
+                (double) ((float) par3EntityPlayer.posX + 0.5F),
+                (double) ((float) par3EntityPlayer.posY + 0.5F),
+                (double) ((float) par3EntityPlayer.posZ + 0.5F),
+                "random.fizz",
+                0.5F,
+                2.6F + (par2World.rand.nextFloat() - par2World.rand.nextFloat()) * 0.8F);
         par3EntityPlayer.fallDistance = 0;
         double xCoord = par3EntityPlayer.posX;
         double yCoord = par3EntityPlayer.posY;
         double zCoord = par3EntityPlayer.posZ;
 
-        for (int i = 0; i < 8; i++)
-        {
-            SpellHelper.sendParticleToAllAround(par2World, xCoord, yCoord, zCoord, 30, par2World.provider.dimensionId, "mobSpell", xCoord + (itemRand.nextFloat() - itemRand.nextFloat()) * 3, yCoord + (itemRand.nextFloat() - itemRand.nextFloat()) * 3, zCoord + (itemRand.nextFloat() - itemRand.nextFloat()) * 3, 0.0F, 0.410F, 1.0F);
+        for (int i = 0; i < 8; i++) {
+            SpellHelper.sendParticleToAllAround(
+                    par2World,
+                    xCoord,
+                    yCoord,
+                    zCoord,
+                    30,
+                    par2World.provider.dimensionId,
+                    "mobSpell",
+                    xCoord + (itemRand.nextFloat() - itemRand.nextFloat()) * 3,
+                    yCoord + (itemRand.nextFloat() - itemRand.nextFloat()) * 3,
+                    zCoord + (itemRand.nextFloat() - itemRand.nextFloat()) * 3,
+                    0.0F,
+                    0.410F,
+                    1.0F);
         }
 
         return par1ItemStack;
     }
 
     @Override
-    public ItemStack onEnvironmentalRightClick(ItemStack par1ItemStack, World par2World, EntityPlayer par3EntityPlayer)
-    {
-        if (!EnergyItems.checkAndSetItemOwner(par1ItemStack, par3EntityPlayer) || par3EntityPlayer.isSneaking())
-        {
+    public ItemStack onEnvironmentalRightClick(
+            ItemStack par1ItemStack, World par2World, EntityPlayer par3EntityPlayer) {
+        if (!EnergyItems.checkAndSetItemOwner(par1ItemStack, par3EntityPlayer) || par3EntityPlayer.isSneaking()) {
             return par1ItemStack;
         }
 
-        if (!par3EntityPlayer.capabilities.isCreativeMode)
-        {
+        if (!par3EntityPlayer.capabilities.isCreativeMode) {
             EnergyItems.syphonAndDamageWhileInContainer(par1ItemStack, par3EntityPlayer, this.getEnvironmentalEnergy());
         }
 
         int d0 = 3;
-        AxisAlignedBB axisalignedbb = AxisAlignedBB.getBoundingBox(par3EntityPlayer.posX, par3EntityPlayer.posY, par3EntityPlayer.posZ, (par3EntityPlayer.posX + 1), (par3EntityPlayer.posY + 2), (par3EntityPlayer.posZ + 1)).expand(d0, d0, d0);
+        AxisAlignedBB axisalignedbb = AxisAlignedBB.getBoundingBox(
+                        par3EntityPlayer.posX,
+                        par3EntityPlayer.posY,
+                        par3EntityPlayer.posZ,
+                        (par3EntityPlayer.posX + 1),
+                        (par3EntityPlayer.posY + 2),
+                        (par3EntityPlayer.posZ + 1))
+                .expand(d0, d0, d0);
         List list = par3EntityPlayer.worldObj.getEntitiesWithinAABB(EntityLivingBase.class, axisalignedbb);
         Iterator iterator = list.iterator();
         double xCoord = par3EntityPlayer.posX;
@@ -154,14 +183,11 @@ public class SpellWindGust extends HomSpell
         double zCoord = par3EntityPlayer.posZ;
         double wantedVel = 2;
 
-        while (iterator.hasNext())
-        {
+        while (iterator.hasNext()) {
             EntityLivingBase entityLiving = (EntityLivingBase) iterator.next();
 
-            if (entityLiving instanceof EntityPlayer)
-            {
-                if (entityLiving.equals(par3EntityPlayer))
-                {
+            if (entityLiving instanceof EntityPlayer) {
+                if (entityLiving.equals(par3EntityPlayer)) {
                     continue;
                 }
             }
@@ -175,9 +201,21 @@ public class SpellWindGust extends HomSpell
             entityLiving.motionY = posYDif * wantedVel / distance;
             entityLiving.motionZ = posZDif * wantedVel / distance;
         }
-        for (int i = 0; i < 20; i++)
-        {
-            SpellHelper.sendParticleToAllAround(par2World, xCoord, yCoord, zCoord, 30, par2World.provider.dimensionId, "mobSpell", xCoord + (itemRand.nextFloat() - itemRand.nextFloat()) * 3, yCoord + (itemRand.nextFloat() - itemRand.nextFloat()) * 3, zCoord + (itemRand.nextFloat() - itemRand.nextFloat()) * 3, 0.0F, 0.410F, 1.0F);
+        for (int i = 0; i < 20; i++) {
+            SpellHelper.sendParticleToAllAround(
+                    par2World,
+                    xCoord,
+                    yCoord,
+                    zCoord,
+                    30,
+                    par2World.provider.dimensionId,
+                    "mobSpell",
+                    xCoord + (itemRand.nextFloat() - itemRand.nextFloat()) * 3,
+                    yCoord + (itemRand.nextFloat() - itemRand.nextFloat()) * 3,
+                    zCoord + (itemRand.nextFloat() - itemRand.nextFloat()) * 3,
+                    0.0F,
+                    0.410F,
+                    1.0F);
         }
 
         return par1ItemStack;

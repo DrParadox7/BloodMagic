@@ -4,11 +4,9 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
-
 import net.minecraft.item.ItemStack;
 
-public class ReagentRegistry
-{
+public class ReagentRegistry {
     public static Map<String, Reagent> reagentList = new HashMap();
     public static Map<ItemStack, ReagentStack> itemToReagentMap = new HashMap();
 
@@ -29,8 +27,7 @@ public class ReagentRegistry
     public static Reagent reductusReagent;
     public static Reagent potentiaReagent;
 
-    public static void initReagents()
-    {
+    public static void initReagents() {
         sanctusReagent = new Reagent("sanctus");
         incendiumReagent = new Reagent("incendium");
         aquasalusReagent = new Reagent("aquasalus");
@@ -80,10 +77,8 @@ public class ReagentRegistry
         registerReagent("potentia", potentiaReagent);
     }
 
-    public static boolean registerReagent(String key, Reagent reagent)
-    {
-        if (reagentList.containsKey(key) || reagent == null)
-        {
+    public static boolean registerReagent(String key, Reagent reagent) {
+        if (reagentList.containsKey(key) || reagent == null) {
             return false;
         }
 
@@ -92,25 +87,19 @@ public class ReagentRegistry
         return true;
     }
 
-    public static Reagent getReagentForKey(String key)
-    {
-        if (reagentList.containsKey(key))
-        {
+    public static Reagent getReagentForKey(String key) {
+        if (reagentList.containsKey(key)) {
             return reagentList.get(key);
         }
 
         return null;
     }
 
-    public static String getKeyForReagent(Reagent reagent)
-    {
-        if (reagentList.containsValue(reagent))
-        {
+    public static String getKeyForReagent(Reagent reagent) {
+        if (reagentList.containsValue(reagent)) {
             Set<Entry<String, Reagent>> set = reagentList.entrySet();
-            for (Entry<String, Reagent> entry : set)
-            {
-                if (entry.getValue().equals(reagent))
-                {
+            for (Entry<String, Reagent> entry : set) {
+                if (entry.getValue().equals(reagent)) {
                     return entry.getKey();
                 }
             }
@@ -119,27 +108,20 @@ public class ReagentRegistry
         return "";
     }
 
-    public static void registerItemAndReagent(ItemStack stack, ReagentStack reagentStack)
-    {
+    public static void registerItemAndReagent(ItemStack stack, ReagentStack reagentStack) {
         itemToReagentMap.put(stack, reagentStack);
     }
 
-    public static ReagentStack getReagentStackForItem(ItemStack stack)
-    {
-        if (stack == null)
-        {
+    public static ReagentStack getReagentStackForItem(ItemStack stack) {
+        if (stack == null) {
             return null;
         }
 
-        for (Entry<ItemStack, ReagentStack> entry : itemToReagentMap.entrySet())
-        {
-            if (entry.getKey() != null && entry.getKey().isItemEqual(stack))
-            {
-                if (entry.getValue() == null)
-                {
+        for (Entry<ItemStack, ReagentStack> entry : itemToReagentMap.entrySet()) {
+            if (entry.getKey() != null && entry.getKey().isItemEqual(stack)) {
+                if (entry.getValue() == null) {
                     return null;
-                } else
-                {
+                } else {
                     return entry.getValue().copy();
                 }
             }
@@ -148,22 +130,16 @@ public class ReagentRegistry
         return null;
     }
 
-    public static ItemStack getItemForReagent(Reagent reagent)
-    {
-        if (reagent == null)
-        {
+    public static ItemStack getItemForReagent(Reagent reagent) {
+        if (reagent == null) {
             return null;
         }
 
-        for (Entry<ItemStack, ReagentStack> entry : itemToReagentMap.entrySet())
-        {
-            if (entry.getValue() != null && entry.getValue().reagent == reagent)
-            {
-                if (entry.getKey() == null)
-                {
+        for (Entry<ItemStack, ReagentStack> entry : itemToReagentMap.entrySet()) {
+            if (entry.getValue() != null && entry.getValue().reagent == reagent) {
+                if (entry.getKey() == null) {
                     return null;
-                } else
-                {
+                } else {
                     return entry.getKey().copy();
                 }
             }

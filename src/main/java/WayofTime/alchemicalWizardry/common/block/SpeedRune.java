@@ -5,10 +5,8 @@ import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.client.renderer.texture.IIconRegister;
 
-public class SpeedRune extends BloodRune
-{
-    public SpeedRune()
-    {
+public class SpeedRune extends BloodRune {
+    public SpeedRune() {
         super();
         this.setBlockName("speedRune");
         setCreativeTab(AlchemicalWizardry.tabBloodMagic);
@@ -18,14 +16,12 @@ public class SpeedRune extends BloodRune
 
     @Override
     @SideOnly(Side.CLIENT)
-    public void registerBlockIcons(IIconRegister iconRegister)
-    {
+    public void registerBlockIcons(IIconRegister iconRegister) {
         this.blockIcon = iconRegister.registerIcon("AlchemicalWizardry:SpeedRune");
     }
 
     @Override
-    public int getRuneEffect(int metaData)
-    {
+    public int getRuneEffect(int metaData) {
         return 1;
     }
 }

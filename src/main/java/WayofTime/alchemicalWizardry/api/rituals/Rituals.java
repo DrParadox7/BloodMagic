@@ -1,24 +1,22 @@
 package WayofTime.alchemicalWizardry.api.rituals;
 
+import WayofTime.alchemicalWizardry.api.event.RitualRunEvent;
+import WayofTime.alchemicalWizardry.api.event.RitualStopEvent;
+import WayofTime.alchemicalWizardry.api.renderer.MRSRenderer;
+import cpw.mods.fml.common.eventhandler.Event;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
-
 import net.minecraft.block.Block;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.StatCollector;
 import net.minecraft.world.World;
 import net.minecraftforge.common.MinecraftForge;
-import WayofTime.alchemicalWizardry.api.event.RitualRunEvent;
-import WayofTime.alchemicalWizardry.api.event.RitualStopEvent;
-import WayofTime.alchemicalWizardry.api.renderer.MRSRenderer;
-import cpw.mods.fml.common.eventhandler.Event;
 
-public class Rituals
-{
-	public final int crystalLevel;
+public class Rituals {
+    public final int crystalLevel;
     public final int actCost;
     public final RitualEffect effect;
     public final String name;
@@ -29,8 +27,7 @@ public class Rituals
     public static Map<String, Rituals> ritualMap = new HashMap();
     public static List<String> keyList = new LinkedList();
 
-    public Rituals(int crystalLevel, int actCost, RitualEffect effect, String name, MRSRenderer renderer)
-    {
+    public Rituals(int crystalLevel, int actCost, RitualEffect effect, String name, MRSRenderer renderer) {
         this.crystalLevel = crystalLevel;
         this.actCost = actCost;
         this.effect = effect;
@@ -40,8 +37,7 @@ public class Rituals
         this.customRenderer = renderer;
     }
 
-    public Rituals(int crystalLevel, int actCost, RitualEffect effect, String name)
-    {
+    public Rituals(int crystalLevel, int actCost, RitualEffect effect, String name) {
         this(crystalLevel, actCost, effect, name, null);
     }
 
@@ -55,13 +51,11 @@ public class Rituals
      * @param name         The name of the ritual
      * @return Returns true if properly registered, or false if the key is already used
      */
-    public static boolean registerRitual(String key, int crystalLevel, int actCost, RitualEffect effect, String name, MRSRenderer renderer)
-    {
-        if (ritualMap.containsKey(key))
-        {
+    public static boolean registerRitual(
+            String key, int crystalLevel, int actCost, RitualEffect effect, String name, MRSRenderer renderer) {
+        if (ritualMap.containsKey(key)) {
             return false;
-        } else
-        {
+        } else {
             Rituals ritual = new Rituals(crystalLevel, actCost, effect, name, renderer);
             ritual.removeRitualFromList();
             ritualMap.put(key, ritual);
@@ -71,13 +65,10 @@ public class Rituals
         }
     }
 
-    public static boolean registerRitual(String key, int crystalLevel, int actCost, RitualEffect effect, String name)
-    {
-        if (ritualMap.containsKey(key))
-        {
+    public static boolean registerRitual(String key, int crystalLevel, int actCost, RitualEffect effect, String name) {
+        if (ritualMap.containsKey(key)) {
             return false;
-        } else
-        {
+        } else {
             Rituals ritual = new Rituals(crystalLevel, actCost, effect, name);
             ritual.removeRitualFromList();
             ritualMap.put(key, ritual);
@@ -87,24 +78,18 @@ public class Rituals
         }
     }
 
-    public void removeRitualFromList()
-    {
-        if (ritualMap.containsValue(this))
-        {
+    public void removeRitualFromList() {
+        if (ritualMap.containsValue(this)) {
             ritualMap.remove(ritualMap.remove(this.name));
         }
-        if (keyList.contains(this.name))
-        {
+        if (keyList.contains(this.name)) {
             keyList.remove(this.name);
         }
     }
 
-    public static String checkValidRitual(World world, int x, int y, int z)
-    {
-        for (String key : ritualMap.keySet())
-        {
-            if (checkRitualIsValid(world, x, y, z, key))
-            {
+    public static String checkValidRitual(World world, int x, int y, int z) {
+        for (String key : ritualMap.keySet()) {
+            if (checkRitualIsValid(world, x, y, z, key)) {
                 return key;
             }
         }
@@ -112,13 +97,10 @@ public class Rituals
         return "";
     }
 
-    public static boolean canCrystalActivate(String ritualID, int crystalLevel)
-    {
-        if (ritualMap.containsKey(ritualID))
-        {
+    public static boolean canCrystalActivate(String ritualID, int crystalLevel) {
+        if (ritualMap.containsKey(ritualID)) {
             Rituals ritual = ritualMap.get(ritualID);
-            if (ritual != null)
-            {
+            if (ritual != null) {
                 return ritual.getCrystalLevel() <= crystalLevel;
             }
         }
@@ -126,8 +108,7 @@ public class Rituals
         return false;
     }
 
-    public static boolean checkRitualIsValid(World world, int x, int y, int z, String ritualID)
-    {
+    public static boolean checkRitualIsValid(World world, int x, int y, int z, String ritualID) {
         int direction = Rituals.getDirectionOfRitual(world, x, y, z, ritualID);
 
         return direction != -1;
@@ -139,26 +120,32 @@ public class Rituals
      * 3 - SOUTH
      * 4 - WEST
      */
-    public static boolean checkDirectionOfRitualValid(World world, int x, int y, int z, String ritualID, int direction)
-    {
+    public static boolean checkDirectionOfRitualValid(
+            World world, int x, int y, int z, String ritualID, int direction) {
         List<RitualComponent> ritual = Rituals.getRitualList(ritualID);
 
-        if (ritual == null)
-        {
+        if (ritual == null) {
             return false;
         }
 
         Block test;
         TileEntity te;
 
-        for (RitualComponent rc : ritual)
-        {
+        for (RitualComponent rc : ritual) {
             test = world.getBlock(x + rc.getX(direction), y + rc.getY(), z + rc.getZ(direction));
             te = world.getTileEntity(x + rc.getX(direction), y + rc.getY(), z + rc.getZ(direction));
 
-            if (!(test instanceof IRitualStone && ((IRitualStone)test).isRuneType(world, x + rc.getX(direction), y, z+ rc.getZ(direction), world.getBlockMetadata(x + rc.getX(direction), y + rc.getY(), z + rc.getZ(direction)), rc.getStoneType()))
-                    && !(te instanceof ITileRitualStone && ((ITileRitualStone)te).isRuneType(rc.getStoneType())))
-            {
+            if (!(test instanceof IRitualStone
+                            && ((IRitualStone) test)
+                                    .isRuneType(
+                                            world,
+                                            x + rc.getX(direction),
+                                            y,
+                                            z + rc.getZ(direction),
+                                            world.getBlockMetadata(
+                                                    x + rc.getX(direction), y + rc.getY(), z + rc.getZ(direction)),
+                                            rc.getStoneType()))
+                    && !(te instanceof ITileRitualStone && ((ITileRitualStone) te).isRuneType(rc.getStoneType()))) {
                 return false;
             }
         }
@@ -166,12 +153,9 @@ public class Rituals
         return true;
     }
 
-    public static int getDirectionOfRitual(World world, int x, int y, int z, String ritualID)
-    {
-        for (int i = 1; i <= 4; i++)
-        {
-            if (Rituals.checkDirectionOfRitualValid(world, x, y, z, ritualID, i))
-            {
+    public static int getDirectionOfRitual(World world, int x, int y, int z, String ritualID) {
+        for (int i = 1; i <= 4; i++) {
+            if (Rituals.checkDirectionOfRitualValid(world, x, y, z, ritualID, i)) {
                 return i;
             }
         }
@@ -179,13 +163,10 @@ public class Rituals
         return -1;
     }
 
-    public static int getCostForActivation(String ritualID)
-    {
-        if (ritualMap.containsKey(ritualID))
-        {
+    public static int getCostForActivation(String ritualID) {
+        if (ritualMap.containsKey(ritualID)) {
             Rituals ritual = ritualMap.get(ritualID);
-            if (ritual != null)
-            {
+            if (ritual != null) {
                 return ritual.actCost;
             }
         }
@@ -193,13 +174,10 @@ public class Rituals
         return 0;
     }
 
-    public static int getInitialCooldown(String ritualID)
-    {
-        if (ritualMap.containsKey(ritualID))
-        {
+    public static int getInitialCooldown(String ritualID) {
+        if (ritualMap.containsKey(ritualID)) {
             Rituals ritual = ritualMap.get(ritualID);
-            if (ritual != null && ritual.effect != null)
-            {
+            if (ritual != null && ritual.effect != null) {
                 return ritual.effect.getInitialCooldown();
             }
         }
@@ -207,67 +185,52 @@ public class Rituals
         return 0;
     }
 
-    public static List<RitualComponent> getRitualList(String ritualID)
-    {
-        if (ritualMap.containsKey(ritualID))
-        {
+    public static List<RitualComponent> getRitualList(String ritualID) {
+        if (ritualMap.containsKey(ritualID)) {
             Rituals ritual = ritualMap.get(ritualID);
-            if (ritual != null)
-            {
+            if (ritual != null) {
                 return ritual.obtainComponents();
-            } else
-            {
+            } else {
                 return null;
             }
-        } else
-        {
+        } else {
             return null;
         }
     }
 
-    private List<RitualComponent> obtainComponents()
-    {
+    private List<RitualComponent> obtainComponents() {
         return this.effect.getRitualComponentList();
     }
 
-    private int getCrystalLevel()
-    {
+    private int getCrystalLevel() {
         return this.crystalLevel;
     }
 
-    private MRSRenderer getRenderer()
-    {
+    private MRSRenderer getRenderer() {
         return this.customRenderer;
     }
 
-    public static void performEffect(IMasterRitualStone ritualStone, String ritualID)
-    {
-    	String ownerName = ritualStone.getOwner();
-    	
-    	RitualRunEvent event = new RitualRunEvent(ritualStone, ownerName, ritualID);
-    	
-    	if(MinecraftForge.EVENT_BUS.post(event) || event.getResult() == Event.Result.DENY)
-    	{
-    		return;
-    	}
-    	
-        if (ritualMap.containsKey(event.ritualKey))
-        {
+    public static void performEffect(IMasterRitualStone ritualStone, String ritualID) {
+        String ownerName = ritualStone.getOwner();
+
+        RitualRunEvent event = new RitualRunEvent(ritualStone, ownerName, ritualID);
+
+        if (MinecraftForge.EVENT_BUS.post(event) || event.getResult() == Event.Result.DENY) {
+            return;
+        }
+
+        if (ritualMap.containsKey(event.ritualKey)) {
             Rituals ritual = ritualMap.get(event.ritualKey);
-            if (ritual != null && ritual.effect != null)
-            {
+            if (ritual != null && ritual.effect != null) {
                 ritual.effect.performEffect(ritualStone);
             }
         }
     }
 
-    public static boolean startRitual(IMasterRitualStone ritualStone, String ritualID, EntityPlayer player)
-    {
-        if (ritualMap.containsKey(ritualID))
-        {
+    public static boolean startRitual(IMasterRitualStone ritualStone, String ritualID, EntityPlayer player) {
+        if (ritualMap.containsKey(ritualID)) {
             Rituals ritual = ritualMap.get(ritualID);
-            if (ritual != null && ritual.effect != null)
-            {
+            if (ritual != null && ritual.effect != null) {
                 return ritual.effect.startRitual(ritualStone, player);
             }
         }
@@ -275,57 +238,46 @@ public class Rituals
         return false;
     }
 
-    public static void onRitualBroken(IMasterRitualStone ritualStone, String ritualID, RitualBreakMethod method)
-    {
-    	String ownerName = ritualStone.getOwner();
-    	RitualStopEvent event = new RitualStopEvent(ritualStone, ownerName, ritualID, method);
-    	MinecraftForge.EVENT_BUS.post(event);
-    	
-        if (ritualMap.containsKey(ritualID))
-        {
+    public static void onRitualBroken(IMasterRitualStone ritualStone, String ritualID, RitualBreakMethod method) {
+        String ownerName = ritualStone.getOwner();
+        RitualStopEvent event = new RitualStopEvent(ritualStone, ownerName, ritualID, method);
+        MinecraftForge.EVENT_BUS.post(event);
+
+        if (ritualMap.containsKey(ritualID)) {
             Rituals ritual = ritualMap.get(ritualID);
-            if (ritual != null && ritual.effect != null)
-            {
+            if (ritual != null && ritual.effect != null) {
                 ritual.effect.onRitualBroken(ritualStone, method);
             }
-        }    
+        }
     }
 
-    public String getRitualName()
-    {
+    public String getRitualName() {
         return this.name;
     }
-    
-    public void setRitualLocalizedName(String localizedName)
-    {
+
+    public void setRitualLocalizedName(String localizedName) {
         this.localizedName = localizedName;
     }
-    public String getRitualLocalizedName()
-    {
+
+    public String getRitualLocalizedName() {
         return localizedName.isEmpty() ? this.name : localizedName;
     }
 
-    public static String getNameOfRitual(String id)
-    {
-        if (ritualMap.containsKey(id))
-        {
+    public static String getNameOfRitual(String id) {
+        if (ritualMap.containsKey(id)) {
             Rituals ritual = ritualMap.get(id);
-            if (ritual != null)
-            {
+            if (ritual != null) {
                 return ritual.getRitualName();
             }
         }
 
         return "";
     }
-    
-    public static String getLocalizedNameOfRitual(String id)
-    {
-        if (ritualMap.containsKey(id))
-        {
+
+    public static String getLocalizedNameOfRitual(String id) {
+        if (ritualMap.containsKey(id)) {
             Rituals ritual = ritualMap.get(id);
-            if (ritual != null)
-            {
+            if (ritual != null) {
                 return ritual.getRitualLocalizedName();
             }
         }
@@ -333,23 +285,18 @@ public class Rituals
         return "";
     }
 
-    public static String getNextRitualKey(String key)
-    {
+    public static String getNextRitualKey(String key) {
         boolean hasSpotted = false;
         String firstKey = "";
 
-        for (String str : keyList)
-        {
-            if (firstKey.equals(""))
-            {
+        for (String str : keyList) {
+            if (firstKey.equals("")) {
                 firstKey = str;
             }
-            if (hasSpotted)
-            {
+            if (hasSpotted) {
                 return str;
             }
-            if (str.equals(key))
-            {
+            if (str.equals(key)) {
                 hasSpotted = true;
             }
         }
@@ -357,19 +304,15 @@ public class Rituals
         return firstKey;
     }
 
-    public static String getPreviousRitualKey(String key)
-    {
+    public static String getPreviousRitualKey(String key) {
         boolean hasSpotted = false;
         String lastKey = keyList.get(keyList.size() - 1);
 
-        for (String str : keyList)
-        {
-            if (str.equals(key))
-            {
+        for (String str : keyList) {
+            if (str.equals(key)) {
                 hasSpotted = true;
             }
-            if (hasSpotted)
-            {
+            if (hasSpotted) {
                 return lastKey;
             }
             lastKey = str;
@@ -378,35 +321,28 @@ public class Rituals
         return lastKey;
     }
 
-    public static MRSRenderer getRendererForKey(String ritualID)
-    {
-        if (ritualMap.containsKey(ritualID))
-        {
+    public static MRSRenderer getRendererForKey(String ritualID) {
+        if (ritualMap.containsKey(ritualID)) {
             Rituals ritual = ritualMap.get(ritualID);
-            if (ritual != null)
-            {
+            if (ritual != null) {
                 return ritual.getRenderer();
             }
         }
 
         return null;
     }
-    
-    public static LocalRitualStorage getLocalStorage(String ritualID)
-    {
-    	if (ritualMap.containsKey(ritualID))
-        {
+
+    public static LocalRitualStorage getLocalStorage(String ritualID) {
+        if (ritualMap.containsKey(ritualID)) {
             Rituals ritual = ritualMap.get(ritualID);
-            if (ritual != null)
-            {
+            if (ritual != null) {
                 RitualEffect eff = ritual.effect;
-                if(eff != null)
-                {
-                	return eff.getNewLocalStorage();
+                if (eff != null) {
+                    return eff.getNewLocalStorage();
                 }
             }
         }
-    	
-    	return null;
+
+        return null;
     }
 }

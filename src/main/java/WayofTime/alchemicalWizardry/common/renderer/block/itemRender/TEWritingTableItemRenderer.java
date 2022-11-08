@@ -8,47 +8,38 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.client.IItemRenderer;
 import org.lwjgl.opengl.GL11;
 
-public class TEWritingTableItemRenderer implements IItemRenderer
-{
+public class TEWritingTableItemRenderer implements IItemRenderer {
     private ModelWritingTable model;
 
-    public TEWritingTableItemRenderer()
-    {
+    public TEWritingTableItemRenderer() {
         model = new ModelWritingTable();
     }
 
     @Override
-    public boolean handleRenderType(ItemStack item, ItemRenderType type)
-    {
+    public boolean handleRenderType(ItemStack item, ItemRenderType type) {
         return true;
     }
 
     @Override
-    public boolean shouldUseRenderHelper(ItemRenderType type, ItemStack item, ItemRendererHelper helper)
-    {
+    public boolean shouldUseRenderHelper(ItemRenderType type, ItemStack item, ItemRendererHelper helper) {
         return true;
     }
 
     @Override
-    public void renderItem(ItemRenderType type, ItemStack item, Object... data)
-    {
+    public void renderItem(ItemRenderType type, ItemStack item, Object... data) {
         float scale = 0.08f;
-        switch (type)
-        {
-            case ENTITY:
-            {
+        switch (type) {
+            case ENTITY: {
                 renderBloodAltar(0f, 0f, 0f, scale);
                 return;
             }
 
-            case EQUIPPED:
-            {
+            case EQUIPPED: {
                 renderBloodAltar(0f, 0f, 0f, scale);
                 return;
             }
 
-            case INVENTORY:
-            {
+            case INVENTORY: {
                 renderBloodAltar(0f, -0.25f, 0f, scale);
                 return;
             }
@@ -58,8 +49,7 @@ public class TEWritingTableItemRenderer implements IItemRenderer
         }
     }
 
-    private void renderBloodAltar(float x, float y, float z, float scale)
-    {
+    private void renderBloodAltar(float x, float y, float z, float scale) {
         GL11.glPushMatrix();
         // Disable Lighting Calculations
         GL11.glDisable(GL11.GL_LIGHTING);

@@ -1,6 +1,5 @@
 package WayofTime.alchemicalWizardry.common;
 
-public interface IFillingAgent
-{
+public interface IFillingAgent {
     int getFilledAmountForPotionNumber(int potionEffects);
 }

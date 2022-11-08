@@ -9,7 +9,7 @@ import net.minecraftforge.common.util.ForgeDirection;
  * @author MineMaarten
  * www.minemaarten.com
  */
-public interface IHeatExchangerLogic{
+public interface IHeatExchangerLogic {
 
     /**
      * Call this to tick this logic, and make the heat disperse itself.
@@ -19,7 +19,7 @@ public interface IHeatExchangerLogic{
     /**
      * When called (preferably on tile entity load and neighbor block/tile entity change) this will add all IHeatExchanger neighbor TileEntities as connected heat exchangers.
      * It will also take care of blocks like Lava.
-     * 
+     *
      * You don't _have_ to call this method, if this heat exchanger is not connected to the outside world (for example the heat of the liquid
      * plastic in the Plastic Mixer).
      * @param world
@@ -32,7 +32,7 @@ public interface IHeatExchangerLogic{
     public void initializeAsHull(World world, int x, int y, int z, ForgeDirection... validSides);
 
     /**
-     * When called, this will connect these two heat exchangers. You should only call this on one of the two heat exchangers. 
+     * When called, this will connect these two heat exchangers. You should only call this on one of the two heat exchangers.
      * @param exchanger
      */
     public void addConnectedExchanger(IHeatExchangerLogic exchanger);
@@ -73,5 +73,4 @@ public interface IHeatExchangerLogic{
      * @param amount
      */
     public void addHeat(double amount);
-
 }

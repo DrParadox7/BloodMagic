@@ -11,23 +11,18 @@ import net.minecraft.item.ItemStack;
 import net.minecraftforge.client.event.MouseEvent;
 
 @SideOnly(Side.CLIENT)
-public class ScrollHelper
-{
+public class ScrollHelper {
     @SubscribeEvent
-    public void onMouseEvent(MouseEvent event)
-    {
+    public void onMouseEvent(MouseEvent event) {
         EntityClientPlayerMP player = Minecraft.getMinecraft().thePlayer;
 
-        if (event.dwheel != 0 && player != null && player.isSneaking())
-        {
+        if (event.dwheel != 0 && player != null && player.isSneaking()) {
             ItemStack stack = player.getCurrentEquippedItem();
 
-            if (stack != null)
-            {
+            if (stack != null) {
                 Item item = stack.getItem();
 
-                if (item instanceof SigilOfHolding)
-                {
+                if (item instanceof SigilOfHolding) {
                     cycleSigil(stack, player, event.dwheel);
                     event.setCanceled(true);
                 }
@@ -35,8 +30,7 @@ public class ScrollHelper
         }
     }
 
-    private void cycleSigil(ItemStack stack, EntityPlayer player, int dWheel)
-    {
+    private void cycleSigil(ItemStack stack, EntityPlayer player, int dWheel) {
         int mode = SigilOfHolding.getCurrentItem(stack);
         mode = dWheel < 0 ? SigilOfHolding.next(mode) : SigilOfHolding.prev(mode);
         SigilOfHolding.cycleSigil(stack, mode);

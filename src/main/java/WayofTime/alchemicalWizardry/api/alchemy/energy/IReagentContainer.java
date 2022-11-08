@@ -1,7 +1,6 @@
 package WayofTime.alchemicalWizardry.api.alchemy.energy;
 
-public interface IReagentContainer
-{
+public interface IReagentContainer {
     ReagentStack getReagent();
 
     int getReagentStackAmount();

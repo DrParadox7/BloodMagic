@@ -7,7 +7,7 @@ import net.minecraft.client.gui.GuiScreen;
  * The Option Page is the page you see when you press 'F' (by default) with a Pneumatic Helmet equipped. You can register this class
  * by returning a new instance of this class at {@link IUpgradeRenderHandler#getGuiOptionsPage()}
  */
-public interface IOptionPage{
+public interface IOptionPage {
 
     /**
      * This string is used in the text of the button of this page.

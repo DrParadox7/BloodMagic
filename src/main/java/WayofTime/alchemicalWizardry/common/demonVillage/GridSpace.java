@@ -2,8 +2,7 @@ package WayofTime.alchemicalWizardry.common.demonVillage;
 
 import net.minecraft.nbt.NBTTagCompound;
 
-public class GridSpace
-{
+public class GridSpace {
     public static final int EMPTY = 0;
     public static final int MAIN_PORTAL = 1;
     public static final int MINI_PORTAL = 2;
@@ -14,49 +13,40 @@ public class GridSpace
     private int yLevel;
     private int type;
 
-    public GridSpace()
-    {
+    public GridSpace() {
         this(EMPTY, -1);
     }
 
-    public GridSpace(int type, int yLevel)
-    {
+    public GridSpace(int type, int yLevel) {
         this.type = type;
         this.yLevel = yLevel;
     }
 
-    public int getGridType()
-    {
+    public int getGridType() {
         return this.type;
     }
 
-    public void setGridType(int type)
-    {
+    public void setGridType(int type) {
         this.type = type;
     }
 
-    public int getYLevel()
-    {
+    public int getYLevel() {
         return this.yLevel;
     }
 
-    public void setYLevel(int yLevel)
-    {
+    public void setYLevel(int yLevel) {
         this.yLevel = yLevel;
     }
 
-    public boolean isEmpty()
-    {
+    public boolean isEmpty() {
         return type == EMPTY;
     }
 
-    public static GridSpace getGridFromTag(NBTTagCompound tag)
-    {
+    public static GridSpace getGridFromTag(NBTTagCompound tag) {
         return new GridSpace(tag.getInteger("type"), tag.getInteger("yLevel"));
     }
 
-    public NBTTagCompound getTag()
-    {
+    public NBTTagCompound getTag() {
         NBTTagCompound tag = new NBTTagCompound();
 
         tag.setInteger("type", type);
@@ -65,13 +55,11 @@ public class GridSpace
         return tag;
     }
 
-    public boolean isRoadSegment()
-    {
+    public boolean isRoadSegment() {
         return type == ROAD || type == CROSSROAD;
     }
 
-    public boolean isBuilding()
-    {
+    public boolean isBuilding() {
         return type == HOUSE;
     }
 }

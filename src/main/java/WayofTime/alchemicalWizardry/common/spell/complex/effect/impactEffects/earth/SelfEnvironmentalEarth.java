@@ -1,36 +1,32 @@
 package WayofTime.alchemicalWizardry.common.spell.complex.effect.impactEffects.earth;
 
+import WayofTime.alchemicalWizardry.api.spell.SelfSpellEffect;
+import WayofTime.alchemicalWizardry.common.spell.complex.effect.SpellHelper;
 import java.util.List;
-
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.potion.Potion;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.world.World;
-import WayofTime.alchemicalWizardry.api.spell.SelfSpellEffect;
-import WayofTime.alchemicalWizardry.common.spell.complex.effect.SpellHelper;
 
-public class SelfEnvironmentalEarth extends SelfSpellEffect
-{
-    public SelfEnvironmentalEarth(int power, int potency, int cost)
-    {
+public class SelfEnvironmentalEarth extends SelfSpellEffect {
+    public SelfEnvironmentalEarth(int power, int potency, int cost) {
         super(power, potency, cost);
     }
 
     @Override
-    public void onSelfUse(World world, EntityPlayer player)
-    {
+    public void onSelfUse(World world, EntityPlayer player) {
         float radius = this.powerUpgrades * 2 + 1.5f;
         int dur = this.powerUpgrades * 5 * 20 + 60;
 
-        List<Entity> entities = SpellHelper.getEntitiesInRange(world, player.posX, player.posY, player.posZ, radius, radius);
+        List<Entity> entities =
+                SpellHelper.getEntitiesInRange(world, player.posX, player.posY, player.posZ, radius, radius);
 
-        for (Entity entity : entities)
-        {
-            if (entity instanceof EntityLivingBase)
-            {
-                ((EntityLivingBase) entity).addPotionEffect(new PotionEffect(Potion.weakness.id, dur, this.potencyUpgrades));
+        for (Entity entity : entities) {
+            if (entity instanceof EntityLivingBase) {
+                ((EntityLivingBase) entity)
+                        .addPotionEffect(new PotionEffect(Potion.weakness.id, dur, this.potencyUpgrades));
             }
         }
     }

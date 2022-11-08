@@ -18,8 +18,7 @@ import net.minecraft.network.play.server.S35PacketUpdateTileEntity;
 import net.minecraftforge.common.util.Constants;
 import net.minecraftforge.common.util.ForgeDirection;
 
-public class TEAlchemicCalcinator extends TEReagentConduit implements IInventory
-{
+public class TEAlchemicCalcinator extends TEReagentConduit implements IInventory {
     protected ItemStack[] inv;
     protected ReagentContainer bufferTank = new ReagentContainer(Reagent.REAGENT_SIZE * 2);
 
@@ -27,8 +26,7 @@ public class TEAlchemicCalcinator extends TEReagentConduit implements IInventory
 
     public int progress;
 
-    public TEAlchemicCalcinator()
-    {
+    public TEAlchemicCalcinator() {
         super(1, Reagent.REAGENT_SIZE * 4);
         this.inv = new ItemStack[2];
         this.tickRate = 20;
@@ -37,8 +35,7 @@ public class TEAlchemicCalcinator extends TEReagentConduit implements IInventory
     }
 
     @Override
-    public void readFromNBT(NBTTagCompound tag)
-    {
+    public void readFromNBT(NBTTagCompound tag) {
         super.readFromNBT(tag);
         bufferTransferRate = tag.getInteger("bufferTransferRate");
         progress = tag.getInteger("progress");
@@ -49,23 +46,19 @@ public class TEAlchemicCalcinator extends TEReagentConduit implements IInventory
 
         NBTTagList tagList = tag.getTagList("Inventory", Constants.NBT.TAG_COMPOUND);
 
-        for (int i = 0; i < tagList.tagCount(); i++)
-        {
+        for (int i = 0; i < tagList.tagCount(); i++) {
             NBTTagCompound savedTag = tagList.getCompoundTagAt(i);
 
-            if (savedTag.getBoolean("Empty"))
-            {
+            if (savedTag.getBoolean("Empty")) {
                 inv[i] = null;
-            } else
-            {
+            } else {
                 inv[i] = ItemStack.loadItemStackFromNBT(savedTag);
             }
         }
     }
 
     @Override
-    public void writeToNBT(NBTTagCompound tag)
-    {
+    public void writeToNBT(NBTTagCompound tag) {
         super.writeToNBT(tag);
         tag.setInteger("bufferTransferRate", bufferTransferRate);
         tag.setInteger("progress", progress);
@@ -78,15 +71,12 @@ public class TEAlchemicCalcinator extends TEReagentConduit implements IInventory
 
         NBTTagList itemList = new NBTTagList();
 
-        for (int i = 0; i < inv.length; i++)
-        {
+        for (int i = 0; i < inv.length; i++) {
             NBTTagCompound savedTag = new NBTTagCompound();
 
-            if (inv[i] != null)
-            {
+            if (inv[i] != null) {
                 inv[i].writeToNBT(savedTag);
-            } else
-            {
+            } else {
                 savedTag.setBoolean("Empty", true);
             }
 
@@ -97,88 +87,75 @@ public class TEAlchemicCalcinator extends TEReagentConduit implements IInventory
     }
 
     @Override
-    public void updateEntity()
-    {
+    public void updateEntity() {
         super.updateEntity();
 
-        if (!worldObj.isRemote)
-        {
+        if (!worldObj.isRemote) {
             moveBufferToMain();
             tickProgress();
         }
     }
 
-    public void moveBufferToMain()
-    {
+    public void moveBufferToMain() {
         ReagentStack amountStack = this.bufferTank.drain(bufferTransferRate, false);
         int drainAmount = this.fill(ForgeDirection.UNKNOWN, amountStack, false);
 
-        if (drainAmount > 0)
-        {
+        if (drainAmount > 0) {
             ReagentStack drainedStack = this.bufferTank.drain(drainAmount, true);
             this.fill(ForgeDirection.UNKNOWN, drainedStack, true);
         }
     }
 
-    public void tickProgress()
-    {
+    public void tickProgress() {
         int lpPerTick = 10;
         int ticksPerReagent = 200;
         ItemStack reagentItemStack = this.getStackInSlot(1);
-        if (reagentItemStack == null)
-        {
+        if (reagentItemStack == null) {
             progress = 0;
             return;
         }
 
         ReagentStack possibleReagent = ReagentRegistry.getReagentStackForItem(reagentItemStack);
-        if (possibleReagent == null || !this.canReagentFitBuffer(possibleReagent))
-        {
+        if (possibleReagent == null || !this.canReagentFitBuffer(possibleReagent)) {
             return;
         }
 
         ItemStack orbStack = this.getStackInSlot(0);
-        if (orbStack == null || !(orbStack.getItem() instanceof IBloodOrb))
-        {
+        if (orbStack == null || !(orbStack.getItem() instanceof IBloodOrb)) {
             return;
         }
 
-        if (!SoulNetworkHandler.canSyphonFromOnlyNetwork(orbStack, lpPerTick))
-        {
+        if (!SoulNetworkHandler.canSyphonFromOnlyNetwork(orbStack, lpPerTick)) {
             SoulNetworkHandler.causeNauseaToPlayer(orbStack);
             return;
         }
 
-        if(!SoulNetworkHandler.syphonFromNetworkWhileInContainer(orbStack, lpPerTick))
-        {
-        	return;
+        if (!SoulNetworkHandler.syphonFromNetworkWhileInContainer(orbStack, lpPerTick)) {
+            return;
         }
-        
+
         progress++;
 
-        if (worldObj.getWorldTime() % 4 == 0)
-        {
-            SpellHelper.sendIndexedParticleToAllAround(worldObj, xCoord, yCoord, zCoord, 20, worldObj.provider.dimensionId, 1, xCoord, yCoord, zCoord);
+        if (worldObj.getWorldTime() % 4 == 0) {
+            SpellHelper.sendIndexedParticleToAllAround(
+                    worldObj, xCoord, yCoord, zCoord, 20, worldObj.provider.dimensionId, 1, xCoord, yCoord, zCoord);
         }
 
-        if (progress >= ticksPerReagent)
-        {
+        if (progress >= ticksPerReagent) {
             progress = 0;
             this.bufferTank.fill(possibleReagent, true);
             this.decrStackSize(1, 1);
         }
     }
 
-    public boolean canReagentFitBuffer(ReagentStack stack)
-    {
+    public boolean canReagentFitBuffer(ReagentStack stack) {
         int amount = this.bufferTank.fill(stack, false);
 
         return amount >= stack.amount;
     }
 
     @Override
-    public void readClientNBT(NBTTagCompound tag)
-    {
+    public void readClientNBT(NBTTagCompound tag) {
         super.readClientNBT(tag);
 
         NBTTagList tagList = tag.getTagList("reagentTanks", Constants.NBT.TAG_COMPOUND);
@@ -186,40 +163,33 @@ public class TEAlchemicCalcinator extends TEReagentConduit implements IInventory
         int size = tagList.tagCount();
         this.tanks = new ReagentContainer[size];
 
-        for (int i = 0; i < size; i++)
-        {
+        for (int i = 0; i < size; i++) {
             NBTTagCompound savedTag = tagList.getCompoundTagAt(i);
             this.tanks[i] = ReagentContainer.readFromNBT(savedTag);
         }
 
         NBTTagList invTagList = tag.getTagList("Inventory", Constants.NBT.TAG_COMPOUND);
 
-        for (int i = 0; i < invTagList.tagCount(); i++)
-        {
+        for (int i = 0; i < invTagList.tagCount(); i++) {
             NBTTagCompound savedTag = invTagList.getCompoundTagAt(i);
 
-            if (savedTag.getBoolean("Empty"))
-            {
+            if (savedTag.getBoolean("Empty")) {
                 inv[i] = null;
-            } else
-            {
+            } else {
                 inv[i] = ItemStack.loadItemStackFromNBT(savedTag);
             }
         }
     }
 
     @Override
-    public void writeClientNBT(NBTTagCompound tag)
-    {
+    public void writeClientNBT(NBTTagCompound tag) {
         super.writeClientNBT(tag);
 
         NBTTagList tagList = new NBTTagList();
 
-        for (int i = 0; i < this.tanks.length; i++)
-        {
+        for (int i = 0; i < this.tanks.length; i++) {
             NBTTagCompound savedTag = new NBTTagCompound();
-            if (this.tanks[i] != null)
-            {
+            if (this.tanks[i] != null) {
                 this.tanks[i].writeToNBT(savedTag);
             }
             tagList.appendTag(savedTag);
@@ -229,15 +199,12 @@ public class TEAlchemicCalcinator extends TEReagentConduit implements IInventory
 
         NBTTagList itemList = new NBTTagList();
 
-        for (int i = 0; i < inv.length; i++)
-        {
+        for (int i = 0; i < inv.length; i++) {
             NBTTagCompound savedTag = new NBTTagCompound();
 
-            if (inv[i] != null)
-            {
+            if (inv[i] != null) {
                 inv[i].writeToNBT(savedTag);
-            } else
-            {
+            } else {
                 savedTag.setBoolean("Empty", true);
             }
 
@@ -248,39 +215,33 @@ public class TEAlchemicCalcinator extends TEReagentConduit implements IInventory
     }
 
     @Override
-    public Packet getDescriptionPacket()
-    {
+    public Packet getDescriptionPacket() {
         NBTTagCompound nbttagcompound = new NBTTagCompound();
         writeClientNBT(nbttagcompound);
         return new S35PacketUpdateTileEntity(xCoord, yCoord, zCoord, -999, nbttagcompound);
     }
 
     @Override
-    public void onDataPacket(NetworkManager net, S35PacketUpdateTileEntity packet)
-    {
+    public void onDataPacket(NetworkManager net, S35PacketUpdateTileEntity packet) {
         super.onDataPacket(net, packet);
         readClientNBT(packet.func_148857_g());
     }
 
     @Override
-    public int getSizeInventory()
-    {
+    public int getSizeInventory() {
         return inv.length;
     }
 
     @Override
-    public ItemStack getStackInSlot(int slot)
-    {
+    public ItemStack getStackInSlot(int slot) {
         return inv[slot];
     }
 
     @Override
-    public void setInventorySlotContents(int slot, ItemStack stack)
-    {
+    public void setInventorySlotContents(int slot, ItemStack stack) {
         inv[slot] = stack;
 
-        if (stack != null && stack.stackSize > getInventoryStackLimit())
-        {
+        if (stack != null && stack.stackSize > getInventoryStackLimit()) {
             stack.stackSize = getInventoryStackLimit();
         }
 
@@ -288,21 +249,16 @@ public class TEAlchemicCalcinator extends TEReagentConduit implements IInventory
     }
 
     @Override
-    public ItemStack decrStackSize(int slot, int amt)
-    {
+    public ItemStack decrStackSize(int slot, int amt) {
         ItemStack stack = getStackInSlot(slot);
 
-        if (stack != null)
-        {
-            if (stack.stackSize <= amt)
-            {
+        if (stack != null) {
+            if (stack.stackSize <= amt) {
                 setInventorySlotContents(slot, null);
-            } else
-            {
+            } else {
                 stack = stack.splitStack(amt);
 
-                if (stack.stackSize == 0)
-                {
+                if (stack.stackSize == 0) {
                     setInventorySlotContents(slot, null);
                 }
             }
@@ -312,12 +268,10 @@ public class TEAlchemicCalcinator extends TEReagentConduit implements IInventory
     }
 
     @Override
-    public ItemStack getStackInSlotOnClosing(int slot)
-    {
+    public ItemStack getStackInSlotOnClosing(int slot) {
         ItemStack stack = getStackInSlot(slot);
 
-        if (stack != null)
-        {
+        if (stack != null) {
             setInventorySlotContents(slot, null);
         }
 
@@ -325,50 +279,40 @@ public class TEAlchemicCalcinator extends TEReagentConduit implements IInventory
     }
 
     @Override
-    public int getInventoryStackLimit()
-    {
+    public int getInventoryStackLimit() {
         return 64;
     }
 
     @Override
-    public boolean isUseableByPlayer(EntityPlayer player)
-    {
-        return worldObj.getTileEntity(xCoord, yCoord, zCoord) == this && player.getDistanceSq(xCoord + 0.5, yCoord + 0.5, zCoord + 0.5) < 64;
+    public boolean isUseableByPlayer(EntityPlayer player) {
+        return worldObj.getTileEntity(xCoord, yCoord, zCoord) == this
+                && player.getDistanceSq(xCoord + 0.5, yCoord + 0.5, zCoord + 0.5) < 64;
     }
 
     @Override
-    public void openInventory()
-    {
-    }
+    public void openInventory() {}
 
     @Override
-    public void closeInventory()
-    {
-    }
+    public void closeInventory() {}
 
     @Override
-    public String getInventoryName()
-    {
+    public String getInventoryName() {
         return "AlchemicCalcinator";
     }
 
     @Override
-    public boolean hasCustomInventoryName()
-    {
+    public boolean hasCustomInventoryName() {
         return false;
     }
 
     @Override
-    public boolean isItemValidForSlot(int slot, ItemStack itemStack)
-    {
+    public boolean isItemValidForSlot(int slot, ItemStack itemStack) {
         return true;
     }
 
     @Override
-    public int fill(ForgeDirection from, ReagentStack resource, boolean doFill)
-    {
-        if (doFill && !worldObj.isRemote)
-        {
+    public int fill(ForgeDirection from, ReagentStack resource, boolean doFill) {
+        if (doFill && !worldObj.isRemote) {
             worldObj.markBlockForUpdate(xCoord, yCoord, zCoord);
         }
 

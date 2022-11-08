@@ -9,7 +9,7 @@ import pneumaticCraft.api.IHeatExchangerLogic;
  * @author MineMaarten
  * www.minemaarten.com
  */
-public interface IHeatExchanger{
+public interface IHeatExchanger {
 
     /**
      * Get an instance of IHeatExchangerLogic from PneumaticRegistry.getInstance().getHeatExchangerLogic() and keep a global reference.
@@ -20,5 +20,4 @@ public interface IHeatExchanger{
      * @return
      */
     public IHeatExchangerLogic getHeatExchangerLogic(ForgeDirection side);
-
 }

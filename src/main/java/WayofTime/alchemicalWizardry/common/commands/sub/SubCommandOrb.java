@@ -2,12 +2,11 @@ package WayofTime.alchemicalWizardry.common.commands.sub;
 
 import WayofTime.alchemicalWizardry.api.command.SubCommandBase;
 import WayofTime.alchemicalWizardry.api.soulNetwork.SoulNetworkHandler;
+import java.util.Locale;
 import net.minecraft.command.ICommand;
 import net.minecraft.command.ICommandSender;
 import net.minecraft.util.ChatComponentText;
 import net.minecraft.util.StatCollector;
-
-import java.util.Locale;
 
 public class SubCommandOrb extends SubCommandBase {
 
@@ -36,13 +35,11 @@ public class SubCommandOrb extends SubCommandBase {
 
         if (args.length > 0) {
 
-            if (args[0].equalsIgnoreCase("help"))
-                return;
+            if (args[0].equalsIgnoreCase("help")) return;
 
             String givenName = commandSender.getCommandSenderName();
 
-            if (args.length > 1)
-                givenName = args[1];
+            if (args.length > 1) givenName = args[1];
 
             boolean displayHelp = isBounded(0, 2, args.length);
 
@@ -75,7 +72,8 @@ public class SubCommandOrb extends SubCommandBase {
                         }
 
                         if (args.length > 1)
-                            commandSender.addChatMessage(new ChatComponentText(StatCollector.translateToLocalFormatted("message.orb.currenttier", SoulNetworkHandler.getCurrentMaxOrb(givenName))));
+                            commandSender.addChatMessage(new ChatComponentText(StatCollector.translateToLocalFormatted(
+                                    "message.orb.currenttier", SoulNetworkHandler.getCurrentMaxOrb(givenName))));
 
                         break;
                     }
@@ -101,9 +99,9 @@ public class SubCommandOrb extends SubCommandBase {
     private static boolean isInteger(String s) {
         try {
             Integer.parseInt(s);
-        } catch(NumberFormatException e) {
+        } catch (NumberFormatException e) {
             return false;
-        } catch(NullPointerException e) {
+        } catch (NullPointerException e) {
             return false;
         }
         // only got here if we didn't return false

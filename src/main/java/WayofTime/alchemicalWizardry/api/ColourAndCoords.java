@@ -2,8 +2,7 @@ package WayofTime.alchemicalWizardry.api;
 
 import net.minecraft.nbt.NBTTagCompound;
 
-public class ColourAndCoords
-{
+public class ColourAndCoords {
     public int colourRed;
     public int colourGreen;
     public int colourBlue;
@@ -13,8 +12,7 @@ public class ColourAndCoords
     public int yCoord;
     public int zCoord;
 
-    public ColourAndCoords(int red, int green, int blue, int intensity, int x, int y, int z)
-    {
+    public ColourAndCoords(int red, int green, int blue, int intensity, int x, int y, int z) {
         this.colourRed = red;
         this.colourGreen = green;
         this.colourBlue = blue;
@@ -25,13 +23,18 @@ public class ColourAndCoords
         this.zCoord = z;
     }
 
-    public static ColourAndCoords readFromNBT(NBTTagCompound tag)
-    {
-        return new ColourAndCoords(tag.getInteger("colourRed"), tag.getInteger("colourGreen"), tag.getInteger("colourBlue"), tag.getInteger("colourIntensity"), tag.getInteger("xCoord"), tag.getInteger("yCoord"), tag.getInteger("zCoord"));
+    public static ColourAndCoords readFromNBT(NBTTagCompound tag) {
+        return new ColourAndCoords(
+                tag.getInteger("colourRed"),
+                tag.getInteger("colourGreen"),
+                tag.getInteger("colourBlue"),
+                tag.getInteger("colourIntensity"),
+                tag.getInteger("xCoord"),
+                tag.getInteger("yCoord"),
+                tag.getInteger("zCoord"));
     }
 
-    public NBTTagCompound writeToNBT(NBTTagCompound tag)
-    {
+    public NBTTagCompound writeToNBT(NBTTagCompound tag) {
         tag.setInteger("colourRed", colourRed);
         tag.setInteger("colourGreen", colourGreen);
         tag.setInteger("colourBlue", colourBlue);

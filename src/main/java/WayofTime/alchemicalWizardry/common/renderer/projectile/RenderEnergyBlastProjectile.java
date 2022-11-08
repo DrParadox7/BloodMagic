@@ -12,10 +12,9 @@ import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL12;
 
 @SideOnly(Side.CLIENT)
-public class RenderEnergyBlastProjectile extends Render
-{
-    public void doRenderEnergyBlastProjectile(Entity entityShot, double par2, double par4, double par6, float par8, float par9)
-    {
+public class RenderEnergyBlastProjectile extends Render {
+    public void doRenderEnergyBlastProjectile(
+            Entity entityShot, double par2, double par4, double par6, float par8, float par9) {
         GL11.glPushMatrix();
         GL11.glTranslatef((float) par2, (float) par4, (float) par6);
         GL11.glEnable(GL12.GL_RESCALE_NORMAL);
@@ -36,54 +35,43 @@ public class RenderEnergyBlastProjectile extends Render
     }
 
     @Override
-    public void doRender(Entity par1Entity, double par2, double par4, double par6, float par8, float par9)
-    {
-        if (par1Entity instanceof IProjectile)
-        {
+    public void doRender(Entity par1Entity, double par2, double par4, double par6, float par8, float par9) {
+        if (par1Entity instanceof IProjectile) {
             this.doRenderEnergyBlastProjectile(par1Entity, par2, par4, par6, par8, par9);
         }
     }
 
     @Override
-    protected ResourceLocation getEntityTexture(Entity entity)
-    {
-        if (entity instanceof IceProjectile)
-        {
+    protected ResourceLocation getEntityTexture(Entity entity) {
+        if (entity instanceof IceProjectile) {
             return new ResourceLocation("alchemicalwizardry", "textures/entities/iceProjectile.png");
         }
 
-        if (entity instanceof FireProjectile)
-        {
+        if (entity instanceof FireProjectile) {
             return new ResourceLocation("alchemicalwizardry", "textures/entities/fireProjectile.png");
         }
 
-        if (entity instanceof ExplosionProjectile)
-        {
+        if (entity instanceof ExplosionProjectile) {
             return new ResourceLocation("alchemicalwizardry", "textures/entities/explosionProjectile.png");
         }
 
-        if (entity instanceof HolyProjectile)
-        {
+        if (entity instanceof HolyProjectile) {
             return new ResourceLocation("alchemicalwizardry", "textures/entities/holyProjectile.png");
         }
 
-        if (entity instanceof WindGustProjectile)
-        {
+        if (entity instanceof WindGustProjectile) {
             return new ResourceLocation("alchemicalwizardry", "textures/entities/windGustProjectile.png");
         }
 
-        if (entity instanceof LightningBoltProjectile)
-        {
+        if (entity instanceof LightningBoltProjectile) {
             return new ResourceLocation("alchemicalwizardry", "textures/entities/lightningProjectile.png");
         }
 
-        if (entity instanceof WaterProjectile)
-        {
+        if (entity instanceof WaterProjectile) {
             return new ResourceLocation("alchemicalwizardry", "textures/entities/waterProjectile.png");
         }
 
-        if (entity instanceof MudProjectile)
-        {
+        if (entity instanceof MudProjectile) {
             return new ResourceLocation("alchemicalwizardry", "textures/entities/mudProjectile.png");
         }
 

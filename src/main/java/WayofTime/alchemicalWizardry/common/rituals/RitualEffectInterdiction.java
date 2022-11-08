@@ -7,23 +7,20 @@ import WayofTime.alchemicalWizardry.api.rituals.RitualComponent;
 import WayofTime.alchemicalWizardry.api.rituals.RitualEffect;
 import WayofTime.alchemicalWizardry.api.soulNetwork.SoulNetworkHandler;
 import WayofTime.alchemicalWizardry.common.spell.complex.effect.SpellHelper;
+import java.util.ArrayList;
+import java.util.List;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.world.World;
 
-import java.util.ArrayList;
-import java.util.List;
-
-public class RitualEffectInterdiction extends RitualEffect
-{
+public class RitualEffectInterdiction extends RitualEffect {
     public static final int aetherDrain = 1;
     public static final int magicalesDrain = 1;
 
     @Override
-    public void performEffect(IMasterRitualStone ritualStone)
-    {
+    public void performEffect(IMasterRitualStone ritualStone) {
         String owner = ritualStone.getOwner();
 
         int currentEssence = SoulNetworkHandler.getCurrentEssence(owner);
@@ -32,23 +29,22 @@ public class RitualEffectInterdiction extends RitualEffect
         int y = ritualStone.getYCoord();
         int z = ritualStone.getZCoord();
 
-        if (currentEssence < this.getCostPerRefresh())
-        {
+        if (currentEssence < this.getCostPerRefresh()) {
             SoulNetworkHandler.causeNauseaToPlayer(owner);
-        } else
-        {
+        } else {
             int d0 = 5;
 
-            List<EntityLivingBase> list = SpellHelper.getLivingEntitiesInRange(world, x + 0.5, y + 0.5, z + 0.5, d0, d0);
+            List<EntityLivingBase> list =
+                    SpellHelper.getLivingEntitiesInRange(world, x + 0.5, y + 0.5, z + 0.5, d0, d0);
             boolean flag = false;
 
-            boolean hasOffensa = this.canDrainReagent(ritualStone, ReagentRegistry.magicalesReagent, magicalesDrain, false);
+            boolean hasOffensa =
+                    this.canDrainReagent(ritualStone, ReagentRegistry.magicalesReagent, magicalesDrain, false);
             boolean playerFlag = false;
 
-            for (EntityLivingBase entityLiving : list)
-            {
-                if (!((!hasOffensa && entityLiving instanceof EntityPlayer) && (SpellHelper.getUsername((EntityPlayer) entityLiving).equals(owner))))
-                {
+            for (EntityLivingBase entityLiving : list) {
+                if (!((!hasOffensa && entityLiving instanceof EntityPlayer)
+                        && (SpellHelper.getUsername((EntityPlayer) entityLiving).equals(owner)))) {
                     double xDif = entityLiving.posX - x;
                     double yDif = entityLiving.posY - (y + 1);
                     double zDif = entityLiving.posZ - z;
@@ -56,9 +52,9 @@ public class RitualEffectInterdiction extends RitualEffect
                     entityLiving.motionY = 0.1 * yDif;
                     entityLiving.motionZ = 0.1 * zDif;
 
-                    if (hasOffensa && entityLiving instanceof EntityPlayer)
-                    {
-                        SpellHelper.setPlayerSpeedFromServer((EntityPlayer) entityLiving, 0.1 * xDif, 0.1 * yDif, 0.1 * zDif);
+                    if (hasOffensa && entityLiving instanceof EntityPlayer) {
+                        SpellHelper.setPlayerSpeedFromServer(
+                                (EntityPlayer) entityLiving, 0.1 * xDif, 0.1 * yDif, 0.1 * zDif);
                         playerFlag = true;
                     }
                     entityLiving.fallDistance = 0;
@@ -66,27 +62,26 @@ public class RitualEffectInterdiction extends RitualEffect
                 }
             }
 
-            if (playerFlag)
-            {
+            if (playerFlag) {
                 this.canDrainReagent(ritualStone, ReagentRegistry.magicalesReagent, magicalesDrain, true);
             }
 
             boolean hasAether = this.canDrainReagent(ritualStone, ReagentRegistry.aetherReagent, aetherDrain, false);
 
-            if (hasAether)
-            {
+            if (hasAether) {
                 int aetherDrainRate = 10;
 
                 int horizontalRadius = 5;
                 int verticalRadius = 5;
-                List<EntityItem> itemList = world.getEntitiesWithinAABB(EntityItem.class, AxisAlignedBB.getBoundingBox(x, y, z, x + 1, y + 1, z + 1).expand(horizontalRadius, verticalRadius, horizontalRadius));
+                List<EntityItem> itemList = world.getEntitiesWithinAABB(
+                        EntityItem.class,
+                        AxisAlignedBB.getBoundingBox(x, y, z, x + 1, y + 1, z + 1)
+                                .expand(horizontalRadius, verticalRadius, horizontalRadius));
 
-                if (itemList != null)
-                {
+                if (itemList != null) {
                     boolean itemFlag = false;
 
-                    for (EntityItem entity : itemList)
-                    {
+                    for (EntityItem entity : itemList) {
                         double xDif = entity.posX - x;
                         double yDif = entity.posY - (y + 1);
                         double zDif = entity.posZ - z;
@@ -97,34 +92,28 @@ public class RitualEffectInterdiction extends RitualEffect
                         itemFlag = true;
                     }
 
-                    if (itemFlag)
-                    {
+                    if (itemFlag) {
                         flag = true;
-                        if (world.getWorldTime() % aetherDrainRate == 0)
-                        {
+                        if (world.getWorldTime() % aetherDrainRate == 0) {
                             this.canDrainReagent(ritualStone, ReagentRegistry.aetherReagent, aetherDrain, true);
                         }
                     }
                 }
             }
 
-
-            if (world.getWorldTime() % 2 == 0 && flag)
-            {
+            if (world.getWorldTime() % 2 == 0 && flag) {
                 SoulNetworkHandler.syphonFromNetwork(owner, getCostPerRefresh());
             }
         }
     }
 
     @Override
-    public int getCostPerRefresh()
-    {
+    public int getCostPerRefresh() {
         return AlchemicalWizardry.ritualCostInterdiction[1];
     }
 
     @Override
-    public List<RitualComponent> getRitualComponentList()
-    {
+    public List<RitualComponent> getRitualComponentList() {
         ArrayList<RitualComponent> interdictionRitual = new ArrayList();
         interdictionRitual.add(new RitualComponent(1, 0, 0, 4));
         interdictionRitual.add(new RitualComponent(-1, 0, 0, 4));

@@ -1,91 +1,80 @@
 package WayofTime.alchemicalWizardry.api.sacrifice;
 
 import WayofTime.alchemicalWizardry.AlchemicalWizardry;
+import WayofTime.alchemicalWizardry.api.spell.APISpellHelper;
+import WayofTime.alchemicalWizardry.api.tile.IBloodAltar;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.potion.Potion;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
-import WayofTime.alchemicalWizardry.api.spell.APISpellHelper;
-import WayofTime.alchemicalWizardry.api.tile.IBloodAltar;
 
-public class PlayerSacrificeHandler
-{
-	public static float scalingOfSacrifice = 0.001f;
-	public static int soulFrayDuration = 400;
-	public static Potion soulFrayId;
-	public static float getPlayerIncense(EntityPlayer player)
-	{
-		return APISpellHelper.getCurrentIncense(player);
-	}
+public class PlayerSacrificeHandler {
+    public static float scalingOfSacrifice = 0.001f;
+    public static int soulFrayDuration = 400;
+    public static Potion soulFrayId;
 
-	public static void setPlayerIncense(EntityPlayer player, float amount)
-	{
-		APISpellHelper.setCurrentIncense(player, amount);
-	}
+    public static float getPlayerIncense(EntityPlayer player) {
+        return APISpellHelper.getCurrentIncense(player);
+    }
 
-	public static boolean incrementIncense(EntityPlayer player, float min, float max, float increment)
-	{
-		float amount = getPlayerIncense(player);
-		if(amount < min || amount >= max)
-		{
-			return false;
-		}
+    public static void setPlayerIncense(EntityPlayer player, float amount) {
+        APISpellHelper.setCurrentIncense(player, amount);
+    }
 
-		amount = amount + Math.min(increment, max - amount);
-		setPlayerIncense(player, amount);
+    public static boolean incrementIncense(EntityPlayer player, float min, float max, float increment) {
+        float amount = getPlayerIncense(player);
+        if (amount < min || amount >= max) {
+            return false;
+        }
 
-//		System.out.println("Amount of incense: " + amount + ", Increment: " + increment);
+        amount = amount + Math.min(increment, max - amount);
+        setPlayerIncense(player, amount);
 
-		return true;
-	}
+        //		System.out.println("Amount of incense: " + amount + ", Increment: " + increment);
 
-	public static boolean sacrificePlayerHealth(EntityPlayer player)
-	{
-		if(player.isPotionActive(soulFrayId))
-		{
-			return false;
-		}
+        return true;
+    }
 
-		float amount = getPlayerIncense(player);
+    public static boolean sacrificePlayerHealth(EntityPlayer player) {
+        if (player.isPotionActive(soulFrayId)) {
+            return false;
+        }
 
-		if(amount >= 0)
-		{
-			float health = player.getHealth();
-			float maxHealth = player.getMaxHealth();
+        float amount = getPlayerIncense(player);
 
-			if(health > maxHealth/10.0)
-			{
-				float sacrificedHealth = health - maxHealth/10.0f;
+        if (amount >= 0) {
+            float health = player.getHealth();
+            float maxHealth = player.getMaxHealth();
 
-				if(findAndFillAltar(player.getEntityWorld(), player, (int)(sacrificedHealth * AlchemicalWizardry.lpPerSacrificeIncense * getModifier(amount))))
-				{
-					player.setHealth(maxHealth/10.0f);
-					setPlayerIncense(player, 0);
-					player.addPotionEffect(new PotionEffect(soulFrayId.id, soulFrayDuration));
+            if (health > maxHealth / 10.0) {
+                float sacrificedHealth = health - maxHealth / 10.0f;
 
-					return true;
-				}
-			}
-		}
+                if (findAndFillAltar(player.getEntityWorld(), player, (int)
+                        (sacrificedHealth * AlchemicalWizardry.lpPerSacrificeIncense * getModifier(amount)))) {
+                    player.setHealth(maxHealth / 10.0f);
+                    setPlayerIncense(player, 0);
+                    player.addPotionEffect(new PotionEffect(soulFrayId.id, soulFrayDuration));
 
-		return false;
-	}
+                    return true;
+                }
+            }
+        }
 
-	public static float getModifier(float amount)
-	{
-		return 1 + amount*scalingOfSacrifice;
-	}
+        return false;
+    }
 
-	public static boolean findAndFillAltar(World world, EntityPlayer player, int amount)
-    {
+    public static float getModifier(float amount) {
+        return 1 + amount * scalingOfSacrifice;
+    }
+
+    public static boolean findAndFillAltar(World world, EntityPlayer player, int amount) {
         int posX = (int) Math.round(player.posX - 0.5f);
         int posY = (int) player.posY;
         int posZ = (int) Math.round(player.posZ - 0.5f);
         IBloodAltar altarEntity = getAltar(world, posX, posY, posZ);
 
-        if (altarEntity == null)
-        {
+        if (altarEntity == null) {
             return false;
         }
 
@@ -95,21 +84,16 @@ public class PlayerSacrificeHandler
         return true;
     }
 
-    public static IBloodAltar getAltar(World world, int x, int y, int z)
-    {
+    public static IBloodAltar getAltar(World world, int x, int y, int z) {
         TileEntity tileEntity;
 
-        for (int i = -2; i <= 2; i++)
-        {
-            for (int j = -2; j <= 2; j++)
-            {
-                for (int k = -2; k <= 1; k++)
-                {
+        for (int i = -2; i <= 2; i++) {
+            for (int j = -2; j <= 2; j++) {
+                for (int k = -2; k <= 1; k++) {
                     tileEntity = world.getTileEntity(i + x, k + y, j + z);
 
-                    if(tileEntity instanceof IBloodAltar)
-                    {
-                    	return (IBloodAltar)tileEntity;
+                    if (tileEntity instanceof IBloodAltar) {
+                        return (IBloodAltar) tileEntity;
                     }
                 }
             }

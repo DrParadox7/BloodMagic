@@ -5,41 +5,34 @@ import net.minecraft.nbt.NBTTagCompound;
 /**
  * New wrapper class to enclose the ComplexSpellEffect
  */
-public class SpellEffect 
-{
-	public ComplexSpellType type;
-	public ComplexSpellModifier modifier;
-	
-	protected int powerEnhancement;
+public class SpellEffect {
+    public ComplexSpellType type;
+    public ComplexSpellModifier modifier;
+
+    protected int powerEnhancement;
     protected int costEnhancement;
     protected int potencyEnhancement;
-    
-    public SpellEffect()
-    {
-    	this(ComplexSpellType.FIRE);
+
+    public SpellEffect() {
+        this(ComplexSpellType.FIRE);
     }
-    
-    public SpellEffect(ComplexSpellType type)
-    {
-    	this(type, ComplexSpellModifier.DEFAULT);
+
+    public SpellEffect(ComplexSpellType type) {
+        this(type, ComplexSpellModifier.DEFAULT);
     }
-    
-    public SpellEffect(ComplexSpellType type, ComplexSpellModifier modifier)
-    {
-    	this.type = type;
-    	this.modifier = modifier;
-    	
-    	this.powerEnhancement = 0;
-    	this.potencyEnhancement = 0;
-    	this.costEnhancement = 0;
+
+    public SpellEffect(ComplexSpellType type, ComplexSpellModifier modifier) {
+        this.type = type;
+        this.modifier = modifier;
+
+        this.powerEnhancement = 0;
+        this.potencyEnhancement = 0;
+        this.costEnhancement = 0;
     }
-    
-    public void enhanceEffect(SpellEnhancement enh)
-    {
-        if (enh != null)
-        {
-            switch (enh.getState())
-            {
+
+    public void enhanceEffect(SpellEnhancement enh) {
+        if (enh != null) {
+            switch (enh.getState()) {
                 case SpellEnhancement.POWER:
                     this.powerEnhancement++;
                     break;
@@ -52,53 +45,48 @@ public class SpellEffect
             }
         }
     }
-    
-    public void modifyEffect(ComplexSpellModifier mod)
-    {
-    	if(mod != null)
-    	{
-    		this.modifier = mod;
-    	}
-    }
-    
-    public void modifyParadigm(SpellParadigm parad) //When modifying the paradigm it will instead get the class name and ask the registry
-    {
-    	if(parad == null)
-    	{
-    		return;
-    	}
-    	
-        Class paraClass = parad.getClass();
-        
-        ComplexSpellEffect effect = SpellEffectRegistry.getSpellEffect(paraClass, type, modifier, powerEnhancement, potencyEnhancement, costEnhancement);
-        
-        if(effect != null)
-        {
-        	effect.modifyParadigm(parad);
+
+    public void modifyEffect(ComplexSpellModifier mod) {
+        if (mod != null) {
+            this.modifier = mod;
         }
     }
-    
-    public int getCostOfEffect(SpellParadigm parad)
-    {
-    	if(parad == null)
-    	{
-    		return 0;
-    	}
-    	
+
+    public void modifyParadigm(
+            SpellParadigm parad) // When modifying the paradigm it will instead get the class name and ask the registry
+            {
+        if (parad == null) {
+            return;
+        }
+
         Class paraClass = parad.getClass();
-        
-    	ComplexSpellEffect effect = SpellEffectRegistry.getSpellEffect(paraClass, type, modifier, powerEnhancement, potencyEnhancement, costEnhancement);
-        
-    	if(effect == null)
-    	{
-    		return 0;
-    	}
-    	
-    	return effect.getCostOfEffect();
+
+        ComplexSpellEffect effect = SpellEffectRegistry.getSpellEffect(
+                paraClass, type, modifier, powerEnhancement, potencyEnhancement, costEnhancement);
+
+        if (effect != null) {
+            effect.modifyParadigm(parad);
+        }
     }
-    
-    public NBTTagCompound getTag()
-    {
+
+    public int getCostOfEffect(SpellParadigm parad) {
+        if (parad == null) {
+            return 0;
+        }
+
+        Class paraClass = parad.getClass();
+
+        ComplexSpellEffect effect = SpellEffectRegistry.getSpellEffect(
+                paraClass, type, modifier, powerEnhancement, potencyEnhancement, costEnhancement);
+
+        if (effect == null) {
+            return 0;
+        }
+
+        return effect.getCostOfEffect();
+    }
+
+    public NBTTagCompound getTag() {
         NBTTagCompound tag = new NBTTagCompound();
 
         tag.setString("Class", this.getClass().getName());
@@ -111,18 +99,13 @@ public class SpellEffect
         return tag;
     }
 
-    public static SpellEffect getEffectFromTag(NBTTagCompound tag)
-    {
-        try
-        {
+    public static SpellEffect getEffectFromTag(NBTTagCompound tag) {
+        try {
             Class clazz = Class.forName(tag.getString("Class"));
-            if (clazz != null)
-            {
-                try
-                {
+            if (clazz != null) {
+                try {
                     Object obj = clazz.newInstance();
-                    if (obj instanceof SpellEffect)
-                    {
+                    if (obj instanceof SpellEffect) {
                         SpellEffect eff = (SpellEffect) obj;
 
                         eff.type = SpellEffectRegistry.getTypeForKey(tag.getString("type"));
@@ -130,48 +113,42 @@ public class SpellEffect
                         eff.powerEnhancement = tag.getInteger("power");
                         eff.costEnhancement = tag.getInteger("cost");
                         eff.potencyEnhancement = tag.getInteger("potency");
-                        
+
                         return eff;
                     }
-                } catch (InstantiationException e)
-                {
+                } catch (InstantiationException e) {
                     e.printStackTrace();
-                } catch (IllegalAccessException e)
-                {
+                } catch (IllegalAccessException e) {
                     e.printStackTrace();
                 }
             }
-        } catch (ClassNotFoundException e)
-        {
+        } catch (ClassNotFoundException e) {
             e.printStackTrace();
         }
         return null;
     }
 
-	public int getPowerEnhancements() 
-	{
-		return this.powerEnhancement;
-	}
-	
-	public int getPotencyEnhancements() 
-	{
-		return this.potencyEnhancement;
-	}
-	
-	public int getCostEnhancements() 
-	{
-		return this.costEnhancement;
-	}
+    public int getPowerEnhancements() {
+        return this.powerEnhancement;
+    }
+
+    public int getPotencyEnhancements() {
+        return this.potencyEnhancement;
+    }
+
+    public int getCostEnhancements() {
+        return this.costEnhancement;
+    }
 }
 
-//package WayofTime.alchemicalWizardry.common.spell.complex.effect;
+// package WayofTime.alchemicalWizardry.common.spell.complex.effect;
 //
-//import WayofTime.alchemicalWizardry.common.spell.complex.*;
-//import WayofTime.alchemicalWizardry.common.spell.complex.enhancement.SpellEnhancement;
-//import net.minecraft.nbt.NBTTagCompound;
+// import WayofTime.alchemicalWizardry.common.spell.complex.*;
+// import WayofTime.alchemicalWizardry.common.spell.complex.enhancement.SpellEnhancement;
+// import net.minecraft.nbt.NBTTagCompound;
 //
-//public abstract class SpellEffect
-//{
+// public abstract class SpellEffect
+// {
 //    protected int modifierState;
 //    protected int powerEnhancement;
 //    protected int costEnhancement;
@@ -210,7 +187,8 @@ public class SpellEffect
 //            modifierState = mod.getModifier();
 //    }
 //
-//    public void modifyParadigm(SpellParadigm parad) //When modifying the paradigm it will instead get the class name and ask the registry
+//    public void modifyParadigm(SpellParadigm parad) //When modifying the paradigm it will instead get the class name
+// and ask the registry
 //    {
 //        if (parad instanceof SpellParadigmProjectile)
 //        {
@@ -497,4 +475,4 @@ public class SpellEffect
 //        }
 //        return null;
 //    }
-//}
+// }

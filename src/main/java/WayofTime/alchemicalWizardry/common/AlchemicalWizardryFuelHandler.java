@@ -12,48 +12,38 @@ import net.minecraft.potion.Potion;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.server.MinecraftServer;
 
-public class AlchemicalWizardryFuelHandler implements IFuelHandler
-{
+public class AlchemicalWizardryFuelHandler implements IFuelHandler {
     @Override
-    public int getBurnTime(ItemStack fuel)
-    {
-        if (fuel == null)
-        {
+    public int getBurnTime(ItemStack fuel) {
+        if (fuel == null) {
             return 0;
         }
 
         Item fuelItem = fuel.getItem();
 
-        if (fuelItem.equals(ModItems.lavaCrystal))
-        {
+        if (fuelItem.equals(ModItems.lavaCrystal)) {
             LavaCrystal item = (LavaCrystal) fuel.getItem();
 
-            if (item.hasEnoughEssence(fuel))
-            {
+            if (item.hasEnoughEssence(fuel)) {
                 return 200;
-            } else
-            {
+            } else {
                 NBTTagCompound tag = fuel.getTagCompound();
 
-                if (tag == null)
-                {
+                if (tag == null) {
                     return 0;
                 }
 
-                if (MinecraftServer.getServer() == null)
-                {
+                if (MinecraftServer.getServer() == null) {
                     return 0;
                 }
 
-                if (MinecraftServer.getServer().getConfigurationManager() == null)
-                {
+                if (MinecraftServer.getServer().getConfigurationManager() == null) {
                     return 0;
                 }
 
                 EntityPlayer owner = SpellHelper.getPlayerForUsername(tag.getString("ownerName"));
 
-                if (owner == null)
-                {
+                if (owner == null) {
                     return 0;
                 }
 

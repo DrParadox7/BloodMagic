@@ -1,16 +1,14 @@
 package WayofTime.alchemicalWizardry.api.spell;
 
+import WayofTime.alchemicalWizardry.api.soulNetwork.SoulNetworkHandler;
 import java.util.ArrayList;
 import java.util.List;
-
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.DamageSource;
 import net.minecraft.world.World;
-import WayofTime.alchemicalWizardry.api.soulNetwork.SoulNetworkHandler;
 
-public class SpellParadigmProjectile extends SpellParadigm
-{
+public class SpellParadigmProjectile extends SpellParadigm {
     public DamageSource damageSource;
     public float damage;
     public int cost;
@@ -20,8 +18,7 @@ public class SpellParadigmProjectile extends SpellParadigm
     public int ricochetMax;
     public boolean isSilkTouch;
 
-    public SpellParadigmProjectile()
-    {
+    public SpellParadigmProjectile() {
         this.damageSource = DamageSource.generic;
         this.damage = 1;
         this.cost = 0;
@@ -33,40 +30,32 @@ public class SpellParadigmProjectile extends SpellParadigm
     }
 
     @Override
-    public void enhanceParadigm(SpellEnhancement enh)
-    {
-
-    }
+    public void enhanceParadigm(SpellEnhancement enh) {}
 
     @Override
-    public void castSpell(World world, EntityPlayer entityPlayer, ItemStack itemStack)
-    {
-    	int cost = this.getTotalCost();
-        
-        if(!SoulNetworkHandler.syphonAndDamageFromNetwork(itemStack, entityPlayer, cost))
-        {
-        	return;
+    public void castSpell(World world, EntityPlayer entityPlayer, ItemStack itemStack) {
+        int cost = this.getTotalCost();
+
+        if (!SoulNetworkHandler.syphonAndDamageFromNetwork(itemStack, entityPlayer, cost)) {
+            return;
         }
-        
+
         EntitySpellProjectile proj = new EntitySpellProjectile(world, entityPlayer);
         this.prepareProjectile(proj);
         world.spawnEntityInWorld(proj);
     }
 
-    public static SpellParadigmProjectile getParadigmForEffectArray(List<SpellEffect> effectList)
-    {
+    public static SpellParadigmProjectile getParadigmForEffectArray(List<SpellEffect> effectList) {
         SpellParadigmProjectile parad = new SpellParadigmProjectile();
 
-        for (SpellEffect eff : effectList)
-        {
+        for (SpellEffect eff : effectList) {
             parad.addBufferedEffect(eff);
         }
 
         return parad;
     }
 
-    public void prepareProjectile(EntitySpellProjectile proj)
-    {
+    public void prepareProjectile(EntitySpellProjectile proj) {
         proj.setDamage(damage);
         proj.setImpactList(impactList);
         proj.setUpdateEffectList(updateEffectList);
@@ -76,26 +65,20 @@ public class SpellParadigmProjectile extends SpellParadigm
         proj.setSpellEffectList(bufferedEffectList);
     }
 
-    public void addImpactEffect(IProjectileImpactEffect eff)
-    {
-        if (eff != null)
-        {
+    public void addImpactEffect(IProjectileImpactEffect eff) {
+        if (eff != null) {
             this.impactList.add(eff);
         }
     }
 
-    public void addUpdateEffect(IProjectileUpdateEffect eff)
-    {
-        if (eff != null)
-        {
+    public void addUpdateEffect(IProjectileUpdateEffect eff) {
+        if (eff != null) {
             this.updateEffectList.add(eff);
         }
     }
 
     @Override
-    public int getDefaultCost()
-    {
+    public int getDefaultCost() {
         return 50;
     }
-
 }

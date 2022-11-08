@@ -8,25 +8,20 @@ import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.world.World;
 
-public class ProjectileOffensiveIce extends ProjectileImpactEffect
-{
-    public ProjectileOffensiveIce(int power, int potency, int cost)
-    {
+public class ProjectileOffensiveIce extends ProjectileImpactEffect {
+    public ProjectileOffensiveIce(int power, int potency, int cost) {
         super(power, potency, cost);
     }
 
     @Override
-    public void onEntityImpact(Entity mop, Entity proj)
-    {
-        if (mop instanceof EntityLivingBase)
-        {
-            ((EntityLivingBase) mop).addPotionEffect(new PotionEffect(Potion.moveSlowdown.id, 60 * (this.powerUpgrades + 1), this.potencyUpgrades));
+    public void onEntityImpact(Entity mop, Entity proj) {
+        if (mop instanceof EntityLivingBase) {
+            ((EntityLivingBase) mop)
+                    .addPotionEffect(new PotionEffect(
+                            Potion.moveSlowdown.id, 60 * (this.powerUpgrades + 1), this.potencyUpgrades));
         }
     }
 
     @Override
-    public void onTileImpact(World world, MovingObjectPosition mop)
-    {
-
-    }
+    public void onTileImpact(World world, MovingObjectPosition mop) {}
 }

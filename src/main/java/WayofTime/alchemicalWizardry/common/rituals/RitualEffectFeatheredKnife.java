@@ -1,8 +1,5 @@
 package WayofTime.alchemicalWizardry.common.rituals;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import WayofTime.alchemicalWizardry.AlchemicalWizardry;
 import WayofTime.alchemicalWizardry.api.alchemy.energy.ReagentRegistry;
 import WayofTime.alchemicalWizardry.api.rituals.IMasterRitualStone;
@@ -11,11 +8,12 @@ import WayofTime.alchemicalWizardry.api.rituals.RitualEffect;
 import WayofTime.alchemicalWizardry.api.soulNetwork.SoulNetworkHandler;
 import WayofTime.alchemicalWizardry.api.tile.IBloodAltar;
 import WayofTime.alchemicalWizardry.common.spell.complex.effect.SpellHelper;
+import java.util.ArrayList;
+import java.util.List;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.world.World;
 
-public class RitualEffectFeatheredKnife extends RitualEffect
-{
+public class RitualEffectFeatheredKnife extends RitualEffect {
     public final int amount = AlchemicalWizardry.lpPerSelfSacrificeFeatheredKnife;
 
     public static final int sanctusDrain = 5;
@@ -24,8 +22,7 @@ public class RitualEffectFeatheredKnife extends RitualEffect
     public static final int potentiaDrain = 5;
 
     @Override
-    public void performEffect(IMasterRitualStone ritualStone)
-    {
+    public void performEffect(IMasterRitualStone ritualStone) {
         String owner = ritualStone.getOwner();
 
         int currentEssence = SoulNetworkHandler.getCurrentEssence(owner);
@@ -38,22 +35,17 @@ public class RitualEffectFeatheredKnife extends RitualEffect
 
         int timeDelay = hasPotentia ? 10 : 20;
 
-        if (world.getWorldTime() % timeDelay != 0)
-        {
+        if (world.getWorldTime() % timeDelay != 0) {
             return;
         }
 
         IBloodAltar tileAltar = null;
         boolean testFlag = false;
 
-        for (int i = -5; i <= 5; i++)
-        {
-            for (int j = -5; j <= 5; j++)
-            {
-                for (int k = -10; k <= 10; k++)
-                {
-                    if (world.getTileEntity(x + i, y + k, z + j) instanceof IBloodAltar)
-                    {
+        for (int i = -5; i <= 5; i++) {
+            for (int j = -5; j <= 5; j++) {
+                for (int k = -10; k <= 10; k++) {
+                    if (world.getTileEntity(x + i, y + k, z + j) instanceof IBloodAltar) {
                         tileAltar = (IBloodAltar) world.getTileEntity(x + i, y + k, z + j);
                         testFlag = true;
                     }
@@ -61,8 +53,7 @@ public class RitualEffectFeatheredKnife extends RitualEffect
             }
         }
 
-        if (!testFlag)
-        {
+        if (!testFlag) {
             return;
         }
 
@@ -75,36 +66,31 @@ public class RitualEffectFeatheredKnife extends RitualEffect
         int entityCount = 0;
         boolean flag = false;
 
-        if (currentEssence < this.getCostPerRefresh() * list.size())
-        {
+        if (currentEssence < this.getCostPerRefresh() * list.size()) {
             SoulNetworkHandler.causeNauseaToPlayer(owner);
-        } else
-        {
-            boolean hasMagicales = this.canDrainReagent(ritualStone, ReagentRegistry.magicalesReagent, magicalesDrain, false);
+        } else {
+            boolean hasMagicales =
+                    this.canDrainReagent(ritualStone, ReagentRegistry.magicalesReagent, magicalesDrain, false);
             boolean hasSanctus = this.canDrainReagent(ritualStone, ReagentRegistry.sanctusReagent, sanctusDrain, false);
 
             EntityPlayer ownerPlayer = SpellHelper.getPlayerForUsername(owner);
-            for (EntityPlayer player : list)
-            {
-                hasSanctus = hasSanctus && this.canDrainReagent(ritualStone, ReagentRegistry.sanctusReagent, sanctusDrain, false);
+            for (EntityPlayer player : list) {
+                hasSanctus = hasSanctus
+                        && this.canDrainReagent(ritualStone, ReagentRegistry.sanctusReagent, sanctusDrain, false);
                 double threshold = hasSanctus ? 0.7d : 0.3d;
 
-                if ((hasMagicales && player == ownerPlayer) || !hasMagicales)
-                {
-                    if (!SpellHelper.isFakePlayer(world, player))
-                    {
-                        if (player.getHealth() / player.getMaxHealth() > threshold)
-                        {
+                if ((hasMagicales && player == ownerPlayer) || !hasMagicales) {
+                    if (!SpellHelper.isFakePlayer(world, player)) {
+                        if (player.getHealth() / player.getMaxHealth() > threshold) {
                             player.setHealth(player.getHealth() - 1);
                             entityCount++;
                             tileAltar.sacrificialDaggerCall(this.amount, false);
-                            if (hasSanctus)
-                            {
+                            if (hasSanctus) {
                                 this.canDrainReagent(ritualStone, ReagentRegistry.sanctusReagent, sanctusDrain, true);
                             }
-                            if (hasMagicales)
-                            {
-                                this.canDrainReagent(ritualStone, ReagentRegistry.magicalesReagent, magicalesDrain, true);
+                            if (hasMagicales) {
+                                this.canDrainReagent(
+                                        ritualStone, ReagentRegistry.magicalesReagent, magicalesDrain, true);
                                 break;
                             }
                         }
@@ -112,14 +98,11 @@ public class RitualEffectFeatheredKnife extends RitualEffect
                 }
             }
 
-            if (entityCount > 0)
-            {
-                if (hasReductus)
-                {
+            if (entityCount > 0) {
+                if (hasReductus) {
                     this.canDrainReagent(ritualStone, ReagentRegistry.reductusReagent, reductusDrain, true);
                 }
-                if (hasPotentia)
-                {
+                if (hasPotentia) {
                     this.canDrainReagent(ritualStone, ReagentRegistry.potentiaReagent, potentiaDrain, true);
                 }
 
@@ -129,14 +112,12 @@ public class RitualEffectFeatheredKnife extends RitualEffect
     }
 
     @Override
-    public int getCostPerRefresh()
-    {
+    public int getCostPerRefresh() {
         return AlchemicalWizardry.ritualCostFeatheredKnife[1];
     }
 
     @Override
-    public List<RitualComponent> getRitualComponentList()
-    {
+    public List<RitualComponent> getRitualComponentList() {
         ArrayList<RitualComponent> featheredKnifeRitual = new ArrayList();
         featheredKnifeRitual.add(new RitualComponent(1, 0, 0, RitualComponent.DUSK));
         featheredKnifeRitual.add(new RitualComponent(-1, 0, 0, RitualComponent.DUSK));

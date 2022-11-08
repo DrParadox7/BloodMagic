@@ -7,6 +7,7 @@ import WayofTime.alchemicalWizardry.api.items.interfaces.ISigil;
 import WayofTime.alchemicalWizardry.common.items.EnergyItems;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
+import java.util.List;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
@@ -15,12 +16,8 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.StatCollector;
 import net.minecraft.world.World;
 
-import java.util.List;
-
-public class SigilSeer extends Item implements IHolding, ArmourUpgrade, ISigil
-{
-    public SigilSeer()
-    {
+public class SigilSeer extends Item implements IHolding, ArmourUpgrade, ISigil {
+    public SigilSeer() {
         super();
         this.maxStackSize = 1;
         setCreativeTab(AlchemicalWizardry.tabBloodMagic);
@@ -28,34 +25,29 @@ public class SigilSeer extends Item implements IHolding, ArmourUpgrade, ISigil
 
     @Override
     @SideOnly(Side.CLIENT)
-    public void registerIcons(IIconRegister iconRegister)
-    {
+    public void registerIcons(IIconRegister iconRegister) {
         this.itemIcon = iconRegister.registerIcon("AlchemicalWizardry:SeerSigil");
     }
 
     @Override
-    public void addInformation(ItemStack par1ItemStack, EntityPlayer par2EntityPlayer, List par3List, boolean par4)
-    {
+    public void addInformation(ItemStack par1ItemStack, EntityPlayer par2EntityPlayer, List par3List, boolean par4) {
         par3List.add(StatCollector.translateToLocal("tooltip.seersigil.desc"));
 
-        if (!(par1ItemStack.getTagCompound() == null))
-        {
-            par3List.add(StatCollector.translateToLocal("tooltip.owner.currentowner") + " " + par1ItemStack.getTagCompound().getString("ownerName"));
+        if (!(par1ItemStack.getTagCompound() == null)) {
+            par3List.add(StatCollector.translateToLocal("tooltip.owner.currentowner") + " "
+                    + par1ItemStack.getTagCompound().getString("ownerName"));
         }
     }
 
     @Override
-    public ItemStack onItemRightClick(ItemStack par1ItemStack, World par2World, EntityPlayer par3EntityPlayer)
-    {
-        if (!EnergyItems.checkAndSetItemOwner(par1ItemStack, par3EntityPlayer) || par3EntityPlayer.worldObj.isRemote)
-        {
+    public ItemStack onItemRightClick(ItemStack par1ItemStack, World par2World, EntityPlayer par3EntityPlayer) {
+        if (!EnergyItems.checkAndSetItemOwner(par1ItemStack, par3EntityPlayer) || par3EntityPlayer.worldObj.isRemote) {
             return par1ItemStack;
         }
 
         NBTTagCompound itemTag = par1ItemStack.getTagCompound();
 
-        if (itemTag == null || itemTag.getString("ownerName").equals(""))
-        {
+        if (itemTag == null || itemTag.getString("ownerName").equals("")) {
             return par1ItemStack;
         }
 
@@ -63,19 +55,15 @@ public class SigilSeer extends Item implements IHolding, ArmourUpgrade, ISigil
     }
 
     @Override
-    public void onArmourUpdate(World world, EntityPlayer player, ItemStack thisItemStack)
-    {
-    }
+    public void onArmourUpdate(World world, EntityPlayer player, ItemStack thisItemStack) {}
 
     @Override
-    public boolean isUpgrade()
-    {
+    public boolean isUpgrade() {
         return false;
     }
 
     @Override
-    public int getEnergyForTenSeconds()
-    {
+    public int getEnergyForTenSeconds() {
         return 0;
     }
 }

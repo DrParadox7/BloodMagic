@@ -5,10 +5,8 @@ import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.client.renderer.texture.IIconRegister;
 
-public class RuneOfSacrifice extends BloodRune
-{
-    public RuneOfSacrifice()
-    {
+public class RuneOfSacrifice extends BloodRune {
+    public RuneOfSacrifice() {
         super();
         this.setBlockName("runeOfSacrifice");
         setCreativeTab(AlchemicalWizardry.tabBloodMagic);
@@ -18,14 +16,12 @@ public class RuneOfSacrifice extends BloodRune
 
     @Override
     @SideOnly(Side.CLIENT)
-    public void registerBlockIcons(IIconRegister iconRegister)
-    {
+    public void registerBlockIcons(IIconRegister iconRegister) {
         this.blockIcon = iconRegister.registerIcon("AlchemicalWizardry:RuneOfSacrifice");
     }
 
     @Override
-    public int getRuneEffect(int metaData)
-    {
+    public int getRuneEffect(int metaData) {
         return 3;
     }
 }

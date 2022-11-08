@@ -4,9 +4,8 @@ import net.minecraft.client.model.ModelBase;
 import net.minecraft.client.model.ModelRenderer;
 import net.minecraft.entity.Entity;
 
-public class ModelCrystalBelljar extends ModelBase
-{
-    //fields
+public class ModelCrystalBelljar extends ModelBase {
+    // fields
     ModelRenderer handle1;
     ModelRenderer handle2;
     ModelRenderer jar1;
@@ -16,8 +15,7 @@ public class ModelCrystalBelljar extends ModelBase
     ModelRenderer jar4;
     ModelRenderer jar5;
 
-    public ModelCrystalBelljar()
-    {
+    public ModelCrystalBelljar() {
         textureWidth = 128;
         textureHeight = 64;
 
@@ -71,8 +69,7 @@ public class ModelCrystalBelljar extends ModelBase
         setRotation(jar5, 0F, 0F, 0F);
     }
 
-    public void render(Entity entity, float f, float f1, float f2, float f3, float f4, float f5)
-    {
+    public void render(Entity entity, float f, float f1, float f2, float f3, float f4, float f5) {
         super.render(entity, f, f1, f2, f3, f4, f5);
         setRotationAngles(f, f1, f2, f3, f4, f5, entity);
         handle1.render(f5);
@@ -85,15 +82,12 @@ public class ModelCrystalBelljar extends ModelBase
         jar5.render(f5);
     }
 
-    public void renderSpecialItem(Entity entity, float f, float f1, float f2, float f3, float f4, float f5, int part)
-    {
+    public void renderSpecialItem(Entity entity, float f, float f1, float f2, float f3, float f4, float f5, int part) {
         super.render(entity, f, f1, f2, f3, f4, f5);
         setRotationAngles(f, f1, f2, f3, f4, f5, entity);
-        if (part == 0)
-        {
+        if (part == 0) {
             woodBottom.render(f5);
-        } else
-        {
+        } else {
             handle1.render(f5);
             handle2.render(f5);
             jar1.render(f5);
@@ -104,16 +98,13 @@ public class ModelCrystalBelljar extends ModelBase
         }
     }
 
-    private void setRotation(ModelRenderer model, float x, float y, float z)
-    {
+    private void setRotation(ModelRenderer model, float x, float y, float z) {
         model.rotateAngleX = x;
         model.rotateAngleY = y;
         model.rotateAngleZ = z;
     }
 
-    public void setRotationAngles(float f, float f1, float f2, float f3, float f4, float f5, Entity entity)
-    {
+    public void setRotationAngles(float f, float f1, float f2, float f3, float f4, float f5, Entity entity) {
         super.setRotationAngles(f, f1, f2, f3, f4, f5, entity);
     }
-
 }

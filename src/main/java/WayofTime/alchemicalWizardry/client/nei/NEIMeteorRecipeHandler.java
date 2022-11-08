@@ -8,13 +8,6 @@ import codechicken.nei.NEIServerUtils;
 import codechicken.nei.PositionedStack;
 import codechicken.nei.recipe.GuiRecipe;
 import codechicken.nei.recipe.TemplateRecipeHandler;
-import net.minecraft.client.Minecraft;
-import net.minecraft.client.resources.I18n;
-import net.minecraft.init.Blocks;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.ResourceLocation;
-import org.lwjgl.opengl.GL11;
-
 import java.awt.*;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
@@ -22,6 +15,12 @@ import java.util.Arrays;
 import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.resources.I18n;
+import net.minecraft.init.Blocks;
+import net.minecraft.item.ItemStack;
+import net.minecraft.util.ResourceLocation;
+import org.lwjgl.opengl.GL11;
 
 public class NEIMeteorRecipeHandler extends TemplateRecipeHandler {
     public class CachedMeteorRecipe extends CachedRecipe {
@@ -36,7 +35,7 @@ public class NEIMeteorRecipeHandler extends TemplateRecipeHandler {
             this.input.add(new PositionedStack(meteor.focusStack, 74, 4));
             int row = 0;
             int col = 0;
-            
+
             float totalMeteorWeight = meteor.getTotalMeteorWeight();
             List<MeteorParadigmComponent> sortedComponents = new ArrayList<>(meteor.componentList);
             sortedComponents.sort(Comparator.comparingInt(c -> -c.chance));
@@ -135,7 +134,7 @@ public class NEIMeteorRecipeHandler extends TemplateRecipeHandler {
         }
         // ignore ore variants (like basalt ore)
         if (compared.getUnlocalizedName().startsWith("gt.blockores")
-            && compareTo.getUnlocalizedName().startsWith("gt.blockores")) {
+                && compareTo.getUnlocalizedName().startsWith("gt.blockores")) {
             return compared.getItemDamage() % 1000 == compareTo.getItemDamage() % 1000;
         }
         return false;
@@ -156,8 +155,12 @@ public class NEIMeteorRecipeHandler extends TemplateRecipeHandler {
         CachedMeteorRecipe meteorRecipe = (CachedMeteorRecipe) this.arecipes.get(recipe);
         int cost = meteorRecipe.getCost();
         int radius = meteorRecipe.getRadius();
-        Minecraft.getMinecraft().fontRenderer.drawString(I18n.format("nei.recipe.meteor.cost", String.format("%,d", cost)), 2, 168, 0x000000);
-        Minecraft.getMinecraft().fontRenderer.drawString(I18n.format("nei.recipe.meteor.radius", radius), 2, 179, 0x000000);
+        Minecraft.getMinecraft()
+                .fontRenderer
+                .drawString(I18n.format("nei.recipe.meteor.cost", String.format("%,d", cost)), 2, 168, 0x000000);
+        Minecraft.getMinecraft()
+                .fontRenderer
+                .drawString(I18n.format("nei.recipe.meteor.radius", radius), 2, 179, 0x000000);
     }
 
     @Override
@@ -195,10 +198,9 @@ public class NEIMeteorRecipeHandler extends TemplateRecipeHandler {
     }
 
     private List<MeteorParadigm> getSortedMeteors() {
-        return MeteorRegistry.paradigmList
-            .stream()
-            .sorted(Comparator.comparing(m -> m.cost))
-            .collect(Collectors.toList());
+        return MeteorRegistry.paradigmList.stream()
+                .sorted(Comparator.comparing(m -> m.cost))
+                .collect(Collectors.toList());
     }
 
     private String getFormattedChance(float chance) {

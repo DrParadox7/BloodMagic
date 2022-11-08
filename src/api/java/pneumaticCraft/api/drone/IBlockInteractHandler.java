@@ -3,7 +3,7 @@ package pneumaticCraft.api.drone;
 /**
  * DON'T IMPLEMENT, just use
  */
-public interface IBlockInteractHandler{
+public interface IBlockInteractHandler {
 
     /**
      * Returns a boolean[6] of all sides. when true, this side is accessible
@@ -22,5 +22,4 @@ public interface IBlockInteractHandler{
      * (It's useless to search any further)
      */
     public void abort();
-
 }

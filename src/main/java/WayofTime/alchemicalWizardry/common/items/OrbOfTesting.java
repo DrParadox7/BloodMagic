@@ -8,10 +8,8 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
 
-public class OrbOfTesting extends EnergyItems
-{
-    public OrbOfTesting()
-    {
+public class OrbOfTesting extends EnergyItems {
+    public OrbOfTesting() {
         super();
         setMaxStackSize(1);
         setCreativeTab(CreativeTabs.tabMisc);
@@ -23,20 +21,16 @@ public class OrbOfTesting extends EnergyItems
 
     @Override
     @SideOnly(Side.CLIENT)
-    public void registerIcons(IIconRegister iconRegister)
-    {
+    public void registerIcons(IIconRegister iconRegister) {
         this.itemIcon = iconRegister.registerIcon("AlchemicalWizardry:Untitled");
     }
 
-    public ItemStack onItemRightClick(ItemStack par1ItemStack, World par2World, EntityPlayer par3EntityPlayer)
-    {
-        if (!par3EntityPlayer.shouldHeal())
-        {
+    public ItemStack onItemRightClick(ItemStack par1ItemStack, World par2World, EntityPlayer par3EntityPlayer) {
+        if (!par3EntityPlayer.shouldHeal()) {
             return par1ItemStack;
         }
 
-        if (syphonBatteries(par1ItemStack, par3EntityPlayer, this.getEnergyUsed()))
-        {
+        if (syphonBatteries(par1ItemStack, par3EntityPlayer, this.getEnergyUsed())) {
             par3EntityPlayer.heal(1);
         }
 

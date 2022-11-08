@@ -1,9 +1,15 @@
 package WayofTime.alchemicalWizardry.common.rituals;
 
+import WayofTime.alchemicalWizardry.AlchemicalWizardry;
+import WayofTime.alchemicalWizardry.ModBlocks;
+import WayofTime.alchemicalWizardry.api.alchemy.energy.ReagentRegistry;
+import WayofTime.alchemicalWizardry.api.rituals.IMasterRitualStone;
+import WayofTime.alchemicalWizardry.api.rituals.RitualComponent;
+import WayofTime.alchemicalWizardry.api.rituals.RitualEffect;
+import WayofTime.alchemicalWizardry.api.soulNetwork.SoulNetworkHandler;
+import WayofTime.alchemicalWizardry.common.spell.complex.effect.SpellHelper;
 import java.util.ArrayList;
 import java.util.List;
-
-import WayofTime.alchemicalWizardry.AlchemicalWizardry;
 import net.minecraft.block.Block;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.init.Blocks;
@@ -14,16 +20,8 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
 import net.minecraftforge.common.util.ForgeDirection;
-import WayofTime.alchemicalWizardry.ModBlocks;
-import WayofTime.alchemicalWizardry.api.alchemy.energy.ReagentRegistry;
-import WayofTime.alchemicalWizardry.api.rituals.IMasterRitualStone;
-import WayofTime.alchemicalWizardry.api.rituals.RitualComponent;
-import WayofTime.alchemicalWizardry.api.rituals.RitualEffect;
-import WayofTime.alchemicalWizardry.api.soulNetwork.SoulNetworkHandler;
-import WayofTime.alchemicalWizardry.common.spell.complex.effect.SpellHelper;
 
-public class RitualEffectCrushing extends RitualEffect
-{
+public class RitualEffectCrushing extends RitualEffect {
     public static final int crystallosDrain = 10;
     public static final int orbisTerraeDrain = 10;
     public static final int potentiaDrain = 10;
@@ -31,15 +29,13 @@ public class RitualEffectCrushing extends RitualEffect
     public static final int incendiumDrain = 10;
 
     @Override
-    public void performEffect(IMasterRitualStone ritualStone)
-    {
+    public void performEffect(IMasterRitualStone ritualStone) {
         String owner = ritualStone.getOwner();
 
         int currentEssence = SoulNetworkHandler.getCurrentEssence(owner);
         World world = ritualStone.getWorld();
 
-        if (world.getWorldTime() % 10 != 5)
-        {
+        if (world.getWorldTime() % 10 != 5) {
             return;
         }
 
@@ -49,133 +45,128 @@ public class RitualEffectCrushing extends RitualEffect
         TileEntity tile = world.getTileEntity(x, y + 1, z);
         IInventory tileEntity;
 
-        if (tile instanceof IInventory)
-        {
+        if (tile instanceof IInventory) {
             tileEntity = (IInventory) tile;
-        } else
-        {
+        } else {
             return;
         }
 
-        if (tileEntity.getSizeInventory() <= 0)
-        {
+        if (tileEntity.getSizeInventory() <= 0) {
             return;
         }
 
         boolean hasRoom = false;
-        for (int i = 0; i < tileEntity.getSizeInventory(); i++)
-        {
-            if (tileEntity.getStackInSlot(i) == null)
-            {
+        for (int i = 0; i < tileEntity.getSizeInventory(); i++) {
+            if (tileEntity.getStackInSlot(i) == null) {
                 hasRoom = true;
                 break;
             }
         }
 
-        if (!hasRoom)
-        {
-            return; //Prevents overflow
+        if (!hasRoom) {
+            return; // Prevents overflow
         }
 
-        boolean hasCrystallos = this.canDrainReagent(ritualStone, ReagentRegistry.crystallosReagent, crystallosDrain, false);
-        boolean hasOrbisTerrae = this.canDrainReagent(ritualStone, ReagentRegistry.orbisTerraeReagent, orbisTerraeDrain, false);
+        boolean hasCrystallos =
+                this.canDrainReagent(ritualStone, ReagentRegistry.crystallosReagent, crystallosDrain, false);
+        boolean hasOrbisTerrae =
+                this.canDrainReagent(ritualStone, ReagentRegistry.orbisTerraeReagent, orbisTerraeDrain, false);
         boolean hasPotentia = this.canDrainReagent(ritualStone, ReagentRegistry.potentiaReagent, potentiaDrain, false);
         boolean hasVirtus = this.canDrainReagent(ritualStone, ReagentRegistry.virtusReagent, virtusDrain, false);
-        boolean hasIncendium = this.canDrainReagent(ritualStone, ReagentRegistry.incendiumReagent, incendiumDrain, false);
+        boolean hasIncendium =
+                this.canDrainReagent(ritualStone, ReagentRegistry.incendiumReagent, incendiumDrain, false);
 
         boolean isSilkTouch = hasCrystallos;
         int fortuneLevel = 0;
-        if (hasOrbisTerrae)
-        {
+        if (hasOrbisTerrae) {
             fortuneLevel++;
         }
-        if (hasPotentia)
-        {
+        if (hasPotentia) {
             fortuneLevel++;
         }
-        if (hasVirtus)
-        {
+        if (hasVirtus) {
             fortuneLevel++;
         }
 
-        if (currentEssence < this.getCostPerRefresh())
-        {
+        if (currentEssence < this.getCostPerRefresh()) {
             SoulNetworkHandler.causeNauseaToPlayer(owner);
-        } else
-        {
-            for (int j = -3; j < 0; j++)
-            {
-                for (int i = -1; i <= 1; i++)
-                {
-                    for (int k = -1; k <= 1; k++)
-                    {
+        } else {
+            for (int j = -3; j < 0; j++) {
+                for (int i = -1; i <= 1; i++) {
+                    for (int k = -1; k <= 1; k++) {
                         Block block = world.getBlock(x + i, y + j, z + k);
                         int meta = world.getBlockMetadata(x + i, y + j, z + k);
-                        if(block.getBlockHardness(world, x + i, y + j, z + k) == -1)
-                        {
-                        	continue;
+                        if (block.getBlockHardness(world, x + i, y + j, z + k) == -1) {
+                            continue;
                         }
 
-                        if (block != null && !world.isAirBlock(x + i, y + j, z + k))
-                        {
-                            if ((block.equals(ModBlocks.ritualStone) || block.equals(ModBlocks.blockMasterStone)) || SpellHelper.isBlockFluid(block))
-                            {
+                        if (block != null && !world.isAirBlock(x + i, y + j, z + k)) {
+                            if ((block.equals(ModBlocks.ritualStone) || block.equals(ModBlocks.blockMasterStone))
+                                    || SpellHelper.isBlockFluid(block)) {
                                 continue;
                             }
 
-                            if (isSilkTouch && block.canSilkHarvest(world, null, x + i, y + j, z + k, meta))
-                            {
+                            if (isSilkTouch && block.canSilkHarvest(world, null, x + i, y + j, z + k, meta)) {
                                 ItemStack item = new ItemStack(block, 1, meta);
                                 ItemStack copyStack = item.copyItemStack(item);
 
                                 SpellHelper.insertStackIntoInventory(copyStack, tileEntity, ForgeDirection.DOWN);
 
-                                if (copyStack.stackSize > 0)
-                                {
+                                if (copyStack.stackSize > 0) {
                                     world.spawnEntityInWorld(new EntityItem(world, x + 0.4, y + 2, z + 0.5, copyStack));
                                 }
 
-                                if (hasCrystallos)
-                                {
-                                    this.canDrainReagent(ritualStone, ReagentRegistry.crystallosReagent, crystallosDrain, true);
+                                if (hasCrystallos) {
+                                    this.canDrainReagent(
+                                            ritualStone, ReagentRegistry.crystallosReagent, crystallosDrain, true);
                                 }
-                            } else
-                            {
-                                ArrayList<ItemStack> itemDropList = block.getDrops(world, x + i, y + j, z + k, meta, fortuneLevel);
+                            } else {
+                                ArrayList<ItemStack> itemDropList =
+                                        block.getDrops(world, x + i, y + j, z + k, meta, fortuneLevel);
 
-                                if (itemDropList != null)
-                                {
+                                if (itemDropList != null) {
                                     int invSize = tileEntity.getSizeInventory();
 
-                                    for (ItemStack item : itemDropList)
-                                    {
-                                        hasIncendium = hasIncendium && this.canDrainReagent(ritualStone, ReagentRegistry.incendiumReagent, incendiumDrain, false);
+                                    for (ItemStack item : itemDropList) {
+                                        hasIncendium = hasIncendium
+                                                && this.canDrainReagent(
+                                                        ritualStone,
+                                                        ReagentRegistry.incendiumReagent,
+                                                        incendiumDrain,
+                                                        false);
                                         ItemStack copyStack = item.copyItemStack(item);
 
-                                        if (this.usesIncendium(copyStack))
-                                        {
+                                        if (this.usesIncendium(copyStack)) {
                                             copyStack = this.transformToNewItem(copyStack, hasIncendium, false);
-                                            this.canDrainReagent(ritualStone, ReagentRegistry.incendiumReagent, incendiumDrain, true);
+                                            this.canDrainReagent(
+                                                    ritualStone,
+                                                    ReagentRegistry.incendiumReagent,
+                                                    incendiumDrain,
+                                                    true);
                                         }
 
-                                        SpellHelper.insertStackIntoInventory(copyStack, tileEntity, ForgeDirection.DOWN);
-                                        if (copyStack.stackSize > 0)
-                                        {
-                                            world.spawnEntityInWorld(new EntityItem(world, x + 0.4, y + 2, z + 0.5, copyStack));
-                                        }  
+                                        SpellHelper.insertStackIntoInventory(
+                                                copyStack, tileEntity, ForgeDirection.DOWN);
+                                        if (copyStack.stackSize > 0) {
+                                            world.spawnEntityInWorld(
+                                                    new EntityItem(world, x + 0.4, y + 2, z + 0.5, copyStack));
+                                        }
                                     }
-                                    
-                                    if (hasOrbisTerrae)
-                                    {
-                                        this.canDrainReagent(ritualStone, ReagentRegistry.orbisTerraeReagent, orbisTerraeDrain, true);
+
+                                    if (hasOrbisTerrae) {
+                                        this.canDrainReagent(
+                                                ritualStone,
+                                                ReagentRegistry.orbisTerraeReagent,
+                                                orbisTerraeDrain,
+                                                true);
                                     }
-                                    if (hasPotentia)
-                                    {
-                                        this.canDrainReagent(ritualStone, ReagentRegistry.potentiaReagent, potentiaDrain, true);
+                                    if (hasPotentia) {
+                                        this.canDrainReagent(
+                                                ritualStone, ReagentRegistry.potentiaReagent, potentiaDrain, true);
                                     }
-                                    if (hasVirtus)
-                                    {
-                                        this.canDrainReagent(ritualStone, ReagentRegistry.virtusReagent, virtusDrain, true);
+                                    if (hasVirtus) {
+                                        this.canDrainReagent(
+                                                ritualStone, ReagentRegistry.virtusReagent, virtusDrain, true);
                                     }
                                 }
                             }
@@ -192,48 +183,37 @@ public class RitualEffectCrushing extends RitualEffect
         }
     }
 
-    private boolean usesIncendium(ItemStack stack)
-    {
-        if (stack != null)
-        {
+    private boolean usesIncendium(ItemStack stack) {
+        if (stack != null) {
             Item item = stack.getItem();
-            if (item instanceof ItemBlock)
-            {
+            if (item instanceof ItemBlock) {
                 Block block = ((ItemBlock) item).field_150939_a;
 
-                if (block == Blocks.cobblestone || block == Blocks.stone)
-                {
+                if (block == Blocks.cobblestone || block == Blocks.stone) {
                     return true;
                 }
-            } else
-            {
+            } else {
 
             }
         }
         return false;
     }
 
-    private ItemStack transformToNewItem(ItemStack stack, boolean hasIncendium, boolean hasCrepitous)
-    {
-        if (stack != null)
-        {
+    private ItemStack transformToNewItem(ItemStack stack, boolean hasIncendium, boolean hasCrepitous) {
+        if (stack != null) {
             ItemStack copyStack = ItemStack.copyItemStack(stack);
             int stackSize = copyStack.stackSize;
 
             Item item = stack.getItem();
-            if (item instanceof ItemBlock)
-            {
+            if (item instanceof ItemBlock) {
                 Block block = ((ItemBlock) item).field_150939_a;
 
-                if (hasIncendium)
-                {
-                    if (block == Blocks.cobblestone || block == Blocks.stone)
-                    {
+                if (hasIncendium) {
+                    if (block == Blocks.cobblestone || block == Blocks.stone) {
                         copyStack = new ItemStack(Blocks.netherrack, stackSize, 0);
                     }
                 }
-            } else
-            {
+            } else {
 
             }
 
@@ -242,21 +222,16 @@ public class RitualEffectCrushing extends RitualEffect
         return stack;
     }
 
-    public boolean isSilkTouch(World world, int x, int y, int z)
-    {
+    public boolean isSilkTouch(World world, int x, int y, int z) {
         int index = 0;
-        for (int i = -2; i <= 2; i++)
-        {
-            for (int j = -2; j <= 2; j++)
-            {
+        for (int i = -2; i <= 2; i++) {
+            for (int j = -2; j <= 2; j++) {
                 int index1 = Math.abs(i);
                 int index2 = Math.abs(j);
 
-                if ((index1 == 2 && (index2 == 2 || index2 == 1)) || (index1 == 1 && index2 == 2))
-                {
+                if ((index1 == 2 && (index2 == 2 || index2 == 1)) || (index1 == 1 && index2 == 2)) {
                     Block block = world.getBlock(x + i, y + 1, z + j);
-                    if (block == Blocks.gold_block)
-                    {
+                    if (block == Blocks.gold_block) {
                         index++;
                     }
                 }
@@ -266,35 +241,27 @@ public class RitualEffectCrushing extends RitualEffect
         return index >= 12;
     }
 
-    public int getFortuneLevel(World world, int x, int y, int z)
-    {
+    public int getFortuneLevel(World world, int x, int y, int z) {
         int index = 0;
-        for (int i = -2; i <= 2; i++)
-        {
-            for (int j = -2; j <= 2; j++)
-            {
+        for (int i = -2; i <= 2; i++) {
+            for (int j = -2; j <= 2; j++) {
                 int index1 = Math.abs(i);
                 int index2 = Math.abs(j);
 
-                if ((index1 == 2 && (index2 == 2 || index2 == 1)) || (index1 == 1 && index2 == 2))
-                {
+                if ((index1 == 2 && (index2 == 2 || index2 == 1)) || (index1 == 1 && index2 == 2)) {
                     Block block = world.getBlock(x + i, y + 1, z + j);
-                    if (block == Blocks.emerald_block || block == Blocks.diamond_block)
-                    {
+                    if (block == Blocks.emerald_block || block == Blocks.diamond_block) {
                         index++;
                     }
                 }
             }
         }
 
-        if (index >= 12)
-        {
+        if (index >= 12) {
             return 3;
-        } else if (index >= 8)
-        {
+        } else if (index >= 8) {
             return 2;
-        } else if (index >= 4)
-        {
+        } else if (index >= 4) {
             return 1;
         }
 
@@ -302,14 +269,12 @@ public class RitualEffectCrushing extends RitualEffect
     }
 
     @Override
-    public int getCostPerRefresh()
-    {
+    public int getCostPerRefresh() {
         return AlchemicalWizardry.ritualCostCrusher[1];
     }
 
     @Override
-    public List<RitualComponent> getRitualComponentList()
-    {
+    public List<RitualComponent> getRitualComponentList() {
         ArrayList<RitualComponent> crushingRitual = new ArrayList();
         crushingRitual.add(new RitualComponent(0, 0, 1, RitualComponent.EARTH));
         crushingRitual.add(new RitualComponent(1, 0, 0, RitualComponent.EARTH));

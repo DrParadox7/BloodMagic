@@ -7,10 +7,8 @@ import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.renderer.texture.IIconRegister;
 
-public class BloodStoneBrick extends Block
-{
-    public BloodStoneBrick()
-    {
+public class BloodStoneBrick extends Block {
+    public BloodStoneBrick() {
         super(Material.iron);
         setHardness(2.0F);
         setResistance(5.0F);
@@ -20,8 +18,7 @@ public class BloodStoneBrick extends Block
 
     @Override
     @SideOnly(Side.CLIENT)
-    public void registerBlockIcons(IIconRegister iconRegister)
-    {
+    public void registerBlockIcons(IIconRegister iconRegister) {
         this.blockIcon = iconRegister.registerIcon("AlchemicalWizardry:BloodStoneBrick");
     }
 }

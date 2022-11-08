@@ -1,10 +1,9 @@
 package pneumaticCraft.api.client;
 
 import java.lang.reflect.Method;
-
 import net.minecraft.client.gui.FontRenderer;
 
-public class GuiElementRenderer{
+public class GuiElementRenderer {
     private static Method drawGaugeMethod;
 
     /**
@@ -19,13 +18,43 @@ public class GuiElementRenderer{
      * @param yPos                  y position of the gauge.
      * @param zLevel                z position of the gauge (Gui#zLevel, -90, for in normal GUI's).
      */
-    public static void drawPressureGauge(FontRenderer fontRenderer, float minPressure, float maxPressure, float dangerPressure, float minWorkingPressure, float currentPressure, int xPos, int yPos, float zLevel){
+    public static void drawPressureGauge(
+            FontRenderer fontRenderer,
+            float minPressure,
+            float maxPressure,
+            float dangerPressure,
+            float minWorkingPressure,
+            float currentPressure,
+            int xPos,
+            int yPos,
+            float zLevel) {
         try {
-            if(drawGaugeMethod == null) {
-                drawGaugeMethod = Class.forName("pneumaticCraft.client.gui.GuiUtils").getMethod("drawPressureGauge", FontRenderer.class, float.class, float.class, float.class, float.class, float.class, int.class, int.class, float.class);
+            if (drawGaugeMethod == null) {
+                drawGaugeMethod = Class.forName("pneumaticCraft.client.gui.GuiUtils")
+                        .getMethod(
+                                "drawPressureGauge",
+                                FontRenderer.class,
+                                float.class,
+                                float.class,
+                                float.class,
+                                float.class,
+                                float.class,
+                                int.class,
+                                int.class,
+                                float.class);
             }
-            drawGaugeMethod.invoke(null, fontRenderer, minPressure, maxPressure, dangerPressure, minWorkingPressure, currentPressure, xPos, yPos, zLevel);
-        } catch(Exception e) {
+            drawGaugeMethod.invoke(
+                    null,
+                    fontRenderer,
+                    minPressure,
+                    maxPressure,
+                    dangerPressure,
+                    minWorkingPressure,
+                    currentPressure,
+                    xPos,
+                    yPos,
+                    zLevel);
+        } catch (Exception e) {
             System.err.println("Failed to render a Pressure Gauge from PneumaticCraft.");
         }
     }

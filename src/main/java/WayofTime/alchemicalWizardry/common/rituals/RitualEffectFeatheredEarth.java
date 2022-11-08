@@ -6,15 +6,14 @@ import WayofTime.alchemicalWizardry.api.rituals.IMasterRitualStone;
 import WayofTime.alchemicalWizardry.api.rituals.RitualComponent;
 import WayofTime.alchemicalWizardry.api.rituals.RitualEffect;
 import WayofTime.alchemicalWizardry.api.soulNetwork.SoulNetworkHandler;
+import java.util.ArrayList;
+import java.util.List;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.effect.EntityLightningBolt;
 import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.world.World;
 
-import java.util.ArrayList;
-import java.util.List;
-
-public class RitualEffectFeatheredEarth extends RitualEffect //Nullifies all fall damage in the area of effect
+public class RitualEffectFeatheredEarth extends RitualEffect // Nullifies all fall damage in the area of effect
 {
     public static final int terraeDrain = 1;
     public static final int orbisTerraeDrain = 1;
@@ -23,8 +22,7 @@ public class RitualEffectFeatheredEarth extends RitualEffect //Nullifies all fal
     public static final int costCooldown = 10;
 
     @Override
-    public void performEffect(IMasterRitualStone ritualStone)
-    {
+    public void performEffect(IMasterRitualStone ritualStone) {
         String owner = ritualStone.getOwner();
 
         int currentEssence = SoulNetworkHandler.getCurrentEssence(owner);
@@ -33,8 +31,7 @@ public class RitualEffectFeatheredEarth extends RitualEffect //Nullifies all fal
         int y = ritualStone.getYCoord();
         int z = ritualStone.getZCoord();
 
-        if (ritualStone.getCooldown() > 0)
-        {
+        if (ritualStone.getCooldown() > 0) {
             world.addWeatherEffect(new EntityLightningBolt(world, x + 4, y + 5, z + 4));
             world.addWeatherEffect(new EntityLightningBolt(world, x + 4, y + 5, z - 4));
             world.addWeatherEffect(new EntityLightningBolt(world, x - 4, y + 5, z - 4));
@@ -43,45 +40,40 @@ public class RitualEffectFeatheredEarth extends RitualEffect //Nullifies all fal
         }
 
         boolean hasTerrae = this.canDrainReagent(ritualStone, ReagentRegistry.terraeReagent, terraeDrain, false);
-        boolean hasOrbisTerrae = this.canDrainReagent(ritualStone, ReagentRegistry.orbisTerraeReagent, orbisTerraeDrain, false);
+        boolean hasOrbisTerrae =
+                this.canDrainReagent(ritualStone, ReagentRegistry.orbisTerraeReagent, orbisTerraeDrain, false);
         boolean hasAether = this.canDrainReagent(ritualStone, ReagentRegistry.aetherReagent, aetherDrain, false);
 
         int range = this.getHorizontalRangeForReagent(hasTerrae, hasOrbisTerrae);
         int verticalRange = hasAether ? 60 : 30;
-        List<EntityLivingBase> entities = world.getEntitiesWithinAABB(EntityLivingBase.class, AxisAlignedBB.getBoundingBox(x, y, z, x + 1, y + 1, z + 1).expand(range, verticalRange, range));
+        List<EntityLivingBase> entities = world.getEntitiesWithinAABB(
+                EntityLivingBase.class,
+                AxisAlignedBB.getBoundingBox(x, y, z, x + 1, y + 1, z + 1).expand(range, verticalRange, range));
         int entityCount = 0;
         boolean flag = false;
 
-        for (EntityLivingBase entity : entities)
-        {
+        for (EntityLivingBase entity : entities) {
             entityCount++;
         }
 
-        if (currentEssence < this.getCostPerRefresh() * entityCount)
-        {
+        if (currentEssence < this.getCostPerRefresh() * entityCount) {
             SoulNetworkHandler.causeNauseaToPlayer(owner);
-        } else
-        {
-            for (EntityLivingBase entity : entities)
-            {
+        } else {
+            for (EntityLivingBase entity : entities) {
                 entity.fallDistance = 0;
                 flag = true;
             }
 
             SoulNetworkHandler.syphonFromNetwork(owner, this.getCostPerRefresh() * entityCount);
 
-            if (flag && world.getWorldTime() % costCooldown == 0)
-            {
-                if (hasTerrae)
-                {
+            if (flag && world.getWorldTime() % costCooldown == 0) {
+                if (hasTerrae) {
                     this.canDrainReagent(ritualStone, ReagentRegistry.terraeReagent, terraeDrain, true);
                 }
-                if (hasOrbisTerrae)
-                {
+                if (hasOrbisTerrae) {
                     this.canDrainReagent(ritualStone, ReagentRegistry.orbisTerraeReagent, orbisTerraeDrain, true);
                 }
-                if (hasAether)
-                {
+                if (hasAether) {
                     this.canDrainReagent(ritualStone, ReagentRegistry.aetherReagent, aetherDrain, true);
                 }
             }
@@ -89,20 +81,17 @@ public class RitualEffectFeatheredEarth extends RitualEffect //Nullifies all fal
     }
 
     @Override
-    public int getCostPerRefresh()
-    {
+    public int getCostPerRefresh() {
         return AlchemicalWizardry.ritualCostFeatheredEarth[1];
     }
 
     @Override
-    public int getInitialCooldown()
-    {
+    public int getInitialCooldown() {
         return 1;
     }
 
     @Override
-    public List<RitualComponent> getRitualComponentList()
-    {
+    public List<RitualComponent> getRitualComponentList() {
         ArrayList<RitualComponent> featheredEarthRitual = new ArrayList();
         featheredEarthRitual.add(new RitualComponent(1, 0, 0, RitualComponent.DUSK));
         featheredEarthRitual.add(new RitualComponent(-1, 0, 0, RitualComponent.DUSK));
@@ -147,24 +136,17 @@ public class RitualEffectFeatheredEarth extends RitualEffect //Nullifies all fal
         return featheredEarthRitual;
     }
 
-    public int getHorizontalRangeForReagent(boolean hasTerrae, boolean hasOrbisTerrae)
-    {
-        if (hasOrbisTerrae)
-        {
-            if (hasTerrae)
-            {
+    public int getHorizontalRangeForReagent(boolean hasTerrae, boolean hasOrbisTerrae) {
+        if (hasOrbisTerrae) {
+            if (hasTerrae) {
                 return 64;
-            } else
-            {
+            } else {
                 return 45;
             }
-        } else
-        {
-            if (hasTerrae)
-            {
+        } else {
+            if (hasTerrae) {
                 return 30;
-            } else
-            {
+            } else {
                 return 20;
             }
         }

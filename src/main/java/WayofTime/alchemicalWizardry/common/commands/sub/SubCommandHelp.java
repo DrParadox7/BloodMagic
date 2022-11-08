@@ -35,10 +35,14 @@ public class SubCommandHelp extends SubCommandBase {
     public void processSubCommand(ICommandSender commandSender, String[] args) {
         super.processSubCommand(commandSender, args);
 
-        if (args.length > 0)
-            return;
+        if (args.length > 0) return;
 
-        for (ISubCommand subCommand : ((CommandBloodMagic)getParentCommand()).getSubCommands().values())
-            commandSender.addChatMessage(new ChatComponentText(StatCollector.translateToLocalFormatted("commands.format.help", capitalizeFirstLetter(subCommand.getSubCommandName()), subCommand.getArgUsage(commandSender))).setChatStyle(new ChatStyle().setColor(EnumChatFormatting.GREEN)));
+        for (ISubCommand subCommand :
+                ((CommandBloodMagic) getParentCommand()).getSubCommands().values())
+            commandSender.addChatMessage(new ChatComponentText(StatCollector.translateToLocalFormatted(
+                            "commands.format.help",
+                            capitalizeFirstLetter(subCommand.getSubCommandName()),
+                            subCommand.getArgUsage(commandSender)))
+                    .setChatStyle(new ChatStyle().setColor(EnumChatFormatting.GREEN)));
     }
 }

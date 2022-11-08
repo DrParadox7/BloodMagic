@@ -7,61 +7,51 @@ import net.minecraft.network.Packet;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraftforge.common.util.ForgeDirection;
 
-public class TEOrientable extends TileEntity implements IOrientable
-{
+public class TEOrientable extends TileEntity implements IOrientable {
     protected ForgeDirection inputFace;
     protected ForgeDirection outputFace;
 
-    public TEOrientable()
-    {
+    public TEOrientable() {
         this.inputFace = ForgeDirection.DOWN;
         this.outputFace = ForgeDirection.UP;
     }
 
     @Override
-    public void readFromNBT(NBTTagCompound par1NBTTagCompound)
-    {
+    public void readFromNBT(NBTTagCompound par1NBTTagCompound) {
         super.readFromNBT(par1NBTTagCompound);
         this.setInputDirection(ForgeDirection.getOrientation(par1NBTTagCompound.getInteger("inputFace")));
         this.setOutputDirection(ForgeDirection.getOrientation(par1NBTTagCompound.getInteger("outputFace")));
     }
 
     @Override
-    public void writeToNBT(NBTTagCompound par1NBTTagCompound)
-    {
+    public void writeToNBT(NBTTagCompound par1NBTTagCompound) {
         super.writeToNBT(par1NBTTagCompound);
         par1NBTTagCompound.setInteger("inputFace", TEOrientable.getIntForForgeDirection(this.getInputDirection()));
         par1NBTTagCompound.setInteger("outputFace", TEOrientable.getIntForForgeDirection(this.getOutputDirection()));
     }
 
     @Override
-    public ForgeDirection getInputDirection()
-    {
+    public ForgeDirection getInputDirection() {
         return this.inputFace;
     }
 
     @Override
-    public ForgeDirection getOutputDirection()
-    {
+    public ForgeDirection getOutputDirection() {
         return this.outputFace;
     }
 
     @Override
-    public void setInputDirection(ForgeDirection direction)
-    {
+    public void setInputDirection(ForgeDirection direction) {
         this.inputFace = direction;
     }
 
     @Override
-    public void setOutputDirection(ForgeDirection direction)
-    {
+    public void setOutputDirection(ForgeDirection direction) {
         this.outputFace = direction;
     }
 
-    public static int getIntForForgeDirection(ForgeDirection direction)
-    {
-        switch (direction)
-        {
+    public static int getIntForForgeDirection(ForgeDirection direction) {
+        switch (direction) {
             case DOWN:
                 return 0;
 
@@ -86,23 +76,18 @@ public class TEOrientable extends TileEntity implements IOrientable
     }
 
     @Override
-    public Packet getDescriptionPacket()
-    {
+    public Packet getDescriptionPacket() {
         return NewPacketHandler.getPacket(this);
     }
 
-
-    public boolean isSideRendered(ForgeDirection side)
-    {
-        if (side.equals(this.getInputDirection()) || side.equals(this.getOutputDirection()))
-        {
+    public boolean isSideRendered(ForgeDirection side) {
+        if (side.equals(this.getInputDirection()) || side.equals(this.getOutputDirection())) {
             return true;
         }
         return false;
     }
 
-    public String getResourceLocationForMeta(int meta)
-    {
+    public String getResourceLocationForMeta(int meta) {
         return "";
     }
 }

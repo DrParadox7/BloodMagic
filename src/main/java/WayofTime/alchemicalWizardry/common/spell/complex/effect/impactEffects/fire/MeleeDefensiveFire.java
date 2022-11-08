@@ -8,16 +8,13 @@ import net.minecraft.util.Vec3;
 import net.minecraft.world.World;
 import net.minecraftforge.common.util.ForgeDirection;
 
-public class MeleeDefensiveFire extends MeleeSpellWorldEffect
-{
-    public MeleeDefensiveFire(int power, int potency, int cost)
-    {
+public class MeleeDefensiveFire extends MeleeSpellWorldEffect {
+    public MeleeDefensiveFire(int power, int potency, int cost) {
         super(power, potency, cost);
     }
 
     @Override
-    public void onWorldEffect(World world, EntityPlayer entityPlayer)
-    {
+    public void onWorldEffect(World world, EntityPlayer entityPlayer) {
         ForgeDirection look = SpellHelper.getCompassDirectionForLookVector(entityPlayer.getLookVec());
 
         int width = this.potencyUpgrades + 1;
@@ -32,15 +29,18 @@ public class MeleeDefensiveFire extends MeleeSpellWorldEffect
         int zStart = (int) (lookVec.zCoord) + 1 * zOffset;
         int yStart = (int) (lookVec.yCoord) - 1;
 
-        for (int i = -width; i <= width; i++)
-        {
-            for (int j = 0; j < length; j++)
-            {
-                for (int k = 0; k < 3; k++)
-                {
-                    if (world.isAirBlock(xStart + i * (zOffset) + j * (xOffset), yStart + k, zStart + i * (xOffset) + j * (zOffset)))
-                    {
-                        world.setBlock(xStart + i * (zOffset) + j * (xOffset), yStart + k, zStart + i * (xOffset) + j * (zOffset), Blocks.fire);
+        for (int i = -width; i <= width; i++) {
+            for (int j = 0; j < length; j++) {
+                for (int k = 0; k < 3; k++) {
+                    if (world.isAirBlock(
+                            xStart + i * (zOffset) + j * (xOffset),
+                            yStart + k,
+                            zStart + i * (xOffset) + j * (zOffset))) {
+                        world.setBlock(
+                                xStart + i * (zOffset) + j * (xOffset),
+                                yStart + k,
+                                zStart + i * (xOffset) + j * (zOffset),
+                                Blocks.fire);
                     }
                 }
             }

@@ -3,19 +3,15 @@ package WayofTime.alchemicalWizardry.common.tileEntity;
 import WayofTime.alchemicalWizardry.api.spell.ComplexSpellModifier;
 import WayofTime.alchemicalWizardry.api.spell.SpellParadigm;
 
-public class TESpellModifierBlock extends TESpellBlock
-{
+public class TESpellModifierBlock extends TESpellBlock {
     @Override
-    protected void applySpellChange(SpellParadigm parad)
-    {
+    protected void applySpellChange(SpellParadigm parad) {
         parad.modifyBufferedEffect(this.getSpellModifier());
     }
 
-    public ComplexSpellModifier getSpellModifier()
-    {
+    public ComplexSpellModifier getSpellModifier() {
         int meta = worldObj.getBlockMetadata(xCoord, yCoord, zCoord);
-        switch (meta)
-        {
+        switch (meta) {
             case 0:
                 return ComplexSpellModifier.DEFAULT;
             case 1:
@@ -29,10 +25,8 @@ public class TESpellModifierBlock extends TESpellBlock
     }
 
     @Override
-    public String getResourceLocationForMeta(int meta)
-    {
-        switch (meta)
-        {
+    public String getResourceLocationForMeta(int meta) {
+        switch (meta) {
             case 0:
                 return "alchemicalwizardry:textures/models/SpellModifierDefault.png";
             case 1:

@@ -4,21 +4,16 @@ import net.minecraft.block.Block;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
 
-public class ItemSpellEnhancementBlock extends ItemBlock
-{
-    public ItemSpellEnhancementBlock(Block par1)
-    {
+public class ItemSpellEnhancementBlock extends ItemBlock {
+    public ItemSpellEnhancementBlock(Block par1) {
         super(par1);
         setHasSubtypes(true);
-
     }
 
-    public String getUnlocalizedName(ItemStack itemstack)
-    {
+    public String getUnlocalizedName(ItemStack itemstack) {
         String name;
 
-        switch (itemstack.getItemDamage())
-        {
+        switch (itemstack.getItemDamage()) {
             case 0:
                 name = "power1";
                 break;
@@ -86,9 +81,8 @@ public class ItemSpellEnhancementBlock extends ItemBlock
         return getUnlocalizedName() + "." + name;
     }
 
-    public int getMetadata(int par1)
+    public int getMetadata(int par1) {
 
-    {
         return par1;
     }
 }

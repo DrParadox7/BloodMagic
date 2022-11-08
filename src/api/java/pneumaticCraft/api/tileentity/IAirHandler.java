@@ -1,19 +1,16 @@
 package pneumaticCraft.api.tileentity;
 
 import java.util.List;
-
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraftforge.common.util.ForgeDirection;
-
 import org.apache.commons.lang3.tuple.Pair;
 
 /**
  * A way for you to access about everything you need from a pneumatic machine.
  * DO NOT IMPLEMENT THIS YOURSELF! Use AirHandlerSupplier to get an instance for your TileEntity, and implement IPneumaticMachine instead.
  */
-
-public interface IAirHandler extends IManoMeasurable{
+public interface IAirHandler extends IManoMeasurable {
 
     /**
      * -----------Needs to be forwarded by the implementing TileEntity's updateEntity() method.
@@ -110,5 +107,4 @@ public interface IAirHandler extends IManoMeasurable{
      * Needs to be forwarded from the implementing _Block_! Forward the Block's "onNeighborChange" method to this handler.
      */
     public void onNeighborChange();
-
 }

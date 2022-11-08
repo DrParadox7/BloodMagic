@@ -9,6 +9,8 @@ import WayofTime.alchemicalWizardry.api.soulNetwork.SoulNetworkHandler;
 import WayofTime.alchemicalWizardry.common.entity.projectile.EntityMeteor;
 import WayofTime.alchemicalWizardry.common.spell.complex.effect.SpellHelper;
 import WayofTime.alchemicalWizardry.common.summoning.meteor.MeteorRegistry;
+import java.util.ArrayList;
+import java.util.List;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.potion.Potion;
@@ -16,14 +18,9 @@ import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.world.World;
 
-import java.util.ArrayList;
-import java.util.List;
-
-public class RitualEffectSummonMeteor extends RitualEffect
-{
+public class RitualEffectSummonMeteor extends RitualEffect {
     @Override
-    public void performEffect(IMasterRitualStone ritualStone)
-    {
+    public void performEffect(IMasterRitualStone ritualStone) {
         String owner = ritualStone.getOwner();
 
         int currentEssence = SoulNetworkHandler.getCurrentEssence(owner);
@@ -36,10 +33,10 @@ public class RitualEffectSummonMeteor extends RitualEffect
             ritualStone.setCooldown(0);
         }
 
-        List<EntityItem> entities = world.getEntitiesWithinAABB(EntityItem.class, AxisAlignedBB.getBoundingBox(x, y + 1, z, x + 1, y + 2, z + 1));
+        List<EntityItem> entities = world.getEntitiesWithinAABB(
+                EntityItem.class, AxisAlignedBB.getBoundingBox(x, y + 1, z, x + 1, y + 2, z + 1));
 
-        if (entities == null)
-            return;
+        if (entities == null) return;
 
         for (EntityItem entityItem : entities) {
             if (entityItem != null && MeteorRegistry.isValidParadigmItem(entityItem.getEntityItem())) {
@@ -48,8 +45,7 @@ public class RitualEffectSummonMeteor extends RitualEffect
 
                 if (currentEssence < cost) {
                     EntityPlayer entityOwner = SpellHelper.getPlayerForUsername(owner);
-                    if (entityOwner != null)
-                        entityOwner.addPotionEffect(new PotionEffect(Potion.confusion.id, 80));
+                    if (entityOwner != null) entityOwner.addPotionEffect(new PotionEffect(Potion.confusion.id, 80));
                     return;
                 }
 
@@ -82,14 +78,12 @@ public class RitualEffectSummonMeteor extends RitualEffect
     }
 
     @Override
-    public int getCostPerRefresh()
-    {
+    public int getCostPerRefresh() {
         return AlchemicalWizardry.ritualCostFallingTower[1];
     }
 
     @Override
-    public List<RitualComponent> getRitualComponentList()
-    {
+    public List<RitualComponent> getRitualComponentList() {
         ArrayList<RitualComponent> meteorRitual = new ArrayList();
         meteorRitual.add(new RitualComponent(2, 0, 0, RitualComponent.FIRE));
         meteorRitual.add(new RitualComponent(-2, 0, 0, RitualComponent.FIRE));
@@ -124,8 +118,7 @@ public class RitualEffectSummonMeteor extends RitualEffect
         meteorRitual.add(new RitualComponent(4, 0, 4, RitualComponent.DUSK));
         meteorRitual.add(new RitualComponent(4, 0, -4, RitualComponent.DUSK));
 
-        for (int i = 4; i <= 6; i++)
-        {
+        for (int i = 4; i <= 6; i++) {
             meteorRitual.add(new RitualComponent(i, 0, 0, RitualComponent.EARTH));
             meteorRitual.add(new RitualComponent(-i, 0, 0, RitualComponent.EARTH));
             meteorRitual.add(new RitualComponent(0, 0, i, RitualComponent.EARTH));
@@ -165,8 +158,7 @@ public class RitualEffectSummonMeteor extends RitualEffect
         meteorRitual.add(new RitualComponent(0, 4, 5, RitualComponent.AIR));
         meteorRitual.add(new RitualComponent(0, 4, -5, RitualComponent.AIR));
 
-        for (int i = -1; i <= 1; i++)
-        {
+        for (int i = -1; i <= 1; i++) {
             meteorRitual.add(new RitualComponent(i, 4, 4, RitualComponent.AIR));
             meteorRitual.add(new RitualComponent(i, 4, -4, RitualComponent.AIR));
             meteorRitual.add(new RitualComponent(4, 4, i, RitualComponent.AIR));

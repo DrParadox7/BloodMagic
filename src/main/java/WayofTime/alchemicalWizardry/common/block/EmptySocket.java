@@ -7,10 +7,8 @@ import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.renderer.texture.IIconRegister;
 
-public class EmptySocket extends Block
-{
-    public EmptySocket()
-    {
+public class EmptySocket extends Block {
+    public EmptySocket() {
         super(Material.iron);
         setHardness(2.0F);
         setResistance(5.0F);
@@ -19,15 +17,13 @@ public class EmptySocket extends Block
     }
 
     @Override
-    public boolean isOpaqueCube()
-    {
+    public boolean isOpaqueCube() {
         return false;
     }
 
     @Override
     @SideOnly(Side.CLIENT)
-    public void registerBlockIcons(IIconRegister iconRegister)
-    {
+    public void registerBlockIcons(IIconRegister iconRegister) {
         this.blockIcon = iconRegister.registerIcon("AlchemicalWizardry:EmptySocket");
     }
 }

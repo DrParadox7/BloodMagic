@@ -1,5 +1,6 @@
 package WayofTime.alchemicalWizardry.api.command;
 
+import java.util.Locale;
 import net.minecraft.command.ICommand;
 import net.minecraft.command.ICommandSender;
 import net.minecraft.command.PlayerNotFoundException;
@@ -10,8 +11,6 @@ import net.minecraft.util.ChatComponentText;
 import net.minecraft.util.ChatStyle;
 import net.minecraft.util.EnumChatFormatting;
 import net.minecraft.util.StatCollector;
-
-import java.util.Locale;
 
 public abstract class SubCommandBase implements ISubCommand {
 
@@ -42,31 +41,37 @@ public abstract class SubCommandBase implements ISubCommand {
     public void processSubCommand(ICommandSender commandSender, String[] args) {
 
         if (args.length == 0 && !getSubCommandName().equals("help"))
-            displayErrorString(commandSender, String.format(StatCollector.translateToLocal("commands.format.error"), capitalizeFirstLetter(getSubCommandName()), getArgUsage(commandSender)));
+            displayErrorString(
+                    commandSender,
+                    String.format(
+                            StatCollector.translateToLocal("commands.format.error"),
+                            capitalizeFirstLetter(getSubCommandName()),
+                            getArgUsage(commandSender)));
 
         if (isBounded(0, 2, args.length) && args[0].equals("help"))
-            displayHelpString(commandSender, String.format(StatCollector.translateToLocal("commands.format.help"), capitalizeFirstLetter(getSubCommandName()), getHelpText()));
+            displayHelpString(
+                    commandSender,
+                    String.format(
+                            StatCollector.translateToLocal("commands.format.help"),
+                            capitalizeFirstLetter(getSubCommandName()),
+                            getHelpText()));
     }
 
     protected EntityPlayerMP getCommandSenderAsPlayer(ICommandSender commandSender) {
-        if (commandSender instanceof EntityPlayerMP)
-            return (EntityPlayerMP)commandSender;
-        else
-            throw new PlayerNotFoundException(StatCollector.translateToLocal("commands.error.arg.player.missing"));
+        if (commandSender instanceof EntityPlayerMP) return (EntityPlayerMP) commandSender;
+        else throw new PlayerNotFoundException(StatCollector.translateToLocal("commands.error.arg.player.missing"));
     }
 
     protected EntityPlayerMP getPlayer(ICommandSender commandSender, String playerName) {
         EntityPlayerMP entityplayermp = PlayerSelector.matchOnePlayer(commandSender, playerName);
 
-        if (entityplayermp != null)
-            return entityplayermp;
+        if (entityplayermp != null) return entityplayermp;
         else {
-            entityplayermp = MinecraftServer.getServer().getConfigurationManager().func_152612_a(playerName);
+            entityplayermp =
+                    MinecraftServer.getServer().getConfigurationManager().func_152612_a(playerName);
 
-            if (entityplayermp == null)
-                throw new PlayerNotFoundException();
-            else
-                return entityplayermp;
+            if (entityplayermp == null) throw new PlayerNotFoundException();
+            else return entityplayermp;
         }
     }
 
@@ -78,15 +83,18 @@ public abstract class SubCommandBase implements ISubCommand {
         return given > low && given < high;
     }
 
-    protected void displayHelpString(ICommandSender commandSender, String display, Object ... info) {
-        commandSender.addChatMessage(new ChatComponentText(StatCollector.translateToLocalFormatted(display, info)).setChatStyle(new ChatStyle().setColor(EnumChatFormatting.GREEN)));
+    protected void displayHelpString(ICommandSender commandSender, String display, Object... info) {
+        commandSender.addChatMessage(new ChatComponentText(StatCollector.translateToLocalFormatted(display, info))
+                .setChatStyle(new ChatStyle().setColor(EnumChatFormatting.GREEN)));
     }
 
-    protected void displayErrorString(ICommandSender commandSender, String display, Object ... info) {
-        commandSender.addChatMessage(new ChatComponentText(StatCollector.translateToLocalFormatted(display, info)).setChatStyle(new ChatStyle().setColor(EnumChatFormatting.RED)));
+    protected void displayErrorString(ICommandSender commandSender, String display, Object... info) {
+        commandSender.addChatMessage(new ChatComponentText(StatCollector.translateToLocalFormatted(display, info))
+                .setChatStyle(new ChatStyle().setColor(EnumChatFormatting.RED)));
     }
 
-    protected void displaySuccessString(ICommandSender commandSender, String display, Object ... info) {
-        commandSender.addChatMessage(new ChatComponentText(StatCollector.translateToLocalFormatted(display, info)).setChatStyle(new ChatStyle().setColor(EnumChatFormatting.BLUE)));
+    protected void displaySuccessString(ICommandSender commandSender, String display, Object... info) {
+        commandSender.addChatMessage(new ChatComponentText(StatCollector.translateToLocalFormatted(display, info))
+                .setChatStyle(new ChatStyle().setColor(EnumChatFormatting.BLUE)));
     }
 }

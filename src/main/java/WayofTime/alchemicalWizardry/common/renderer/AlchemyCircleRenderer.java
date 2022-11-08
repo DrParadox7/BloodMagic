@@ -1,17 +1,15 @@
 package WayofTime.alchemicalWizardry.common.renderer;
 
+import WayofTime.alchemicalWizardry.api.renderer.MRSRenderer;
+import WayofTime.alchemicalWizardry.api.rituals.IMasterRitualStone;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.util.MathHelper;
 import net.minecraft.util.ResourceLocation;
-
 import org.lwjgl.opengl.GL11;
 
-import WayofTime.alchemicalWizardry.api.renderer.MRSRenderer;
-import WayofTime.alchemicalWizardry.api.rituals.IMasterRitualStone;
-
-public class AlchemyCircleRenderer extends MRSRenderer
-{
-    private ResourceLocation resourceLocation = new ResourceLocation("alchemicalwizardry:textures/models/TransCircle.png");
+public class AlchemyCircleRenderer extends MRSRenderer {
+    private ResourceLocation resourceLocation =
+            new ResourceLocation("alchemicalwizardry:textures/models/TransCircle.png");
     private int colourRed;
     private int colourGreen;
     private int colourBlue;
@@ -23,8 +21,18 @@ public class AlchemyCircleRenderer extends MRSRenderer
     private double initialY;
     private boolean renderWithoutReagents;
 
-    public AlchemyCircleRenderer(ResourceLocation resource, int red, int green, int blue, int intensity, double xOff, double initialY, double yOff, double zOff, double radius, boolean renderWithoutReagents)
-    {
+    public AlchemyCircleRenderer(
+            ResourceLocation resource,
+            int red,
+            int green,
+            int blue,
+            int intensity,
+            double xOff,
+            double initialY,
+            double yOff,
+            double zOff,
+            double radius,
+            boolean renderWithoutReagents) {
         this.resourceLocation = resource;
         this.colourRed = red;
         this.colourGreen = green;
@@ -39,10 +47,8 @@ public class AlchemyCircleRenderer extends MRSRenderer
     }
 
     @Override
-    public void renderAt(IMasterRitualStone tile, double x, double y, double z)
-    {
-        if (tile.areTanksEmpty() && !renderWithoutReagents)
-        {
+    public void renderAt(IMasterRitualStone tile, double x, double y, double z) {
+        if (tile.areTanksEmpty() && !renderWithoutReagents) {
             return;
         }
 
@@ -56,19 +62,22 @@ public class AlchemyCircleRenderer extends MRSRenderer
         GL11.glDisable(GL11.GL_CULL_FACE);
         float f2 = 0;
         float f3 = -f2 * 0.2F - (float) MathHelper.floor_float(-f2 * 0.1F);
-//        GL11.glEnable(GL11.GL_BLEND);
-//        GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
+        //        GL11.glEnable(GL11.GL_BLEND);
+        //        GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
 
-//        GL11.glDepthMask(false);
+        //        GL11.glDepthMask(false);
 
         tessellator.startDrawingQuads();
         tessellator.setColorRGBA(colourRed, colourGreen, colourBlue, colourIntensity);
 
-        GL11.glTranslated(x + 0.5 + xOffset, y + 0.5 + (yOffset - initialY) * (tile.getRunningTime() / 100d) + initialY, z + 0.5 + zOffset);
+        GL11.glTranslated(
+                x + 0.5 + xOffset,
+                y + 0.5 + (yOffset - initialY) * (tile.getRunningTime() / 100d) + initialY,
+                z + 0.5 + zOffset);
 
         float rotationAngle = (float) (720.0 * (System.currentTimeMillis() & 0x3FFFL) / 0x3FFFL);
 
-        GL11.glRotatef(rotationAngle, 0F, 1F, 0F); //Rotate on planar axis
+        GL11.glRotatef(rotationAngle, 0F, 1F, 0F); // Rotate on planar axis
         tessellator.setBrightness(240);
 
         double finalRadius = (radius) * (tile.getRunningTime() / 100d);
@@ -80,7 +89,7 @@ public class AlchemyCircleRenderer extends MRSRenderer
 
         tessellator.draw();
 
-//        GL11.glDepthMask(true);
+        //        GL11.glDepthMask(true);
 
         GL11.glEnable(GL11.GL_LIGHTING);
         GL11.glEnable(GL11.GL_TEXTURE_2D);

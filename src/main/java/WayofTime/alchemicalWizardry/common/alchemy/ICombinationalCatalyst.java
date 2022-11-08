@@ -1,5 +1,3 @@
 package WayofTime.alchemicalWizardry.common.alchemy;
 
-public interface ICombinationalCatalyst
-{
-}
+public interface ICombinationalCatalyst {}

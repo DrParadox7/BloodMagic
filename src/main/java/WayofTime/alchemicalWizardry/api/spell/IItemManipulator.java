@@ -1,10 +1,8 @@
 package WayofTime.alchemicalWizardry.api.spell;
 
+import java.util.List;
 import net.minecraft.item.ItemStack;
 
-import java.util.List;
-
-public interface IItemManipulator
-{
+public interface IItemManipulator {
     public List<ItemStack> handleItemsOnBlockBroken(ItemStack toolStack, List<ItemStack> itemList);
 }

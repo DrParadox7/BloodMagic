@@ -4,18 +4,15 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.Vec3;
 import net.minecraft.world.World;
 
-public abstract class MeleeSpellCenteredWorldEffect extends MeleeSpellWorldEffect
-{
+public abstract class MeleeSpellCenteredWorldEffect extends MeleeSpellWorldEffect {
     protected float range;
 
-    public MeleeSpellCenteredWorldEffect(int power, int potency, int cost)
-    {
+    public MeleeSpellCenteredWorldEffect(int power, int potency, int cost) {
         super(power, potency, cost);
     }
 
     @Override
-    public void onWorldEffect(World world, EntityPlayer entityPlayer)
-    {
+    public void onWorldEffect(World world, EntityPlayer entityPlayer) {
         Vec3 lookVec = entityPlayer.getLook(range).normalize();
         int x = (int) (entityPlayer.posX + lookVec.xCoord * range);
         int y = (int) (entityPlayer.posY + entityPlayer.getEyeHeight() + lookVec.yCoord * range);
@@ -24,8 +21,7 @@ public abstract class MeleeSpellCenteredWorldEffect extends MeleeSpellWorldEffec
         this.onCenteredWorldEffect(entityPlayer, world, x, y, z);
     }
 
-    public void setRange(float range)
-    {
+    public void setRange(float range) {
         this.range = range;
     }
 

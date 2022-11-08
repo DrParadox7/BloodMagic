@@ -8,6 +8,8 @@ import WayofTime.alchemicalWizardry.api.rituals.RitualEffect;
 import WayofTime.alchemicalWizardry.api.soulNetwork.SoulNetworkHandler;
 import WayofTime.alchemicalWizardry.common.spell.complex.effect.SpellHelper;
 import WayofTime.alchemicalWizardry.common.tileEntity.TESpectralContainer;
+import java.util.ArrayList;
+import java.util.List;
 import net.minecraft.block.Block;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.potion.Potion;
@@ -15,17 +17,12 @@ import net.minecraft.potion.PotionEffect;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
 
-import java.util.ArrayList;
-import java.util.List;
-
-public class RitualEffectSupression extends RitualEffect
-{
+public class RitualEffectSupression extends RitualEffect {
     public static final int aquasalusDrain = 15;
     public static final int aetherDrain = 15;
 
     @Override
-    public void performEffect(IMasterRitualStone ritualStone)
-    {
+    public void performEffect(IMasterRitualStone ritualStone) {
         String owner = ritualStone.getOwner();
 
         int currentEssence = SoulNetworkHandler.getCurrentEssence(owner);
@@ -36,7 +33,8 @@ public class RitualEffectSupression extends RitualEffect
 
         Block blockish = world.getBlock(x, y - 1, z);
 
-        boolean hasAquasalus = this.canDrainReagent(ritualStone, ReagentRegistry.aquasalusReagent, aquasalusDrain, false);
+        boolean hasAquasalus =
+                this.canDrainReagent(ritualStone, ReagentRegistry.aquasalusReagent, aquasalusDrain, false);
         boolean hasAether = this.canDrainReagent(ritualStone, ReagentRegistry.aetherReagent, aetherDrain, false);
 
         int costMod = this.getCostModifier(blockish);
@@ -46,47 +44,36 @@ public class RitualEffectSupression extends RitualEffect
         int yIndex = (int) (world.getWorldTime() % (2 * radius + 1)) - radius;
         boolean expansion = false;
 
-        if (ritualStone.getVar1() < (radius + 1))
-        {
+        if (ritualStone.getVar1() < (radius + 1)) {
             expansion = true;
             radius = ritualStone.getVar1();
             ritualStone.setVar1(ritualStone.getVar1() + 1);
         }
 
-        if (currentEssence < this.getCostPerRefresh() * costMod)
-        {
+        if (currentEssence < this.getCostPerRefresh() * costMod) {
             EntityPlayer entityOwner = SpellHelper.getPlayerForUsername(owner);
 
-            if (entityOwner == null)
-            {
+            if (entityOwner == null) {
                 return;
             }
 
             entityOwner.addPotionEffect(new PotionEffect(Potion.confusion.id, 80));
-        } else
-        {
-            for (int i = -radius; i <= radius; i++)
-            {
-                for (int j = (expansion ? -radius : yIndex); j <= (expansion ? radius : yIndex); j++)
-                {
-                    for (int k = -radius; k <= radius; k++)
-                    {
-                        if (i * i + j * j + k * k >= (radius + 0.50f) * (radius + 0.50f))
-                        {
+        } else {
+            for (int i = -radius; i <= radius; i++) {
+                for (int j = (expansion ? -radius : yIndex); j <= (expansion ? radius : yIndex); j++) {
+                    for (int k = -radius; k <= radius; k++) {
+                        if (i * i + j * j + k * k >= (radius + 0.50f) * (radius + 0.50f)) {
                             continue;
                         }
 
                         Block block = world.getBlock(x + i, y + j, z + k);
 
-
-                        if (SpellHelper.isBlockFluid(block))
-                        {
-                            TESpectralContainer.createSpectralBlockAtLocation(world, x + i, y + j, z + k, 3 * masterRadius);
-                        } else
-                        {
+                        if (SpellHelper.isBlockFluid(block)) {
+                            TESpectralContainer.createSpectralBlockAtLocation(
+                                    world, x + i, y + j, z + k, 3 * masterRadius);
+                        } else {
                             TileEntity tile = world.getTileEntity(x + i, y + j, z + k);
-                            if (tile instanceof TESpectralContainer)
-                            {
+                            if (tile instanceof TESpectralContainer) {
                                 ((TESpectralContainer) tile).resetDuration(3 * masterRadius);
                             }
                         }
@@ -94,17 +81,13 @@ public class RitualEffectSupression extends RitualEffect
                 }
             }
 
-
             SoulNetworkHandler.syphonFromNetwork(owner, this.getCostPerRefresh() * costMod);
 
-            if (world.getWorldTime() % 100 == 0)
-            {
-                if (hasAquasalus)
-                {
+            if (world.getWorldTime() % 100 == 0) {
+                if (hasAquasalus) {
                     this.canDrainReagent(ritualStone, ReagentRegistry.aquasalusReagent, aquasalusDrain, true);
                 }
-                if (hasAether)
-                {
+                if (hasAether) {
                     this.canDrainReagent(ritualStone, ReagentRegistry.aetherReagent, aetherDrain, true);
                 }
             }
@@ -112,14 +95,12 @@ public class RitualEffectSupression extends RitualEffect
     }
 
     @Override
-    public int getCostPerRefresh()
-    {
+    public int getCostPerRefresh() {
         return AlchemicalWizardry.ritualCostSuppression[1];
     }
 
     @Override
-    public List<RitualComponent> getRitualComponentList()
-    {
+    public List<RitualComponent> getRitualComponentList() {
         ArrayList<RitualComponent> supressionRitual = new ArrayList();
         supressionRitual.add(new RitualComponent(2, 0, 2, RitualComponent.WATER));
         supressionRitual.add(new RitualComponent(2, 0, -2, RitualComponent.WATER));
@@ -136,29 +117,21 @@ public class RitualEffectSupression extends RitualEffect
         return supressionRitual;
     }
 
-    public int getCostModifier(Block block)
-    {
+    public int getCostModifier(Block block) {
         return 1;
     }
 
-    public int getRadiusForReagents(boolean hasAether, boolean hasAquasalus)
-    {
-        if (hasAether)
-        {
-            if (hasAquasalus)
-            {
+    public int getRadiusForReagents(boolean hasAether, boolean hasAquasalus) {
+        if (hasAether) {
+            if (hasAquasalus) {
                 return 30;
-            } else
-            {
+            } else {
                 return 20;
             }
-        } else
-        {
-            if (hasAquasalus)
-            {
+        } else {
+            if (hasAquasalus) {
                 return 15;
-            } else
-            {
+            } else {
                 return 10;
             }
         }

@@ -1,7 +1,14 @@
 package WayofTime.alchemicalWizardry.common.block;
 
+import WayofTime.alchemicalWizardry.AlchemicalWizardry;
+import WayofTime.alchemicalWizardry.ModItems;
+import WayofTime.alchemicalWizardry.api.items.IAltarManipulator;
+import WayofTime.alchemicalWizardry.common.items.EnergyBattery;
+import WayofTime.alchemicalWizardry.common.items.sigil.holding.SigilOfHolding;
+import WayofTime.alchemicalWizardry.common.tileEntity.TEAltar;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 import java.util.Random;
-
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockContainer;
 import net.minecraft.block.material.Material;
@@ -14,26 +21,18 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.IIcon;
 import net.minecraft.world.World;
-import WayofTime.alchemicalWizardry.AlchemicalWizardry;
-import WayofTime.alchemicalWizardry.ModItems;
-import WayofTime.alchemicalWizardry.api.items.IAltarManipulator;
-import WayofTime.alchemicalWizardry.common.items.EnergyBattery;
-import WayofTime.alchemicalWizardry.common.items.sigil.holding.SigilOfHolding;
-import WayofTime.alchemicalWizardry.common.tileEntity.TEAltar;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
 
-public class BlockAltar extends BlockContainer
-{
+public class BlockAltar extends BlockContainer {
     @SideOnly(Side.CLIENT)
     private IIcon topIcon;
+
     @SideOnly(Side.CLIENT)
     private IIcon sideIcon2;
+
     @SideOnly(Side.CLIENT)
     private IIcon bottomIcon;
 
-    public BlockAltar()
-    {
+    public BlockAltar() {
         super(Material.rock);
         setHardness(2.0F);
         setResistance(5.0F);
@@ -43,8 +42,7 @@ public class BlockAltar extends BlockContainer
 
     @Override
     @SideOnly(Side.CLIENT)
-    public void registerBlockIcons(IIconRegister iconRegister)
-    {
+    public void registerBlockIcons(IIconRegister iconRegister) {
         this.topIcon = iconRegister.registerIcon("AlchemicalWizardry:BloodAltar_Top");
         this.sideIcon2 = iconRegister.registerIcon("AlchemicalWizardry:BloodAltar_SideType2");
         this.bottomIcon = iconRegister.registerIcon("AlchemicalWizardry:BloodAltar_Bottom");
@@ -52,10 +50,8 @@ public class BlockAltar extends BlockContainer
 
     @Override
     @SideOnly(Side.CLIENT)
-    public IIcon getIcon(int side, int meta)
-    {
-        switch (side)
-        {
+    public IIcon getIcon(int side, int meta) {
+        switch (side) {
             case 0:
                 return bottomIcon;
             case 1:
@@ -66,22 +62,18 @@ public class BlockAltar extends BlockContainer
     }
 
     @Override
-    public boolean hasComparatorInputOverride()
-    {
+    public boolean hasComparatorInputOverride() {
         return true;
     }
 
     @Override
-    public int getComparatorInputOverride(World world, int x, int y, int z, int meta)
-    {
+    public int getComparatorInputOverride(World world, int x, int y, int z, int meta) {
         TileEntity tile = world.getTileEntity(x, y, z);
 
-        if (tile instanceof TEAltar)
-        {
+        if (tile instanceof TEAltar) {
             ItemStack stack = ((TEAltar) tile).getStackInSlot(0);
 
-            if (stack != null && stack.getItem() instanceof EnergyBattery)
-            {
+            if (stack != null && stack.getItem() instanceof EnergyBattery) {
                 EnergyBattery bloodOrb = (EnergyBattery) stack.getItem();
                 int maxEssence = bloodOrb.getMaxEssence();
                 int currentEssence = bloodOrb.getCurrentEssence(stack);
@@ -94,67 +86,50 @@ public class BlockAltar extends BlockContainer
     }
 
     @Override
-    public boolean onBlockActivated(World world, int x, int y, int z, EntityPlayer player, int idk, float what, float these, float are)
-    {
+    public boolean onBlockActivated(
+            World world, int x, int y, int z, EntityPlayer player, int idk, float what, float these, float are) {
         TEAltar tileEntity = (TEAltar) world.getTileEntity(x, y, z);
 
-        if (tileEntity == null || player.isSneaking())
-        {
+        if (tileEntity == null || player.isSneaking()) {
             return false;
         }
 
         ItemStack playerItem = player.getCurrentEquippedItem();
 
-        if (playerItem != null)
-        {
-            if (playerItem.getItem().equals(ModItems.divinationSigil))
-            {
-                if (player.worldObj.isRemote)
-                {
+        if (playerItem != null) {
+            if (playerItem.getItem().equals(ModItems.divinationSigil)) {
+                if (player.worldObj.isRemote) {
                     world.markBlockForUpdate(x, y, z);
-                } else
-                {
+                } else {
                     tileEntity.sendChatInfoToPlayer(player);
                 }
 
                 return true;
-            } else if (playerItem.getItem().equals(ModItems.itemSeerSigil))
-            {
-                if (player.worldObj.isRemote)
-                {
+            } else if (playerItem.getItem().equals(ModItems.itemSeerSigil)) {
+                if (player.worldObj.isRemote) {
                     world.markBlockForUpdate(x, y, z);
-                } else
-                {
+                } else {
                     tileEntity.sendMoreChatInfoToPlayer(player);
                 }
 
                 return true;
-            }else if(playerItem.getItem() instanceof IAltarManipulator)
-            {
-            	return false;
-            }
-            else if (playerItem.getItem().equals(ModItems.sigilOfHolding))
-            {
+            } else if (playerItem.getItem() instanceof IAltarManipulator) {
+                return false;
+            } else if (playerItem.getItem().equals(ModItems.sigilOfHolding)) {
                 ItemStack item = SigilOfHolding.getCurrentSigil(playerItem);
 
-                if (item != null && item.getItem().equals(ModItems.divinationSigil))
-                {
-                    if (player.worldObj.isRemote)
-                    {
+                if (item != null && item.getItem().equals(ModItems.divinationSigil)) {
+                    if (player.worldObj.isRemote) {
                         world.markBlockForUpdate(x, y, z);
-                    } else
-                    {
+                    } else {
                         tileEntity.sendChatInfoToPlayer(player);
                     }
 
                     return true;
-                } else if (item != null && item.getItem().equals(ModItems.itemSeerSigil))
-                {
-                    if (player.worldObj.isRemote)
-                    {
+                } else if (item != null && item.getItem().equals(ModItems.itemSeerSigil)) {
+                    if (player.worldObj.isRemote) {
                         world.markBlockForUpdate(x, y, z);
-                    } else
-                    {
+                    } else {
                         tileEntity.sendMoreChatInfoToPlayer(player);
                     }
 
@@ -163,15 +138,13 @@ public class BlockAltar extends BlockContainer
             }
         }
 
-        if (tileEntity.getStackInSlot(0) == null && playerItem != null)
-        {
+        if (tileEntity.getStackInSlot(0) == null && playerItem != null) {
             ItemStack newItem = playerItem.copy();
             newItem.stackSize = 1;
             --playerItem.stackSize;
             tileEntity.setInventorySlotContents(0, newItem);
             tileEntity.startCycle();
-        } else if (tileEntity.getStackInSlot(0) != null && playerItem == null)
-        {
+        } else if (tileEntity.getStackInSlot(0) != null && playerItem == null) {
             player.inventory.addItemStackToInventory(tileEntity.getStackInSlot(0));
             tileEntity.setInventorySlotContents(0, null);
             tileEntity.setActive();
@@ -181,40 +154,38 @@ public class BlockAltar extends BlockContainer
     }
 
     @Override
-    public void breakBlock(World world, int x, int y, int z, Block par5, int par6)
-    {
+    public void breakBlock(World world, int x, int y, int z, Block par5, int par6) {
         dropItems(world, x, y, z);
         super.breakBlock(world, x, y, z, par5, par6);
     }
 
-    private void dropItems(World world, int x, int y, int z)
-    {
+    private void dropItems(World world, int x, int y, int z) {
         Random rand = new Random();
         TileEntity tileEntity = world.getTileEntity(x, y, z);
 
-        if (!(tileEntity instanceof IInventory))
-        {
+        if (!(tileEntity instanceof IInventory)) {
             return;
         }
 
         IInventory inventory = (IInventory) tileEntity;
 
-        for (int i = 0; i < inventory.getSizeInventory(); i++)
-        {
+        for (int i = 0; i < inventory.getSizeInventory(); i++) {
             ItemStack item = inventory.getStackInSlot(i);
 
-            if (item != null && item.stackSize > 0)
-            {
+            if (item != null && item.stackSize > 0) {
                 float rx = rand.nextFloat() * 0.8F + 0.1F;
                 float ry = rand.nextFloat() * 0.8F + 0.1F;
                 float rz = rand.nextFloat() * 0.8F + 0.1F;
-                EntityItem entityItem = new EntityItem(world,
-                        x + rx, y + ry, z + rz,
+                EntityItem entityItem = new EntityItem(
+                        world,
+                        x + rx,
+                        y + ry,
+                        z + rz,
                         new ItemStack(item.getItem(), item.stackSize, item.getItemDamage()));
 
-                if (item.hasTagCompound())
-                {
-                    entityItem.getEntityItem().setTagCompound((NBTTagCompound) item.getTagCompound().copy());
+                if (item.hasTagCompound()) {
+                    entityItem.getEntityItem().setTagCompound((NBTTagCompound)
+                            item.getTagCompound().copy());
                 }
 
                 float factor = 0.05F;
@@ -228,48 +199,40 @@ public class BlockAltar extends BlockContainer
     }
 
     @Override
-    public boolean renderAsNormalBlock()
-    {
+    public boolean renderAsNormalBlock() {
         return false;
     }
 
     @Override
-    public int getRenderType()
-    {
+    public int getRenderType() {
         return -1;
     }
 
     @Override
-    public boolean isOpaqueCube()
-    {
+    public boolean isOpaqueCube() {
         return false;
     }
 
     @Override
-    public boolean hasTileEntity()
-    {
+    public boolean hasTileEntity() {
         return true;
     }
 
     @Override
-    public void randomDisplayTick(World world, int x, int y, int z, Random rand)
-    {
+    public void randomDisplayTick(World world, int x, int y, int z, Random rand) {
         TEAltar tileEntity = (TEAltar) world.getTileEntity(x, y, z);
 
-        if (!tileEntity.isActive())
-        {
+        if (!tileEntity.isActive()) {
             return;
         }
 
-        if (rand.nextInt(3) != 0)
-        {
+        if (rand.nextInt(3) != 0) {
             return;
         }
     }
 
     @Override
-    public TileEntity createNewTileEntity(World var1, int var2)
-    {
+    public TileEntity createNewTileEntity(World var1, int var2) {
         return new TEAltar();
     }
 }

@@ -5,100 +5,88 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.world.World;
 
-public abstract class HomSpell implements ISimpleSpell
-{
+public abstract class HomSpell implements ISimpleSpell {
     private int offensiveRangedEnergy;
     private int offensiveMeleeEnergy;
     private int defensiveEnergy;
     private int environmentalEnergy;
 
-    public HomSpell()
-    {
-        //super(id);
-        //this.setMaxStackSize(1);
+    public HomSpell() {
+        // super(id);
+        // this.setMaxStackSize(1);
         // TODO Auto-generated constructor stub
     }
 
     @Override
-    public abstract ItemStack onOffensiveRangedRightClick(ItemStack par1ItemStack, World par2World, EntityPlayer par3EntityPlayer);
+    public abstract ItemStack onOffensiveRangedRightClick(
+            ItemStack par1ItemStack, World par2World, EntityPlayer par3EntityPlayer);
 
     @Override
-    public abstract ItemStack onOffensiveMeleeRightClick(ItemStack par1ItemStack, World par2World, EntityPlayer par3EntityPlayer);
+    public abstract ItemStack onOffensiveMeleeRightClick(
+            ItemStack par1ItemStack, World par2World, EntityPlayer par3EntityPlayer);
 
     @Override
-    public abstract ItemStack onDefensiveRightClick(ItemStack par1ItemStack, World par2World, EntityPlayer par3EntityPlayer);
+    public abstract ItemStack onDefensiveRightClick(
+            ItemStack par1ItemStack, World par2World, EntityPlayer par3EntityPlayer);
 
     @Override
-    public abstract ItemStack onEnvironmentalRightClick(ItemStack par1ItemStack, World par2World, EntityPlayer par3EntityPlayer);
+    public abstract ItemStack onEnvironmentalRightClick(
+            ItemStack par1ItemStack, World par2World, EntityPlayer par3EntityPlayer);
 
-    public int getOffensiveRangedEnergy()
-    {
+    public int getOffensiveRangedEnergy() {
         return offensiveRangedEnergy;
     }
 
-    public int getOffensiveMeleeEnergy()
-    {
+    public int getOffensiveMeleeEnergy() {
         return offensiveMeleeEnergy;
     }
 
-    public int getDefensiveEnergy()
-    {
+    public int getDefensiveEnergy() {
         return defensiveEnergy;
     }
 
-    public int getEnvironmentalEnergy()
-    {
+    public int getEnvironmentalEnergy() {
         return environmentalEnergy;
     }
 
-    public void setEnergies(int offensiveRanged, int offensiveMelee, int defensive, int environmental)
-    {
+    public void setEnergies(int offensiveRanged, int offensiveMelee, int defensive, int environmental) {
         this.offensiveRangedEnergy = offensiveRanged;
         this.offensiveMeleeEnergy = offensiveMelee;
         this.defensiveEnergy = defensive;
         this.environmentalEnergy = environmental;
     }
 
-    public void setSpellParadigm(ItemStack itemStack, int paradigm)
-    {
-        if (itemStack.getTagCompound() == null)
-        {
+    public void setSpellParadigm(ItemStack itemStack, int paradigm) {
+        if (itemStack.getTagCompound() == null) {
             itemStack.setTagCompound(new NBTTagCompound());
         }
 
         itemStack.getTagCompound().setInteger("paradigm", paradigm);
     }
 
-    public int getSpellParadigm(ItemStack itemStack)
-    {
-        if (itemStack.getTagCompound() == null)
-        {
+    public int getSpellParadigm(ItemStack itemStack) {
+        if (itemStack.getTagCompound() == null) {
             itemStack.setTagCompound(new NBTTagCompound());
         }
 
         return (itemStack.getTagCompound().getInteger("paradigm"));
     }
 
-    //@Override
-    public ItemStack useSpell(ItemStack par1ItemStack, World par2World, EntityPlayer par3EntityPlayer)
-    {
+    // @Override
+    public ItemStack useSpell(ItemStack par1ItemStack, World par2World, EntityPlayer par3EntityPlayer) {
         int paradigm = getSpellParadigm(par1ItemStack);
 
-        if (par3EntityPlayer.isSneaking())
-        {
-            if (paradigm < 3)
-            {
+        if (par3EntityPlayer.isSneaking()) {
+            if (paradigm < 3) {
                 this.setSpellParadigm(par1ItemStack, paradigm + 1);
-            } else
-            {
+            } else {
                 this.setSpellParadigm(par1ItemStack, 0);
             }
 
             return par1ItemStack;
         }
 
-        switch (paradigm)
-        {
+        switch (paradigm) {
             case 0:
                 return this.onOffensiveRangedRightClick(par1ItemStack, par2World, par3EntityPlayer);
 
@@ -115,24 +103,23 @@ public abstract class HomSpell implements ISimpleSpell
         return par1ItemStack;
     }
 
-//	@Override
-//    public void addInformation(ItemStack par1ItemStack, EntityPlayer par2EntityPlayer, List par3List, boolean par4)
-//    {
-//        if (!(par1ItemStack.getTagCompound() == null))
-//        {
-//            if (!par1ItemStack.getTagCompound().getString("ownerName").equals(""))
-//            {
-//                par3List.add("Current owner: " + par1ItemStack.getTagCompound().getString("ownerName"));
-//            }
-//
-//            par3List.add("Current paradigm: " + this.getSpellParadigm(par1ItemStack));
-//        }
-//    }
+    //	@Override
+    //    public void addInformation(ItemStack par1ItemStack, EntityPlayer par2EntityPlayer, List par3List, boolean
+    // par4)
+    //    {
+    //        if (!(par1ItemStack.getTagCompound() == null))
+    //        {
+    //            if (!par1ItemStack.getTagCompound().getString("ownerName").equals(""))
+    //            {
+    //                par3List.add("Current owner: " + par1ItemStack.getTagCompound().getString("ownerName"));
+    //            }
+    //
+    //            par3List.add("Current paradigm: " + this.getSpellParadigm(par1ItemStack));
+    //        }
+    //    }
 
-    public int getDimensionID(ItemStack itemStack)
-    {
-        if (itemStack.getTagCompound() == null)
-        {
+    public int getDimensionID(ItemStack itemStack) {
+        if (itemStack.getTagCompound() == null) {
             itemStack.setTagCompound(new NBTTagCompound());
         }
 

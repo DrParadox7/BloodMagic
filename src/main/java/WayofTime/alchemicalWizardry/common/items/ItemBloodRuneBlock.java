@@ -4,29 +4,22 @@ import net.minecraft.block.Block;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
 
-public class ItemBloodRuneBlock extends ItemBlock
-{
-    public ItemBloodRuneBlock(Block block)
-    {
+public class ItemBloodRuneBlock extends ItemBlock {
+    public ItemBloodRuneBlock(Block block) {
         super(block);
         setHasSubtypes(true);
-
     }
 
-    public String getUnlocalizedName(ItemStack itemstack)
-    {
+    public String getUnlocalizedName(ItemStack itemstack) {
         String name;
 
-        switch (itemstack.getItemDamage())
-        {
-            case 0:
-            {
+        switch (itemstack.getItemDamage()) {
+            case 0: {
                 name = "blank";
                 break;
             }
 
-            case 1:
-            {
+            case 1: {
                 name = "fill";
                 break;
             }
@@ -42,10 +35,10 @@ public class ItemBloodRuneBlock extends ItemBlock
             case 4:
                 name = "betterCapacity";
                 break;
-                
+
             case 5:
-            	name = "acceleration";
-            	break;
+                name = "acceleration";
+                break;
 
             default:
                 name = "broken";
@@ -54,9 +47,8 @@ public class ItemBloodRuneBlock extends ItemBlock
         return getUnlocalizedName() + "." + name;
     }
 
-    public int getMetadata(int par1)
+    public int getMetadata(int par1) {
 
-    {
         return par1;
     }
 }

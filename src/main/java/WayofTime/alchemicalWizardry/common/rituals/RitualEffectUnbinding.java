@@ -13,22 +13,18 @@ import WayofTime.alchemicalWizardry.api.soulNetwork.SoulNetworkHandler;
 import WayofTime.alchemicalWizardry.common.items.EnergyItems;
 import WayofTime.alchemicalWizardry.common.items.armour.BoundArmour;
 import WayofTime.alchemicalWizardry.common.spell.complex.effect.SpellHelper;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
 import net.minecraft.entity.effect.EntityLightningBolt;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.world.World;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Iterator;
-import java.util.List;
-
-public class RitualEffectUnbinding extends RitualEffect
-{
+public class RitualEffectUnbinding extends RitualEffect {
     @Override
-    public void performEffect(IMasterRitualStone ritualStone)
-    {
+    public void performEffect(IMasterRitualStone ritualStone) {
         String owner = ritualStone.getOwner();
 
         int currentEssence = SoulNetworkHandler.getCurrentEssence(owner);
@@ -37,35 +33,34 @@ public class RitualEffectUnbinding extends RitualEffect
         int y = ritualStone.getYCoord();
         int z = ritualStone.getZCoord();
 
-        if (currentEssence < this.getCostPerRefresh())
-        {
+        if (currentEssence < this.getCostPerRefresh()) {
             SoulNetworkHandler.causeNauseaToPlayer(owner);
-        } else
-        {
+        } else {
             int d0 = 0;
-            AxisAlignedBB axisalignedbb = AxisAlignedBB.getBoundingBox((double) x, (double) y + 1, (double) z, (double) (x + 1), (double) (y + 2), (double) (z + 1)).expand(d0, d0, d0);
+            AxisAlignedBB axisalignedbb = AxisAlignedBB.getBoundingBox(
+                            (double) x, (double) y + 1, (double) z, (double) (x + 1), (double) (y + 2), (double)
+                                    (z + 1))
+                    .expand(d0, d0, d0);
             List list = world.getEntitiesWithinAABB(EntityItem.class, axisalignedbb);
             Iterator iterator = list.iterator();
             EntityItem item;
 
             boolean drain = false;
 
-            while (iterator.hasNext())
-            {
+            while (iterator.hasNext()) {
                 final int sanctusDrain = 1000;
                 item = (EntityItem) iterator.next();
                 ItemStack itemStack = item.getEntityItem();
 
-                if (itemStack == null)
-                {
+                if (itemStack == null) {
                     continue;
                 }
 
-                boolean hasSanctus = this.canDrainReagent(ritualStone, ReagentRegistry.sanctusReagent, sanctusDrain, false);
-                if (hasSanctus)
-                {
-                    if (itemStack.getItem() instanceof IBindable && !EnergyItems.getOwnerName(itemStack).equals(""))
-                    {
+                boolean hasSanctus =
+                        this.canDrainReagent(ritualStone, ReagentRegistry.sanctusReagent, sanctusDrain, false);
+                if (hasSanctus) {
+                    if (itemStack.getItem() instanceof IBindable
+                            && !EnergyItems.getOwnerName(itemStack).equals("")) {
                         world.addWeatherEffect(new EntityLightningBolt(world, x, y + 1, z - 5));
                         world.addWeatherEffect(new EntityLightningBolt(world, x, y + 1, z + 5));
                         world.addWeatherEffect(new EntityLightningBolt(world, x - 5, y + 1, z));
@@ -79,72 +74,56 @@ public class RitualEffectUnbinding extends RitualEffect
                     }
                 }
 
-                if (itemStack.getItem() == ModItems.boundHelmet)
-                {
+                if (itemStack.getItem() == ModItems.boundHelmet) {
                     ritualStone.setVar1(5);
-                } else if (itemStack.getItem() == ModItems.boundPlate)
-                {
+                } else if (itemStack.getItem() == ModItems.boundPlate) {
                     ritualStone.setVar1(8);
-                } else if (itemStack.getItem() == ModItems.boundLeggings)
-                {
+                } else if (itemStack.getItem() == ModItems.boundLeggings) {
                     ritualStone.setVar1(7);
-                } else if (itemStack.getItem() == ModItems.boundBoots)
-                {
+                } else if (itemStack.getItem() == ModItems.boundBoots) {
                     ritualStone.setVar1(4);
-                }
-                else if (UnbindingRegistry.isRequiredItemValid(itemStack))
-                {
+                } else if (UnbindingRegistry.isRequiredItemValid(itemStack)) {
                     ritualStone.setVar1(UnbindingRegistry.getIndexForItem(itemStack) + 9);
                 }
 
-                if (ritualStone.getVar1() > 0 && ritualStone.getVar1() <= 8)
-                {
+                if (ritualStone.getVar1() > 0 && ritualStone.getVar1() <= 8) {
                     item.setDead();
                     doLightning(world, x, y, z);
                     ItemStack[] inv = ((BoundArmour) itemStack.getItem()).getInternalInventory(itemStack);
                     int bloodSockets = 0;
-                    if (itemStack.getItem() == ModItems.boundHelmet)
-                    {
+                    if (itemStack.getItem() == ModItems.boundHelmet) {
                         bloodSockets = 5;
-                    } else if (itemStack.getItem() == ModItems.boundPlate)
-                    {
+                    } else if (itemStack.getItem() == ModItems.boundPlate) {
                         bloodSockets = 8;
-                    } else if (itemStack.getItem() == ModItems.boundLeggings)
-                    {
+                    } else if (itemStack.getItem() == ModItems.boundLeggings) {
                         bloodSockets = 7;
-                    } else if (itemStack.getItem() == ModItems.boundBoots)
-                    {
+                    } else if (itemStack.getItem() == ModItems.boundBoots) {
                         bloodSockets = 4;
                     }
-                    if (inv != null)
-                    {
-                        for (ItemStack internalItem : inv)
-                        {
-                            if (internalItem != null)
-                            {
+                    if (inv != null) {
+                        for (ItemStack internalItem : inv) {
+                            if (internalItem != null) {
                                 doLightning(world, x, y, z);
-                                EntityItem newItem = new EntityItem(world, x + 0.5, y + 1, z + 0.5, internalItem.copy());
+                                EntityItem newItem =
+                                        new EntityItem(world, x + 0.5, y + 1, z + 0.5, internalItem.copy());
                                 world.spawnEntityInWorld(newItem);
                             }
                         }
                     }
 
-                    EntityItem newItem = new EntityItem(world, x + 0.5, y + 1, z + 0.5, new ItemStack(ModBlocks.bloodSocket, bloodSockets));
+                    EntityItem newItem = new EntityItem(
+                            world, x + 0.5, y + 1, z + 0.5, new ItemStack(ModBlocks.bloodSocket, bloodSockets));
                     world.spawnEntityInWorld(newItem);
                     ritualStone.setActive(false);
                     drain = true;
                     break;
-                }
-                else if (ritualStone.getVar1() >= 9)
-                {
+                } else if (ritualStone.getVar1() >= 9) {
                     item.setDead();
                     doLightning(world, x, y, z);
                     List<ItemStack> spawnedItem = UnbindingRegistry.getOutputForIndex(ritualStone.getVar1() - 9);
 
-                    if (spawnedItem != null)
-                    {
-                        for (ItemStack itemStack1 : spawnedItem)
-                        {
+                    if (spawnedItem != null) {
+                        for (ItemStack itemStack1 : spawnedItem) {
                             EntityItem newItem = new EntityItem(world, x + 0.5, y + 1, z + 0.5, itemStack1.copy());
                             world.spawnEntityInWorld(newItem);
                         }
@@ -154,7 +133,6 @@ public class RitualEffectUnbinding extends RitualEffect
                     drain = true;
                     break;
                 }
-
             }
 
             if (drain) {
@@ -162,14 +140,12 @@ public class RitualEffectUnbinding extends RitualEffect
             }
         }
 
-        if (world.rand.nextInt(10) == 0)
-        {
+        if (world.rand.nextInt(10) == 0) {
             SpellHelper.sendIndexedParticleToAllAround(world, x, y, z, 20, world.provider.dimensionId, 1, x, y, z);
         }
     }
 
-    private void doLightning(World world, int x, int y, int z)
-    {
+    private void doLightning(World world, int x, int y, int z) {
         world.addWeatherEffect(new EntityLightningBolt(world, x, y + 1, z - 5));
         world.addWeatherEffect(new EntityLightningBolt(world, x, y + 1, z + 5));
         world.addWeatherEffect(new EntityLightningBolt(world, x - 5, y + 1, z));
@@ -177,14 +153,12 @@ public class RitualEffectUnbinding extends RitualEffect
     }
 
     @Override
-    public int getCostPerRefresh()
-    {
+    public int getCostPerRefresh() {
         return AlchemicalWizardry.ritualCostUnbinding[1];
     }
 
     @Override
-    public List<RitualComponent> getRitualComponentList()
-    {
+    public List<RitualComponent> getRitualComponentList() {
         ArrayList<RitualComponent> unbindingRitual = new ArrayList<RitualComponent>();
         unbindingRitual.add(new RitualComponent(-2, 0, 0, 4));
         unbindingRitual.add(new RitualComponent(2, 0, 0, 4));

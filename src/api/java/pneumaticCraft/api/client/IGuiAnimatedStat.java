@@ -10,8 +10,7 @@ import java.util.List;
  * animated stats can be implemented as well via this interface, and they will interact with the PneumaticCraft GuiAnimatedStats
  * if you implement it correctly.
  */
-
-public interface IGuiAnimatedStat{
+public interface IGuiAnimatedStat {
 
     /**
      * When you call this method with a set of coordinates representing the button location and dimensions, you'll get
@@ -175,5 +174,4 @@ public interface IGuiAnimatedStat{
      * @return
      */
     public boolean isClicked();
-
 }

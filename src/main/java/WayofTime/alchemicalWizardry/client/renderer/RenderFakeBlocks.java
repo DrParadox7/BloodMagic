@@ -9,15 +9,20 @@ import net.minecraft.world.World;
  *  Created in Scala by Alex-Hawks
  *  Translated and implemented by Arcaratus
  */
-public class RenderFakeBlocks
-{
-    public static void drawFakeBlock(WayofTime.alchemicalWizardry.api.Vector3 vector3, Block block, int meta, double minX, double minY, double minZ, World world)
-    {
+public class RenderFakeBlocks {
+    public static void drawFakeBlock(
+            WayofTime.alchemicalWizardry.api.Vector3 vector3,
+            Block block,
+            int meta,
+            double minX,
+            double minY,
+            double minZ,
+            World world) {
         double maxX = minX + 1;
         double maxY = minY + 1;
         double maxZ = minZ + 1;
         Tessellator tessellator = Tessellator.instance;
-        
+
         tessellator.startDrawingQuads();
         tessellator.setColorRGBA(255, 255, 255, 200);
 
@@ -80,26 +85,22 @@ public class RenderFakeBlocks
         tessellator.draw();
     }
 
-    private static float getMinU(Block block, int meta, int side)
-    {
+    private static float getMinU(Block block, int meta, int side) {
         IIcon icon = block.getIcon(side, meta);
         return icon.getMinU();
     }
 
-    private static float getMaxU(Block block, int meta, int side)
-    {
+    private static float getMaxU(Block block, int meta, int side) {
         IIcon icon = block.getIcon(side, meta);
         return icon.getMaxU();
     }
 
-    private static float getMinV(Block block, int meta, int side)
-    {
+    private static float getMinV(Block block, int meta, int side) {
         IIcon icon = block.getIcon(side, meta);
         return icon.getMinV();
     }
 
-    private static float getMaxV(Block block, int meta, int side)
-    {
+    private static float getMaxV(Block block, int meta, int side) {
         IIcon icon = block.getIcon(side, meta);
         return icon.getMaxV();
     }

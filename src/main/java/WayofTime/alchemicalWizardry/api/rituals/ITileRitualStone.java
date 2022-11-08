@@ -1,6 +1,5 @@
 package WayofTime.alchemicalWizardry.api.rituals;
 
-public interface ITileRitualStone
-{
+public interface ITileRitualStone {
     boolean isRuneType(int runeType);
 }

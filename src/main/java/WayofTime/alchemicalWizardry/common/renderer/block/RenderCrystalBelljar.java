@@ -14,18 +14,14 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.common.util.ForgeDirection;
 import org.lwjgl.opengl.GL11;
 
-public class RenderCrystalBelljar extends TileEntitySpecialRenderer
-{
+public class RenderCrystalBelljar extends TileEntitySpecialRenderer {
     private ModelCrystalBelljar modelConduit = new ModelCrystalBelljar();
 
     private ResourceLocation resourceLocation = new ResourceLocation("alchemicalwizardry:textures/models/Reagent.png");
 
-
     @Override
-    public void renderTileEntityAt(TileEntity tileEntity, double d0, double d1, double d2, float f)
-    {
-        if (tileEntity instanceof TEBellJar)
-        {
+    public void renderTileEntityAt(TileEntity tileEntity, double d0, double d1, double d2, float f) {
+        if (tileEntity instanceof TEBellJar) {
             TEBellJar tileAltar = (TEBellJar) tileEntity;
             GL11.glPushMatrix();
             GL11.glTranslatef((float) d0 + 0.5F, (float) d1 + 1.5F, (float) d2 + 0.5F);
@@ -38,21 +34,26 @@ public class RenderCrystalBelljar extends TileEntitySpecialRenderer
             GL11.glPopMatrix();
 
             ReagentContainerInfo[] info = tileAltar.getContainerInfo(ForgeDirection.UNKNOWN);
-            if (info.length >= 1 && info[0] != null)
-            {
+            if (info.length >= 1 && info[0] != null) {
                 ReagentStack reagentStack = info[0].reagent;
                 int capacity = info[0].capacity;
-                if (reagentStack != null && reagentStack.reagent != null)
-                {
+                if (reagentStack != null && reagentStack.reagent != null) {
                     Reagent reagent = reagentStack.reagent;
-                    this.renderTankContents(d0, d1, d2, reagent.getColourRed(), reagent.getColourGreen(), reagent.getColourBlue(), 200 * reagentStack.amount / capacity);
+                    this.renderTankContents(
+                            d0,
+                            d1,
+                            d2,
+                            reagent.getColourRed(),
+                            reagent.getColourGreen(),
+                            reagent.getColourBlue(),
+                            200 * reagentStack.amount / capacity);
                 }
             }
         }
     }
 
-    private void renderTankContents(double x, double y, double z, int colourRed, int colourGreen, int colourBlue, int colourIntensity)
-    {
+    private void renderTankContents(
+            double x, double y, double z, int colourRed, int colourGreen, int colourBlue, int colourIntensity) {
         GL11.glPushMatrix();
         float f1 = 1.0f;
         Tessellator tessellator = Tessellator.instance;

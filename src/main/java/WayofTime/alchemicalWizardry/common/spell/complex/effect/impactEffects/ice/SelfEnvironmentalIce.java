@@ -8,16 +8,13 @@ import net.minecraft.util.Vec3;
 import net.minecraft.world.World;
 import net.minecraftforge.common.util.ForgeDirection;
 
-public class SelfEnvironmentalIce extends SelfSpellEffect
-{
-    public SelfEnvironmentalIce(int power, int potency, int cost)
-    {
+public class SelfEnvironmentalIce extends SelfSpellEffect {
+    public SelfEnvironmentalIce(int power, int potency, int cost) {
         super(power, potency, cost);
     }
 
     @Override
-    public void onSelfUse(World world, EntityPlayer player)
-    {
+    public void onSelfUse(World world, EntityPlayer player) {
         ForgeDirection look = SpellHelper.getCompassDirectionForLookVector(player.getLookVec());
 
         int width = this.potencyUpgrades + 1;
@@ -32,13 +29,15 @@ public class SelfEnvironmentalIce extends SelfSpellEffect
         int zStart = (int) (lookVec.zCoord);
         int yStart = (int) (lookVec.yCoord) - 1;
 
-        for (int i = -width; i <= width; i++)
-        {
-            for (int j = 0; j < length; j++)
-            {
-                if (world.isAirBlock(xStart + i * (zOffset) + j * (xOffset), yStart, zStart + i * (xOffset) + j * (zOffset)))
-                {
-                    world.setBlock(xStart + i * (zOffset) + j * (xOffset), yStart, zStart + i * (xOffset) + j * (zOffset), Blocks.ice);
+        for (int i = -width; i <= width; i++) {
+            for (int j = 0; j < length; j++) {
+                if (world.isAirBlock(
+                        xStart + i * (zOffset) + j * (xOffset), yStart, zStart + i * (xOffset) + j * (zOffset))) {
+                    world.setBlock(
+                            xStart + i * (zOffset) + j * (xOffset),
+                            yStart,
+                            zStart + i * (xOffset) + j * (zOffset),
+                            Blocks.ice);
                 }
             }
         }

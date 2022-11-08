@@ -7,7 +7,6 @@ import net.minecraft.command.ICommand;
 import net.minecraft.command.ICommandSender;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.ChatComponentText;
 import net.minecraft.util.ChatComponentTranslation;
 import net.minecraft.util.StatCollector;
 
@@ -44,14 +43,12 @@ public class SubCommandBind extends SubCommandBase {
         if (held != null && held.getItem() instanceof IBindable) {
             if (args.length > 0) {
 
-                if (args[0].equalsIgnoreCase("help"))
-                    return;
+                if (args[0].equalsIgnoreCase("help")) return;
 
                 if (isBoolean(args[0])) {
                     bind = Boolean.parseBoolean(args[0]);
 
-                    if (args.length > 2)
-                        playerName = args[1];
+                    if (args.length > 2) playerName = args[1];
                 } else {
                     playerName = args[0];
                 }

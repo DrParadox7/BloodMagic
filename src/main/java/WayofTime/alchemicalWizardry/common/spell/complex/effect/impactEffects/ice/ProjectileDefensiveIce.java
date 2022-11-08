@@ -7,22 +7,16 @@ import net.minecraft.init.Blocks;
 import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.world.World;
 
-public class ProjectileDefensiveIce extends ProjectileImpactEffect
-{
-    public ProjectileDefensiveIce(int power, int potency, int cost)
-    {
+public class ProjectileDefensiveIce extends ProjectileImpactEffect {
+    public ProjectileDefensiveIce(int power, int potency, int cost) {
         super(power, potency, cost);
     }
 
     @Override
-    public void onEntityImpact(Entity mop, Entity proj)
-    {
-
-    }
+    public void onEntityImpact(Entity mop, Entity proj) {}
 
     @Override
-    public void onTileImpact(World world, MovingObjectPosition mop)
-    {
+    public void onTileImpact(World world, MovingObjectPosition mop) {
         int horizRadius = this.powerUpgrades + 1;
         int vertRadius = this.potencyUpgrades;
 
@@ -30,16 +24,13 @@ public class ProjectileDefensiveIce extends ProjectileImpactEffect
         int posY = mop.blockY;
         int posZ = mop.blockZ;
 
-        for (int i = -horizRadius; i <= horizRadius; i++)
-        {
-            for (int k = -horizRadius; k <= horizRadius; k++)
-            {
-                for (int j = -vertRadius; j <= vertRadius; j++)
-                {
+        for (int i = -horizRadius; i <= horizRadius; i++) {
+            for (int k = -horizRadius; k <= horizRadius; k++) {
+                for (int j = -vertRadius; j <= vertRadius; j++) {
                     SpellHelper.freezeWaterBlock(world, posX + i, posY + j, posZ + k);
 
-                    if (world.isAirBlock(posX + i, posY + j, posZ + k) && !world.isAirBlock(posX + i, posY + j - 1, posZ + k))
-                    {
+                    if (world.isAirBlock(posX + i, posY + j, posZ + k)
+                            && !world.isAirBlock(posX + i, posY + j - 1, posZ + k)) {
                         world.setBlock(posX + i, posY + j, posZ + k, Blocks.snow);
                     }
                 }

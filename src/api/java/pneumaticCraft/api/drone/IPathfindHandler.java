@@ -2,7 +2,7 @@ package pneumaticCraft.api.drone;
 
 import net.minecraft.world.World;
 
-public interface IPathfindHandler{
+public interface IPathfindHandler {
     /**
      * When returned true, the drone can pathfind through this block. When false it can't.
      * @param world
