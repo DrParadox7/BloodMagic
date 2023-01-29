@@ -1,10 +1,5 @@
 package WayofTime.alchemicalWizardry.common.tileEntity;
 
-import WayofTime.alchemicalWizardry.ModBlocks;
-import WayofTime.alchemicalWizardry.api.alchemy.energy.Reagent;
-import WayofTime.alchemicalWizardry.api.alchemy.energy.ReagentRegistry;
-import WayofTime.alchemicalWizardry.common.omega.OmegaParadigm;
-import WayofTime.alchemicalWizardry.common.omega.OmegaRegistry;
 import net.minecraft.block.Block;
 import net.minecraft.entity.Entity;
 import net.minecraft.item.ItemBlock;
@@ -18,7 +13,14 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
 import net.minecraftforge.common.util.Constants;
 
+import WayofTime.alchemicalWizardry.ModBlocks;
+import WayofTime.alchemicalWizardry.api.alchemy.energy.Reagent;
+import WayofTime.alchemicalWizardry.api.alchemy.energy.ReagentRegistry;
+import WayofTime.alchemicalWizardry.common.omega.OmegaParadigm;
+import WayofTime.alchemicalWizardry.common.omega.OmegaRegistry;
+
 public class TEMimicBlock extends TileEntity {
+
     private ItemStack[] inv;
     public Reagent reagent;
 
@@ -91,8 +93,8 @@ public class TEMimicBlock extends TileEntity {
         }
     }
 
-    public static boolean createMimicBlockAtLocation(
-            World world, int x, int y, int z, int duration, Block block, int meta, Reagent reagent) {
+    public static boolean createMimicBlockAtLocation(World world, int x, int y, int z, int duration, Block block,
+            int meta, Reagent reagent) {
         if (block == null) {
             return false;
         }
@@ -115,8 +117,8 @@ public class TEMimicBlock extends TileEntity {
             if (tileEntity instanceof TEMimicBlock) {
                 if (((TEMimicBlock) tileEntity).getBlock() == block
                         && ((TEMimicBlock) tileEntity).getMetaOfMimic() == meta) {
-                    ((TEMimicBlock) tileEntity).ticksRemaining =
-                            Math.max(duration, ((TEMimicBlock) tileEntity).ticksRemaining);
+                    ((TEMimicBlock) tileEntity).ticksRemaining = Math
+                            .max(duration, ((TEMimicBlock) tileEntity).ticksRemaining);
                 }
             }
         }
@@ -124,8 +126,8 @@ public class TEMimicBlock extends TileEntity {
         return false;
     }
 
-    public static boolean createMimicBlockAtLocation(
-            World world, int x, int y, int z, int duration, Block block, int meta) {
+    public static boolean createMimicBlockAtLocation(World world, int x, int y, int z, int duration, Block block,
+            int meta) {
         return createMimicBlockAtLocation(world, x, y, z, duration, block, meta);
     }
 
@@ -144,21 +146,21 @@ public class TEMimicBlock extends TileEntity {
     }
 
     public void returnContainedBlock() {
-        //        ItemStack item = this.inv[0];
-        //        if (item != null)
-        //        {
-        //            if (item.getItem() instanceof ItemBlock)
-        //            {
-        //                Block block = ((ItemBlock) item.getItem()).field_150939_a;
-        //                int meta = item.getItemDamage();
+        // ItemStack item = this.inv[0];
+        // if (item != null)
+        // {
+        // if (item.getItem() instanceof ItemBlock)
+        // {
+        // Block block = ((ItemBlock) item.getItem()).field_150939_a;
+        // int meta = item.getItemDamage();
         //
-        //                if (block != null)
-        //                {
-        //                    this.worldObj.setBlock(xCoord, yCoord, zCoord, block, meta, 6);
-        //                }
-        //            }
+        // if (block != null)
+        // {
+        // this.worldObj.setBlock(xCoord, yCoord, zCoord, block, meta, 6);
+        // }
+        // }
         //
-        //        } else
+        // } else
         {
             this.worldObj.setBlockToAir(xCoord, yCoord, zCoord);
         }

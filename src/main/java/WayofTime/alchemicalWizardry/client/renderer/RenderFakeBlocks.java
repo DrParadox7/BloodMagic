@@ -6,18 +6,12 @@ import net.minecraft.util.IIcon;
 import net.minecraft.world.World;
 
 /*
- *  Created in Scala by Alex-Hawks
- *  Translated and implemented by Arcaratus
+ * Created in Scala by Alex-Hawks Translated and implemented by Arcaratus
  */
 public class RenderFakeBlocks {
-    public static void drawFakeBlock(
-            WayofTime.alchemicalWizardry.api.Vector3 vector3,
-            Block block,
-            int meta,
-            double minX,
-            double minY,
-            double minZ,
-            World world) {
+
+    public static void drawFakeBlock(WayofTime.alchemicalWizardry.api.Vector3 vector3, Block block, int meta,
+            double minX, double minY, double minZ, World world) {
         double maxX = minX + 1;
         double maxY = minY + 1;
         double maxZ = minZ + 1;

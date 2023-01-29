@@ -1,13 +1,10 @@
 package WayofTime.alchemicalWizardry.api.rituals;
 
-import WayofTime.alchemicalWizardry.api.event.RitualRunEvent;
-import WayofTime.alchemicalWizardry.api.event.RitualStopEvent;
-import WayofTime.alchemicalWizardry.api.renderer.MRSRenderer;
-import cpw.mods.fml.common.eventhandler.Event;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+
 import net.minecraft.block.Block;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.tileentity.TileEntity;
@@ -15,7 +12,13 @@ import net.minecraft.util.StatCollector;
 import net.minecraft.world.World;
 import net.minecraftforge.common.MinecraftForge;
 
+import WayofTime.alchemicalWizardry.api.event.RitualRunEvent;
+import WayofTime.alchemicalWizardry.api.event.RitualStopEvent;
+import WayofTime.alchemicalWizardry.api.renderer.MRSRenderer;
+import cpw.mods.fml.common.eventhandler.Event;
+
 public class Rituals {
+
     public final int crystalLevel;
     public final int actCost;
     public final RitualEffect effect;
@@ -51,8 +54,8 @@ public class Rituals {
      * @param name         The name of the ritual
      * @return Returns true if properly registered, or false if the key is already used
      */
-    public static boolean registerRitual(
-            String key, int crystalLevel, int actCost, RitualEffect effect, String name, MRSRenderer renderer) {
+    public static boolean registerRitual(String key, int crystalLevel, int actCost, RitualEffect effect, String name,
+            MRSRenderer renderer) {
         if (ritualMap.containsKey(key)) {
             return false;
         } else {
@@ -115,13 +118,10 @@ public class Rituals {
     }
 
     /**
-     * 1 - NORTH
-     * 2 - EAST
-     * 3 - SOUTH
-     * 4 - WEST
+     * 1 - NORTH 2 - EAST 3 - SOUTH 4 - WEST
      */
-    public static boolean checkDirectionOfRitualValid(
-            World world, int x, int y, int z, String ritualID, int direction) {
+    public static boolean checkDirectionOfRitualValid(World world, int x, int y, int z, String ritualID,
+            int direction) {
         List<RitualComponent> ritual = Rituals.getRitualList(ritualID);
 
         if (ritual == null) {
@@ -135,16 +135,13 @@ public class Rituals {
             test = world.getBlock(x + rc.getX(direction), y + rc.getY(), z + rc.getZ(direction));
             te = world.getTileEntity(x + rc.getX(direction), y + rc.getY(), z + rc.getZ(direction));
 
-            if (!(test instanceof IRitualStone
-                            && ((IRitualStone) test)
-                                    .isRuneType(
-                                            world,
-                                            x + rc.getX(direction),
-                                            y,
-                                            z + rc.getZ(direction),
-                                            world.getBlockMetadata(
-                                                    x + rc.getX(direction), y + rc.getY(), z + rc.getZ(direction)),
-                                            rc.getStoneType()))
+            if (!(test instanceof IRitualStone && ((IRitualStone) test).isRuneType(
+                    world,
+                    x + rc.getX(direction),
+                    y,
+                    z + rc.getZ(direction),
+                    world.getBlockMetadata(x + rc.getX(direction), y + rc.getY(), z + rc.getZ(direction)),
+                    rc.getStoneType()))
                     && !(te instanceof ITileRitualStone && ((ITileRitualStone) te).isRuneType(rc.getStoneType()))) {
                 return false;
             }

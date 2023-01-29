@@ -1,11 +1,13 @@
 package WayofTime.alchemicalWizardry.common.demonVillage.tileEntity;
 
-import WayofTime.alchemicalWizardry.api.Int3;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.tileentity.TileEntityChest;
 
+import WayofTime.alchemicalWizardry.api.Int3;
+
 public class TEDemonChest extends TileEntityChest implements ITilePortalNode {
+
     public Int3 portalLocation = new Int3(0, 0, 0);
 
     @Override

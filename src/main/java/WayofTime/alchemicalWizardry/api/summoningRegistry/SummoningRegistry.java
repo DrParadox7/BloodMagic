@@ -2,27 +2,23 @@ package WayofTime.alchemicalWizardry.api.summoningRegistry;
 
 import java.util.ArrayList;
 import java.util.List;
+
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
 
 public class SummoningRegistry {
+
     public static List<SummoningRegistryComponent> summoningList = new ArrayList();
 
-    public static void registerSummon(
-            SummoningHelper s,
-            ItemStack[] ring1,
-            ItemStack[] ring2,
-            ItemStack[] ring3,
-            int amountUsed,
-            int bloodOrbLevel) {
+    public static void registerSummon(SummoningHelper s, ItemStack[] ring1, ItemStack[] ring2, ItemStack[] ring3,
+            int amountUsed, int bloodOrbLevel) {
         summoningList.add(new SummoningRegistryComponent(s, ring1, ring2, ring3, amountUsed, bloodOrbLevel));
     }
 
     public static boolean isRecipeValid(int bloodOrbLevel, ItemStack[] test1, ItemStack[] test2, ItemStack[] test3) {
         for (SummoningRegistryComponent src : summoningList) {
-            if (src.getBloodOrbLevel() <= bloodOrbLevel
-                    && src.compareRing(1, test1)
+            if (src.getBloodOrbLevel() <= bloodOrbLevel && src.compareRing(1, test1)
                     && src.compareRing(2, test2)
                     && src.compareRing(3, test3)) {
                 return true;
@@ -32,11 +28,10 @@ public class SummoningRegistry {
         return false;
     }
 
-    public static SummoningRegistryComponent getRegistryComponent(
-            int bloodOrbLevel, ItemStack[] test1, ItemStack[] test2, ItemStack[] test3) {
+    public static SummoningRegistryComponent getRegistryComponent(int bloodOrbLevel, ItemStack[] test1,
+            ItemStack[] test2, ItemStack[] test3) {
         for (SummoningRegistryComponent src : summoningList) {
-            if (src.getBloodOrbLevel() <= bloodOrbLevel
-                    && src.compareRing(1, test1)
+            if (src.getBloodOrbLevel() <= bloodOrbLevel && src.compareRing(1, test1)
                     && src.compareRing(2, test2)
                     && src.compareRing(3, test3)) {
                 return src;
@@ -46,11 +41,10 @@ public class SummoningRegistry {
         return null;
     }
 
-    public static EntityLivingBase getEntity(
-            World worldObj, int bloodOrbLevel, ItemStack[] test1, ItemStack[] test2, ItemStack[] test3) {
+    public static EntityLivingBase getEntity(World worldObj, int bloodOrbLevel, ItemStack[] test1, ItemStack[] test2,
+            ItemStack[] test3) {
         for (SummoningRegistryComponent src : summoningList) {
-            if (src.getBloodOrbLevel() <= bloodOrbLevel
-                    && src.compareRing(1, test1)
+            if (src.getBloodOrbLevel() <= bloodOrbLevel && src.compareRing(1, test1)
                     && src.compareRing(2, test2)
                     && src.compareRing(3, test3)) {
                 return src.getEntity(worldObj);

@@ -8,6 +8,7 @@ import WayofTime.alchemicalWizardry.api.spell.SpellParadigmSelf;
 import WayofTime.alchemicalWizardry.common.spell.complex.effect.impactEffects.ice.SelfDefaultIce;
 
 public class CSESelfDefaultIce extends ComplexSpellEffect {
+
     public CSESelfDefaultIce() {
         super(ComplexSpellType.ICE, ComplexSpellModifier.DEFAULT);
     }
@@ -23,9 +24,8 @@ public class CSESelfDefaultIce extends ComplexSpellEffect {
     @Override
     public void modifyParadigm(SpellParadigm parad) {
         if (parad instanceof SpellParadigmSelf) {
-            ((SpellParadigmSelf) parad)
-                    .addSelfSpellEffect(
-                            new SelfDefaultIce(this.powerEnhancement, this.potencyEnhancement, this.costEnhancement));
+            ((SpellParadigmSelf) parad).addSelfSpellEffect(
+                    new SelfDefaultIce(this.powerEnhancement, this.potencyEnhancement, this.costEnhancement));
         }
     }
 

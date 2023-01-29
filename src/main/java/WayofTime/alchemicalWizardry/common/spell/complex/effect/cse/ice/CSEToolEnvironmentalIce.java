@@ -8,6 +8,7 @@ import WayofTime.alchemicalWizardry.api.spell.SpellParadigmTool;
 import WayofTime.alchemicalWizardry.common.spell.complex.effect.SpellHelper;
 
 public class CSEToolEnvironmentalIce extends ComplexSpellEffect {
+
     public CSEToolEnvironmentalIce() {
         super(ComplexSpellType.ICE, ComplexSpellModifier.ENVIRONMENTAL);
     }
@@ -23,10 +24,9 @@ public class CSEToolEnvironmentalIce extends ComplexSpellEffect {
     @Override
     public void modifyParadigm(SpellParadigm parad) {
         if (parad instanceof SpellParadigmTool) {
-            ((SpellParadigmTool) parad)
-                    .addToolString(
-                            "SilkTouch",
-                            "Silk Touch" + " " + SpellHelper.getNumeralForInt((this.powerEnhancement + 1)));
+            ((SpellParadigmTool) parad).addToolString(
+                    "SilkTouch",
+                    "Silk Touch" + " " + SpellHelper.getNumeralForInt((this.powerEnhancement + 1)));
 
             ((SpellParadigmTool) parad).setSilkTouch(true);
         }

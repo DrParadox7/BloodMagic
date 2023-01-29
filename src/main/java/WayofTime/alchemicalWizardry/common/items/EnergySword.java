@@ -1,11 +1,7 @@
 package WayofTime.alchemicalWizardry.common.items;
 
-import WayofTime.alchemicalWizardry.AlchemicalWizardry;
-import WayofTime.alchemicalWizardry.common.omega.OmegaParadigm;
-import WayofTime.alchemicalWizardry.common.omega.OmegaRegistry;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
 import java.util.List;
+
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.renderer.texture.IIconRegister;
@@ -22,7 +18,14 @@ import net.minecraft.util.IIcon;
 import net.minecraft.util.StatCollector;
 import net.minecraft.world.World;
 
+import WayofTime.alchemicalWizardry.AlchemicalWizardry;
+import WayofTime.alchemicalWizardry.common.omega.OmegaParadigm;
+import WayofTime.alchemicalWizardry.common.omega.OmegaRegistry;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
+
 public class EnergySword extends ItemSword {
+
     @SideOnly(Side.CLIENT)
     private IIcon activeIcon;
 
@@ -91,12 +94,11 @@ public class EnergySword extends ItemSword {
     }
 
     @Override
-    public boolean hitEntity(
-            ItemStack par1ItemStack, EntityLivingBase par2EntityLivingBase, EntityLivingBase par3EntityLivingBase) {
+    public boolean hitEntity(ItemStack par1ItemStack, EntityLivingBase par2EntityLivingBase,
+            EntityLivingBase par3EntityLivingBase) {
         if (par3EntityLivingBase instanceof EntityPlayer) {
-            if (!EnergyItems.checkAndSetItemOwner(par1ItemStack, (EntityPlayer) par3EntityLivingBase)
-                    || !EnergyItems.syphonBatteries(
-                            par1ItemStack, (EntityPlayer) par3EntityLivingBase, this.getEnergyUsed())) {
+            if (!EnergyItems.checkAndSetItemOwner(par1ItemStack, (EntityPlayer) par3EntityLivingBase) || !EnergyItems
+                    .syphonBatteries(par1ItemStack, (EntityPlayer) par3EntityLivingBase, this.getEnergyUsed())) {
                 return false;
             }
         }
@@ -187,8 +189,9 @@ public class EnergySword extends ItemSword {
             }
 
             if (!par1ItemStack.getTagCompound().getString("ownerName").equals("")) {
-                par3List.add(StatCollector.translateToLocal("tooltip.owner.currentowner") + " "
-                        + par1ItemStack.getTagCompound().getString("ownerName"));
+                par3List.add(
+                        StatCollector.translateToLocal("tooltip.owner.currentowner") + " "
+                                + par1ItemStack.getTagCompound().getString("ownerName"));
             }
         }
     }
@@ -199,13 +202,10 @@ public class EnergySword extends ItemSword {
             return 15.0F;
         } else {
             Material material = par2Block.getMaterial();
-            return material != Material.plants
-                            && material != Material.vine
-                            && material != Material.coral
-                            && material != Material.leaves
-                            && material != Material.gourd
-                    ? 1.0F
-                    : 1.5F;
+            return material != Material.plants && material != Material.vine
+                    && material != Material.coral
+                    && material != Material.leaves
+                    && material != Material.gourd ? 1.0F : 1.5F;
         }
     }
 }

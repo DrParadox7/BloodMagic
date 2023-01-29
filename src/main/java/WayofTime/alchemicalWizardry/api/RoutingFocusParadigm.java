@@ -2,9 +2,11 @@ package WayofTime.alchemicalWizardry.api;
 
 import java.util.LinkedList;
 import java.util.List;
+
 import net.minecraft.item.ItemStack;
 
 public class RoutingFocusParadigm {
+
     public List<RoutingFocusLogic> logicList = new LinkedList();
 
     public List<RoutingFocusPosAndFacing> locationList = new LinkedList();

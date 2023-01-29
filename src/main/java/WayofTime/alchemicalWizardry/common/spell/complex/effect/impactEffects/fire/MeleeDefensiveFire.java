@@ -1,14 +1,16 @@
 package WayofTime.alchemicalWizardry.common.spell.complex.effect.impactEffects.fire;
 
-import WayofTime.alchemicalWizardry.api.spell.MeleeSpellWorldEffect;
-import WayofTime.alchemicalWizardry.common.spell.complex.effect.SpellHelper;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.util.Vec3;
 import net.minecraft.world.World;
 import net.minecraftforge.common.util.ForgeDirection;
 
+import WayofTime.alchemicalWizardry.api.spell.MeleeSpellWorldEffect;
+import WayofTime.alchemicalWizardry.common.spell.complex.effect.SpellHelper;
+
 public class MeleeDefensiveFire extends MeleeSpellWorldEffect {
+
     public MeleeDefensiveFire(int power, int potency, int cost) {
         super(power, potency, cost);
     }

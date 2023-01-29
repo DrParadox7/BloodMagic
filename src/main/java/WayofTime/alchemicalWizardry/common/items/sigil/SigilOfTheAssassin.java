@@ -1,14 +1,7 @@
 package WayofTime.alchemicalWizardry.common.items.sigil;
 
-import WayofTime.alchemicalWizardry.AlchemicalWizardry;
-import WayofTime.alchemicalWizardry.api.items.interfaces.ArmourUpgrade;
-import WayofTime.alchemicalWizardry.api.items.interfaces.ISigil;
-import WayofTime.alchemicalWizardry.common.items.EnergyItems;
-import WayofTime.alchemicalWizardry.common.spell.complex.effect.SpellHelper;
-import WayofTime.alchemicalWizardry.common.spell.simple.SpellTeleport;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
 import java.util.List;
+
 import net.minecraft.block.Block;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.entity.Entity;
@@ -27,7 +20,17 @@ import net.minecraft.world.World;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.entity.living.EnderTeleportEvent;
 
+import WayofTime.alchemicalWizardry.AlchemicalWizardry;
+import WayofTime.alchemicalWizardry.api.items.interfaces.ArmourUpgrade;
+import WayofTime.alchemicalWizardry.api.items.interfaces.ISigil;
+import WayofTime.alchemicalWizardry.common.items.EnergyItems;
+import WayofTime.alchemicalWizardry.common.spell.complex.effect.SpellHelper;
+import WayofTime.alchemicalWizardry.common.spell.simple.SpellTeleport;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
+
 public class SigilOfTheAssassin extends EnergyItems implements ArmourUpgrade, ISigil {
+
     public SigilOfTheAssassin() {
         super();
         this.maxStackSize = 1;
@@ -61,8 +64,9 @@ public class SigilOfTheAssassin extends EnergyItems implements ArmourUpgrade, IS
         par3List.add(StatCollector.translateToLocal("tooltip.sigiloftheassassin.desc"));
 
         if (!(par1ItemStack.getTagCompound() == null)) {
-            par3List.add(StatCollector.translateToLocal("tooltip.owner.currentowner") + " "
-                    + par1ItemStack.getTagCompound().getString("ownerName"));
+            par3List.add(
+                    StatCollector.translateToLocal("tooltip.owner.currentowner") + " "
+                            + par1ItemStack.getTagCompound().getString("ownerName"));
         }
     }
 
@@ -76,8 +80,8 @@ public class SigilOfTheAssassin extends EnergyItems implements ArmourUpgrade, IS
 
         float f = 10.0F;
 
-        MovingObjectPosition movingobjectposition =
-                SpellHelper.raytraceFromEntity(par2World, par3EntityPlayer, false, f);
+        MovingObjectPosition movingobjectposition = SpellHelper
+                .raytraceFromEntity(par2World, par3EntityPlayer, false, f);
 
         if (movingobjectposition == null) {
             AlchemicalWizardry.logger.info("I saw nothing.");
@@ -109,14 +113,8 @@ public class SigilOfTheAssassin extends EnergyItems implements ArmourUpgrade, IS
         }
     }
 
-    protected static boolean teleportTo(
-            EntityLivingBase entityLiving,
-            double par1,
-            double par3,
-            double par5,
-            double lastX,
-            double lastY,
-            double lastZ) {
+    protected static boolean teleportTo(EntityLivingBase entityLiving, double par1, double par3, double par5,
+            double lastX, double lastY, double lastZ) {
         EnderTeleportEvent event = new EnderTeleportEvent(entityLiving, par1, par3, par5, 0);
 
         if (MinecraftForge.EVENT_BUS.post(event)) {
@@ -148,13 +146,10 @@ public class SigilOfTheAssassin extends EnergyItems implements ArmourUpgrade, IS
             }
 
             if (flag1) {
-                SpellTeleport.moveEntityViaTeleport(
-                        entityLiving, entityLiving.posX, entityLiving.posY, entityLiving.posZ);
+                SpellTeleport
+                        .moveEntityViaTeleport(entityLiving, entityLiving.posX, entityLiving.posY, entityLiving.posZ);
 
-                if (entityLiving
-                                .worldObj
-                                .getCollidingBoundingBoxes(entityLiving, entityLiving.boundingBox)
-                                .isEmpty()
+                if (entityLiving.worldObj.getCollidingBoundingBoxes(entityLiving, entityLiving.boundingBox).isEmpty()
                         && !entityLiving.worldObj.isAnyLiquid(entityLiving.boundingBox)) {
                     flag = true;
                 }
@@ -172,14 +167,11 @@ public class SigilOfTheAssassin extends EnergyItems implements ArmourUpgrade, IS
                 float f = (entityLiving.worldObj.rand.nextFloat() - 0.5F) * 0.2F;
                 float f1 = (entityLiving.worldObj.rand.nextFloat() - 0.5F) * 0.2F;
                 float f2 = (entityLiving.worldObj.rand.nextFloat() - 0.5F) * 0.2F;
-                double d7 = d3
-                        + (entityLiving.posX - d3) * d6
+                double d7 = d3 + (entityLiving.posX - d3) * d6
                         + (entityLiving.worldObj.rand.nextDouble() - 0.5D) * (double) entityLiving.width * 2.0D;
-                double d8 = d4
-                        + (entityLiving.posY - d4) * d6
+                double d8 = d4 + (entityLiving.posY - d4) * d6
                         + entityLiving.worldObj.rand.nextDouble() * (double) entityLiving.height;
-                double d9 = d5
-                        + (entityLiving.posZ - d5) * d6
+                double d9 = d5 + (entityLiving.posZ - d5) * d6
                         + (entityLiving.worldObj.rand.nextDouble() - 0.5D) * (double) entityLiving.width * 2.0D;
                 entityLiving.worldObj.spawnParticle("portal", d7, d8, d9, (double) f, (double) f1, (double) f2);
             }
@@ -187,19 +179,15 @@ public class SigilOfTheAssassin extends EnergyItems implements ArmourUpgrade, IS
         }
     }
 
-    public MovingObjectPosition getMovingObjectPositionFromPlayer(
-            World p_77621_1_, EntityPlayer p_77621_2_, boolean p_77621_3_, float reach) {
+    public MovingObjectPosition getMovingObjectPositionFromPlayer(World p_77621_1_, EntityPlayer p_77621_2_,
+            boolean p_77621_3_, float reach) {
         float f = 1;
         float f1 = p_77621_2_.prevRotationPitch + (p_77621_2_.rotationPitch - p_77621_2_.prevRotationPitch) * f;
         float f2 = p_77621_2_.prevRotationYaw + (p_77621_2_.rotationYaw - p_77621_2_.prevRotationYaw) * f;
         double d0 = p_77621_2_.prevPosX + (p_77621_2_.posX - p_77621_2_.prevPosX) * (double) f;
-        double d1 = p_77621_2_.prevPosY
-                + (p_77621_2_.posY - p_77621_2_.prevPosY) * (double) f
-                + (double)
-                        (p_77621_1_.isRemote
-                                ? p_77621_2_.getEyeHeight() - p_77621_2_.getDefaultEyeHeight()
-                                : p_77621_2_
-                                        .getEyeHeight()); // isRemote check to revert changes to ray trace position due
+        double d1 = p_77621_2_.prevPosY + (p_77621_2_.posY - p_77621_2_.prevPosY) * (double) f
+                + (double) (p_77621_1_.isRemote ? p_77621_2_.getEyeHeight() - p_77621_2_.getDefaultEyeHeight()
+                        : p_77621_2_.getEyeHeight()); // isRemote check to revert changes to ray trace position due
         // to adding the eye height clientside and player yOffset
         // differences
         double d2 = p_77621_2_.prevPosZ + (p_77621_2_.posZ - p_77621_2_.prevPosZ) * (double) f;
@@ -212,65 +200,65 @@ public class SigilOfTheAssassin extends EnergyItems implements ArmourUpgrade, IS
         float f8 = f3 * f5;
         double d3 = 500.0D;
         if (p_77621_2_ instanceof EntityPlayerMP) {
-            //            d3 = ((EntityPlayerMP)p_77621_2_).theItemInWorldManager.getBlockReachDistance();
+            // d3 = ((EntityPlayerMP)p_77621_2_).theItemInWorldManager.getBlockReachDistance();
         }
         Vec3 vec31 = vec3.addVector((double) f7 * d3, (double) f6 * d3, (double) f8 * d3);
         return p_77621_1_.func_147447_a(vec3, vec31, p_77621_3_, !p_77621_3_, false);
     }
 
-    //    public MovingObjectPosition movingObjectPositiongdsa(WOrld worldObj, int posX, int posY, int posZ)
-    //    {
-    //    	Vec3 var17 = SpellHelper.createVec3(posX, posY, posZ);
-    //        Vec3 var3 = SpellHelper.createVec3(posX + motionX, posY + motionY, posZ + motionZ);
-    //        MovingObjectPosition var4 = worldObj.func_147447_a(var17, var3, true, false, false);
-    //        var17 = SpellHelper.createVec3(posX, posY, posZ);
-    //        var3 = SpellHelper.createVec3(posX + motionX, posY + motionY, posZ + motionZ);
+    // public MovingObjectPosition movingObjectPositiongdsa(WOrld worldObj, int posX, int posY, int posZ)
+    // {
+    // Vec3 var17 = SpellHelper.createVec3(posX, posY, posZ);
+    // Vec3 var3 = SpellHelper.createVec3(posX + motionX, posY + motionY, posZ + motionZ);
+    // MovingObjectPosition var4 = worldObj.func_147447_a(var17, var3, true, false, false);
+    // var17 = SpellHelper.createVec3(posX, posY, posZ);
+    // var3 = SpellHelper.createVec3(posX + motionX, posY + motionY, posZ + motionZ);
     //
-    //        if (var4 != null)
-    //        {
-    //            var3 = SpellHelper.createVec3(var4.hitVec.xCoord, var4.hitVec.yCoord, var4.hitVec.zCoord);
-    //        }
+    // if (var4 != null)
+    // {
+    // var3 = SpellHelper.createVec3(var4.hitVec.xCoord, var4.hitVec.yCoord, var4.hitVec.zCoord);
+    // }
     //
-    //        Entity var5 = null;
-    //        List var6 = worldObj.getEntitiesWithinAABBExcludingEntity(this, boundingBox.addCoord(motionX, motionY,
+    // Entity var5 = null;
+    // List var6 = worldObj.getEntitiesWithinAABBExcludingEntity(this, boundingBox.addCoord(motionX, motionY,
     // motionZ).expand(1.0D, 1.0D, 1.0D));
-    //        double var7 = 0.0D;
-    //        Iterator var9 = var6.iterator();
-    //        float var11;
+    // double var7 = 0.0D;
+    // Iterator var9 = var6.iterator();
+    // float var11;
     //
-    //        while (var9.hasNext())
-    //        {
-    //            Entity var10 = (Entity) var9.next();
+    // while (var9.hasNext())
+    // {
+    // Entity var10 = (Entity) var9.next();
     //
-    //            if (var10.canBeCollidedWith() && (var10 != shootingEntity || ticksInAir >= 5))
-    //            {
-    //                var11 = 0.3F;
-    //                AxisAlignedBB var12 = var10.boundingBox.expand(var11, var11, var11);
-    //                MovingObjectPosition var13 = var12.calculateIntercept(var17, var3);
+    // if (var10.canBeCollidedWith() && (var10 != shootingEntity || ticksInAir >= 5))
+    // {
+    // var11 = 0.3F;
+    // AxisAlignedBB var12 = var10.boundingBox.expand(var11, var11, var11);
+    // MovingObjectPosition var13 = var12.calculateIntercept(var17, var3);
     //
-    //                if (var13 != null)
-    //                {
-    //                    double var14 = var17.distanceTo(var13.hitVec);
+    // if (var13 != null)
+    // {
+    // double var14 = var17.distanceTo(var13.hitVec);
     //
-    //                    if (var14 < var7 || var7 == 0.0D)
-    //                    {
-    //                        var5 = var10;
-    //                        var7 = var14;
-    //                    }
-    //                }
-    //            }
-    //        }
+    // if (var14 < var7 || var7 == 0.0D)
+    // {
+    // var5 = var10;
+    // var7 = var14;
+    // }
+    // }
+    // }
+    // }
     //
-    //        if (var5 != null)
-    //        {
-    //            var4 = new MovingObjectPosition(var5);
-    //        }
+    // if (var5 != null)
+    // {
+    // var4 = new MovingObjectPosition(var5);
+    // }
     //
-    //        if (var4 != null)
-    //        {
-    //            this.onImpact(var4);
-    //        }
-    //    }
+    // if (var4 != null)
+    // {
+    // this.onImpact(var4);
+    // }
+    // }
 
     @Override
     public void onArmourUpdate(World world, EntityPlayer player, ItemStack thisItemStack) {

@@ -4,6 +4,7 @@ import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidStack;
 
 public class LifeEssence extends Fluid {
+
     public LifeEssence(String fluidName) {
         super(fluidName);
         this.setDensity(2000);

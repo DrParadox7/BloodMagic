@@ -1,9 +1,5 @@
 package WayofTime.alchemicalWizardry.common.block;
 
-import WayofTime.alchemicalWizardry.AlchemicalWizardry;
-import WayofTime.alchemicalWizardry.common.demonVillage.tileEntity.TEDemonPortal;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.block.BlockContainer;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.renderer.texture.IIconRegister;
@@ -11,7 +7,13 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
 
+import WayofTime.alchemicalWizardry.AlchemicalWizardry;
+import WayofTime.alchemicalWizardry.common.demonVillage.tileEntity.TEDemonPortal;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
+
 public class BlockDemonPortal extends BlockContainer {
+
     public BlockDemonPortal() {
         super(Material.rock);
         setHardness(1000);
@@ -42,8 +44,8 @@ public class BlockDemonPortal extends BlockContainer {
     }
 
     @Override
-    public boolean onBlockActivated(
-            World world, int x, int y, int z, EntityPlayer player, int side, float what, float these, float are) {
+    public boolean onBlockActivated(World world, int x, int y, int z, EntityPlayer player, int side, float what,
+            float these, float are) {
         if (world.isRemote) {
             return false;
         }

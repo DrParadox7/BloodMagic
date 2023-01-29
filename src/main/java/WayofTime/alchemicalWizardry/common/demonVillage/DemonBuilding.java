@@ -1,11 +1,13 @@
 package WayofTime.alchemicalWizardry.common.demonVillage;
 
-import WayofTime.alchemicalWizardry.api.Int3;
-import WayofTime.alchemicalWizardry.common.demonVillage.tileEntity.TEDemonPortal;
 import net.minecraft.world.World;
 import net.minecraftforge.common.util.ForgeDirection;
 
+import WayofTime.alchemicalWizardry.api.Int3;
+import WayofTime.alchemicalWizardry.common.demonVillage.tileEntity.TEDemonPortal;
+
 public class DemonBuilding {
+
     public static final int BUILDING_HOUSE = 0;
     public static final int BUILDING_PORTAL = 1;
 
@@ -31,19 +33,13 @@ public class DemonBuilding {
         return area.doesContainAll(master, gridX, gridZ, dir);
     }
 
-    public void buildAll(
-            TEDemonPortal teDemonPortal,
-            World world,
-            int xCoord,
-            int yCoord,
-            int zCoord,
-            ForgeDirection dir,
-            boolean populateInventories) {
+    public void buildAll(TEDemonPortal teDemonPortal, World world, int xCoord, int yCoord, int zCoord,
+            ForgeDirection dir, boolean populateInventories) {
         schematic.buildAll(teDemonPortal, world, xCoord, yCoord, zCoord, dir, populateInventories);
     }
 
-    public void setAllGridSpaces(
-            int xInit, int zInit, int yLevel, ForgeDirection dir, int type, GridSpaceHolder master) {
+    public void setAllGridSpaces(int xInit, int zInit, int yLevel, ForgeDirection dir, int type,
+            GridSpaceHolder master) {
         area.setAllGridSpaces(xInit, zInit, yLevel, dir, type, master);
     }
 

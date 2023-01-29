@@ -1,16 +1,8 @@
 package WayofTime.alchemicalWizardry.common.block;
 
-import WayofTime.alchemicalWizardry.AlchemicalWizardry;
-import WayofTime.alchemicalWizardry.ModItems;
-import WayofTime.alchemicalWizardry.api.items.interfaces.ArmourUpgrade;
-import WayofTime.alchemicalWizardry.common.ArmourComponent;
-import WayofTime.alchemicalWizardry.common.items.armour.BoundArmour;
-import WayofTime.alchemicalWizardry.common.spell.complex.effect.SpellHelper;
-import WayofTime.alchemicalWizardry.common.tileEntity.TESocket;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
 import java.util.ArrayList;
 import java.util.List;
+
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.renderer.texture.IIconRegister;
@@ -23,7 +15,18 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
 
+import WayofTime.alchemicalWizardry.AlchemicalWizardry;
+import WayofTime.alchemicalWizardry.ModItems;
+import WayofTime.alchemicalWizardry.api.items.interfaces.ArmourUpgrade;
+import WayofTime.alchemicalWizardry.common.ArmourComponent;
+import WayofTime.alchemicalWizardry.common.items.armour.BoundArmour;
+import WayofTime.alchemicalWizardry.common.spell.complex.effect.SpellHelper;
+import WayofTime.alchemicalWizardry.common.tileEntity.TESocket;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
+
 public class ArmourForge extends Block {
+
     public static List<ArmourComponent> helmetList = new ArrayList();
     public static List<ArmourComponent> plateList = new ArrayList();
     public static List<ArmourComponent> leggingsList = new ArrayList();
@@ -44,8 +47,8 @@ public class ArmourForge extends Block {
     }
 
     @Override
-    public boolean onBlockActivated(
-            World world, int x, int y, int z, EntityPlayer player, int idk, float what, float these, float are) {
+    public boolean onBlockActivated(World world, int x, int y, int z, EntityPlayer player, int idk, float what,
+            float these, float are) {
         if (world.isRemote) {
             return false;
         }
@@ -143,7 +146,16 @@ public class ArmourForge extends Block {
 
                 for (int i = 0; i < 8; i++) {
                     SpellHelper.sendIndexedParticleToAllAround(
-                            world, xCoord, yCoord, zCoord, 20, world.provider.dimensionId, 1, xCoord, yCoord, zCoord);
+                            world,
+                            xCoord,
+                            yCoord,
+                            zCoord,
+                            20,
+                            world.provider.dimensionId,
+                            1,
+                            xCoord,
+                            yCoord,
+                            zCoord);
                 }
 
                 if (itemStack != null) {

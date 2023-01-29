@@ -1,5 +1,17 @@
 package WayofTime.alchemicalWizardry.common;
 
+import java.util.EnumMap;
+import java.util.LinkedList;
+import java.util.List;
+
+import net.minecraft.client.Minecraft;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.EntityPlayerMP;
+import net.minecraft.network.Packet;
+import net.minecraft.tileentity.TileEntity;
+import net.minecraft.world.World;
+import net.minecraftforge.common.util.ForgeDirection;
+
 import WayofTime.alchemicalWizardry.AlchemicalWizardry;
 import WayofTime.alchemicalWizardry.api.ColourAndCoords;
 import WayofTime.alchemicalWizardry.api.alchemy.energy.Reagent;
@@ -25,18 +37,9 @@ import io.netty.buffer.ByteBuf;
 import io.netty.channel.ChannelFutureListener;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.SimpleChannelInboundHandler;
-import java.util.EnumMap;
-import java.util.LinkedList;
-import java.util.List;
-import net.minecraft.client.Minecraft;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.entity.player.EntityPlayerMP;
-import net.minecraft.network.Packet;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.world.World;
-import net.minecraftforge.common.util.ForgeDirection;
 
 public enum NewPacketHandler {
+
     INSTANCE;
 
     private EnumMap<Side, FMLEmbeddedChannel> channels;
@@ -67,15 +70,12 @@ public enum NewPacketHandler {
         clientChannel.pipeline().addAfter(tileAltarCodec, "ParticleHandler", new ParticleMessageHandler());
         clientChannel.pipeline().addAfter(tileAltarCodec, "VelocityHandler", new VelocityMessageHandler());
         clientChannel.pipeline().addAfter(tileAltarCodec, "TEMasterStoneHandler", new TEMasterStoneMessageHandler());
-        clientChannel
-                .pipeline()
+        clientChannel.pipeline()
                 .addAfter(tileAltarCodec, "TEReagentConduitHandler", new TEReagentConduitMessageHandler());
         clientChannel.pipeline().addAfter(tileAltarCodec, "CurrentLPMessageHandler", new CurrentLPMessageHandler());
-        clientChannel
-                .pipeline()
+        clientChannel.pipeline()
                 .addAfter(tileAltarCodec, "CurrentReagentBarMessageHandler", new CurrentReagentBarMessageHandler());
-        clientChannel
-                .pipeline()
+        clientChannel.pipeline()
                 .addAfter(tileAltarCodec, "CurrentAddedHPMessageHandler", new CurrentAddedHPMessageHandler());
     }
 
@@ -88,6 +88,7 @@ public enum NewPacketHandler {
     }
 
     private static class TEAltarMessageHandler extends SimpleChannelInboundHandler<TEAltarMessage> {
+
         @Override
         protected void channelRead0(ChannelHandlerContext ctx, TEAltarMessage msg) throws Exception {
             World world = AlchemicalWizardry.proxy.getClientWorld();
@@ -101,6 +102,7 @@ public enum NewPacketHandler {
     }
 
     private static class TEOrientableMessageHandler extends SimpleChannelInboundHandler<TEOrientableMessage> {
+
         @Override
         protected void channelRead0(ChannelHandlerContext ctx, TEOrientableMessage msg) throws Exception {
             World world = AlchemicalWizardry.proxy.getClientWorld();
@@ -113,6 +115,7 @@ public enum NewPacketHandler {
     }
 
     private static class TEPedestalMessageHandler extends SimpleChannelInboundHandler<TEPedestalMessage> {
+
         @Override
         protected void channelRead0(ChannelHandlerContext ctx, TEPedestalMessage msg) throws Exception {
             World world = AlchemicalWizardry.proxy.getClientWorld();
@@ -126,6 +129,7 @@ public enum NewPacketHandler {
     }
 
     private static class TEPlinthMessageHandler extends SimpleChannelInboundHandler<TEPlinthMessage> {
+
         @Override
         protected void channelRead0(ChannelHandlerContext ctx, TEPlinthMessage msg) throws Exception {
             World world = AlchemicalWizardry.proxy.getClientWorld();
@@ -139,6 +143,7 @@ public enum NewPacketHandler {
     }
 
     private static class TESocketMessageHandler extends SimpleChannelInboundHandler<TESocketMessage> {
+
         @Override
         protected void channelRead0(ChannelHandlerContext ctx, TESocketMessage msg) throws Exception {
             World world = AlchemicalWizardry.proxy.getClientWorld();
@@ -152,6 +157,7 @@ public enum NewPacketHandler {
     }
 
     private static class TETeleposerMessageHandler extends SimpleChannelInboundHandler<TETeleposerMessage> {
+
         @Override
         protected void channelRead0(ChannelHandlerContext ctx, TETeleposerMessage msg) throws Exception {
             World world = AlchemicalWizardry.proxy.getClientWorld();
@@ -165,6 +171,7 @@ public enum NewPacketHandler {
     }
 
     private static class TEWritingTableMessageHandler extends SimpleChannelInboundHandler<TEWritingTableMessage> {
+
         @Override
         protected void channelRead0(ChannelHandlerContext ctx, TEWritingTableMessage msg) throws Exception {
             World world = AlchemicalWizardry.proxy.getClientWorld();
@@ -178,6 +185,7 @@ public enum NewPacketHandler {
     }
 
     private static class ParticleMessageHandler extends SimpleChannelInboundHandler<ParticleMessage> {
+
         @Override
         protected void channelRead0(ChannelHandlerContext ctx, ParticleMessage msg) throws Exception {
             World world = AlchemicalWizardry.proxy.getClientWorld();
@@ -187,6 +195,7 @@ public enum NewPacketHandler {
     }
 
     private static class VelocityMessageHandler extends SimpleChannelInboundHandler<VelocityMessage> {
+
         @Override
         protected void channelRead0(ChannelHandlerContext ctx, VelocityMessage msg) throws Exception {
             EntityPlayer player = Minecraft.getMinecraft().thePlayer;
@@ -200,6 +209,7 @@ public enum NewPacketHandler {
     }
 
     private static class TEMasterStoneMessageHandler extends SimpleChannelInboundHandler<TEMasterStoneMessage> {
+
         @Override
         protected void channelRead0(ChannelHandlerContext ctx, TEMasterStoneMessage msg) throws Exception {
             World world = AlchemicalWizardry.proxy.getClientWorld();
@@ -214,6 +224,7 @@ public enum NewPacketHandler {
     }
 
     private static class TEReagentConduitMessageHandler extends SimpleChannelInboundHandler<TEReagentConduitMessage> {
+
         @Override
         protected void channelRead0(ChannelHandlerContext ctx, TEReagentConduitMessage msg) throws Exception {
             World world = AlchemicalWizardry.proxy.getClientWorld();
@@ -227,6 +238,7 @@ public enum NewPacketHandler {
     }
 
     private static class CurrentLPMessageHandler extends SimpleChannelInboundHandler<CurrentLPMessage> {
+
         @Override
         protected void channelRead0(ChannelHandlerContext ctx, CurrentLPMessage msg) throws Exception {
             EntityPlayer player = Minecraft.getMinecraft().thePlayer;
@@ -237,6 +249,7 @@ public enum NewPacketHandler {
     }
 
     private static class CurrentReagentBarMessageHandler extends SimpleChannelInboundHandler<CurrentReagentBarMessage> {
+
         @Override
         protected void channelRead0(ChannelHandlerContext ctx, CurrentReagentBarMessage msg) throws Exception {
             EntityPlayer player = Minecraft.getMinecraft().thePlayer;
@@ -248,6 +261,7 @@ public enum NewPacketHandler {
     }
 
     private static class CurrentAddedHPMessageHandler extends SimpleChannelInboundHandler<CurrentAddedHPMessage> {
+
         @Override
         protected void channelRead0(ChannelHandlerContext ctx, CurrentAddedHPMessage msg) throws Exception {
             EntityPlayer player = Minecraft.getMinecraft().thePlayer;
@@ -258,6 +272,7 @@ public enum NewPacketHandler {
     }
 
     private static class KeyboardMessageHandler extends SimpleChannelInboundHandler<KeyboardMessage> {
+
         public KeyboardMessageHandler() {
             System.out.println("I am being created");
         }
@@ -269,10 +284,12 @@ public enum NewPacketHandler {
     }
 
     public static class BMMessage {
+
         int index;
     }
 
     public static class TEAltarMessage extends BMMessage {
+
         int x;
         int y;
         int z;
@@ -283,6 +300,7 @@ public enum NewPacketHandler {
     }
 
     public static class TEOrientableMessage extends BMMessage {
+
         int x;
         int y;
         int z;
@@ -292,6 +310,7 @@ public enum NewPacketHandler {
     }
 
     public static class TEPedestalMessage extends BMMessage {
+
         int x;
         int y;
         int z;
@@ -300,6 +319,7 @@ public enum NewPacketHandler {
     }
 
     public static class TEPlinthMessage extends BMMessage {
+
         int x;
         int y;
         int z;
@@ -308,6 +328,7 @@ public enum NewPacketHandler {
     }
 
     public static class TESocketMessage extends BMMessage {
+
         int x;
         int y;
         int z;
@@ -316,6 +337,7 @@ public enum NewPacketHandler {
     }
 
     public static class TETeleposerMessage extends BMMessage {
+
         int x;
         int y;
         int z;
@@ -324,6 +346,7 @@ public enum NewPacketHandler {
     }
 
     public static class TEWritingTableMessage extends BMMessage {
+
         int x;
         int y;
         int z;
@@ -332,6 +355,7 @@ public enum NewPacketHandler {
     }
 
     public static class ParticleMessage extends BMMessage {
+
         String particle;
 
         double xCoord;
@@ -344,12 +368,14 @@ public enum NewPacketHandler {
     }
 
     public static class VelocityMessage extends BMMessage {
+
         double xVel;
         double yVel;
         double zVel;
     }
 
     public static class TEMasterStoneMessage extends BMMessage {
+
         int x;
         int y;
         int z;
@@ -359,6 +385,7 @@ public enum NewPacketHandler {
     }
 
     public static class TEReagentConduitMessage extends BMMessage {
+
         int x;
         int y;
         int z;
@@ -367,35 +394,39 @@ public enum NewPacketHandler {
     }
 
     public static class CurrentLPMessage extends BMMessage {
+
         int currentLP;
         int maxLP;
     }
 
     public static class CurrentReagentBarMessage extends BMMessage {
+
         String reagent;
         float currentAR;
         float maxAR;
     }
 
     public static class CurrentAddedHPMessage extends BMMessage {
+
         float currentHP;
         float maxHP;
     }
 
     public static class KeyboardMessage extends BMMessage {
+
         byte keyPressed;
     }
 
     private class ClientToServerCodec extends FMLIndexedMessageToMessageCodec<BMMessage> {
+
         public ClientToServerCodec() {}
 
         @Override
         public void encodeInto(ChannelHandlerContext ctx, BMMessage msg, ByteBuf target) throws Exception {
             target.writeInt(msg.index);
 
-            //			switch(msg.index)
-            {
-            }
+            // switch(msg.index)
+            {}
         }
 
         @Override
@@ -404,13 +435,13 @@ public enum NewPacketHandler {
 
             System.out.println("Packet is recieved and being decoded");
 
-            //			switch(index)
-            {
-            }
+            // switch(index)
+            {}
         }
     }
 
     private class TEAltarCodec extends FMLIndexedMessageToMessageCodec<BMMessage> {
+
         public TEAltarCodec() {
             addDiscriminator(0, TEAltarMessage.class);
             addDiscriminator(1, TEOrientableMessage.class);
@@ -662,10 +693,9 @@ public enum NewPacketHandler {
 
                     boolean hasFluids = dat.readBoolean();
                     ((TEAltarMessage) msg).fluids = new int[6];
-                    if (hasFluids)
-                        for (int i = 0; i < ((TEAltarMessage) msg).fluids.length; i++) {
-                            ((TEAltarMessage) msg).fluids[i] = dat.readInt();
-                        }
+                    if (hasFluids) for (int i = 0; i < ((TEAltarMessage) msg).fluids.length; i++) {
+                        ((TEAltarMessage) msg).fluids[i] = dat.readInt();
+                    }
 
                     ((TEAltarMessage) msg).capacity = dat.readInt();
 
@@ -820,14 +850,15 @@ public enum NewPacketHandler {
                     List<ColourAndCoords> list = new LinkedList();
 
                     for (int i = 0; i < listSize; i++) {
-                        list.add(new ColourAndCoords(
-                                dat.readInt(),
-                                dat.readInt(),
-                                dat.readInt(),
-                                dat.readInt(),
-                                dat.readInt(),
-                                dat.readInt(),
-                                dat.readInt()));
+                        list.add(
+                                new ColourAndCoords(
+                                        dat.readInt(),
+                                        dat.readInt(),
+                                        dat.readInt(),
+                                        dat.readInt(),
+                                        dat.readInt(),
+                                        dat.readInt(),
+                                        dat.readInt()));
                     }
 
                     ((TEReagentConduitMessage) msg).destinationList = list;
@@ -948,8 +979,8 @@ public enum NewPacketHandler {
         return INSTANCE.channels.get(Side.SERVER).generatePacketFrom(msg);
     }
 
-    public static Packet getParticlePacket(
-            String str, double xCoord, double yCoord, double zCoord, double xVel, double yVel, double zVel) {
+    public static Packet getParticlePacket(String str, double xCoord, double yCoord, double zCoord, double xVel,
+            double yVel, double zVel) {
         ParticleMessage msg = new ParticleMessage();
         msg.index = 7;
         msg.particle = str;
@@ -1037,45 +1068,29 @@ public enum NewPacketHandler {
     }
 
     public void sendTo(Packet message, EntityPlayerMP player) {
-        this.channels
-                .get(Side.SERVER)
-                .attr(FMLOutboundHandler.FML_MESSAGETARGET)
+        this.channels.get(Side.SERVER).attr(FMLOutboundHandler.FML_MESSAGETARGET)
                 .set(FMLOutboundHandler.OutboundTarget.PLAYER);
-        this.channels
-                .get(Side.SERVER)
-                .attr(FMLOutboundHandler.FML_MESSAGETARGETARGS)
-                .set(player);
+        this.channels.get(Side.SERVER).attr(FMLOutboundHandler.FML_MESSAGETARGETARGS).set(player);
         this.channels.get(Side.SERVER).writeAndFlush(message);
     }
 
     public void sendToAll(Packet message) {
-        this.channels
-                .get(Side.SERVER)
-                .attr(FMLOutboundHandler.FML_MESSAGETARGET)
+        this.channels.get(Side.SERVER).attr(FMLOutboundHandler.FML_MESSAGETARGET)
                 .set(FMLOutboundHandler.OutboundTarget.ALL);
         this.channels.get(Side.SERVER).writeAndFlush(message);
     }
 
     public void sendToAllAround(Packet message, NetworkRegistry.TargetPoint point) {
-        this.channels
-                .get(Side.SERVER)
-                .attr(FMLOutboundHandler.FML_MESSAGETARGET)
+        this.channels.get(Side.SERVER).attr(FMLOutboundHandler.FML_MESSAGETARGET)
                 .set(FMLOutboundHandler.OutboundTarget.ALLAROUNDPOINT);
-        this.channels
-                .get(Side.SERVER)
-                .attr(FMLOutboundHandler.FML_MESSAGETARGETARGS)
-                .set(point);
+        this.channels.get(Side.SERVER).attr(FMLOutboundHandler.FML_MESSAGETARGETARGS).set(point);
         this.channels.get(Side.SERVER).writeAndFlush(message);
     }
 
     public void sendToServer(Packet message) {
-        this.channels
-                .get(Side.CLIENT)
-                .attr(FMLOutboundHandler.FML_MESSAGETARGET)
+        this.channels.get(Side.CLIENT).attr(FMLOutboundHandler.FML_MESSAGETARGET)
                 .set(FMLOutboundHandler.OutboundTarget.TOSERVER);
-        this.channels
-                .get(Side.CLIENT)
-                .writeAndFlush(message)
+        this.channels.get(Side.CLIENT).writeAndFlush(message)
                 .addListener(ChannelFutureListener.FIRE_EXCEPTION_ON_FAILURE);
     }
 }

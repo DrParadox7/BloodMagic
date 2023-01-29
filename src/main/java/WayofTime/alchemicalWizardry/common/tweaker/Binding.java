@@ -2,26 +2,30 @@ package WayofTime.alchemicalWizardry.common.tweaker;
 
 import static WayofTime.alchemicalWizardry.common.tweaker.MTHelper.toStack;
 
-import WayofTime.alchemicalWizardry.api.bindingRegistry.BindingRecipe;
-import WayofTime.alchemicalWizardry.api.bindingRegistry.BindingRegistry;
 import minetweaker.IUndoableAction;
 import minetweaker.MineTweakerAPI;
 import minetweaker.api.item.IItemStack;
+
 import net.minecraft.item.ItemStack;
+
 import stanhebben.zenscript.annotations.ZenClass;
 import stanhebben.zenscript.annotations.ZenMethod;
+import WayofTime.alchemicalWizardry.api.bindingRegistry.BindingRecipe;
+import WayofTime.alchemicalWizardry.api.bindingRegistry.BindingRegistry;
 
 /**
  * MineTweaker3 Binding Recipe Handler by joshie *
  */
 @ZenClass("mods.bloodmagic.Binding")
 public class Binding {
+
     @ZenMethod
     public static void addRecipe(IItemStack input, IItemStack output) {
         MineTweakerAPI.apply(new Add(new BindingRecipe(toStack(output), toStack(input))));
     }
 
     private static class Add implements IUndoableAction {
+
         private final BindingRecipe recipe;
 
         public Add(BindingRecipe recipe) {
@@ -45,14 +49,12 @@ public class Binding {
 
         @Override
         public String describe() {
-            return "Adding Binding Recipe for "
-                    + ((BindingRecipe) recipe).getResult().getDisplayName();
+            return "Adding Binding Recipe for " + ((BindingRecipe) recipe).getResult().getDisplayName();
         }
 
         @Override
         public String describeUndo() {
-            return "Removing Binding Recipe for "
-                    + ((BindingRecipe) recipe).getResult().getDisplayName();
+            return "Removing Binding Recipe for " + ((BindingRecipe) recipe).getResult().getDisplayName();
         }
 
         @Override
@@ -67,6 +69,7 @@ public class Binding {
     }
 
     private static class Remove implements IUndoableAction {
+
         private final ItemStack output;
         private BindingRecipe recipe;
 

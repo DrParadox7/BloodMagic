@@ -5,6 +5,7 @@ import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
 
 public class ItemEnchantmentGlyphBlock extends ItemBlock {
+
     public ItemEnchantmentGlyphBlock(Block block) {
         super(block);
         setHasSubtypes(true);

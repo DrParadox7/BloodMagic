@@ -1,9 +1,11 @@
 package WayofTime.alchemicalWizardry.client.nei;
 
-import cpw.mods.fml.common.event.FMLInterModComms;
 import net.minecraft.nbt.NBTTagCompound;
 
+import cpw.mods.fml.common.event.FMLInterModComms;
+
 public class IMCForNEI {
+
     public static void IMCSender() {
         sendHandler("alchemicalwizardry.meteor", "AWWayofTime:masterStone", 130);
         sendCatalyst("alchemicalwizardry.meteor", "AWWayofTime:masterStone");

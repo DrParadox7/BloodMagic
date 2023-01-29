@@ -1,15 +1,17 @@
 package WayofTime.alchemicalWizardry.common.compress;
 
-import WayofTime.alchemicalWizardry.api.compress.CompressionHandler;
-import WayofTime.alchemicalWizardry.api.compress.CompressionRegistry;
-import WayofTime.alchemicalWizardry.common.spell.complex.effect.SpellHelper;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.Container;
 import net.minecraft.inventory.InventoryCrafting;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
 
+import WayofTime.alchemicalWizardry.api.compress.CompressionHandler;
+import WayofTime.alchemicalWizardry.api.compress.CompressionRegistry;
+import WayofTime.alchemicalWizardry.common.spell.complex.effect.SpellHelper;
+
 public class AdvancedCompressionHandler extends CompressionHandler {
+
     @Override
     public ItemStack compressInventory(ItemStack[] inv, World world) {
         return test(inv, true, world);
@@ -28,7 +30,11 @@ public class AdvancedCompressionHandler extends CompressionHandler {
 
                     int needed = i * i;
                     int neededLeft = iterateThroughInventory(
-                            invStack, threshold + invStack.getMaxStackSize() - needed, inv, needed, false);
+                            invStack,
+                            threshold + invStack.getMaxStackSize() - needed,
+                            inv,
+                            needed,
+                            false);
                     if (neededLeft <= 0) {
                         iterateThroughInventory(invStack, 0, inv, needed, true);
                         return stacky;
@@ -50,10 +56,8 @@ public class AdvancedCompressionHandler extends CompressionHandler {
                 continue;
             }
 
-            if (invStack.isItemEqual(required)
-                    && (invStack.getTagCompound() == null
-                            ? required.getTagCompound() == null
-                            : invStack.getTagCompound().equals(required.getTagCompound()))) {
+            if (invStack.isItemEqual(required) && (invStack.getTagCompound() == null ? required.getTagCompound() == null
+                    : invStack.getTagCompound().equals(required.getTagCompound()))) {
                 int stackSize = invStack.stackSize;
                 int used = 0;
                 if (kept > 0) {
@@ -88,14 +92,12 @@ public class AdvancedCompressionHandler extends CompressionHandler {
         if (stack == null) {
             return false;
         }
-        InventoryCrafting inventory = new InventoryCrafting(
-                new Container() {
-                    public boolean canInteractWith(EntityPlayer player) {
-                        return false;
-                    }
-                },
-                2,
-                2);
+        InventoryCrafting inventory = new InventoryCrafting(new Container() {
+
+            public boolean canInteractWith(EntityPlayer player) {
+                return false;
+            }
+        }, 2, 2);
 
         inventory.setInventorySlotContents(0, stack);
 
@@ -122,14 +124,12 @@ public class AdvancedCompressionHandler extends CompressionHandler {
     }
 
     public static ItemStack getRecipe(ItemStack stack, World world, int gridSize) {
-        InventoryCrafting inventory = new InventoryCrafting(
-                new Container() {
-                    public boolean canInteractWith(EntityPlayer player) {
-                        return false;
-                    }
-                },
-                gridSize,
-                gridSize);
+        InventoryCrafting inventory = new InventoryCrafting(new Container() {
+
+            public boolean canInteractWith(EntityPlayer player) {
+                return false;
+            }
+        }, gridSize, gridSize);
         for (int i = 0; i < inventory.getSizeInventory(); i++) {
             inventory.setInventorySlotContents(i, stack);
         }

@@ -1,11 +1,12 @@
 package WayofTime.alchemicalWizardry.common.spell.complex.effect.impactEffects.earth;
 
-import WayofTime.alchemicalWizardry.AlchemicalWizardry;
-import WayofTime.alchemicalWizardry.api.spell.SelfSpellEffect;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.potion.Potion;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.world.World;
+
+import WayofTime.alchemicalWizardry.AlchemicalWizardry;
+import WayofTime.alchemicalWizardry.api.spell.SelfSpellEffect;
 
 public class SelfDefensiveEarth extends SelfSpellEffect {
 

@@ -1,11 +1,13 @@
 package WayofTime.alchemicalWizardry.common.tileEntity;
 
-import WayofTime.alchemicalWizardry.ModBlocks;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
 
+import WayofTime.alchemicalWizardry.ModBlocks;
+
 public class TESpectralBlock extends TileEntity {
+
     private int ticksRemaining;
 
     public TESpectralBlock() {
@@ -30,9 +32,9 @@ public class TESpectralBlock extends TileEntity {
     public void updateEntity() {
         super.updateEntity();
 
-        //        if (worldObj.isRemote)
+        // if (worldObj.isRemote)
         {
-            //            return;
+            // return;
         }
 
         this.ticksRemaining--;

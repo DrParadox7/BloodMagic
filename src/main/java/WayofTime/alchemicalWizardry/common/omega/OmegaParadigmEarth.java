@@ -1,8 +1,5 @@
 package WayofTime.alchemicalWizardry.common.omega;
 
-import WayofTime.alchemicalWizardry.AlchemicalWizardry;
-import WayofTime.alchemicalWizardry.api.alchemy.energy.ReagentRegistry;
-import WayofTime.alchemicalWizardry.common.items.armour.OmegaArmour;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
@@ -10,7 +7,12 @@ import net.minecraft.potion.Potion;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.world.World;
 
+import WayofTime.alchemicalWizardry.AlchemicalWizardry;
+import WayofTime.alchemicalWizardry.api.alchemy.energy.ReagentRegistry;
+import WayofTime.alchemicalWizardry.common.items.armour.OmegaArmour;
+
 public class OmegaParadigmEarth extends OmegaParadigm {
+
     public OmegaParadigmEarth(OmegaArmour helmet, OmegaArmour chestPiece, OmegaArmour leggings, OmegaArmour boots) {
         super(
                 ReagentRegistry.terraeReagent,
@@ -23,10 +25,10 @@ public class OmegaParadigmEarth extends OmegaParadigm {
 
     @Override
     public float getCostPerTickOfUse(EntityPlayer player) {
-        //		if(player.isBurning())
-        //		{
-        //			return 0.5f;
-        //		}
+        // if(player.isBurning())
+        // {
+        // return 0.5f;
+        // }
         return 1;
     }
 

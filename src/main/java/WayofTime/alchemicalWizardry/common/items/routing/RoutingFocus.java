@@ -1,11 +1,7 @@
 package WayofTime.alchemicalWizardry.common.items.routing;
 
-import WayofTime.alchemicalWizardry.AlchemicalWizardry;
-import WayofTime.alchemicalWizardry.api.Int3;
-import WayofTime.alchemicalWizardry.api.RoutingFocusLogic;
-import WayofTime.alchemicalWizardry.api.RoutingFocusPosAndFacing;
-import WayofTime.alchemicalWizardry.common.spell.complex.effect.SpellHelper;
 import java.util.List;
+
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.Item;
@@ -17,7 +13,14 @@ import net.minecraft.util.StatCollector;
 import net.minecraft.world.World;
 import net.minecraftforge.common.util.ForgeDirection;
 
+import WayofTime.alchemicalWizardry.AlchemicalWizardry;
+import WayofTime.alchemicalWizardry.api.Int3;
+import WayofTime.alchemicalWizardry.api.RoutingFocusLogic;
+import WayofTime.alchemicalWizardry.api.RoutingFocusPosAndFacing;
+import WayofTime.alchemicalWizardry.common.spell.complex.effect.SpellHelper;
+
 public class RoutingFocus extends Item {
+
     public RoutingFocus() {
         super();
         this.maxStackSize = 1;
@@ -30,25 +33,25 @@ public class RoutingFocus extends Item {
                 this.getSetDirection(itemStack));
     }
 
-    //	@Override
-    //    public ItemStack onItemRightClick(ItemStack itemStack, World world, EntityPlayer player)
-    //    {
-    //		this.cycleDirection(itemStack);
-    //		return itemStack;
-    //    }
+    // @Override
+    // public ItemStack onItemRightClick(ItemStack itemStack, World world, EntityPlayer player)
+    // {
+    // this.cycleDirection(itemStack);
+    // return itemStack;
+    // }
     //
-    //	public void cycleDirection(ItemStack itemStack)
-    //	{
-    //		ForgeDirection dir = this.getSetDirection(itemStack);
-    //		int direction = dir.ordinal();
-    //		direction++;
-    //		if(direction >= ForgeDirection.VALID_DIRECTIONS.length)
-    //		{
-    //			direction = 0;
-    //		}
+    // public void cycleDirection(ItemStack itemStack)
+    // {
+    // ForgeDirection dir = this.getSetDirection(itemStack);
+    // int direction = dir.ordinal();
+    // direction++;
+    // if(direction >= ForgeDirection.VALID_DIRECTIONS.length)
+    // {
+    // direction = 0;
+    // }
     //
-    //		this.setSetDirection(itemStack, ForgeDirection.getOrientation(direction));
-    //	}
+    // this.setSetDirection(itemStack, ForgeDirection.getOrientation(direction));
+    // }
 
     public ForgeDirection getSetDirection(ItemStack itemStack) {
         if (!itemStack.hasTagCompound()) {
@@ -77,10 +80,16 @@ public class RoutingFocus extends Item {
         if (!(par1ItemStack.getTagCompound() == null)) {
             NBTTagCompound itemTag = par1ItemStack.getTagCompound();
 
-            par3List.add(StatCollector.translateToLocal("tooltip.alchemy.coords") + " " + itemTag.getInteger("xCoord")
-                    + ", " + itemTag.getInteger("yCoord") + ", " + itemTag.getInteger("zCoord"));
-            par3List.add(StatCollector.translateToLocal("tooltip.alchemy.direction") + " "
-                    + this.getSetDirection(par1ItemStack));
+            par3List.add(
+                    StatCollector.translateToLocal("tooltip.alchemy.coords") + " "
+                            + itemTag.getInteger("xCoord")
+                            + ", "
+                            + itemTag.getInteger("yCoord")
+                            + ", "
+                            + itemTag.getInteger("zCoord"));
+            par3List.add(
+                    StatCollector.translateToLocal("tooltip.alchemy.direction") + " "
+                            + this.getSetDirection(par1ItemStack));
         }
     }
 
@@ -89,17 +98,8 @@ public class RoutingFocus extends Item {
     }
 
     @Override
-    public boolean onItemUseFirst(
-            ItemStack stack,
-            EntityPlayer player,
-            World world,
-            int x,
-            int y,
-            int z,
-            int side,
-            float hitX,
-            float hitY,
-            float hitZ) {
+    public boolean onItemUseFirst(ItemStack stack, EntityPlayer player, World world, int x, int y, int z, int side,
+            float hitX, float hitY, float hitZ) {
         if (world.isRemote) {
             return false;
         }
@@ -109,12 +109,13 @@ public class RoutingFocus extends Item {
             if (player.isSneaking()) {
                 if (this instanceof ILimitedRoutingFocus) {
                     int pastAmount = ((ILimitedRoutingFocus) this).getRoutingFocusLimit(stack);
-                    int amount = SpellHelper.getNumberOfItemsInInventory(
-                            (IInventory) tile, ForgeDirection.getOrientation(side));
+                    int amount = SpellHelper
+                            .getNumberOfItemsInInventory((IInventory) tile, ForgeDirection.getOrientation(side));
                     if (amount != pastAmount) {
                         ((ILimitedRoutingFocus) this).setRoutingFocusLimit(stack, amount);
-                        player.addChatComponentMessage(new ChatComponentText(
-                                StatCollector.translateToLocal("message.routerfocus.limit") + amount));
+                        player.addChatComponentMessage(
+                                new ChatComponentText(
+                                        StatCollector.translateToLocal("message.routerfocus.limit") + amount));
                     }
                 }
             }

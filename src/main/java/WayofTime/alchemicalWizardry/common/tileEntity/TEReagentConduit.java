@@ -1,17 +1,11 @@
 package WayofTime.alchemicalWizardry.common.tileEntity;
 
-import WayofTime.alchemicalWizardry.api.ColourAndCoords;
-import WayofTime.alchemicalWizardry.api.Int3;
-import WayofTime.alchemicalWizardry.api.alchemy.energy.*;
-import WayofTime.alchemicalWizardry.common.entity.projectile.EntityParticleBeam;
-import WayofTime.alchemicalWizardry.common.spell.complex.effect.SpellHelper;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
+
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTTagCompound;
@@ -24,7 +18,16 @@ import net.minecraft.world.World;
 import net.minecraftforge.common.util.Constants;
 import net.minecraftforge.common.util.ForgeDirection;
 
+import WayofTime.alchemicalWizardry.api.ColourAndCoords;
+import WayofTime.alchemicalWizardry.api.Int3;
+import WayofTime.alchemicalWizardry.api.alchemy.energy.*;
+import WayofTime.alchemicalWizardry.common.entity.projectile.EntityParticleBeam;
+import WayofTime.alchemicalWizardry.common.spell.complex.effect.SpellHelper;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
+
 public class TEReagentConduit extends TileSegmentedReagentHandler {
+
     public List<ColourAndCoords> destinationList; // These are offsets
     public Map<Reagent, List<Int3>> reagentTargetList;
     public Map<Reagent, Integer> reagentTankDesignationList;
@@ -281,8 +284,8 @@ public class TEReagentConduit extends TileSegmentedReagentHandler {
                             amountLeft -= amount;
                             totalTransfered += amount;
 
-                            ReagentStack stack =
-                                    this.drain(ForgeDirection.UNKNOWN, new ReagentStack(entry.getKey(), amount), true);
+                            ReagentStack stack = this
+                                    .drain(ForgeDirection.UNKNOWN, new ReagentStack(entry.getKey(), amount), true);
                             ((IReagentHandler) tile).fill(ForgeDirection.UNKNOWN, stack, true);
                         }
                     }
@@ -311,8 +314,9 @@ public class TEReagentConduit extends TileSegmentedReagentHandler {
         if (SpellHelper.canPlayerSeeAlchemy(player)) {
             for (ColourAndCoords colourSet : this.destinationList) {
                 if (!(worldObj.getTileEntity(
-                                xCoord + colourSet.xCoord, yCoord + colourSet.yCoord, zCoord + colourSet.zCoord)
-                        instanceof IReagentHandler)) {
+                        xCoord + colourSet.xCoord,
+                        yCoord + colourSet.yCoord,
+                        zCoord + colourSet.zCoord) instanceof IReagentHandler)) {
                     continue;
                 }
                 EntityParticleBeam beam = new EntityParticleBeam(worldObj, xCoord + 0.5, yCoord + 0.5, zCoord + 0.5);
@@ -357,14 +361,15 @@ public class TEReagentConduit extends TileSegmentedReagentHandler {
                     if (coord == null) {
                         continue;
                     }
-                    list.add(new ColourAndCoords(
-                            reagent.getColourRed(),
-                            reagent.getColourGreen(),
-                            reagent.getColourBlue(),
-                            reagent.getColourIntensity(),
-                            coord.xCoord,
-                            coord.yCoord,
-                            coord.zCoord));
+                    list.add(
+                            new ColourAndCoords(
+                                    reagent.getColourRed(),
+                                    reagent.getColourGreen(),
+                                    reagent.getColourBlue(),
+                                    reagent.getColourIntensity(),
+                                    coord.xCoord,
+                                    coord.yCoord,
+                                    coord.zCoord));
                 }
             }
         }
@@ -372,8 +377,8 @@ public class TEReagentConduit extends TileSegmentedReagentHandler {
         return list;
     }
 
-    public boolean addDestinationViaOffset(
-            int red, int green, int blue, int intensity, int xOffset, int yOffset, int zOffset) {
+    public boolean addDestinationViaOffset(int red, int green, int blue, int intensity, int xOffset, int yOffset,
+            int zOffset) {
         if (xOffset == 0 && yOffset == 0 && zOffset == 0) {
             return false;
         }
@@ -385,7 +390,13 @@ public class TEReagentConduit extends TileSegmentedReagentHandler {
 
     public boolean addDestinationViaActual(int red, int green, int blue, int intensity, int x, int y, int z) {
         return this.addDestinationViaOffset(
-                red, green, blue, intensity, x - this.xCoord, y - this.yCoord, z - this.zCoord);
+                red,
+                green,
+                blue,
+                intensity,
+                x - this.xCoord,
+                y - this.yCoord,
+                z - this.zCoord);
     }
 
     @Override

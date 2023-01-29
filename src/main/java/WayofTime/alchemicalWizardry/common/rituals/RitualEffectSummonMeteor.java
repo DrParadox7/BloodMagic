@@ -1,5 +1,15 @@
 package WayofTime.alchemicalWizardry.common.rituals;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import net.minecraft.entity.item.EntityItem;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.potion.Potion;
+import net.minecraft.potion.PotionEffect;
+import net.minecraft.util.AxisAlignedBB;
+import net.minecraft.world.World;
+
 import WayofTime.alchemicalWizardry.AlchemicalWizardry;
 import WayofTime.alchemicalWizardry.api.alchemy.energy.ReagentRegistry;
 import WayofTime.alchemicalWizardry.api.rituals.IMasterRitualStone;
@@ -9,16 +19,9 @@ import WayofTime.alchemicalWizardry.api.soulNetwork.SoulNetworkHandler;
 import WayofTime.alchemicalWizardry.common.entity.projectile.EntityMeteor;
 import WayofTime.alchemicalWizardry.common.spell.complex.effect.SpellHelper;
 import WayofTime.alchemicalWizardry.common.summoning.meteor.MeteorRegistry;
-import java.util.ArrayList;
-import java.util.List;
-import net.minecraft.entity.item.EntityItem;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.potion.Potion;
-import net.minecraft.potion.PotionEffect;
-import net.minecraft.util.AxisAlignedBB;
-import net.minecraft.world.World;
 
 public class RitualEffectSummonMeteor extends RitualEffect {
+
     @Override
     public void performEffect(IMasterRitualStone ritualStone) {
         String owner = ritualStone.getOwner();
@@ -34,7 +37,8 @@ public class RitualEffectSummonMeteor extends RitualEffect {
         }
 
         List<EntityItem> entities = world.getEntitiesWithinAABB(
-                EntityItem.class, AxisAlignedBB.getBoundingBox(x, y + 1, z, x + 1, y + 2, z + 1));
+                EntityItem.class,
+                AxisAlignedBB.getBoundingBox(x, y + 1, z, x + 1, y + 2, z + 1));
 
         if (entities == null) return;
 

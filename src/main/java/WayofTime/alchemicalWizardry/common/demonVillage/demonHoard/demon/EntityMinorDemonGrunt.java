@@ -1,19 +1,5 @@
 package WayofTime.alchemicalWizardry.common.demonVillage.demonHoard.demon;
 
-import WayofTime.alchemicalWizardry.AlchemicalWizardry;
-import WayofTime.alchemicalWizardry.ModItems;
-import WayofTime.alchemicalWizardry.api.Int3;
-import WayofTime.alchemicalWizardry.api.rituals.IMasterRitualStone;
-import WayofTime.alchemicalWizardry.api.rituals.LocalRitualStorage;
-import WayofTime.alchemicalWizardry.common.EntityAITargetAggroCloaking;
-import WayofTime.alchemicalWizardry.common.demonVillage.ai.EntityAIOccasionalRangedAttack;
-import WayofTime.alchemicalWizardry.common.demonVillage.ai.EntityDemonAIHurtByTarget;
-import WayofTime.alchemicalWizardry.common.demonVillage.ai.IOccasionalRangedAttackMob;
-import WayofTime.alchemicalWizardry.common.demonVillage.tileEntity.TEDemonPortal;
-import WayofTime.alchemicalWizardry.common.entity.mob.EntityDemon;
-import WayofTime.alchemicalWizardry.common.entity.projectile.HolyProjectile;
-import WayofTime.alchemicalWizardry.common.rituals.LocalStorageAlphaPact;
-import WayofTime.alchemicalWizardry.common.spell.complex.effect.SpellHelper;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.SharedMonsterAttributes;
@@ -37,11 +23,35 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.DamageSource;
 import net.minecraft.world.World;
 
+import WayofTime.alchemicalWizardry.AlchemicalWizardry;
+import WayofTime.alchemicalWizardry.ModItems;
+import WayofTime.alchemicalWizardry.api.Int3;
+import WayofTime.alchemicalWizardry.api.rituals.IMasterRitualStone;
+import WayofTime.alchemicalWizardry.api.rituals.LocalRitualStorage;
+import WayofTime.alchemicalWizardry.common.EntityAITargetAggroCloaking;
+import WayofTime.alchemicalWizardry.common.demonVillage.ai.EntityAIOccasionalRangedAttack;
+import WayofTime.alchemicalWizardry.common.demonVillage.ai.EntityDemonAIHurtByTarget;
+import WayofTime.alchemicalWizardry.common.demonVillage.ai.IOccasionalRangedAttackMob;
+import WayofTime.alchemicalWizardry.common.demonVillage.tileEntity.TEDemonPortal;
+import WayofTime.alchemicalWizardry.common.entity.mob.EntityDemon;
+import WayofTime.alchemicalWizardry.common.entity.projectile.HolyProjectile;
+import WayofTime.alchemicalWizardry.common.rituals.LocalStorageAlphaPact;
+import WayofTime.alchemicalWizardry.common.spell.complex.effect.SpellHelper;
+
 public class EntityMinorDemonGrunt extends EntityDemon implements IOccasionalRangedAttackMob, IHoardDemon {
-    private EntityAIOccasionalRangedAttack aiArrowAttack =
-            new EntityAIOccasionalRangedAttack(this, 1.0D, 40, 40, 15.0F, 5);
-    private EntityAIAttackOnCollide aiAttackOnCollide =
-            new EntityAIAttackOnCollide(this, EntityPlayer.class, 1.2D, false);
+
+    private EntityAIOccasionalRangedAttack aiArrowAttack = new EntityAIOccasionalRangedAttack(
+            this,
+            1.0D,
+            40,
+            40,
+            15.0F,
+            5);
+    private EntityAIAttackOnCollide aiAttackOnCollide = new EntityAIAttackOnCollide(
+            this,
+            EntityPlayer.class,
+            1.2D,
+            false);
 
     private boolean isAngry = true;
     private Int3 demonPortal;
@@ -150,11 +160,11 @@ public class EntityMinorDemonGrunt extends EntityDemon implements IOccasionalRan
     /**
      * main AI tick function, replaces updateEntityActionState
      */
-    //    @Override
-    //    protected void updateAITick()
-    //    {
-    //        this.dataWatcher.updateObject(18, Float.valueOf(this.getHealth()));
-    //    }
+    // @Override
+    // protected void updateAITick()
+    // {
+    // this.dataWatcher.updateObject(18, Float.valueOf(this.getHealth()));
+    // }
 
     /**
      * (abstract) Protected helper method to write subclass entity data to NBT.
@@ -227,8 +237,8 @@ public class EntityMinorDemonGrunt extends EntityDemon implements IOccasionalRan
     @Override
     public void onUpdate() {
         if (!this.enthralled) {
-            TileEntity tile = this.worldObj.getTileEntity(
-                    this.demonPortal.xCoord, this.demonPortal.yCoord, this.demonPortal.zCoord);
+            TileEntity tile = this.worldObj
+                    .getTileEntity(this.demonPortal.xCoord, this.demonPortal.yCoord, this.demonPortal.zCoord);
             if (tile instanceof TEDemonPortal) {
                 ((TEDemonPortal) tile).enthrallDemon(this);
                 this.enthralled = true;
@@ -291,8 +301,8 @@ public class EntityMinorDemonGrunt extends EntityDemon implements IOccasionalRan
                         this.heal((float) itemfood.func_150905_g(itemstack));
 
                         if (itemstack.stackSize <= 0) {
-                            par1EntityPlayer.inventory.setInventorySlotContents(
-                                    par1EntityPlayer.inventory.currentItem, null);
+                            par1EntityPlayer.inventory
+                                    .setInventorySlotContents(par1EntityPlayer.inventory.currentItem, null);
                         }
 
                         return true;
@@ -314,36 +324,36 @@ public class EntityMinorDemonGrunt extends EntityDemon implements IOccasionalRan
 
                 this.sendSittingMessageToPlayer(par1EntityPlayer, !this.isSitting());
             }
-        } else if (this.isTameable()
-                && itemstack != null
+        } else if (this.isTameable() && itemstack != null
                 && itemstack.getItem().equals(ModItems.weakBloodOrb)
                 && !this.isAngry()) {
-            if (!par1EntityPlayer.capabilities.isCreativeMode) {
-                --itemstack.stackSize;
-            }
+                    if (!par1EntityPlayer.capabilities.isCreativeMode) {
+                        --itemstack.stackSize;
+                    }
 
-            if (itemstack.stackSize <= 0) {
-                par1EntityPlayer.inventory.setInventorySlotContents(par1EntityPlayer.inventory.currentItem, null);
-            }
+                    if (itemstack.stackSize <= 0) {
+                        par1EntityPlayer.inventory
+                                .setInventorySlotContents(par1EntityPlayer.inventory.currentItem, null);
+                    }
 
-            if (!this.worldObj.isRemote) {
-                if (this.rand.nextInt(1) == 0) {
-                    this.setTamed(true);
-                    this.setPathToEntity(null);
-                    this.setAttackTarget(null);
-                    this.aiSit.setSitting(true);
-                    this.setHealth(maxTamedHealth);
-                    this.func_152115_b(par1EntityPlayer.getUniqueID().toString());
-                    this.playTameEffect(true);
-                    this.worldObj.setEntityState(this, (byte) 7);
-                } else {
-                    this.playTameEffect(false);
-                    this.worldObj.setEntityState(this, (byte) 6);
+                    if (!this.worldObj.isRemote) {
+                        if (this.rand.nextInt(1) == 0) {
+                            this.setTamed(true);
+                            this.setPathToEntity(null);
+                            this.setAttackTarget(null);
+                            this.aiSit.setSitting(true);
+                            this.setHealth(maxTamedHealth);
+                            this.func_152115_b(par1EntityPlayer.getUniqueID().toString());
+                            this.playTameEffect(true);
+                            this.worldObj.setEntityState(this, (byte) 7);
+                        } else {
+                            this.playTameEffect(false);
+                            this.worldObj.setEntityState(this, (byte) 6);
+                        }
+                    }
+
+                    return true;
                 }
-            }
-
-            return true;
-        }
 
         return super.interact(par1EntityPlayer);
     }
@@ -397,12 +407,11 @@ public class EntityMinorDemonGrunt extends EntityDemon implements IOccasionalRan
                 }
             }
 
-            return par1EntityLivingBase instanceof EntityPlayer
-                            && par2EntityLivingBase instanceof EntityPlayer
-                            && !((EntityPlayer) par2EntityLivingBase)
-                                    .canAttackPlayer((EntityPlayer) par1EntityLivingBase)
-                    ? false
-                    : !(par1EntityLivingBase instanceof EntityHorse) || !((EntityHorse) par1EntityLivingBase).isTame();
+            return par1EntityLivingBase instanceof EntityPlayer && par2EntityLivingBase instanceof EntityPlayer
+                    && !((EntityPlayer) par2EntityLivingBase).canAttackPlayer((EntityPlayer) par1EntityLivingBase)
+                            ? false
+                            : !(par1EntityLivingBase instanceof EntityHorse)
+                                    || !((EntityHorse) par1EntityLivingBase).isTame();
         } else {
             return false;
         }
@@ -455,8 +464,8 @@ public class EntityMinorDemonGrunt extends EntityDemon implements IOccasionalRan
     @Override
     public boolean isSamePortal(IHoardDemon demon) {
         Int3 position = demon.getPortalLocation();
-        TileEntity portal =
-                worldObj.getTileEntity(this.demonPortal.xCoord, this.demonPortal.yCoord, this.demonPortal.zCoord);
+        TileEntity portal = worldObj
+                .getTileEntity(this.demonPortal.xCoord, this.demonPortal.yCoord, this.demonPortal.zCoord);
 
         return portal instanceof TEDemonPortal
                 ? portal == worldObj.getTileEntity(position.xCoord, position.yCoord, position.zCoord)

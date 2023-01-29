@@ -1,6 +1,7 @@
 package WayofTime.alchemicalWizardry.api.spell;
 
 public abstract class SelfSpellEffect implements ISelfSpellEffect {
+
     protected int powerUpgrades;
     protected int potencyUpgrades;
     protected int costUpgrades;

@@ -1,11 +1,11 @@
 package WayofTime.alchemicalWizardry.common.compress;
 
-import WayofTime.alchemicalWizardry.AlchemicalWizardry;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
+
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.Container;
 import net.minecraft.inventory.InventoryCrafting;
@@ -19,9 +19,11 @@ import net.minecraftforge.oredict.OreDictionary;
 import net.minecraftforge.oredict.ShapedOreRecipe;
 import net.minecraftforge.oredict.ShapelessOreRecipe;
 
+import WayofTime.alchemicalWizardry.AlchemicalWizardry;
+
 public class StorageBlockCraftingRecipeAssimilator {
 
-    public static String[] problemMods = {"BiblioWoodsForestry"};
+    public static String[] problemMods = { "BiblioWoodsForestry" };
 
     public List<IRecipe> getPackingRecipes() {
         // grab all recipes potentially suitable for packing or unpacking
@@ -58,15 +60,15 @@ public class StorageBlockCraftingRecipeAssimilator {
             ItemStack unpacked = recipeUnpack.getRecipeOutput();
             InventoryCrafting inventory = null;
 
-            for (Iterator<PackingRecipe> it = packingRecipes.iterator(); it.hasNext(); ) {
+            for (Iterator<PackingRecipe> it = packingRecipes.iterator(); it.hasNext();) {
                 PackingRecipe recipePack = it.next();
 
                 // check if the packing recipe accepts the unpacking recipe's output
 
                 boolean matched = false;
 
-                if (recipePack.possibleInputs
-                        != null) { // the recipe could be parsed, use its inputs directly since that's faster
+                if (recipePack.possibleInputs != null) { // the recipe could be parsed, use its inputs directly since
+                                                         // that's faster
                     // verify recipe size
 
                     if (recipePack.inputCount != unpacked.stackSize) continue;
@@ -111,8 +113,8 @@ public class StorageBlockCraftingRecipeAssimilator {
 
                     if (recipeUnpack.matches(inventoryUnpack, world)) {
                         ret.add(recipePack.recipe);
-                        AlchemicalWizardry.logger.info(
-                                "Adding the following recipe to the Compression Handler: " + packOutput);
+                        AlchemicalWizardry.logger
+                                .info("Adding the following recipe to the Compression Handler: " + packOutput);
                         it.remove();
                     }
                 }
@@ -129,6 +131,7 @@ public class StorageBlockCraftingRecipeAssimilator {
 
     private Container makeDummyContainer() {
         return new Container() {
+
             @Override
             public boolean canInteractWith(EntityPlayer p_75145_1_) {
                 return true;
@@ -201,7 +204,7 @@ public class StorageBlockCraftingRecipeAssimilator {
                 continue;
             }
 
-            for (Iterator<ItemStack> it = options.iterator(); it.hasNext(); ) {
+            for (Iterator<ItemStack> it = options.iterator(); it.hasNext();) {
                 ItemStack stackReq = it.next();
                 boolean found = false;
 
@@ -234,8 +237,8 @@ public class StorageBlockCraftingRecipeAssimilator {
             return dmgA == dmgB || dmgA == OreDictionary.WILDCARD_VALUE || dmgB == OreDictionary.WILDCARD_VALUE;
         } catch (NullPointerException e) {
 
-            AlchemicalWizardry.logger.error(
-                    "A mod in this instance has registered an item with a null input. Known problem mods are:");
+            AlchemicalWizardry.logger
+                    .error("A mod in this instance has registered an item with a null input. Known problem mods are:");
 
             String err = "";
             for (String problem : problemMods) err += (err.length() > 0 ? ", " : "") + problem;
@@ -246,6 +249,7 @@ public class StorageBlockCraftingRecipeAssimilator {
     }
 
     private static class PackingRecipe {
+
         PackingRecipe(IRecipe recipe, List<ItemStack> possibleInputs, int inputCount) {
             this.recipe = recipe;
             this.possibleInputs = possibleInputs;

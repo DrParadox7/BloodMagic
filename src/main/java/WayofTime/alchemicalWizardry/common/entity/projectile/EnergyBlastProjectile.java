@@ -1,11 +1,8 @@
 package WayofTime.alchemicalWizardry.common.entity.projectile;
 
-import WayofTime.alchemicalWizardry.common.spell.complex.effect.SpellHelper;
-import cpw.mods.fml.common.registry.IThrowableEntity;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
 import java.util.Iterator;
 import java.util.List;
+
 import net.minecraft.block.Block;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
@@ -21,8 +18,14 @@ import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.util.Vec3;
 import net.minecraft.world.World;
 
+import WayofTime.alchemicalWizardry.common.spell.complex.effect.SpellHelper;
+import cpw.mods.fml.common.registry.IThrowableEntity;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
+
 // Shamelessly ripped off from x3n0ph0b3
 public class EnergyBlastProjectile extends Entity implements IProjectile, IThrowableEntity {
+
     protected int xTile = -1;
     protected int yTile = -1;
     protected int zTile = -1;
@@ -80,16 +83,8 @@ public class EnergyBlastProjectile extends Entity implements IProjectile, IThrow
         this.maxTicksInAir = 600;
     }
 
-    public EnergyBlastProjectile(
-            World par1World,
-            EntityLivingBase par2EntityPlayer,
-            int damage,
-            int maxTicksInAir,
-            double posX,
-            double posY,
-            double posZ,
-            float rotationYaw,
-            float rotationPitch) {
+    public EnergyBlastProjectile(World par1World, EntityLivingBase par2EntityPlayer, int damage, int maxTicksInAir,
+            double posX, double posY, double posZ, float rotationYaw, float rotationPitch) {
         super(par1World);
         shootingEntity = par2EntityPlayer;
         float par3 = 0.8F;
@@ -110,14 +105,8 @@ public class EnergyBlastProjectile extends Entity implements IProjectile, IThrow
         this.maxTicksInAir = maxTicksInAir;
     }
 
-    public EnergyBlastProjectile(
-            World par1World,
-            EntityLivingBase par2EntityLivingBase,
-            EntityLivingBase par3EntityLivingBase,
-            float par4,
-            float par5,
-            int damage,
-            int maxTicksInAir) {
+    public EnergyBlastProjectile(World par1World, EntityLivingBase par2EntityLivingBase,
+            EntityLivingBase par3EntityLivingBase, float par4, float par5, int damage, int maxTicksInAir) {
         super(par1World);
         this.renderDistanceWeight = 10.0D;
         this.shootingEntity = par2EntityLivingBase;
@@ -133,7 +122,11 @@ public class EnergyBlastProjectile extends Entity implements IProjectile, IThrow
             double d4 = d0 / d3;
             double d5 = d2 / d3;
             this.setLocationAndAngles(
-                    par2EntityLivingBase.posX + d4, this.posY, par2EntityLivingBase.posZ + d5, f2, f3);
+                    par2EntityLivingBase.posX + d4,
+                    this.posY,
+                    par2EntityLivingBase.posZ + d5,
+                    f2,
+                    f3);
             this.yOffset = 0.0F;
             float f4 = (float) d3 * 0.2F;
             this.setThrowableHeading(d0, d1, d2, par4, par5);
@@ -149,8 +142,7 @@ public class EnergyBlastProjectile extends Entity implements IProjectile, IThrow
     }
 
     /**
-     * Similar to setArrowHeading, it's point the throwable entity to a x, y, z
-     * direction.
+     * Similar to setArrowHeading, it's point the throwable entity to a x, y, z direction.
      */
     @Override
     public void setThrowableHeading(double var1, double var3, double var5, float var7, float var8) {
@@ -279,7 +271,8 @@ public class EnergyBlastProjectile extends Entity implements IProjectile, IThrow
 
             Entity var5 = null;
             List var6 = worldObj.getEntitiesWithinAABBExcludingEntity(
-                    this, boundingBox.addCoord(motionX, motionY, motionZ).expand(1.0D, 1.0D, 1.0D));
+                    this,
+                    boundingBox.addCoord(motionX, motionY, motionZ).expand(1.0D, 1.0D, 1.0D));
             double var7 = 0.0D;
             Iterator var9 = var6.iterator();
             float var11;
@@ -368,8 +361,8 @@ public class EnergyBlastProjectile extends Entity implements IProjectile, IThrow
     }
 
     /**
-     * returns if this entity triggers Block.onEntityWalking on the blocks they
-     * walk on. used for spiders and wolves to prevent them from trampling crops
+     * returns if this entity triggers Block.onEntityWalking on the blocks they walk on. used for spiders and wolves to
+     * prevent them from trampling crops
      */
     @Override
     protected boolean canTriggerWalking() {
@@ -396,8 +389,7 @@ public class EnergyBlastProjectile extends Entity implements IProjectile, IThrow
     }
 
     /**
-     * Whether the arrow has a stream of critical hit particles flying behind
-     * it.
+     * Whether the arrow has a stream of critical hit particles flying behind it.
      */
     public void setIsCritical(boolean par1) {
         byte var2 = dataWatcher.getWatchableObjectByte(16);
@@ -410,8 +402,7 @@ public class EnergyBlastProjectile extends Entity implements IProjectile, IThrow
     }
 
     /**
-     * Whether the arrow has a stream of critical hit particles flying behind
-     * it.
+     * Whether the arrow has a stream of critical hit particles flying behind it.
      */
     public boolean getIsCritical() {
         byte var1 = dataWatcher.getWatchableObjectByte(16);

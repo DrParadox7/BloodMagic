@@ -1,18 +1,11 @@
 package WayofTime.alchemicalWizardry.common.rituals;
 
-import WayofTime.alchemicalWizardry.AlchemicalWizardry;
-import WayofTime.alchemicalWizardry.api.Int3;
-import WayofTime.alchemicalWizardry.api.alchemy.energy.ReagentRegistry;
-import WayofTime.alchemicalWizardry.api.rituals.IMasterRitualStone;
-import WayofTime.alchemicalWizardry.api.rituals.RitualComponent;
-import WayofTime.alchemicalWizardry.api.rituals.RitualEffect;
-import WayofTime.alchemicalWizardry.api.soulNetwork.SoulNetworkHandler;
-import WayofTime.alchemicalWizardry.common.spell.complex.effect.SpellHelper;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
+
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.Container;
 import net.minecraft.inventory.IInventory;
@@ -26,14 +19,24 @@ import net.minecraft.world.World;
 import net.minecraftforge.common.util.ForgeDirection;
 import net.minecraftforge.oredict.OreDictionary;
 
+import WayofTime.alchemicalWizardry.AlchemicalWizardry;
+import WayofTime.alchemicalWizardry.api.Int3;
+import WayofTime.alchemicalWizardry.api.alchemy.energy.ReagentRegistry;
+import WayofTime.alchemicalWizardry.api.rituals.IMasterRitualStone;
+import WayofTime.alchemicalWizardry.api.rituals.RitualComponent;
+import WayofTime.alchemicalWizardry.api.rituals.RitualEffect;
+import WayofTime.alchemicalWizardry.api.soulNetwork.SoulNetworkHandler;
+import WayofTime.alchemicalWizardry.common.spell.complex.effect.SpellHelper;
+
 public class RitualEffectCrafting extends RitualEffect {
+
     public static final boolean limitToSingleStack = true;
     public static final int potentiaDrain = 2;
     public static final int virtusDrain = 2;
 
     @Override
     public void performEffect(IMasterRitualStone ritualStone) {
-        //    	long startTime = System.nanoTime();
+        // long startTime = System.nanoTime();
 
         String owner = ritualStone.getOwner();
 
@@ -72,14 +75,12 @@ public class RitualEffectCrafting extends RitualEffect {
             boolean canContinue = false;
 
             ItemStack[] recipe = new ItemStack[9];
-            InventoryCrafting inventory = new InventoryCrafting(
-                    new Container() {
-                        public boolean canInteractWith(EntityPlayer player) {
-                            return false;
-                        }
-                    },
-                    3,
-                    3);
+            InventoryCrafting inventory = new InventoryCrafting(new Container() {
+
+                public boolean canInteractWith(EntityPlayer player) {
+                    return false;
+                }
+            }, 3, 3);
 
             for (int i = -1; i <= 1; i++) {
                 for (int j = -1; j <= 1; j++) {
@@ -89,9 +90,9 @@ public class RitualEffectCrafting extends RitualEffect {
                     TileEntity inv = world.getTileEntity(x + pos.xCoord, y + pos.yCoord, z + pos.zCoord);
                     if (inv instanceof IInventory) {
                         if (((IInventory) inv).getSizeInventory() <= slotDesignation
-                                || !((IInventory) inv)
-                                        .isItemValidForSlot(
-                                                slotDesignation, ((IInventory) inv).getStackInSlot(slotDesignation))) {
+                                || !((IInventory) inv).isItemValidForSlot(
+                                        slotDesignation,
+                                        ((IInventory) inv).getStackInSlot(slotDesignation))) {
                             continue;
                         } else {
                             ItemStack invStack = ((IInventory) inv).getStackInSlot(slotDesignation);
@@ -115,8 +116,8 @@ public class RitualEffectCrafting extends RitualEffect {
             if (returnStack == null) {
                 tag.setBoolean("didLastCraftFail", true);
             } else {
-                boolean hasVirtus =
-                        this.canDrainReagent(ritualStone, ReagentRegistry.virtusReagent, virtusDrain, false);
+                boolean hasVirtus = this
+                        .canDrainReagent(ritualStone, ReagentRegistry.virtusReagent, virtusDrain, false);
                 boolean addOutputToInputs = hasVirtus;
 
                 IInventory outputInv = null;
@@ -256,13 +257,13 @@ public class RitualEffectCrafting extends RitualEffect {
                                 if (this.areItemsEqualForCrafting(recipeStack, invItem)) {
                                     // TODO
                                     inventory.setInventorySlotContents(n, invItem);
-                                    //                					ItemStack returnedStack =
+                                    // ItemStack returnedStack =
                                     // CraftingManager.getInstance().findMatchingRecipe(inventory, world);
-                                    //                					if(returnedStack == null || returnedStack.getItem() == null
+                                    // if(returnedStack == null || returnedStack.getItem() == null
                                     // || returnedStack.getItem() != returnStack.getItem())
-                                    //                					{
-                                    //                						continue;
-                                    //                					}
+                                    // {
+                                    // continue;
+                                    // }
                                     Map<Integer, Integer> slotMap = syphonMap.get(i);
                                     if (slotMap == null) {
                                         slotMap = new HashMap();
@@ -329,10 +330,10 @@ public class RitualEffectCrafting extends RitualEffect {
                     world.markBlockForUpdate(x + 2, y - 1, z);
                     world.markBlockForUpdate(x - 2, y - 1, z);
 
-                    //                    long endTime = System.nanoTime();
+                    // long endTime = System.nanoTime();
                     //
-                    //                	long duration = (endTime - startTime);  //divide by 1000000 to get milliseconds.
-                    //                	System.out.println("(Total) method time in ms: " + (float)(duration)/1000000.0);
+                    // long duration = (endTime - startTime); //divide by 1000000 to get milliseconds.
+                    // System.out.println("(Total) method time in ms: " + (float)(duration)/1000000.0);
                 }
             }
         }
@@ -366,19 +367,18 @@ public class RitualEffectCrafting extends RitualEffect {
             return false;
         }
         //
-        //        if (stack1.isItemStackDamageable() ^ stack2.isItemStackDamageable())
-        //        {
-        //            return false;
-        //        }
+        // if (stack1.isItemStackDamageable() ^ stack2.isItemStackDamageable())
+        // {
+        // return false;
+        // }
 
         return stack1.getItem() == stack2.getItem() && !stack1.getItem().getHasSubtypes()
                 || stack1.getItemDamage() == stack2.getItemDamage();
     }
 
     public boolean areItemStacksEqualWithWildcard(ItemStack recipeStack, ItemStack comparedStack) {
-        return recipeStack.isItemEqual(comparedStack)
-                || (recipeStack.getItemDamage() == OreDictionary.WILDCARD_VALUE
-                        && recipeStack.getItem() == comparedStack.getItem());
+        return recipeStack.isItemEqual(comparedStack) || (recipeStack.getItemDamage() == OreDictionary.WILDCARD_VALUE
+                && recipeStack.getItem() == comparedStack.getItem());
     }
 
     public Int3 getSlotPositionForDirection(int slot, int direction) {

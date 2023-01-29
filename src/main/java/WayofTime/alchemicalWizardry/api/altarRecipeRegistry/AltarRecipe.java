@@ -2,11 +2,13 @@ package WayofTime.alchemicalWizardry.api.altarRecipeRegistry;
 
 import java.util.ArrayList;
 import java.util.Set;
+
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTBase;
 import net.minecraft.nbt.NBTTagCompound;
 
 public class AltarRecipe {
+
     public int minTier;
     public int liquidRequired;
     public boolean canBeFilled; // Tells the system that the item is an orb
@@ -17,26 +19,13 @@ public class AltarRecipe {
     public boolean useTag;
     public ArrayList<Object> input = new ArrayList<Object>();
 
-    public AltarRecipe(
-            ItemStack result,
-            ItemStack requiredItem,
-            int minTier,
-            int liquidRequired,
-            int consumptionRate,
-            int drainRate,
-            boolean canBeFilled) {
+    public AltarRecipe(ItemStack result, ItemStack requiredItem, int minTier, int liquidRequired, int consumptionRate,
+            int drainRate, boolean canBeFilled) {
         this(result, requiredItem, minTier, liquidRequired, consumptionRate, drainRate, canBeFilled, false);
     }
 
-    public AltarRecipe(
-            ItemStack result,
-            ItemStack requiredItem,
-            int minTier,
-            int liquidRequired,
-            int consumptionRate,
-            int drainRate,
-            boolean canBeFilled,
-            boolean useTag) {
+    public AltarRecipe(ItemStack result, ItemStack requiredItem, int minTier, int liquidRequired, int consumptionRate,
+            int drainRate, boolean canBeFilled, boolean useTag) {
         this.result = result;
         this.requiredItem = requiredItem;
         this.minTier = minTier;
@@ -60,8 +49,7 @@ public class AltarRecipe {
             return false;
         }
 
-        return tierCheck >= minTier
-                && this.requiredItem.isItemEqual(comparedStack)
+        return tierCheck >= minTier && this.requiredItem.isItemEqual(comparedStack)
                 && (this.useTag ? this.areRequiredTagsEqual(comparedStack) : true);
     }
 

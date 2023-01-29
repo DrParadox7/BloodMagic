@@ -1,15 +1,8 @@
 package WayofTime.alchemicalWizardry.common.rituals;
 
-import WayofTime.alchemicalWizardry.AlchemicalWizardry;
-import WayofTime.alchemicalWizardry.api.alchemy.energy.ReagentRegistry;
-import WayofTime.alchemicalWizardry.api.rituals.IMasterRitualStone;
-import WayofTime.alchemicalWizardry.api.rituals.RitualComponent;
-import WayofTime.alchemicalWizardry.api.rituals.RitualEffect;
-import WayofTime.alchemicalWizardry.api.soulNetwork.SoulNetworkHandler;
-import WayofTime.alchemicalWizardry.common.block.BlockSpectralContainer;
-import WayofTime.alchemicalWizardry.common.spell.complex.effect.SpellHelper;
 import java.util.ArrayList;
 import java.util.List;
+
 import net.minecraft.block.Block;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
@@ -22,7 +15,17 @@ import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.IFluidHandler;
 
+import WayofTime.alchemicalWizardry.AlchemicalWizardry;
+import WayofTime.alchemicalWizardry.api.alchemy.energy.ReagentRegistry;
+import WayofTime.alchemicalWizardry.api.rituals.IMasterRitualStone;
+import WayofTime.alchemicalWizardry.api.rituals.RitualComponent;
+import WayofTime.alchemicalWizardry.api.rituals.RitualEffect;
+import WayofTime.alchemicalWizardry.api.soulNetwork.SoulNetworkHandler;
+import WayofTime.alchemicalWizardry.common.block.BlockSpectralContainer;
+import WayofTime.alchemicalWizardry.common.spell.complex.effect.SpellHelper;
+
 public class RitualEffectLava extends RitualEffect {
+
     public static final int sanctusDrain = 20;
     public static final int offensaDrain = 50;
     public static final int reductusDrain = 5;
@@ -41,13 +44,13 @@ public class RitualEffectLava extends RitualEffect {
 
         if (this.canDrainReagent(ritualStone, ReagentRegistry.offensaReagent, offensaDrain, false)
                 && SoulNetworkHandler.canSyphonFromOnlyNetwork(owner, fireFuseCost)) {
-            boolean hasReductus =
-                    this.canDrainReagent(ritualStone, ReagentRegistry.reductusReagent, reductusDrain, false);
+            boolean hasReductus = this
+                    .canDrainReagent(ritualStone, ReagentRegistry.reductusReagent, reductusDrain, false);
             boolean drainReductus = world.getWorldTime() % 100 == 0;
 
             int range = 5;
-            List<EntityLivingBase> entityList =
-                    SpellHelper.getLivingEntitiesInRange(world, x + 0.5, y + 0.5, z + 0.5, range, range);
+            List<EntityLivingBase> entityList = SpellHelper
+                    .getLivingEntitiesInRange(world, x + 0.5, y + 0.5, z + 0.5, range, range);
             EntityPlayer player = SpellHelper.getPlayerForUsername(owner);
 
             for (EntityLivingBase entity : entityList) {
@@ -55,9 +58,8 @@ public class RitualEffectLava extends RitualEffect {
                         && this.canDrainReagent(ritualStone, ReagentRegistry.offensaReagent, offensaDrain, false)
                         && SoulNetworkHandler.canSyphonFromOnlyNetwork(owner, fireFuseCost)
                         && !entity.isPotionActive(AlchemicalWizardry.customPotionFireFuse)) {
-                    if (hasReductus
-                            && this.canDrainReagent(
-                                    ritualStone, ReagentRegistry.reductusReagent, reductusDrain, false)) {
+                    if (hasReductus && this
+                            .canDrainReagent(ritualStone, ReagentRegistry.reductusReagent, reductusDrain, false)) {
                         if (entity instanceof EntityPlayer) {
                             if (drainReductus) {
                                 this.canDrainReagent(ritualStone, ReagentRegistry.reductusReagent, reductusDrain, true);
@@ -81,8 +83,8 @@ public class RitualEffectLava extends RitualEffect {
                 SoulNetworkHandler.causeNauseaToPlayer(owner);
             } else {
                 for (int i = 0; i < 10; i++) {
-                    SpellHelper.sendIndexedParticleToAllAround(
-                            world, x, y, z, 20, world.provider.dimensionId, 3, x, y, z);
+                    SpellHelper
+                            .sendIndexedParticleToAllAround(world, x, y, z, 20, world.provider.dimensionId, 3, x, y, z);
                 }
 
                 world.setBlock(x, y + 1, z, Blocks.lava, 0, 3);

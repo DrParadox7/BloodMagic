@@ -1,13 +1,15 @@
 package WayofTime.alchemicalWizardry.common.tileEntity.container;
 
-import WayofTime.alchemicalWizardry.common.tileEntity.TEAltar;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.inventory.Container;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
 
+import WayofTime.alchemicalWizardry.common.tileEntity.TEAltar;
+
 public class ContainerAltar extends Container {
+
     protected TEAltar tileEntity;
 
     public ContainerAltar(InventoryPlayer inventoryPlayer, TEAltar te) {

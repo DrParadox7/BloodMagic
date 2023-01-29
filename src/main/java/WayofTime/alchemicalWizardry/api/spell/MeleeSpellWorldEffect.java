@@ -4,6 +4,7 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.world.World;
 
 public abstract class MeleeSpellWorldEffect implements IMeleeSpellWorldEffect {
+
     protected int powerUpgrades;
     protected int potencyUpgrades;
     protected int costUpgrades;

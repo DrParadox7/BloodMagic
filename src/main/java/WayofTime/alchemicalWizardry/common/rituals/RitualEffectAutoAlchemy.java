@@ -1,5 +1,16 @@
 package WayofTime.alchemicalWizardry.common.rituals;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import net.minecraft.inventory.IInventory;
+import net.minecraft.inventory.ISidedInventory;
+import net.minecraft.item.ItemStack;
+import net.minecraft.tileentity.TileEntity;
+import net.minecraft.world.World;
+import net.minecraftforge.common.util.ForgeDirection;
+import net.minecraftforge.oredict.OreDictionary;
+
 import WayofTime.alchemicalWizardry.AlchemicalWizardry;
 import WayofTime.alchemicalWizardry.api.alchemy.AlchemyRecipeRegistry;
 import WayofTime.alchemicalWizardry.api.alchemy.energy.ReagentRegistry;
@@ -9,17 +20,9 @@ import WayofTime.alchemicalWizardry.api.rituals.RitualEffect;
 import WayofTime.alchemicalWizardry.api.soulNetwork.SoulNetworkHandler;
 import WayofTime.alchemicalWizardry.api.tile.IBloodAltar;
 import WayofTime.alchemicalWizardry.common.tileEntity.TEWritingTable;
-import java.util.ArrayList;
-import java.util.List;
-import net.minecraft.inventory.IInventory;
-import net.minecraft.inventory.ISidedInventory;
-import net.minecraft.item.ItemStack;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.world.World;
-import net.minecraftforge.common.util.ForgeDirection;
-import net.minecraftforge.oredict.OreDictionary;
 
 public class RitualEffectAutoAlchemy extends RitualEffect {
+
     public static final boolean fillToOne = true;
 
     public static final int potentiaDrain = 2;
@@ -37,8 +40,8 @@ public class RitualEffectAutoAlchemy extends RitualEffect {
         if (currentEssence < this.getCostPerRefresh() * 6) {
             SoulNetworkHandler.causeNauseaToPlayer(owner);
         } else {
-            boolean hasPotentia =
-                    this.canDrainReagent(ritualStone, ReagentRegistry.potentiaReagent, potentiaDrain, false);
+            boolean hasPotentia = this
+                    .canDrainReagent(ritualStone, ReagentRegistry.potentiaReagent, potentiaDrain, false);
 
             int flag = 0;
 
@@ -139,21 +142,21 @@ public class RitualEffectAutoAlchemy extends RitualEffect {
                                 outputInv.setInventorySlotContents(i, copyStack);
                                 flag++;
                                 break;
-                            } else if (curStack.isItemEqual(outputStack)
-                                    && curStack.stackSize < curStack.getMaxStackSize()
-                                    && ItemStack.areItemStackTagsEqual(outputStack, curStack)) {
-                                outputStack.stackSize--;
-                                if (outputStack.stackSize <= 0) {
-                                    alchemyEntity.setInventorySlotContents(6, null);
-                                } else {
-                                    alchemyEntity.setInventorySlotContents(6, outputStack);
-                                }
+                            } else
+                                if (curStack.isItemEqual(outputStack) && curStack.stackSize < curStack.getMaxStackSize()
+                                        && ItemStack.areItemStackTagsEqual(outputStack, curStack)) {
+                                            outputStack.stackSize--;
+                                            if (outputStack.stackSize <= 0) {
+                                                alchemyEntity.setInventorySlotContents(6, null);
+                                            } else {
+                                                alchemyEntity.setInventorySlotContents(6, outputStack);
+                                            }
 
-                                curStack.stackSize++;
-                                outputInv.setInventorySlotContents(i, curStack);
-                                flag++;
-                                break;
-                            }
+                                            curStack.stackSize++;
+                                            outputInv.setInventorySlotContents(i, curStack);
+                                            flag++;
+                                            break;
+                                        }
                         }
                     }
 
@@ -187,18 +190,18 @@ public class RitualEffectAutoAlchemy extends RitualEffect {
                                 } else if (curStack.isItemEqual(alchStack)
                                         && curStack.stackSize < curStack.getMaxStackSize()
                                         && ItemStack.areItemStackTagsEqual(alchStack, curStack)) {
-                                    alchStack.stackSize--;
-                                    if (alchStack.stackSize <= 0) {
-                                        alchemyEntity.setInventorySlotContents(i + 1, null);
-                                    } else {
-                                        alchemyEntity.setInventorySlotContents(i + 1, alchStack);
-                                    }
+                                            alchStack.stackSize--;
+                                            if (alchStack.stackSize <= 0) {
+                                                alchemyEntity.setInventorySlotContents(i + 1, null);
+                                            } else {
+                                                alchemyEntity.setInventorySlotContents(i + 1, alchStack);
+                                            }
 
-                                    curStack.stackSize++;
-                                    outputInv.setInventorySlotContents(j, curStack);
-                                    flag++;
-                                    break;
-                                }
+                                            curStack.stackSize++;
+                                            outputInv.setInventorySlotContents(j, curStack);
+                                            flag++;
+                                            break;
+                                        }
                             }
                             continue;
                         }
@@ -214,9 +217,8 @@ public class RitualEffectAutoAlchemy extends RitualEffect {
                             }
                             ItemStack alchStack = alchemyEntity.getStackInSlot(i + 1);
 
-                            if (alchStack != null
-                                    && ((!areItemStacksEqualWithWildcard(recItem, alchStack))
-                                            || alchStack.stackSize >= (fillToOne ? 1 : alchStack.getMaxStackSize()))) {
+                            if (alchStack != null && ((!areItemStacksEqualWithWildcard(recItem, alchStack))
+                                    || alchStack.stackSize >= (fillToOne ? 1 : alchStack.getMaxStackSize()))) {
                                 continue;
                             }
 
@@ -227,9 +229,8 @@ public class RitualEffectAutoAlchemy extends RitualEffect {
                                 }
 
                                 if (!inputInv1.isItemValidForSlot(j, curItem)
-                                        || (inputInv1 instanceof ISidedInventory
-                                                && !((ISidedInventory) inputInv1)
-                                                        .canExtractItem(j, curItem, ForgeDirection.DOWN.ordinal()))) {
+                                        || (inputInv1 instanceof ISidedInventory && !((ISidedInventory) inputInv1)
+                                                .canExtractItem(j, curItem, ForgeDirection.DOWN.ordinal()))) {
                                     continue;
                                 }
 
@@ -274,9 +275,8 @@ public class RitualEffectAutoAlchemy extends RitualEffect {
                                 continue;
                             }
                             ItemStack alchStack = alchemyEntity.getStackInSlot(i + 1);
-                            if (alchStack != null
-                                    && ((!areItemStacksEqualWithWildcard(recItem, alchStack))
-                                            || alchStack.stackSize >= (fillToOne ? 1 : alchStack.getMaxStackSize()))) {
+                            if (alchStack != null && ((!areItemStacksEqualWithWildcard(recItem, alchStack))
+                                    || alchStack.stackSize >= (fillToOne ? 1 : alchStack.getMaxStackSize()))) {
                                 continue;
                             }
 
@@ -360,8 +360,7 @@ public class RitualEffectAutoAlchemy extends RitualEffect {
     }
 
     public boolean areItemStacksEqualWithWildcard(ItemStack recipeStack, ItemStack comparedStack) {
-        return recipeStack.isItemEqual(comparedStack)
-                || (recipeStack.getItemDamage() == OreDictionary.WILDCARD_VALUE
-                        && recipeStack.getItem() == comparedStack.getItem());
+        return recipeStack.isItemEqual(comparedStack) || (recipeStack.getItemDamage() == OreDictionary.WILDCARD_VALUE
+                && recipeStack.getItem() == comparedStack.getItem());
     }
 }

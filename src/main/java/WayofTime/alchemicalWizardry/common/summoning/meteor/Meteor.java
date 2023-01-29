@@ -1,16 +1,19 @@
 package WayofTime.alchemicalWizardry.common.summoning.meteor;
 
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-import cpw.mods.fml.common.registry.GameRegistry;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
+
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import cpw.mods.fml.common.registry.GameRegistry;
+
 public class Meteor {
+
     public String[] ores;
     public int radius;
     public int cost;
@@ -28,7 +31,10 @@ public class Meteor {
                     BufferedReader br = new BufferedReader(new FileReader(f));
                     Meteor m = gson.fromJson(br, Meteor.class);
                     MeteorRegistry.registerMeteorParadigm(
-                            findItemStack(m.focusModId, m.focusName, m.focusMeta), m.ores, m.radius, m.cost);
+                            findItemStack(m.focusModId, m.focusName, m.focusMeta),
+                            m.ores,
+                            m.radius,
+                            m.cost);
                 }
             } catch (FileNotFoundException e) {
                 e.printStackTrace();

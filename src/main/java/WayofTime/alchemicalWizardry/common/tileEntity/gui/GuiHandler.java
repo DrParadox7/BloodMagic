@@ -1,5 +1,9 @@
 package WayofTime.alchemicalWizardry.common.tileEntity.gui;
 
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.tileentity.TileEntity;
+import net.minecraft.world.World;
+
 import WayofTime.alchemicalWizardry.common.items.sigil.holding.ContainerHolding;
 import WayofTime.alchemicalWizardry.common.items.sigil.holding.GuiHolding;
 import WayofTime.alchemicalWizardry.common.items.sigil.holding.InventoryHolding;
@@ -8,11 +12,9 @@ import WayofTime.alchemicalWizardry.common.tileEntity.TEWritingTable;
 import WayofTime.alchemicalWizardry.common.tileEntity.container.ContainerTeleposer;
 import WayofTime.alchemicalWizardry.common.tileEntity.container.ContainerWritingTable;
 import cpw.mods.fml.common.network.IGuiHandler;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.world.World;
 
 public class GuiHandler implements IGuiHandler {
+
     // returns an instance of the Container you made earlier
     @Override
     public Object getServerGuiElement(int id, EntityPlayer player, World world, int x, int y, int z) {

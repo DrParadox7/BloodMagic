@@ -1,10 +1,7 @@
 package WayofTime.alchemicalWizardry.common.items;
 
-import WayofTime.alchemicalWizardry.AlchemicalWizardry;
-import WayofTime.alchemicalWizardry.api.alchemy.AlchemyRecipeRegistry;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
 import java.util.List;
+
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
@@ -15,10 +12,17 @@ import net.minecraft.util.IIcon;
 import net.minecraft.util.MathHelper;
 import net.minecraft.util.StatCollector;
 import net.minecraft.world.World;
+
 import org.lwjgl.input.Keyboard;
 
+import WayofTime.alchemicalWizardry.AlchemicalWizardry;
+import WayofTime.alchemicalWizardry.api.alchemy.AlchemyRecipeRegistry;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
+
 public class ActivationCrystal extends EnergyItems {
-    private static final String[] ACTIVATION_CRYSTAL_NAMES = new String[] {"Weak", "Awakened", "Creative"};
+
+    private static final String[] ACTIVATION_CRYSTAL_NAMES = new String[] { "Weak", "Awakened", "Creative" };
 
     @SideOnly(Side.CLIENT)
     private IIcon[] icons;
@@ -37,8 +41,8 @@ public class ActivationCrystal extends EnergyItems {
         icons = new IIcon[ACTIVATION_CRYSTAL_NAMES.length];
 
         for (int i = 0; i < ACTIVATION_CRYSTAL_NAMES.length; ++i) {
-            icons[i] = iconRegister.registerIcon(
-                    "AlchemicalWizardry:" + "activationCrystal" + ACTIVATION_CRYSTAL_NAMES[i]);
+            icons[i] = iconRegister
+                    .registerIcon("AlchemicalWizardry:" + "activationCrystal" + ACTIVATION_CRYSTAL_NAMES[i]);
         }
     }
 
@@ -67,10 +71,15 @@ public class ActivationCrystal extends EnergyItems {
                         }
                     }
                 } else {
-                    par3List.add("-" + StatCollector.translateToLocal("tooltip.alchemy.press") + " "
-                            + EnumChatFormatting.BLUE + StatCollector.translateToLocal("tooltip.alchemy.shift")
-                            + EnumChatFormatting.GRAY + " "
-                            + StatCollector.translateToLocal("tooltip.alchemy.forrecipe") + "-");
+                    par3List.add(
+                            "-" + StatCollector.translateToLocal("tooltip.alchemy.press")
+                                    + " "
+                                    + EnumChatFormatting.BLUE
+                                    + StatCollector.translateToLocal("tooltip.alchemy.shift")
+                                    + EnumChatFormatting.GRAY
+                                    + " "
+                                    + StatCollector.translateToLocal("tooltip.alchemy.forrecipe")
+                                    + "-");
                 }
 
                 break;
@@ -84,8 +93,9 @@ public class ActivationCrystal extends EnergyItems {
         }
 
         if (!(par1ItemStack.getTagCompound() == null)) {
-            par3List.add(StatCollector.translateToLocal("tooltip.owner.currentowner") + " "
-                    + par1ItemStack.getTagCompound().getString("ownerName"));
+            par3List.add(
+                    StatCollector.translateToLocal("tooltip.owner.currentowner") + " "
+                            + par1ItemStack.getTagCompound().getString("ownerName"));
         }
     }
 

@@ -1,15 +1,8 @@
 package WayofTime.alchemicalWizardry.common.rituals;
 
-import WayofTime.alchemicalWizardry.AlchemicalWizardry;
-import WayofTime.alchemicalWizardry.ModBlocks;
-import WayofTime.alchemicalWizardry.api.rituals.IMasterRitualStone;
-import WayofTime.alchemicalWizardry.api.rituals.RitualComponent;
-import WayofTime.alchemicalWizardry.api.rituals.RitualEffect;
-import WayofTime.alchemicalWizardry.api.soulNetwork.SoulNetworkHandler;
-import WayofTime.alchemicalWizardry.common.spell.complex.effect.SpellHelper;
-import WayofTime.alchemicalWizardry.common.tileEntity.TEPlinth;
 import java.util.ArrayList;
 import java.util.List;
+
 import net.minecraft.block.Block;
 import net.minecraft.entity.effect.EntityLightningBolt;
 import net.minecraft.entity.player.EntityPlayer;
@@ -25,7 +18,17 @@ import net.minecraft.world.World;
 import net.minecraft.world.biome.BiomeGenBase;
 import net.minecraft.world.chunk.Chunk;
 
+import WayofTime.alchemicalWizardry.AlchemicalWizardry;
+import WayofTime.alchemicalWizardry.ModBlocks;
+import WayofTime.alchemicalWizardry.api.rituals.IMasterRitualStone;
+import WayofTime.alchemicalWizardry.api.rituals.RitualComponent;
+import WayofTime.alchemicalWizardry.api.rituals.RitualEffect;
+import WayofTime.alchemicalWizardry.api.soulNetwork.SoulNetworkHandler;
+import WayofTime.alchemicalWizardry.common.spell.complex.effect.SpellHelper;
+import WayofTime.alchemicalWizardry.common.tileEntity.TEPlinth;
+
 public class RitualEffectBiomeChanger extends RitualEffect {
+
     @Override
     public void performEffect(IMasterRitualStone ritualStone) {
         String owner = ritualStone.getOwner();
@@ -39,8 +42,12 @@ public class RitualEffectBiomeChanger extends RitualEffect {
             ritualStone.setCooldown(cooldown - 1);
 
             if (world.rand.nextInt(15) == 0) {
-                world.addWeatherEffect(new EntityLightningBolt(
-                        world, x - 1 + world.rand.nextInt(3), y + 1, z - 1 + world.rand.nextInt(3)));
+                world.addWeatherEffect(
+                        new EntityLightningBolt(
+                                world,
+                                x - 1 + world.rand.nextInt(3),
+                                y + 1,
+                                z - 1 + world.rand.nextInt(3)));
             }
 
             return;

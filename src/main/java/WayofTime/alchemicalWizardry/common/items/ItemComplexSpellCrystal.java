@@ -1,10 +1,7 @@
 package WayofTime.alchemicalWizardry.common.items;
 
-import WayofTime.alchemicalWizardry.AlchemicalWizardry;
-import WayofTime.alchemicalWizardry.common.tileEntity.TESpellParadigmBlock;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
 import java.util.List;
+
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
@@ -14,7 +11,13 @@ import net.minecraft.util.StatCollector;
 import net.minecraft.world.World;
 import net.minecraftforge.common.DimensionManager;
 
+import WayofTime.alchemicalWizardry.AlchemicalWizardry;
+import WayofTime.alchemicalWizardry.common.tileEntity.TESpellParadigmBlock;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
+
 public class ItemComplexSpellCrystal extends EnergyItems {
+
     public ItemComplexSpellCrystal() {
         super();
         this.setMaxStackSize(1);
@@ -35,12 +38,18 @@ public class ItemComplexSpellCrystal extends EnergyItems {
             NBTTagCompound itemTag = par1ItemStack.getTagCompound();
 
             if (!par1ItemStack.getTagCompound().getString("ownerName").equals("")) {
-                par3List.add(StatCollector.translateToLocal("tooltip.owner.currentowner") + " "
-                        + par1ItemStack.getTagCompound().getString("ownerName"));
+                par3List.add(
+                        StatCollector.translateToLocal("tooltip.owner.currentowner") + " "
+                                + par1ItemStack.getTagCompound().getString("ownerName"));
             }
 
-            par3List.add(StatCollector.translateToLocal("tooltip.alchemy.coords") + " " + itemTag.getInteger("xCoord")
-                    + ", " + itemTag.getInteger("yCoord") + ", " + itemTag.getInteger("zCoord"));
+            par3List.add(
+                    StatCollector.translateToLocal("tooltip.alchemy.coords") + " "
+                            + itemTag.getInteger("xCoord")
+                            + ", "
+                            + itemTag.getInteger("yCoord")
+                            + ", "
+                            + itemTag.getInteger("zCoord"));
             par3List.add(
                     StatCollector.translateToLocal("tooltip.alchemy.dimension") + " " + getDimensionID(par1ItemStack));
         }
@@ -58,7 +67,9 @@ public class ItemComplexSpellCrystal extends EnergyItems {
             if (world != null) {
                 NBTTagCompound itemTag = par1ItemStack.getTagCompound();
                 TileEntity tileEntity = world.getTileEntity(
-                        itemTag.getInteger("xCoord"), itemTag.getInteger("yCoord"), itemTag.getInteger("zCoord"));
+                        itemTag.getInteger("xCoord"),
+                        itemTag.getInteger("yCoord"),
+                        itemTag.getInteger("zCoord"));
 
                 if (tileEntity instanceof TESpellParadigmBlock) {
                     TESpellParadigmBlock tileParad = (TESpellParadigmBlock) tileEntity;

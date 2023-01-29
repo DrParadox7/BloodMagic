@@ -1,8 +1,7 @@
 package WayofTime.alchemicalWizardry.common.entity.mob;
 
-import WayofTime.alchemicalWizardry.AlchemicalWizardry;
-import WayofTime.alchemicalWizardry.ModItems;
 import java.util.List;
+
 import net.minecraft.block.Block;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
@@ -21,9 +20,16 @@ import net.minecraft.util.DamageSource;
 import net.minecraft.util.MathHelper;
 import net.minecraft.world.World;
 
+import WayofTime.alchemicalWizardry.AlchemicalWizardry;
+import WayofTime.alchemicalWizardry.ModItems;
+
 public class EntityElemental extends EntityDemon {
-    private EntityAIAttackOnCollide aiAttackOnCollide =
-            new EntityAIAttackOnCollide(this, EntityPlayer.class, 1.2D, false);
+
+    private EntityAIAttackOnCollide aiAttackOnCollide = new EntityAIAttackOnCollide(
+            this,
+            EntityPlayer.class,
+            1.2D,
+            false);
 
     private static float maxTamedHealth = 100.0F;
     private static float maxUntamedHealth = 100.0F;
@@ -66,12 +72,12 @@ public class EntityElemental extends EntityDemon {
 
     /**
      * Takes in the distance the entity has fallen this tick and whether its on the ground to update the fall distance
-     * and deal fall damage if landing on the ground.  Args: distanceFallenThisTick, onGround
+     * and deal fall damage if landing on the ground. Args: distanceFallenThisTick, onGround
      */
     protected void updateFallState(double par1, boolean par3) {}
 
     /**
-     * Moves the entity based on the specified heading.  Args: strafe, forward
+     * Moves the entity based on the specified heading. Args: strafe, forward
      */
     public void moveEntityWithHeading(float par1, float par2) {
         if (this.isInWater()) {
@@ -179,8 +185,7 @@ public class EntityElemental extends EntityDemon {
 
         if (this.targetedEntity != null && this.targetedEntity.getDistanceSqToEntity(this) < d4 * d4) {
             double d5 = this.targetedEntity.posX - this.posX;
-            double d6 = this.targetedEntity.boundingBox.minY
-                    + (double) (this.targetedEntity.height / 2.0F)
+            double d6 = this.targetedEntity.boundingBox.minY + (double) (this.targetedEntity.height / 2.0F)
                     - (this.posY + (double) (this.height / 2.0F));
             double d7 = this.targetedEntity.posZ - this.posZ;
             this.renderYawOffset = this.rotationYaw = -((float) Math.atan2(d5, d7)) * 180.0F / (float) Math.PI;
@@ -212,8 +217,8 @@ public class EntityElemental extends EntityDemon {
                     ++this.attackCounter;
 
                     if (this.attackCounter >= 10) {
-                        this.worldObj.playAuxSFXAtEntity(
-                                null, 1008, (int) this.posX, (int) this.posY, (int) this.posZ, 0);
+                        this.worldObj
+                                .playAuxSFXAtEntity(null, 1008, (int) this.posX, (int) this.posY, (int) this.posZ, 0);
                         this.inflictEffectOnEntity(this.targetedEntity);
                         this.attackCounter = -40;
                     }
@@ -222,8 +227,8 @@ public class EntityElemental extends EntityDemon {
                 --this.attackCounter;
             }
         } else {
-            this.renderYawOffset =
-                    this.rotationYaw = -((float) Math.atan2(motionX, this.motionZ)) * 180.0F / (float) Math.PI;
+            this.renderYawOffset = this.rotationYaw = -((float) Math.atan2(motionX, this.motionZ)) * 180.0F
+                    / (float) Math.PI;
 
             if (this.attackCounter > 0) {
                 --this.attackCounter;
@@ -441,12 +446,11 @@ public class EntityElemental extends EntityDemon {
                 }
             }
 
-            return par1EntityLivingBase instanceof EntityPlayer
-                            && par2EntityLivingBase instanceof EntityPlayer
-                            && !((EntityPlayer) par2EntityLivingBase)
-                                    .canAttackPlayer((EntityPlayer) par1EntityLivingBase)
-                    ? false
-                    : !(par1EntityLivingBase instanceof EntityHorse) || !((EntityHorse) par1EntityLivingBase).isTame();
+            return par1EntityLivingBase instanceof EntityPlayer && par2EntityLivingBase instanceof EntityPlayer
+                    && !((EntityPlayer) par2EntityLivingBase).canAttackPlayer((EntityPlayer) par1EntityLivingBase)
+                            ? false
+                            : !(par1EntityLivingBase instanceof EntityHorse)
+                                    || !((EntityHorse) par1EntityLivingBase).isTame();
         } else {
             return false;
         }
@@ -480,8 +484,8 @@ public class EntityElemental extends EntityDemon {
         double verticalRange = Math.sqrt(par2);
         List<EntityLivingBase> entities = world.getEntitiesWithinAABB(
                 EntityLivingBase.class,
-                AxisAlignedBB.getBoundingBox(
-                                par1 - 0.5f, par3 - 0.5f, par5 - 0.5f, par1 + 0.5f, par3 + 0.5f, par5 + 0.5f)
+                AxisAlignedBB
+                        .getBoundingBox(par1 - 0.5f, par3 - 0.5f, par5 - 0.5f, par1 + 0.5f, par3 + 0.5f, par5 + 0.5f)
                         .expand(range, verticalRange, range));
         if (entities == null) {
             return null;

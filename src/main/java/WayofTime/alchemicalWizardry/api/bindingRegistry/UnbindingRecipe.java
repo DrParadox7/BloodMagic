@@ -2,9 +2,11 @@ package WayofTime.alchemicalWizardry.api.bindingRegistry;
 
 import java.util.ArrayList;
 import java.util.List;
+
 import net.minecraft.item.ItemStack;
 
 public class UnbindingRecipe {
+
     public ItemStack requiredItem;
     public List<ItemStack> outputItem;
 

@@ -1,12 +1,14 @@
 package WayofTime.alchemicalWizardry.common.commands.sub;
 
-import WayofTime.alchemicalWizardry.api.command.SubCommandBase;
-import WayofTime.alchemicalWizardry.api.soulNetwork.SoulNetworkHandler;
 import java.util.Locale;
+
 import net.minecraft.command.ICommand;
 import net.minecraft.command.ICommandSender;
 import net.minecraft.util.ChatComponentText;
 import net.minecraft.util.StatCollector;
+
+import WayofTime.alchemicalWizardry.api.command.SubCommandBase;
+import WayofTime.alchemicalWizardry.api.soulNetwork.SoulNetworkHandler;
 
 public class SubCommandOrb extends SubCommandBase {
 
@@ -71,9 +73,11 @@ public class SubCommandOrb extends SubCommandBase {
                             break;
                         }
 
-                        if (args.length > 1)
-                            commandSender.addChatMessage(new ChatComponentText(StatCollector.translateToLocalFormatted(
-                                    "message.orb.currenttier", SoulNetworkHandler.getCurrentMaxOrb(givenName))));
+                        if (args.length > 1) commandSender.addChatMessage(
+                                new ChatComponentText(
+                                        StatCollector.translateToLocalFormatted(
+                                                "message.orb.currenttier",
+                                                SoulNetworkHandler.getCurrentMaxOrb(givenName))));
 
                         break;
                     }
@@ -85,6 +89,7 @@ public class SubCommandOrb extends SubCommandBase {
     }
 
     private enum ValidCommands {
+
         SET("commands.orb.set.help"),
         GET("commands.orb.get.help");
 

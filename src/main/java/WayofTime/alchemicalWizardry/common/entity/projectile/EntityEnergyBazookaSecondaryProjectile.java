@@ -1,10 +1,8 @@
 package WayofTime.alchemicalWizardry.common.entity.projectile;
 
-import WayofTime.alchemicalWizardry.common.spell.complex.effect.SpellHelper;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
 import java.util.Iterator;
 import java.util.List;
+
 import net.minecraft.block.Block;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
@@ -18,7 +16,12 @@ import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.util.Vec3;
 import net.minecraft.world.World;
 
+import WayofTime.alchemicalWizardry.common.spell.complex.effect.SpellHelper;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
+
 public class EntityEnergyBazookaSecondaryProjectile extends EnergyBlastProjectile implements IProjectile {
+
     private int xTile = -1;
     private int yTile = -1;
     private int zTile = -1;
@@ -80,8 +83,7 @@ public class EntityEnergyBazookaSecondaryProjectile extends EnergyBlastProjectil
     }
 
     /**
-     * Similar to setArrowHeading, it's point the throwable entity to a x, y, z
-     * direction.
+     * Similar to setArrowHeading, it's point the throwable entity to a x, y, z direction.
      */
     @Override
     public void setThrowableHeading(double var1, double var3, double var5, float var7, float var8) {
@@ -210,7 +212,8 @@ public class EntityEnergyBazookaSecondaryProjectile extends EnergyBlastProjectil
 
             Entity var5 = null;
             List var6 = worldObj.getEntitiesWithinAABBExcludingEntity(
-                    this, boundingBox.addCoord(motionX, motionY, motionZ).expand(1.0D, 1.0D, 1.0D));
+                    this,
+                    boundingBox.addCoord(motionX, motionY, motionZ).expand(1.0D, 1.0D, 1.0D));
             double var7 = 0.0D;
             Iterator var9 = var6.iterator();
             float var11;
@@ -293,8 +296,8 @@ public class EntityEnergyBazookaSecondaryProjectile extends EnergyBlastProjectil
     }
 
     /**
-     * returns if this entity triggers Block.onEntityWalking on the blocks they
-     * walk on. used for spiders and wolves to prevent them from trampling crops
+     * returns if this entity triggers Block.onEntityWalking on the blocks they walk on. used for spiders and wolves to
+     * prevent them from trampling crops
      */
     @Override
     protected boolean canTriggerWalking() {
@@ -321,8 +324,7 @@ public class EntityEnergyBazookaSecondaryProjectile extends EnergyBlastProjectil
     }
 
     /**
-     * Whether the arrow has a stream of critical hit particles flying behind
-     * it.
+     * Whether the arrow has a stream of critical hit particles flying behind it.
      */
     public void setIsCritical(boolean par1) {
         byte var2 = dataWatcher.getWatchableObjectByte(16);
@@ -335,8 +337,7 @@ public class EntityEnergyBazookaSecondaryProjectile extends EnergyBlastProjectil
     }
 
     /**
-     * Whether the arrow has a stream of critical hit particles flying behind
-     * it.
+     * Whether the arrow has a stream of critical hit particles flying behind it.
      */
     public boolean getIsCritical() {
         byte var1 = dataWatcher.getWatchableObjectByte(16);
@@ -436,32 +437,68 @@ public class EntityEnergyBazookaSecondaryProjectile extends EnergyBlastProjectil
                 switch (sideHit) {
                     case 0:
                         worldObj.spawnParticle(
-                                "smoke", posX, posY, posZ, gaussian(0.1D), -gaussian(0.1D), gaussian(0.1D));
+                                "smoke",
+                                posX,
+                                posY,
+                                posZ,
+                                gaussian(0.1D),
+                                -gaussian(0.1D),
+                                gaussian(0.1D));
                         break;
 
                     case 1:
                         worldObj.spawnParticle(
-                                "smoke", posX, posY, posZ, gaussian(0.1D), gaussian(0.1D), gaussian(0.1D));
+                                "smoke",
+                                posX,
+                                posY,
+                                posZ,
+                                gaussian(0.1D),
+                                gaussian(0.1D),
+                                gaussian(0.1D));
                         break;
 
                     case 2:
                         worldObj.spawnParticle(
-                                "smoke", posX, posY, posZ, gaussian(0.1D), gaussian(0.1D), -gaussian(0.1D));
+                                "smoke",
+                                posX,
+                                posY,
+                                posZ,
+                                gaussian(0.1D),
+                                gaussian(0.1D),
+                                -gaussian(0.1D));
                         break;
 
                     case 3:
                         worldObj.spawnParticle(
-                                "smoke", posX, posY, posZ, gaussian(0.1D), gaussian(0.1D), gaussian(0.1D));
+                                "smoke",
+                                posX,
+                                posY,
+                                posZ,
+                                gaussian(0.1D),
+                                gaussian(0.1D),
+                                gaussian(0.1D));
                         break;
 
                     case 4:
                         worldObj.spawnParticle(
-                                "smoke", posX, posY, posZ, -gaussian(0.1D), gaussian(0.1D), gaussian(0.1D));
+                                "smoke",
+                                posX,
+                                posY,
+                                posZ,
+                                -gaussian(0.1D),
+                                gaussian(0.1D),
+                                gaussian(0.1D));
                         break;
 
                     case 5:
                         worldObj.spawnParticle(
-                                "smoke", posX, posY, posZ, gaussian(0.1D), gaussian(0.1D), gaussian(0.1D));
+                                "smoke",
+                                posX,
+                                posY,
+                                posZ,
+                                gaussian(0.1D),
+                                gaussian(0.1D),
+                                gaussian(0.1D));
                         break;
                 }
             }

@@ -1,10 +1,12 @@
 package WayofTime.alchemicalWizardry.common.compress;
 
-import WayofTime.alchemicalWizardry.api.compress.CompressionHandler;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
 
+import WayofTime.alchemicalWizardry.api.compress.CompressionHandler;
+
 public class BaseCompressionHandler extends CompressionHandler {
+
     private final ItemStack required;
     private final ItemStack result;
     private final int leftover;
@@ -56,8 +58,7 @@ public class BaseCompressionHandler extends CompressionHandler {
             }
 
             if (invStack.isItemEqual(this.required)
-                    && (invStack.getTagCompound() == null
-                            ? this.required.getTagCompound() == null
+                    && (invStack.getTagCompound() == null ? this.required.getTagCompound() == null
                             : invStack.getTagCompound().equals(this.required.getTagCompound()))) {
                 int stackSize = invStack.stackSize;
                 int used = 0;

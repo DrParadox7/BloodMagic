@@ -1,11 +1,13 @@
 package WayofTime.alchemicalWizardry.common.spell.complex.effect.impactEffects.ice;
 
-import WayofTime.alchemicalWizardry.api.spell.ExtrapolatedMeleeEntityEffect;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.world.World;
 
+import WayofTime.alchemicalWizardry.api.spell.ExtrapolatedMeleeEntityEffect;
+
 public class MeleeDefaultIce extends ExtrapolatedMeleeEntityEffect {
+
     public MeleeDefaultIce(int power, int potency, int cost) {
         super(power, potency, cost);
         this.setRange(3 + 0.3f * potency);

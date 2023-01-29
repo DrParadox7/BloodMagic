@@ -1,13 +1,15 @@
 package WayofTime.alchemicalWizardry.common.tileEntity;
 
-import WayofTime.alchemicalWizardry.api.items.interfaces.ArmourUpgrade;
-import WayofTime.alchemicalWizardry.common.NewPacketHandler;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.Packet;
 
+import WayofTime.alchemicalWizardry.api.items.interfaces.ArmourUpgrade;
+import WayofTime.alchemicalWizardry.common.NewPacketHandler;
+
 public class TESocket extends TEInventory {
+
     public static final int sizeInv = 1;
 
     private int resultID;
@@ -77,8 +79,10 @@ public class TESocket extends TEInventory {
         if (intData.length == 3) {
             for (int i = 0; i < 1; i++) {
                 if (intData[i * 3 + 2] != 0) {
-                    ItemStack is =
-                            new ItemStack(Item.getItemById(intData[i * 3]), intData[i * 3 + 2], intData[i * 3 + 1]);
+                    ItemStack is = new ItemStack(
+                            Item.getItemById(intData[i * 3]),
+                            intData[i * 3 + 2],
+                            intData[i * 3 + 1]);
                     inv[i] = is;
                 } else {
                     inv[i] = null;

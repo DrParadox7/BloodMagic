@@ -1,12 +1,15 @@
 package WayofTime.alchemicalWizardry.common.demonVillage.demonHoard;
 
-import WayofTime.alchemicalWizardry.common.demonVillage.tileEntity.TEDemonPortal;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;
+
 import net.minecraft.world.World;
 
+import WayofTime.alchemicalWizardry.common.demonVillage.tileEntity.TEDemonPortal;
+
 public class DemonPacketRegistry {
+
     public static Map<String, DemonHoardPacket> packetMap = new HashMap();
 
     public static boolean registerDemonPacket(String string, DemonHoardPacket packet) {
@@ -51,15 +54,8 @@ public class DemonPacketRegistry {
         return "";
     }
 
-    public static int spawnDemons(
-            TEDemonPortal teDemonPortal,
-            World world,
-            int x,
-            int y,
-            int z,
-            DemonType type,
-            int tier,
-            boolean spawnGuardian) {
+    public static int spawnDemons(TEDemonPortal teDemonPortal, World world, int x, int y, int z, DemonType type,
+            int tier, boolean spawnGuardian) {
         return spawnDemons(
                 teDemonPortal,
                 world,
@@ -72,16 +68,8 @@ public class DemonPacketRegistry {
                 spawnGuardian);
     }
 
-    public static int spawnDemons(
-            TEDemonPortal teDemonPortal,
-            World world,
-            int x,
-            int y,
-            int z,
-            String name,
-            DemonType type,
-            int tier,
-            boolean spawnGuardian) {
+    public static int spawnDemons(TEDemonPortal teDemonPortal, World world, int x, int y, int z, String name,
+            DemonType type, int tier, boolean spawnGuardian) {
         DemonHoardPacket packet = packetMap.get(name);
 
         if (packet != null) {

@@ -4,6 +4,7 @@ import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
 
 public class AlchemyPotionHandlerComponent {
+
     private ItemStack itemStack;
     private int potionID;
     private int tickDuration;

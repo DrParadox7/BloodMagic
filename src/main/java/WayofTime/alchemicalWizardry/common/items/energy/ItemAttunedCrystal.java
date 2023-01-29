@@ -1,14 +1,8 @@
 package WayofTime.alchemicalWizardry.common.items.energy;
 
-import WayofTime.alchemicalWizardry.AlchemicalWizardry;
-import WayofTime.alchemicalWizardry.api.Int3;
-import WayofTime.alchemicalWizardry.api.alchemy.energy.*;
-import WayofTime.alchemicalWizardry.api.items.interfaces.IReagentManipulator;
-import WayofTime.alchemicalWizardry.common.tileEntity.TEReagentConduit;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
 import java.util.LinkedList;
 import java.util.List;
+
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
@@ -23,7 +17,16 @@ import net.minecraft.util.StatCollector;
 import net.minecraft.world.World;
 import net.minecraftforge.common.util.ForgeDirection;
 
+import WayofTime.alchemicalWizardry.AlchemicalWizardry;
+import WayofTime.alchemicalWizardry.api.Int3;
+import WayofTime.alchemicalWizardry.api.alchemy.energy.*;
+import WayofTime.alchemicalWizardry.api.items.interfaces.IReagentManipulator;
+import WayofTime.alchemicalWizardry.common.tileEntity.TEReagentConduit;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
+
 public class ItemAttunedCrystal extends Item implements IReagentManipulator {
+
     public static final int maxDistance = 6;
 
     public IIcon crystalBody;
@@ -63,10 +66,16 @@ public class ItemAttunedCrystal extends Item implements IReagentManipulator {
             if (this.getHasSavedCoordinates(par1ItemStack)) {
                 par3List.add("");
                 Int3 coords = this.getCoordinates(par1ItemStack);
-                par3List.add(StatCollector.translateToLocal("tooltip.alchemy.coords") + " " + coords.xCoord + ", "
-                        + coords.yCoord + ", " + coords.zCoord);
-                par3List.add(StatCollector.translateToLocal("tooltip.alchemy.dimension") + " "
-                        + getDimension(par1ItemStack));
+                par3List.add(
+                        StatCollector.translateToLocal("tooltip.alchemy.coords") + " "
+                                + coords.xCoord
+                                + ", "
+                                + coords.yCoord
+                                + ", "
+                                + coords.zCoord);
+                par3List.add(
+                        StatCollector.translateToLocal("tooltip.alchemy.dimension") + " "
+                                + getDimension(par1ItemStack));
             }
         }
     }
@@ -87,8 +96,7 @@ public class ItemAttunedCrystal extends Item implements IReagentManipulator {
             case 1:
                 Reagent reagent = this.getReagent(stack);
                 if (reagent != null) {
-                    return (reagent.getColourRed() * 256 * 256
-                            + reagent.getColourGreen() * 256
+                    return (reagent.getColourRed() * 256 * 256 + reagent.getColourGreen() * 256
                             + reagent.getColourBlue());
                 }
                 break;
@@ -191,8 +199,7 @@ public class ItemAttunedCrystal extends Item implements IReagentManipulator {
                             return itemStack;
                         }
 
-                        if (dimension != world.provider.dimensionId
-                                || Math.abs(coords.xCoord - x) > maxDistance
+                        if (dimension != world.provider.dimensionId || Math.abs(coords.xCoord - x) > maxDistance
                                 || Math.abs(coords.yCoord - y) > maxDistance
                                 || Math.abs(coords.zCoord - z) > maxDistance) {
                             player.addChatComponentMessage(
@@ -219,9 +226,10 @@ public class ItemAttunedCrystal extends Item implements IReagentManipulator {
                             pastRelay.removeReagentDestinationViaActual(reagent, x, y, z);
                         } else {
                             if (pastRelay.addReagentDestinationViaActual(reagent, x, y, z)) {
-                                player.addChatComponentMessage(new ChatComponentText(
-                                        StatCollector.translateToLocal("message.attunedcrystal.linked") + " "
-                                                + reagent.name));
+                                player.addChatComponentMessage(
+                                        new ChatComponentText(
+                                                StatCollector.translateToLocal("message.attunedcrystal.linked") + " "
+                                                        + reagent.name));
                             } else {
                                 player.addChatComponentMessage(
                                         new ChatComponentTranslation("message.attunedcrystal.error.noconnections"));
@@ -329,8 +337,9 @@ public class ItemAttunedCrystal extends Item implements IReagentManipulator {
         this.setReagent(stack, reagent);
 
         if (reagent != null) {
-            player.addChatComponentMessage(new ChatComponentText(
-                    StatCollector.translateToLocal("message.attunedcrystal.setto") + " " + reagent.name));
+            player.addChatComponentMessage(
+                    new ChatComponentText(
+                            StatCollector.translateToLocal("message.attunedcrystal.setto") + " " + reagent.name));
         }
     }
 }

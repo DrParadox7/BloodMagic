@@ -1,13 +1,16 @@
 package WayofTime.alchemicalWizardry.api.rituals;
 
-import WayofTime.alchemicalWizardry.api.alchemy.energy.Reagent;
-import WayofTime.alchemicalWizardry.api.alchemy.energy.ReagentStack;
 import java.util.ArrayList;
 import java.util.List;
+
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraftforge.common.util.ForgeDirection;
 
+import WayofTime.alchemicalWizardry.api.alchemy.energy.Reagent;
+import WayofTime.alchemicalWizardry.api.alchemy.energy.ReagentStack;
+
 public abstract class RitualEffect {
+
     public abstract void performEffect(IMasterRitualStone ritualStone);
 
     public boolean startRitual(IMasterRitualStone ritualStone, EntityPlayer player) {

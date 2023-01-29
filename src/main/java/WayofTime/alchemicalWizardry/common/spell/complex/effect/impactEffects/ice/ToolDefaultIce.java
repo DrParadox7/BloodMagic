@@ -1,12 +1,14 @@
 package WayofTime.alchemicalWizardry.common.spell.complex.effect.impactEffects.ice;
 
-import WayofTime.alchemicalWizardry.common.spell.complex.effect.impactEffects.tool.LeftClickEffect;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.item.ItemStack;
 import net.minecraft.potion.Potion;
 import net.minecraft.potion.PotionEffect;
 
+import WayofTime.alchemicalWizardry.common.spell.complex.effect.impactEffects.tool.LeftClickEffect;
+
 public class ToolDefaultIce extends LeftClickEffect {
+
     public ToolDefaultIce(int power, int potency, int cost) {
         super(power, potency, cost);
     }

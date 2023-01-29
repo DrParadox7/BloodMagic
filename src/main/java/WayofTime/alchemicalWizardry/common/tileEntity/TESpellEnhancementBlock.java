@@ -7,6 +7,7 @@ import WayofTime.alchemicalWizardry.api.spell.SpellEnhancementPower;
 import WayofTime.alchemicalWizardry.api.spell.SpellParadigm;
 
 public class TESpellEnhancementBlock extends TESpellBlock {
+
     @Override
     protected void applySpellChange(SpellParadigm parad) {
         int i = -1;
@@ -93,7 +94,7 @@ public class TESpellEnhancementBlock extends TESpellBlock {
     }
 
     public int enhancementType() // 0 is power, 1 is cost, 2 is potency
-            {
+    {
         int meta = worldObj.getBlockMetadata(xCoord, yCoord, zCoord);
         switch (meta) {
             case 0:

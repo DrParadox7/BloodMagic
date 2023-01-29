@@ -1,18 +1,21 @@
 package WayofTime.alchemicalWizardry.common.renderer.block.itemRender;
 
-import WayofTime.alchemicalWizardry.common.renderer.model.ModelAlchemicalCalcinator;
-import cpw.mods.fml.client.FMLClientHandler;
 import net.minecraft.client.renderer.RenderBlocks;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.client.IItemRenderer;
+
 import org.lwjgl.opengl.GL11;
 
+import WayofTime.alchemicalWizardry.common.renderer.model.ModelAlchemicalCalcinator;
+import cpw.mods.fml.client.FMLClientHandler;
+
 public class TEAlchemicalCalcinatorItemRenderer implements IItemRenderer {
+
     private ModelAlchemicalCalcinator modelConduit = new ModelAlchemicalCalcinator();
 
-    private void renderConduitItem(
-            RenderBlocks render, ItemStack item, float translateX, float translateY, float translateZ) {
+    private void renderConduitItem(RenderBlocks render, ItemStack item, float translateX, float translateY,
+            float translateZ) {
         GL11.glPushMatrix();
         GL11.glTranslatef(translateX + 0.5F, translateY + 1.5F, translateZ + 0.5F);
         ResourceLocation test = new ResourceLocation("alchemicalwizardry:textures/models/AlchemicalCalcinator.png");

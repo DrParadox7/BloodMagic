@@ -1,14 +1,8 @@
 package WayofTime.alchemicalWizardry.common.demonVillage;
 
-import WayofTime.alchemicalWizardry.api.Int3;
-import WayofTime.alchemicalWizardry.common.demonVillage.loot.DemonVillageLootRegistry;
-import WayofTime.alchemicalWizardry.common.demonVillage.tileEntity.IBlockPortalNode;
-import WayofTime.alchemicalWizardry.common.demonVillage.tileEntity.ITilePortalNode;
-import WayofTime.alchemicalWizardry.common.demonVillage.tileEntity.TEDemonPortal;
-import cpw.mods.fml.common.registry.GameRegistry;
-import cpw.mods.fml.common.registry.GameRegistry.UniqueIdentifier;
 import java.util.ArrayList;
 import java.util.List;
+
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockDoor;
 import net.minecraft.block.BlockLadder;
@@ -23,7 +17,16 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
 import net.minecraftforge.common.util.ForgeDirection;
 
+import WayofTime.alchemicalWizardry.api.Int3;
+import WayofTime.alchemicalWizardry.common.demonVillage.loot.DemonVillageLootRegistry;
+import WayofTime.alchemicalWizardry.common.demonVillage.tileEntity.IBlockPortalNode;
+import WayofTime.alchemicalWizardry.common.demonVillage.tileEntity.ITilePortalNode;
+import WayofTime.alchemicalWizardry.common.demonVillage.tileEntity.TEDemonPortal;
+import cpw.mods.fml.common.registry.GameRegistry;
+import cpw.mods.fml.common.registry.GameRegistry.UniqueIdentifier;
+
 public class BlockSet {
+
     protected String blockid;
     protected int[] metadata;
     protected List<Int3> positions;
@@ -48,14 +51,14 @@ public class BlockSet {
             metadata[i] = meta;
         }
         if (block instanceof BlockStairs) {
-            int[] northSet = new int[] {2, 3, 0, 1};
-            int[] eastSet = new int[] {1, 0, 2, 3};
-            int[] southSet = new int[] {3, 2, 1, 0};
-            int[] westSet = new int[] {0, 1, 3, 2};
-            int[] northUpSet = new int[] {6, 7, 4, 5};
-            int[] eastUpSet = new int[] {5, 4, 6, 7};
-            int[] southUpSet = new int[] {7, 6, 5, 4};
-            int[] westUpSet = new int[] {4, 5, 7, 6};
+            int[] northSet = new int[] { 2, 3, 0, 1 };
+            int[] eastSet = new int[] { 1, 0, 2, 3 };
+            int[] southSet = new int[] { 3, 2, 1, 0 };
+            int[] westSet = new int[] { 0, 1, 3, 2 };
+            int[] northUpSet = new int[] { 6, 7, 4, 5 };
+            int[] eastUpSet = new int[] { 5, 4, 6, 7 };
+            int[] southUpSet = new int[] { 7, 6, 5, 4 };
+            int[] westUpSet = new int[] { 4, 5, 7, 6 };
 
             switch (meta) {
                 case 0:
@@ -84,10 +87,10 @@ public class BlockSet {
                     break;
             }
         } else if (block instanceof BlockLadder) {
-            int[] northSet = new int[] {3, 2, 5, 4};
-            int[] eastSet = new int[] {4, 5, 3, 2};
-            int[] southSet = new int[] {2, 3, 4, 5};
-            int[] westSet = new int[] {5, 4, 2, 3};
+            int[] northSet = new int[] { 3, 2, 5, 4 };
+            int[] eastSet = new int[] { 4, 5, 3, 2 };
+            int[] southSet = new int[] { 2, 3, 4, 5 };
+            int[] westSet = new int[] { 5, 4, 2, 3 };
 
             switch (meta) {
                 case 3:
@@ -106,10 +109,10 @@ public class BlockSet {
         } else if (block instanceof BlockTrapDoor) {
             int div = meta / 4;
             int mod = meta % 4;
-            int[] northSet = new int[] {1 + div * 4, div * 4, 3 + div * 4, 2 + div * 4}; // Second one: 0 +
-            int[] eastSet = new int[] {2 + div * 4, 3 + div * 4, 1 + div * 4, div * 4}; // Last one: 0 +
-            int[] southSet = new int[] {div * 4, 1 + div * 4, 2 + div * 4, 3 + div * 4}; // First one: 0 +
-            int[] westSet = new int[] {3 + div * 4, 2 + div * 4, div * 4, 1 + div * 4}; // Third one: 0 +
+            int[] northSet = new int[] { 1 + div * 4, div * 4, 3 + div * 4, 2 + div * 4 }; // Second one: 0 +
+            int[] eastSet = new int[] { 2 + div * 4, 3 + div * 4, 1 + div * 4, div * 4 }; // Last one: 0 +
+            int[] southSet = new int[] { div * 4, 1 + div * 4, 2 + div * 4, 3 + div * 4 }; // First one: 0 +
+            int[] westSet = new int[] { 3 + div * 4, 2 + div * 4, div * 4, 1 + div * 4 }; // Third one: 0 +
 
             switch (mod) {
                 case 0:
@@ -126,10 +129,10 @@ public class BlockSet {
                     break;
             }
         } else if (block instanceof BlockTorch) {
-            int[] northSet = new int[] {3, 4, 1, 2};
-            int[] eastSet = new int[] {2, 1, 3, 4};
-            int[] southSet = new int[] {4, 3, 2, 1};
-            int[] westSet = new int[] {1, 2, 4, 3};
+            int[] northSet = new int[] { 3, 4, 1, 2 };
+            int[] eastSet = new int[] { 2, 1, 3, 4 };
+            int[] southSet = new int[] { 4, 3, 2, 1 };
+            int[] westSet = new int[] { 1, 2, 4, 3 };
 
             switch (meta) {
                 case 1:
@@ -146,10 +149,10 @@ public class BlockSet {
                     break;
             }
         } else if (block instanceof BlockDoor) {
-            int[] northSet = new int[] {3, 1, 2, 0};
-            int[] eastSet = new int[] {0, 2, 3, 1};
-            int[] southSet = new int[] {1, 3, 0, 2};
-            int[] westSet = new int[] {2, 0, 1, 3};
+            int[] northSet = new int[] { 3, 1, 2, 0 };
+            int[] eastSet = new int[] { 0, 2, 3, 1 };
+            int[] southSet = new int[] { 1, 3, 0, 2 };
+            int[] westSet = new int[] { 2, 0, 1, 3 };
 
             switch (meta) {
                 case 0:
@@ -168,10 +171,10 @@ public class BlockSet {
         } else if (block instanceof BlockRedstoneComparator) {
             int div = meta / 4;
             int mod = meta % 4;
-            int[] northSet = new int[] {div * 4, 2 + div * 4, 3 + div * 4, 1 + div * 4}; // First one: 0 +
-            int[] eastSet = new int[] {1 + div * 4, 3 + div * 4, div * 4, 2 + div * 4}; // Third one: 0 +
-            int[] southSet = new int[] {2 + div * 4, div * 4, 1 + div * 4, 3 + div * 4}; // Second one: 0 +
-            int[] westSet = new int[] {3 + div * 4, 1 + div * 4, 2 + div * 4, div * 4}; // Last one: 0 +
+            int[] northSet = new int[] { div * 4, 2 + div * 4, 3 + div * 4, 1 + div * 4 }; // First one: 0 +
+            int[] eastSet = new int[] { 1 + div * 4, 3 + div * 4, div * 4, 2 + div * 4 }; // Third one: 0 +
+            int[] southSet = new int[] { 2 + div * 4, div * 4, 1 + div * 4, 3 + div * 4 }; // Second one: 0 +
+            int[] westSet = new int[] { 3 + div * 4, 1 + div * 4, 2 + div * 4, div * 4 }; // Last one: 0 +
 
             switch (mod) {
                 case 0:
@@ -190,10 +193,10 @@ public class BlockSet {
         } else if (block instanceof BlockRedstoneRepeater) {
             int div = meta / 4;
             int mod = meta % 4;
-            int[] northSet = new int[] {div * 4, 2 + div * 4, 3 + div * 4, 1 + div * 4}; // First one: 0 +
-            int[] eastSet = new int[] {1 + div * 4, 3 + div * 4, div * 4, 2 + div * 4}; // Third one: 0 +
-            int[] southSet = new int[] {2 + div * 4, div * 4, 1 + div * 4, 3 + div * 4}; // Second one: 0 +
-            int[] westSet = new int[] {3 + div * 4, 1 + div * 4, 2 + div * 4, div * 4}; // Last one: 0 +
+            int[] northSet = new int[] { div * 4, 2 + div * 4, 3 + div * 4, 1 + div * 4 }; // First one: 0 +
+            int[] eastSet = new int[] { 1 + div * 4, 3 + div * 4, div * 4, 2 + div * 4 }; // Third one: 0 +
+            int[] southSet = new int[] { 2 + div * 4, div * 4, 1 + div * 4, 3 + div * 4 }; // Second one: 0 +
+            int[] westSet = new int[] { 3 + div * 4, 1 + div * 4, 2 + div * 4, div * 4 }; // Last one: 0 +
 
             switch (mod) {
                 case 0:
@@ -261,16 +264,8 @@ public class BlockSet {
         }
     }
 
-    public void buildAtIndex(
-            TEDemonPortal teDemonPortal,
-            World world,
-            int xCoord,
-            int yCoord,
-            int zCoord,
-            ForgeDirection dir,
-            int index,
-            boolean populateInventories,
-            int tier) {
+    public void buildAtIndex(TEDemonPortal teDemonPortal, World world, int xCoord, int yCoord, int zCoord,
+            ForgeDirection dir, int index, boolean populateInventories, int tier) {
         Block block = this.getBlock();
         if (index >= positions.size() || block == null) {
             return;
@@ -321,15 +316,8 @@ public class BlockSet {
         }
     }
 
-    public void buildAll(
-            TEDemonPortal teDemonPortal,
-            World world,
-            int xCoord,
-            int yCoord,
-            int zCoord,
-            ForgeDirection dir,
-            boolean populateInventories,
-            int tier) {
+    public void buildAll(TEDemonPortal teDemonPortal, World world, int xCoord, int yCoord, int zCoord,
+            ForgeDirection dir, boolean populateInventories, int tier) {
         for (int i = 0; i < positions.size(); i++) {
             this.buildAtIndex(teDemonPortal, world, xCoord, yCoord, zCoord, dir, i, populateInventories, tier);
         }

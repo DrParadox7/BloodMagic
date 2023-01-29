@@ -1,6 +1,7 @@
 package WayofTime.alchemicalWizardry.common.bloodAltarUpgrade;
 
 import WayofTime.alchemicalWizardry.api.BlockStack;
+
 import com.cricketcraft.chisel.api.carving.CarvingUtils;
 import com.cricketcraft.chisel.api.carving.ICarvingGroup;
 import com.google.common.base.Strings;
@@ -12,8 +13,7 @@ public class CompatChecks {
 
         ICarvingGroup group = CarvingUtils.getChiselRegistry().getGroup(blockStack.getBlock(), blockStack.getMeta());
         if (group != null) {
-            String check = CarvingUtils.getChiselRegistry()
-                    .getGroup(blockStack.getBlock(), blockStack.getMeta())
+            String check = CarvingUtils.getChiselRegistry().getGroup(blockStack.getBlock(), blockStack.getMeta())
                     .getName();
 
             if (Strings.isNullOrEmpty(check)) return false;

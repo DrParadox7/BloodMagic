@@ -1,9 +1,5 @@
 package WayofTime.alchemicalWizardry.common.entity.projectile;
 
-import cpw.mods.fml.client.FMLClientHandler;
-import cpw.mods.fml.common.registry.IThrowableEntity;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.client.particle.EntityCloudFX;
 import net.minecraft.client.particle.EntityFX;
 import net.minecraft.entity.Entity;
@@ -14,8 +10,14 @@ import net.minecraft.util.DamageSource;
 import net.minecraft.util.MathHelper;
 import net.minecraft.world.World;
 
+import cpw.mods.fml.client.FMLClientHandler;
+import cpw.mods.fml.common.registry.IThrowableEntity;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
+
 // Shamelessly ripped off from x3n0ph0b3
 public class EntityParticleBeam extends Entity implements IProjectile, IThrowableEntity {
+
     protected int xTile = -1;
     protected int yTile = -1;
     protected int zTile = -1;
@@ -79,16 +81,8 @@ public class EntityParticleBeam extends Entity implements IProjectile, IThrowabl
         this.maxTicksInAir = 600;
     }
 
-    public EntityParticleBeam(
-            World par1World,
-            EntityLivingBase par2EntityPlayer,
-            int damage,
-            int maxTicksInAir,
-            double posX,
-            double posY,
-            double posZ,
-            float rotationYaw,
-            float rotationPitch) {
+    public EntityParticleBeam(World par1World, EntityLivingBase par2EntityPlayer, int damage, int maxTicksInAir,
+            double posX, double posY, double posZ, float rotationYaw, float rotationPitch) {
         super(par1World);
         shootingEntity = par2EntityPlayer;
         float par3 = 0.8F;
@@ -109,14 +103,8 @@ public class EntityParticleBeam extends Entity implements IProjectile, IThrowabl
         this.maxTicksInAir = maxTicksInAir;
     }
 
-    public EntityParticleBeam(
-            World par1World,
-            EntityLivingBase par2EntityLivingBase,
-            EntityLivingBase par3EntityLivingBase,
-            float par4,
-            float par5,
-            int damage,
-            int maxTicksInAir) {
+    public EntityParticleBeam(World par1World, EntityLivingBase par2EntityLivingBase,
+            EntityLivingBase par3EntityLivingBase, float par4, float par5, int damage, int maxTicksInAir) {
         super(par1World);
         this.renderDistanceWeight = 10.0D;
         this.shootingEntity = par2EntityLivingBase;
@@ -132,7 +120,11 @@ public class EntityParticleBeam extends Entity implements IProjectile, IThrowabl
             double d4 = d0 / d3;
             double d5 = d2 / d3;
             this.setLocationAndAngles(
-                    par2EntityLivingBase.posX + d4, this.posY, par2EntityLivingBase.posZ + d5, f2, f3);
+                    par2EntityLivingBase.posX + d4,
+                    this.posY,
+                    par2EntityLivingBase.posZ + d5,
+                    f2,
+                    f3);
             this.yOffset = 0.0F;
             float f4 = (float) d3 * 0.2F;
             this.setThrowableHeading(d0, d1, d2, par4, par5);
@@ -148,8 +140,7 @@ public class EntityParticleBeam extends Entity implements IProjectile, IThrowabl
     }
 
     /**
-     * Similar to setArrowHeading, it's point the throwable entity to a x, y, z
-     * direction.
+     * Similar to setArrowHeading, it's point the throwable entity to a x, y, z direction.
      */
     @Override
     public void setThrowableHeading(double var1, double var3, double var5, float var7, float var8) {

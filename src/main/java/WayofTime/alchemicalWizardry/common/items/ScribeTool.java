@@ -1,13 +1,16 @@
 package WayofTime.alchemicalWizardry.common.items;
 
-import WayofTime.alchemicalWizardry.AlchemicalWizardry;
 import java.util.List;
+
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.StatCollector;
 import net.minecraft.world.World;
 
+import WayofTime.alchemicalWizardry.AlchemicalWizardry;
+
 public class ScribeTool extends EnergyItems {
+
     private int meta;
 
     public ScribeTool(int inkType) {
@@ -24,8 +27,9 @@ public class ScribeTool extends EnergyItems {
         par3List.add(StatCollector.translateToLocal("tooltip.scribetool.desc"));
 
         if (!(par1ItemStack.getTagCompound() == null)) {
-            par3List.add(StatCollector.translateToLocal("tooltip.owner.currentowner") + " "
-                    + par1ItemStack.getTagCompound().getString("ownerName"));
+            par3List.add(
+                    StatCollector.translateToLocal("tooltip.owner.currentowner") + " "
+                            + par1ItemStack.getTagCompound().getString("ownerName"));
         }
     }
 

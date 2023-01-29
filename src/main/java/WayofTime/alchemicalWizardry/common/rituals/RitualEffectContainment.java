@@ -1,5 +1,15 @@
 package WayofTime.alchemicalWizardry.common.rituals;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.monster.EntityCreeper;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.potion.PotionEffect;
+import net.minecraft.world.World;
+
 import WayofTime.alchemicalWizardry.AlchemicalWizardry;
 import WayofTime.alchemicalWizardry.api.alchemy.energy.ReagentRegistry;
 import WayofTime.alchemicalWizardry.api.rituals.IMasterRitualStone;
@@ -8,17 +18,10 @@ import WayofTime.alchemicalWizardry.api.rituals.RitualEffect;
 import WayofTime.alchemicalWizardry.api.soulNetwork.SoulNetworkHandler;
 import WayofTime.alchemicalWizardry.common.spell.complex.effect.SpellHelper;
 import cpw.mods.fml.relauncher.ReflectionHelper;
-import java.util.ArrayList;
-import java.util.List;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.entity.monster.EntityCreeper;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.potion.PotionEffect;
-import net.minecraft.world.World;
 
 public class RitualEffectContainment extends RitualEffect {
-    public final String[] TIME_SINCE_IGNITED = new String[] {"timeSinceIgnited", "field_70833_d", "bq"};
+
+    public final String[] TIME_SINCE_IGNITED = new String[] { "timeSinceIgnited", "field_70833_d", "bq" };
 
     @Override
     public void performEffect(IMasterRitualStone ritualStone) {
@@ -38,11 +41,11 @@ public class RitualEffectContainment extends RitualEffect {
             final int magicalesDrain = 10;
 
             boolean flag = false;
-            boolean hasCrepitous =
-                    this.canDrainReagent(ritualStone, ReagentRegistry.crepitousReagent, crepitousDrain, false);
+            boolean hasCrepitous = this
+                    .canDrainReagent(ritualStone, ReagentRegistry.crepitousReagent, crepitousDrain, false);
             boolean hasTerrae = this.canDrainReagent(ritualStone, ReagentRegistry.terraeReagent, terraeDrain, false);
-            boolean hasMagicales =
-                    this.canDrainReagent(ritualStone, ReagentRegistry.magicalesReagent, magicalesDrain, false);
+            boolean hasMagicales = this
+                    .canDrainReagent(ritualStone, ReagentRegistry.magicalesReagent, magicalesDrain, false);
             int d0 = hasTerrae ? 10 : 5;
             List<Entity> entityList = SpellHelper.getEntitiesInRange(world, x + 0.5, y + 0.5, z + 0.5, d0, d0);
 
@@ -79,8 +82,8 @@ public class RitualEffectContainment extends RitualEffect {
                 if (hasCrepitous
                         && this.canDrainReagent(ritualStone, ReagentRegistry.crepitousReagent, crepitousDrain, false)) {
                     if (entity instanceof EntityCreeper) {
-                        ReflectionHelper.setPrivateValue(
-                                EntityCreeper.class, (EntityCreeper) entity, 2, TIME_SINCE_IGNITED);
+                        ReflectionHelper
+                                .setPrivateValue(EntityCreeper.class, (EntityCreeper) entity, 2, TIME_SINCE_IGNITED);
                         ((EntityCreeper) entity).setAttackTarget(null);
                         this.canDrainReagent(ritualStone, ReagentRegistry.crepitousReagent, crepitousDrain, true);
                     }

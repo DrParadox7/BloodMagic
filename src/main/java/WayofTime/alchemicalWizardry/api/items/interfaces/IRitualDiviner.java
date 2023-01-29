@@ -3,6 +3,7 @@ package WayofTime.alchemicalWizardry.api.items.interfaces;
 import net.minecraft.item.ItemStack;
 
 public interface IRitualDiviner {
+
     int cycleDirection(ItemStack stack);
 
     String getCurrentRitual(ItemStack stack);

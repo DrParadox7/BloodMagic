@@ -8,6 +8,7 @@ import WayofTime.alchemicalWizardry.api.spell.SpellParadigmProjectile;
 import WayofTime.alchemicalWizardry.common.spell.complex.effect.impactEffects.wind.ProjectileDefaultWind;
 
 public class CSEProjectileDefaultWind extends ComplexSpellEffect {
+
     public CSEProjectileDefaultWind() {
         super(ComplexSpellType.WIND, ComplexSpellModifier.DEFAULT);
     }
@@ -23,9 +24,8 @@ public class CSEProjectileDefaultWind extends ComplexSpellEffect {
     @Override
     public void modifyParadigm(SpellParadigm parad) {
         if (parad instanceof SpellParadigmProjectile) {
-            ((SpellParadigmProjectile) parad)
-                    .addImpactEffect(new ProjectileDefaultWind(
-                            this.powerEnhancement, this.potencyEnhancement, this.costEnhancement));
+            ((SpellParadigmProjectile) parad).addImpactEffect(
+                    new ProjectileDefaultWind(this.powerEnhancement, this.potencyEnhancement, this.costEnhancement));
         }
     }
 

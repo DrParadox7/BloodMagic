@@ -1,14 +1,17 @@
 package WayofTime.alchemicalWizardry.common.alchemy;
 
-import WayofTime.alchemicalWizardry.api.alchemy.AlchemyPotionHelper;
-import WayofTime.alchemicalWizardry.common.items.potion.AlchemyFlask;
 import java.util.ArrayList;
 import java.util.List;
+
 import net.minecraft.item.ItemStack;
 import net.minecraft.potion.Potion;
 import net.minecraft.potion.PotionEffect;
 
+import WayofTime.alchemicalWizardry.api.alchemy.AlchemyPotionHelper;
+import WayofTime.alchemicalWizardry.common.items.potion.AlchemyFlask;
+
 public class CombinedPotionRegistry {
+
     public static List<CombinedPotionComponent> potionList = new ArrayList();
 
     public static void registerCombinedPotionRecipe(Potion result, Potion pot1, Potion pot2) {
@@ -83,7 +86,10 @@ public class CombinedPotionRegistry {
 
                 if (potEffect != null) {
                     AlchemyPotionHelper potHelper = new AlchemyPotionHelper(
-                            potEffect.getPotionID(), potEffect.getDuration(), 0, potEffect.getAmplifier());
+                            potEffect.getPotionID(),
+                            potEffect.getDuration(),
+                            0,
+                            potEffect.getAmplifier());
 
                     list.remove(helper1);
                     list.remove(helper2);
@@ -138,8 +144,7 @@ public class CombinedPotionRegistry {
 
         if (isRecipeValid(pot1, pot2)) {
             int duration = (int) ((potE1.getTickDuration() * Math.pow(8.0f / 3.0f, potE1.getdurationFactor())
-                            + potE2.getdurationFactor() * Math.pow(8.0f / 3.0f, potE2.getdurationFactor()))
-                    / 2.0);
+                    + potE2.getdurationFactor() * Math.pow(8.0f / 3.0f, potE2.getdurationFactor())) / 2.0);
             int amplifier = (potE1.getConcentration() + potE2.getConcentration()) / 2;
 
             Potion pot = getPotion(pot1, pot2);

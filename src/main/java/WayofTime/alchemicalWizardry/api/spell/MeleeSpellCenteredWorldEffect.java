@@ -5,6 +5,7 @@ import net.minecraft.util.Vec3;
 import net.minecraft.world.World;
 
 public abstract class MeleeSpellCenteredWorldEffect extends MeleeSpellWorldEffect {
+
     protected float range;
 
     public MeleeSpellCenteredWorldEffect(int power, int potency, int cost) {

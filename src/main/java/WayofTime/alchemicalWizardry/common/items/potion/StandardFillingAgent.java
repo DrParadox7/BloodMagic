@@ -1,11 +1,13 @@
 package WayofTime.alchemicalWizardry.common.items.potion;
 
+import net.minecraft.client.renderer.texture.IIconRegister;
+
 import WayofTime.alchemicalWizardry.AlchemicalWizardry;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
-import net.minecraft.client.renderer.texture.IIconRegister;
 
 public class StandardFillingAgent extends WeakFillingAgent {
+
     public StandardFillingAgent() {
         super();
         setCreativeTab(AlchemicalWizardry.tabBloodMagic);

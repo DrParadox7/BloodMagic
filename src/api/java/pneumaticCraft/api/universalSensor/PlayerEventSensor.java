@@ -1,9 +1,10 @@
 package pneumaticCraft.api.universalSensor;
 
-import cpw.mods.fml.common.eventhandler.Event;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraftforge.event.entity.player.PlayerEvent;
+
+import cpw.mods.fml.common.eventhandler.Event;
 
 public abstract class PlayerEventSensor implements IEventSensorSetting {
 

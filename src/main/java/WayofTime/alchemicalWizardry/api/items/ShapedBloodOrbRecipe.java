@@ -1,11 +1,11 @@
 package WayofTime.alchemicalWizardry.api.items;
 
-import WayofTime.alchemicalWizardry.api.items.interfaces.IBloodOrb;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.Map.Entry;
+
 import net.minecraft.block.Block;
 import net.minecraft.inventory.InventoryCrafting;
 import net.minecraft.item.Item;
@@ -15,10 +15,13 @@ import net.minecraft.item.crafting.ShapedRecipes;
 import net.minecraft.world.World;
 import net.minecraftforge.oredict.OreDictionary;
 
+import WayofTime.alchemicalWizardry.api.items.interfaces.IBloodOrb;
+
 /**
  * Shaped Blood Orb Recipe Handler by joshie *
  */
 public class ShapedBloodOrbRecipe implements IRecipe {
+
     private static final int MAX_CRAFT_GRID_WIDTH = 3;
     private static final int MAX_CRAFT_GRID_HEIGHT = 3;
 
@@ -85,10 +88,11 @@ public class ShapedBloodOrbRecipe implements IRecipe {
             Object in = recipe[idx + 1];
 
             if (in instanceof IBloodOrb
-                    || (in instanceof ItemStack
-                            && ((ItemStack) in).getItem()
-                                    instanceof
-                                    IBloodOrb)) { // If the item is an instanceof IBloodOrb then save the level of the
+                    || (in instanceof ItemStack && ((ItemStack) in).getItem() instanceof IBloodOrb)) { // If the item is
+                                                                                                       // an instanceof
+                                                                                                       // IBloodOrb then
+                                                                                                       // save the level
+                                                                                                       // of the
                 // orb
                 if (in instanceof ItemStack) itemMap.put(chr, ((IBloodOrb) ((ItemStack) in).getItem()).getOrbLevel());
                 else itemMap.put(chr, ((IBloodOrb) in).getOrbLevel());

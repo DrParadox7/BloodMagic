@@ -1,14 +1,17 @@
 package WayofTime.alchemicalWizardry.common.renderer;
 
-import WayofTime.alchemicalWizardry.api.ColourAndCoords;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.texture.TextureManager;
 import net.minecraft.client.renderer.tileentity.TileEntityRendererDispatcher;
 import net.minecraft.util.MathHelper;
 import net.minecraft.util.ResourceLocation;
+
 import org.lwjgl.opengl.GL11;
 
+import WayofTime.alchemicalWizardry.api.ColourAndCoords;
+
 public class BeamRenderer {
+
     private static final ResourceLocation field_110629_a = new ResourceLocation("textures/entity/beacon_beam.png");
 
     public int xInit;

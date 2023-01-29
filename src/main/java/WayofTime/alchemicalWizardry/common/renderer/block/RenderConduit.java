@@ -1,15 +1,18 @@
 package WayofTime.alchemicalWizardry.common.renderer.block;
 
-import WayofTime.alchemicalWizardry.common.renderer.model.ModelConduit;
-import WayofTime.alchemicalWizardry.common.tileEntity.TEConduit;
-import cpw.mods.fml.client.FMLClientHandler;
 import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
 import net.minecraft.entity.Entity;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ResourceLocation;
+
 import org.lwjgl.opengl.GL11;
 
+import WayofTime.alchemicalWizardry.common.renderer.model.ModelConduit;
+import WayofTime.alchemicalWizardry.common.tileEntity.TEConduit;
+import cpw.mods.fml.client.FMLClientHandler;
+
 public class RenderConduit extends TileEntitySpecialRenderer {
+
     private ModelConduit modelConduit = new ModelConduit();
 
     @Override

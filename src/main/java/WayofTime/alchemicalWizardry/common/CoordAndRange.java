@@ -1,6 +1,7 @@
 package WayofTime.alchemicalWizardry.common;
 
 public class CoordAndRange {
+
     public int xCoord;
     public int yCoord;
     public int zCoord;
@@ -18,8 +19,7 @@ public class CoordAndRange {
     @Override
     public boolean equals(Object o) {
         return o instanceof CoordAndRange
-                ? ((CoordAndRange) o).xCoord == this.xCoord
-                        && ((CoordAndRange) o).yCoord == this.yCoord
+                ? ((CoordAndRange) o).xCoord == this.xCoord && ((CoordAndRange) o).yCoord == this.yCoord
                         && ((CoordAndRange) o).zCoord == this.zCoord
                         && ((CoordAndRange) o).horizRadius == this.horizRadius
                         && ((CoordAndRange) o).vertRadius == this.vertRadius

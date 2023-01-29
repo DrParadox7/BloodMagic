@@ -6,6 +6,7 @@ import net.minecraft.entity.Entity;
 import net.minecraft.util.MathHelper;
 
 public class ModelMinorDemonGrunt extends ModelBase {
+
     // fields
     ModelRenderer head;
     ModelRenderer chest;

@@ -1,11 +1,9 @@
 package WayofTime.alchemicalWizardry.common.spell.complex.effect.impactEffects.tool;
 
-import WayofTime.alchemicalWizardry.AlchemicalWizardry;
-import WayofTime.alchemicalWizardry.api.items.ItemSpellMultiTool;
-import WayofTime.alchemicalWizardry.common.spell.complex.effect.SpellHelper;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Random;
+
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.MovingObjectPosition;
@@ -13,7 +11,12 @@ import net.minecraft.util.Vec3;
 import net.minecraft.world.World;
 import net.minecraftforge.common.util.ForgeDirection;
 
+import WayofTime.alchemicalWizardry.AlchemicalWizardry;
+import WayofTime.alchemicalWizardry.api.items.ItemSpellMultiTool;
+import WayofTime.alchemicalWizardry.common.spell.complex.effect.SpellHelper;
+
 public class DigAreaTunnel extends DigAreaEffect {
+
     Random rand = new Random();
 
     public DigAreaTunnel(int power, int potency, int cost) {
@@ -21,15 +24,8 @@ public class DigAreaTunnel extends DigAreaEffect {
     }
 
     @Override
-    public int digSurroundingArea(
-            ItemStack container,
-            World world,
-            EntityPlayer player,
-            MovingObjectPosition blockPos,
-            String usedToolClass,
-            float blockHardness,
-            int harvestLvl,
-            ItemSpellMultiTool itemTool) {
+    public int digSurroundingArea(ItemStack container, World world, EntityPlayer player, MovingObjectPosition blockPos,
+            String usedToolClass, float blockHardness, int harvestLvl, ItemSpellMultiTool itemTool) {
         if (!blockPos.typeOfHit.equals(MovingObjectPosition.MovingObjectType.BLOCK)) {
             return 0;
         }
@@ -47,7 +43,9 @@ public class DigAreaTunnel extends DigAreaEffect {
         double initialLength = this.getRandomVectorLength();
 
         Vec3 initialVector = SpellHelper.createVec3(
-                opposite.offsetX * initialLength, opposite.offsetY * initialLength, opposite.offsetZ * initialLength);
+                opposite.offsetX * initialLength,
+                opposite.offsetY * initialLength,
+                opposite.offsetZ * initialLength);
 
         Vec3 lastVec = SpellHelper.createVec3(initialVector.xCoord, initialVector.yCoord, initialVector.zCoord);
         vectorLine.add(initialVector);
@@ -157,7 +155,11 @@ public class DigAreaTunnel extends DigAreaEffect {
             prevVec = prevVec.addVector(stepLength * normVec.xCoord, stepLength * normVec.yCoord, normVec.zCoord);
 
             this.destroySphereOfMundane(
-                    world, prevVec.xCoord + x, prevVec.yCoord + y, prevVec.zCoord + z, this.getRandomRadius());
+                    world,
+                    prevVec.xCoord + x,
+                    prevVec.yCoord + y,
+                    prevVec.zCoord + z,
+                    this.getRandomRadius());
 
             distanceTravelled = prevVec.lengthVector();
         }

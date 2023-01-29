@@ -3,6 +3,7 @@ package WayofTime.alchemicalWizardry.api.soulNetwork;
 import net.minecraft.nbt.NBTTagCompound;
 
 public class LifeEssenceNetwork extends net.minecraft.world.WorldSavedData {
+
     public int currentEssence;
     public int maxOrb;
 

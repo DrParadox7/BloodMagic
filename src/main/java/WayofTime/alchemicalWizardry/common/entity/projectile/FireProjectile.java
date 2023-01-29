@@ -9,6 +9,7 @@ import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.world.World;
 
 public class FireProjectile extends EnergyBlastProjectile {
+
     public FireProjectile(World par1World) {
         super(par1World);
     }
@@ -21,27 +22,13 @@ public class FireProjectile extends EnergyBlastProjectile {
         super(par1World, par2EntityPlayer, damage);
     }
 
-    public FireProjectile(
-            World par1World,
-            EntityLivingBase par2EntityPlayer,
-            int damage,
-            int maxTicksInAir,
-            double posX,
-            double posY,
-            double posZ,
-            float rotationYaw,
-            float rotationPitch) {
+    public FireProjectile(World par1World, EntityLivingBase par2EntityPlayer, int damage, int maxTicksInAir,
+            double posX, double posY, double posZ, float rotationYaw, float rotationPitch) {
         super(par1World, par2EntityPlayer, damage, maxTicksInAir, posX, posY, posZ, rotationYaw, rotationPitch);
     }
 
-    public FireProjectile(
-            World par1World,
-            EntityLivingBase par2EntityLivingBase,
-            EntityLivingBase par3EntityLivingBase,
-            float par4,
-            float par5,
-            int damage,
-            int maxTicksInAir) {
+    public FireProjectile(World par1World, EntityLivingBase par2EntityLivingBase, EntityLivingBase par3EntityLivingBase,
+            float par4, float par5, int damage, int maxTicksInAir) {
         super(par1World, par2EntityLivingBase, par3EntityLivingBase, par4, par5, damage, maxTicksInAir);
     }
 
@@ -64,7 +51,10 @@ public class FireProjectile extends EnergyBlastProjectile {
                     for (int k = -1; k <= 1; k++) {
                         if (worldObj.isAirBlock((int) this.posX + i, (int) this.posY + j, (int) this.posZ + k)) {
                             worldObj.setBlock(
-                                    (int) this.posX + i, (int) this.posY + j, (int) this.posZ + k, Blocks.fire);
+                                    (int) this.posX + i,
+                                    (int) this.posY + j,
+                                    (int) this.posZ + k,
+                                    Blocks.fire);
                         }
                     }
                 }

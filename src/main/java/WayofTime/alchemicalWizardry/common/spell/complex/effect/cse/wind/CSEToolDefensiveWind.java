@@ -9,6 +9,7 @@ import WayofTime.alchemicalWizardry.common.spell.complex.effect.SpellHelper;
 import WayofTime.alchemicalWizardry.common.spell.complex.effect.impactEffects.wind.ToolDefensiveWind;
 
 public class CSEToolDefensiveWind extends ComplexSpellEffect {
+
     public CSEToolDefensiveWind() {
         super(ComplexSpellType.WIND, ComplexSpellModifier.DEFENSIVE);
     }
@@ -24,12 +25,11 @@ public class CSEToolDefensiveWind extends ComplexSpellEffect {
     @Override
     public void modifyParadigm(SpellParadigm parad) {
         if (parad instanceof SpellParadigmTool) {
-            ((SpellParadigmTool) parad)
-                    .addLeftClickEffect(new ToolDefensiveWind(
-                            this.powerEnhancement, this.potencyEnhancement, this.costEnhancement));
-            ((SpellParadigmTool) parad)
-                    .addToolString(
-                            "DefWind", "Knockback" + " " + SpellHelper.getNumeralForInt(this.powerEnhancement + 1));
+            ((SpellParadigmTool) parad).addLeftClickEffect(
+                    new ToolDefensiveWind(this.powerEnhancement, this.potencyEnhancement, this.costEnhancement));
+            ((SpellParadigmTool) parad).addToolString(
+                    "DefWind",
+                    "Knockback" + " " + SpellHelper.getNumeralForInt(this.powerEnhancement + 1));
         }
     }
 
@@ -40,8 +40,7 @@ public class CSEToolDefensiveWind extends ComplexSpellEffect {
 
     @Override
     public int getCostOfEffect() {
-        return (int) (150
-                * (1 + this.powerEnhancement * 0.4f)
+        return (int) (150 * (1 + this.powerEnhancement * 0.4f)
                 * (1 + this.potencyEnhancement * 0.3f)
                 * Math.pow(0.85, costEnhancement));
     }

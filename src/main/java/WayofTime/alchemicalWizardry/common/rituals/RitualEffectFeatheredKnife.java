@@ -1,5 +1,11 @@
 package WayofTime.alchemicalWizardry.common.rituals;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.world.World;
+
 import WayofTime.alchemicalWizardry.AlchemicalWizardry;
 import WayofTime.alchemicalWizardry.api.alchemy.energy.ReagentRegistry;
 import WayofTime.alchemicalWizardry.api.rituals.IMasterRitualStone;
@@ -8,12 +14,9 @@ import WayofTime.alchemicalWizardry.api.rituals.RitualEffect;
 import WayofTime.alchemicalWizardry.api.soulNetwork.SoulNetworkHandler;
 import WayofTime.alchemicalWizardry.api.tile.IBloodAltar;
 import WayofTime.alchemicalWizardry.common.spell.complex.effect.SpellHelper;
-import java.util.ArrayList;
-import java.util.List;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.world.World;
 
 public class RitualEffectFeatheredKnife extends RitualEffect {
+
     public final int amount = AlchemicalWizardry.lpPerSelfSacrificeFeatheredKnife;
 
     public static final int sanctusDrain = 5;
@@ -69,8 +72,8 @@ public class RitualEffectFeatheredKnife extends RitualEffect {
         if (currentEssence < this.getCostPerRefresh() * list.size()) {
             SoulNetworkHandler.causeNauseaToPlayer(owner);
         } else {
-            boolean hasMagicales =
-                    this.canDrainReagent(ritualStone, ReagentRegistry.magicalesReagent, magicalesDrain, false);
+            boolean hasMagicales = this
+                    .canDrainReagent(ritualStone, ReagentRegistry.magicalesReagent, magicalesDrain, false);
             boolean hasSanctus = this.canDrainReagent(ritualStone, ReagentRegistry.sanctusReagent, sanctusDrain, false);
 
             EntityPlayer ownerPlayer = SpellHelper.getPlayerForUsername(owner);
@@ -90,7 +93,10 @@ public class RitualEffectFeatheredKnife extends RitualEffect {
                             }
                             if (hasMagicales) {
                                 this.canDrainReagent(
-                                        ritualStone, ReagentRegistry.magicalesReagent, magicalesDrain, true);
+                                        ritualStone,
+                                        ReagentRegistry.magicalesReagent,
+                                        magicalesDrain,
+                                        true);
                                 break;
                             }
                         }

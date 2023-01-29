@@ -1,13 +1,7 @@
 package WayofTime.alchemicalWizardry.common.items.sigil;
 
-import WayofTime.alchemicalWizardry.AlchemicalWizardry;
-import WayofTime.alchemicalWizardry.api.items.interfaces.ArmourUpgrade;
-import WayofTime.alchemicalWizardry.api.items.interfaces.ISigil;
-import WayofTime.alchemicalWizardry.common.items.EnergyItems;
-import WayofTime.alchemicalWizardry.common.spell.complex.effect.SpellHelper;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
 import java.util.List;
+
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemBucket;
@@ -19,7 +13,16 @@ import net.minecraftforge.common.util.ForgeDirection;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.IFluidHandler;
 
+import WayofTime.alchemicalWizardry.AlchemicalWizardry;
+import WayofTime.alchemicalWizardry.api.items.interfaces.ArmourUpgrade;
+import WayofTime.alchemicalWizardry.api.items.interfaces.ISigil;
+import WayofTime.alchemicalWizardry.common.items.EnergyItems;
+import WayofTime.alchemicalWizardry.common.spell.complex.effect.SpellHelper;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
+
 public class SigilVoid extends ItemBucket implements ArmourUpgrade, ISigil {
+
     private int isFull;
     private int energyUsed;
 
@@ -42,8 +45,9 @@ public class SigilVoid extends ItemBucket implements ArmourUpgrade, ISigil {
         par3List.add(StatCollector.translateToLocal("tooltip.voidsigil.desc"));
 
         if (!(stack.getTagCompound() == null)) {
-            par3List.add(StatCollector.translateToLocal("tooltip.owner.currentowner") + " "
-                    + stack.getTagCompound().getString("ownerName"));
+            par3List.add(
+                    StatCollector.translateToLocal("tooltip.owner.currentowner") + " "
+                            + stack.getTagCompound().getString("ownerName"));
         }
     }
 
@@ -68,17 +72,8 @@ public class SigilVoid extends ItemBucket implements ArmourUpgrade, ISigil {
     }
 
     @Override
-    public boolean onItemUseFirst(
-            ItemStack stack,
-            EntityPlayer player,
-            World world,
-            int x,
-            int y,
-            int z,
-            int side,
-            float hitX,
-            float hitY,
-            float hitZ) {
+    public boolean onItemUseFirst(ItemStack stack, EntityPlayer player, World world, int x, int y, int z, int side,
+            float hitX, float hitY, float hitZ) {
         if (world.isRemote || !EnergyItems.checkAndSetItemOwner(stack, player) || player.isSneaking()) {
             return false;
         }
@@ -141,8 +136,8 @@ public class SigilVoid extends ItemBucket implements ArmourUpgrade, ISigil {
     /**
      * Attempts to place the liquid contained inside the bucket.
      */
-    public boolean tryPlaceContainedLiquid(
-            World par1World, double par2, double par4, double par6, int par8, int par9, int par10) {
+    public boolean tryPlaceContainedLiquid(World par1World, double par2, double par4, double par6, int par8, int par9,
+            int par10) {
         return false;
     }
 

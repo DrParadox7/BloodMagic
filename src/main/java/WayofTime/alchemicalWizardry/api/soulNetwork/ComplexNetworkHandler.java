@@ -1,8 +1,5 @@
 package WayofTime.alchemicalWizardry.api.soulNetwork;
 
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-import com.mojang.authlib.GameProfile;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -13,13 +10,19 @@ import java.io.Writer;
 import java.util.HashMap;
 import java.util.Map.Entry;
 import java.util.UUID;
+
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.server.MinecraftServer;
+
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.mojang.authlib.GameProfile;
 
 /**
  * Temporary class to hash-out how to create a network not completely tied to the player.
  */
 public class ComplexNetworkHandler {
+
     public static String fileName = "config/BloodMagic/soulnetworkKeys";
     static HashMap<UUID, String> keyMap = new HashMap();
 
@@ -42,19 +45,19 @@ public class ComplexNetworkHandler {
     }
 
     public static UUID getUUIDForKey(String key) {
-        //    	if (MinecraftServer.getServer() == null)
-        //        {
-        //            return null;
-        //        }
+        // if (MinecraftServer.getServer() == null)
+        // {
+        // return null;
+        // }
         //
-        //        World world = MinecraftServer.getServer().worldServers[0];
-        //        UUIDKeyMap data = (UUIDKeyMap) world.loadItemData(UUIDKeyMap.class, key);
+        // World world = MinecraftServer.getServer().worldServers[0];
+        // UUIDKeyMap data = (UUIDKeyMap) world.loadItemData(UUIDKeyMap.class, key);
         //
-        //        if (data == null)
-        //        {
-        //            data = new UUIDKeyMap(key);
-        //            world.setItemData(key, data);
-        //        }
+        // if (data == null)
+        // {
+        // data = new UUIDKeyMap(key);
+        // world.setItemData(key, data);
+        // }
         return null;
     }
 

@@ -23,10 +23,12 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.storage.MapData;
 import net.minecraftforge.client.IItemRenderer;
 import net.minecraftforge.client.MinecraftForgeClient;
+
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL12;
 
 public class ClientUtils {
+
     public static Minecraft mc = Minecraft.getMinecraft();
 
     private static final ResourceLocation RES_MAP_BACKGROUND = new ResourceLocation("textures/map/map_background.png");
@@ -38,18 +40,16 @@ public class ClientUtils {
         EntityClientPlayerMP entityclientplayermp = mc.thePlayer;
         float f2 = entityclientplayermp.prevRotationPitch
                 + (entityclientplayermp.rotationPitch - entityclientplayermp.prevRotationPitch) * partialTickTime;
-        //        GL11.glPushMatrix();
+        // GL11.glPushMatrix();
         GL11.glRotatef(
-                180
-                        - (entityclientplayermp.prevRotationYaw
-                                + (entityclientplayermp.rotationYaw - entityclientplayermp.prevRotationYaw)
-                                        * partialTickTime),
+                180 - (entityclientplayermp.prevRotationYaw
+                        + (entityclientplayermp.rotationYaw - entityclientplayermp.prevRotationYaw) * partialTickTime),
                 0.0F,
                 1.0F,
                 0.0F);
         GL11.glRotatef(-f2, 1.0F, 0.0F, 0.0F);
         RenderHelper.enableStandardItemLighting();
-        //        GL11.glPopMatrix();
+        // GL11.glPopMatrix();
         EntityPlayerSP entityplayersp = (EntityPlayerSP) entityclientplayermp;
         float f3 = entityplayersp.prevRenderArmPitch
                 + (entityplayersp.renderArmPitch - entityplayersp.prevRenderArmPitch) * partialTickTime;
@@ -101,7 +101,9 @@ public class ClientUtils {
             f6 = MathHelper.sin(f5 * (float) Math.PI);
             f7 = MathHelper.sin(MathHelper.sqrt_float(f5) * (float) Math.PI);
             GL11.glTranslatef(
-                    -f7 * 0.4F, MathHelper.sin(MathHelper.sqrt_float(f5) * (float) Math.PI * 2.0F) * 0.2F, -f6 * 0.2F);
+                    -f7 * 0.4F,
+                    MathHelper.sin(MathHelper.sqrt_float(f5) * (float) Math.PI * 2.0F) * 0.2F,
+                    -f6 * 0.2F);
             f5 = 1.0F - f2 / 45.0F + 0.1F;
 
             if (f5 < 0.0F) {
@@ -263,20 +265,20 @@ public class ClientUtils {
             }
 
             if (itemstack.getItem().requiresMultipleRenderPasses()) {
-                RenderManager.instance.itemRenderer.renderItem(
-                        entityclientplayermp, itemstack, 0, EQUIPPED_FIRST_PERSON);
+                RenderManager.instance.itemRenderer
+                        .renderItem(entityclientplayermp, itemstack, 0, EQUIPPED_FIRST_PERSON);
                 for (int x = 1; x < itemstack.getItem().getRenderPasses(itemstack.getItemDamage()); x++) {
                     int k1 = itemstack.getItem().getColorFromItemStack(itemstack, x);
                     f10 = (float) (k1 >> 16 & 255) / 255.0F;
                     f11 = (float) (k1 >> 8 & 255) / 255.0F;
                     f12 = (float) (k1 & 255) / 255.0F;
                     GL11.glColor4f(1.0F * f10, 1.0F * f11, 1.0F * f12, 1.0F);
-                    RenderManager.instance.itemRenderer.renderItem(
-                            entityclientplayermp, itemstack, x, EQUIPPED_FIRST_PERSON);
+                    RenderManager.instance.itemRenderer
+                            .renderItem(entityclientplayermp, itemstack, x, EQUIPPED_FIRST_PERSON);
                 }
             } else {
-                RenderManager.instance.itemRenderer.renderItem(
-                        entityclientplayermp, itemstack, 0, EQUIPPED_FIRST_PERSON);
+                RenderManager.instance.itemRenderer
+                        .renderItem(entityclientplayermp, itemstack, 0, EQUIPPED_FIRST_PERSON);
             }
 
             GL11.glPopMatrix();
@@ -287,7 +289,9 @@ public class ClientUtils {
             f6 = MathHelper.sin(f5 * (float) Math.PI);
             f7 = MathHelper.sin(MathHelper.sqrt_float(f5) * (float) Math.PI);
             GL11.glTranslatef(
-                    -f7 * 0.3F, MathHelper.sin(MathHelper.sqrt_float(f5) * (float) Math.PI * 2.0F) * 0.4F, -f6 * 0.4F);
+                    -f7 * 0.3F,
+                    MathHelper.sin(MathHelper.sqrt_float(f5) * (float) Math.PI * 2.0F) * 0.4F,
+                    -f6 * 0.4F);
             GL11.glTranslatef(0.8F * f13, -0.75F * f13 - (1.0F - f1) * 0.6F, -0.9F * f13);
             GL11.glRotatef(45.0F, 0.0F, 1.0F, 0.0F);
             GL11.glEnable(GL12.GL_RESCALE_NORMAL);

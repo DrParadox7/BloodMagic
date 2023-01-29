@@ -1,6 +1,7 @@
 package WayofTime.alchemicalWizardry.common.omega;
 
 public class ReagentRegenConfiguration {
+
     public int tickRate;
     public int healPerTick;
     public float costPerPoint;

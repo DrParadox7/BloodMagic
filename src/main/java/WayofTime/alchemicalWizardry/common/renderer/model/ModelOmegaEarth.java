@@ -5,8 +5,7 @@ import net.minecraft.client.model.ModelRenderer;
 import net.minecraft.entity.Entity;
 
 /**
- * OmegaEarth.tcn - TechneToTabulaImporter
- * Created using Tabula 4.1.0
+ * OmegaEarth.tcn - TechneToTabulaImporter Created using Tabula 4.1.0
  */
 public class ModelOmegaEarth extends ModelBiped {
 

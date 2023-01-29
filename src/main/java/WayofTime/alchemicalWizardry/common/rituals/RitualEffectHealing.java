@@ -1,5 +1,14 @@
 package WayofTime.alchemicalWizardry.common.rituals;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.potion.Potion;
+import net.minecraft.potion.PotionEffect;
+import net.minecraft.world.World;
+
 import WayofTime.alchemicalWizardry.AlchemicalWizardry;
 import WayofTime.alchemicalWizardry.api.alchemy.energy.ReagentRegistry;
 import WayofTime.alchemicalWizardry.api.rituals.IMasterRitualStone;
@@ -7,15 +16,9 @@ import WayofTime.alchemicalWizardry.api.rituals.RitualComponent;
 import WayofTime.alchemicalWizardry.api.rituals.RitualEffect;
 import WayofTime.alchemicalWizardry.api.soulNetwork.SoulNetworkHandler;
 import WayofTime.alchemicalWizardry.common.spell.complex.effect.SpellHelper;
-import java.util.ArrayList;
-import java.util.List;
-import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.potion.Potion;
-import net.minecraft.potion.PotionEffect;
-import net.minecraft.world.World;
 
 public class RitualEffectHealing extends RitualEffect {
+
     public static final int reductusDrain = 10;
     public static final int virtusDrain = 10;
     public static final int praesidiumDrain = 2;
@@ -36,14 +39,14 @@ public class RitualEffectHealing extends RitualEffect {
             return;
         }
 
-        boolean hasPraesidium =
-                this.canDrainReagent(ritualStone, ReagentRegistry.praesidiumReagent, praesidiumDrain, false);
+        boolean hasPraesidium = this
+                .canDrainReagent(ritualStone, ReagentRegistry.praesidiumReagent, praesidiumDrain, false);
 
         int range = 15 * (hasPraesidium ? 3 : 1);
         int vertRange = 15 * (hasPraesidium ? 3 : 1);
 
-        List<EntityLivingBase> list =
-                SpellHelper.getLivingEntitiesInRange(world, x + 0.5, y + 0.5, z + 0.5, range, vertRange);
+        List<EntityLivingBase> list = SpellHelper
+                .getLivingEntitiesInRange(world, x + 0.5, y + 0.5, z + 0.5, range, vertRange);
         int entityCount = 0;
         boolean flag = false;
 
@@ -65,8 +68,8 @@ public class RitualEffectHealing extends RitualEffect {
         } else {
             entityCount = 0;
 
-            boolean hasReductus =
-                    this.canDrainReagent(ritualStone, ReagentRegistry.reductusReagent, reductusDrain, false);
+            boolean hasReductus = this
+                    .canDrainReagent(ritualStone, ReagentRegistry.reductusReagent, reductusDrain, false);
 
             for (EntityLivingBase livingEntity : list) {
                 hasReductus = hasReductus
@@ -77,15 +80,12 @@ public class RitualEffectHealing extends RitualEffect {
 
                 if (livingEntity.getHealth() + 0.1f < livingEntity.getMaxHealth()) {
                     PotionEffect effect = livingEntity.getActivePotionEffect(Potion.regeneration);
-                    if (effect == null
-                            || (effect != null
-                                    && effect.getAmplifier() <= potency
-                                    && effect.getDuration() <= timeDelay)) {
-                        if (!hasVirtus
-                                || (this.canDrainReagent(
-                                        ritualStone, ReagentRegistry.virtusReagent, virtusDrain, false))) {
-                            livingEntity.addPotionEffect(
-                                    new PotionEffect(Potion.regeneration.id, timeDelay + 2, potency));
+                    if (effect == null || (effect != null && effect.getAmplifier() <= potency
+                            && effect.getDuration() <= timeDelay)) {
+                        if (!hasVirtus || (this
+                                .canDrainReagent(ritualStone, ReagentRegistry.virtusReagent, virtusDrain, false))) {
+                            livingEntity
+                                    .addPotionEffect(new PotionEffect(Potion.regeneration.id, timeDelay + 2, potency));
                             if (hasReductus) {
                                 this.canDrainReagent(ritualStone, ReagentRegistry.reductusReagent, reductusDrain, true);
                             }

@@ -1,10 +1,7 @@
 package WayofTime.alchemicalWizardry.common.items;
 
-import WayofTime.alchemicalWizardry.AlchemicalWizardry;
-import WayofTime.alchemicalWizardry.api.alchemy.AlchemyRecipeRegistry;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
 import java.util.List;
+
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
@@ -15,20 +12,18 @@ import net.minecraft.util.IIcon;
 import net.minecraft.util.MathHelper;
 import net.minecraft.util.StatCollector;
 import net.minecraft.world.World;
+
 import org.lwjgl.input.Keyboard;
 
+import WayofTime.alchemicalWizardry.AlchemicalWizardry;
+import WayofTime.alchemicalWizardry.api.alchemy.AlchemyRecipeRegistry;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
+
 public class ItemAlchemyBase extends Item {
-    private static final String[] ITEM_NAMES = new String[] {
-        "Offensa",
-        "Praesidium",
-        "OrbisTerrae",
-        "StrengthenedCatalyst",
-        "ConcentratedCatalyst",
-        "FracturedBone",
-        "Virtus",
-        "Reductus",
-        "Potentia"
-    };
+
+    private static final String[] ITEM_NAMES = new String[] { "Offensa", "Praesidium", "OrbisTerrae",
+            "StrengthenedCatalyst", "ConcentratedCatalyst", "FracturedBone", "Virtus", "Reductus", "Potentia" };
 
     @SideOnly(Side.CLIENT)
     private IIcon[] icons;
@@ -67,9 +62,15 @@ public class ItemAlchemyBase extends Item {
                 }
             }
         } else {
-            par3List.add("-" + StatCollector.translateToLocal("tooltip.alchemy.press") + " " + EnumChatFormatting.BLUE
-                    + StatCollector.translateToLocal("tooltip.alchemy.shift") + EnumChatFormatting.GRAY + " "
-                    + StatCollector.translateToLocal("tooltip.alchemy.forrecipe") + "-");
+            par3List.add(
+                    "-" + StatCollector.translateToLocal("tooltip.alchemy.press")
+                            + " "
+                            + EnumChatFormatting.BLUE
+                            + StatCollector.translateToLocal("tooltip.alchemy.shift")
+                            + EnumChatFormatting.GRAY
+                            + " "
+                            + StatCollector.translateToLocal("tooltip.alchemy.forrecipe")
+                            + "-");
         }
     }
 

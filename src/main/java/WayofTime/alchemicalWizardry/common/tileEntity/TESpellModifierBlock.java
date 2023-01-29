@@ -4,6 +4,7 @@ import WayofTime.alchemicalWizardry.api.spell.ComplexSpellModifier;
 import WayofTime.alchemicalWizardry.api.spell.SpellParadigm;
 
 public class TESpellModifierBlock extends TESpellBlock {
+
     @Override
     protected void applySpellChange(SpellParadigm parad) {
         parad.modifyBufferedEffect(this.getSpellModifier());

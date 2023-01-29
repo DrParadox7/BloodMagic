@@ -1,15 +1,18 @@
 package WayofTime.alchemicalWizardry.common.spell.simple;
 
-import WayofTime.alchemicalWizardry.common.entity.projectile.IceProjectile;
-import WayofTime.alchemicalWizardry.common.items.EnergyItems;
 import java.util.Random;
+
 import net.minecraft.block.Block;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
 
+import WayofTime.alchemicalWizardry.common.entity.projectile.IceProjectile;
+import WayofTime.alchemicalWizardry.common.items.EnergyItems;
+
 public class SpellFrozenWater extends HomSpell {
+
     public Random itemRand = new Random();
 
     public SpellFrozenWater() {
@@ -18,15 +21,15 @@ public class SpellFrozenWater extends HomSpell {
     }
 
     @Override
-    public ItemStack onOffensiveRangedRightClick(
-            ItemStack par1ItemStack, World par2World, EntityPlayer par3EntityPlayer) {
+    public ItemStack onOffensiveRangedRightClick(ItemStack par1ItemStack, World par2World,
+            EntityPlayer par3EntityPlayer) {
         if (!EnergyItems.checkAndSetItemOwner(par1ItemStack, par3EntityPlayer) || par3EntityPlayer.isSneaking()) {
             return par1ItemStack;
         }
 
         if (!par3EntityPlayer.capabilities.isCreativeMode) {
-            EnergyItems.syphonAndDamageWhileInContainer(
-                    par1ItemStack, par3EntityPlayer, this.getOffensiveRangedEnergy());
+            EnergyItems
+                    .syphonAndDamageWhileInContainer(par1ItemStack, par3EntityPlayer, this.getOffensiveRangedEnergy());
         }
 
         par2World.playSoundAtEntity(par3EntityPlayer, "random.fizz", 0.5F, 0.4F / (itemRand.nextFloat() * 0.4F + 0.8F));
@@ -39,28 +42,29 @@ public class SpellFrozenWater extends HomSpell {
     }
 
     @Override
-    public ItemStack onOffensiveMeleeRightClick(
-            ItemStack par1ItemStack, World par2World, EntityPlayer par3EntityPlayer) {
+    public ItemStack onOffensiveMeleeRightClick(ItemStack par1ItemStack, World par2World,
+            EntityPlayer par3EntityPlayer) {
         if (!EnergyItems.checkAndSetItemOwner(par1ItemStack, par3EntityPlayer) || par3EntityPlayer.isSneaking()) {
             return par1ItemStack;
         }
 
         if (!par3EntityPlayer.capabilities.isCreativeMode) {
-            EnergyItems.syphonAndDamageWhileInContainer(
-                    par1ItemStack, par3EntityPlayer, this.getOffensiveMeleeEnergy());
+            EnergyItems
+                    .syphonAndDamageWhileInContainer(par1ItemStack, par3EntityPlayer, this.getOffensiveMeleeEnergy());
         }
 
         for (int i = -2; i <= 2; i++) {
-            par2World.spawnEntityInWorld(new IceProjectile(
-                    par2World,
-                    par3EntityPlayer,
-                    6,
-                    2,
-                    par3EntityPlayer.posX,
-                    par3EntityPlayer.posY + par3EntityPlayer.getEyeHeight(),
-                    par3EntityPlayer.posZ,
-                    par3EntityPlayer.rotationYaw + i * 5F,
-                    par3EntityPlayer.rotationPitch));
+            par2World.spawnEntityInWorld(
+                    new IceProjectile(
+                            par2World,
+                            par3EntityPlayer,
+                            6,
+                            2,
+                            par3EntityPlayer.posX,
+                            par3EntityPlayer.posY + par3EntityPlayer.getEyeHeight(),
+                            par3EntityPlayer.posZ,
+                            par3EntityPlayer.rotationYaw + i * 5F,
+                            par3EntityPlayer.rotationPitch));
         }
 
         return par1ItemStack;
@@ -178,8 +182,8 @@ public class SpellFrozenWater extends HomSpell {
     }
 
     @Override
-    public ItemStack onEnvironmentalRightClick(
-            ItemStack par1ItemStack, World par2World, EntityPlayer par3EntityPlayer) {
+    public ItemStack onEnvironmentalRightClick(ItemStack par1ItemStack, World par2World,
+            EntityPlayer par3EntityPlayer) {
         if (!EnergyItems.checkAndSetItemOwner(par1ItemStack, par3EntityPlayer) || par3EntityPlayer.isSneaking()) {
             return par1ItemStack;
         }

@@ -1,15 +1,11 @@
 package WayofTime.alchemicalWizardry.common.items.potion;
 
-import WayofTime.alchemicalWizardry.AlchemicalWizardry;
-import WayofTime.alchemicalWizardry.api.alchemy.AlchemyPotionHelper;
-import com.google.common.collect.HashMultimap;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
+
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.ai.attributes.AttributeModifier;
@@ -29,7 +25,16 @@ import net.minecraft.util.StatCollector;
 import net.minecraft.world.World;
 import net.minecraftforge.common.util.Constants;
 
+import WayofTime.alchemicalWizardry.AlchemicalWizardry;
+import WayofTime.alchemicalWizardry.api.alchemy.AlchemyPotionHelper;
+
+import com.google.common.collect.HashMultimap;
+
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
+
 public class AlchemyFlask extends Item {
+
     public AlchemyFlask() {
         super();
         this.setMaxDamage(8);
@@ -46,8 +51,8 @@ public class AlchemyFlask extends Item {
     public static ArrayList<AlchemyPotionHelper> getEffects(ItemStack par1ItemStack) {
         if (par1ItemStack.hasTagCompound() && par1ItemStack.getTagCompound().hasKey("CustomFlaskEffects")) {
             ArrayList<AlchemyPotionHelper> arraylist = new ArrayList();
-            NBTTagList nbttaglist =
-                    par1ItemStack.getTagCompound().getTagList("CustomFlaskEffects", Constants.NBT.TAG_COMPOUND);
+            NBTTagList nbttaglist = par1ItemStack.getTagCompound()
+                    .getTagList("CustomFlaskEffects", Constants.NBT.TAG_COMPOUND);
 
             for (int i = 0; i < nbttaglist.tagCount(); ++i) {
                 NBTTagCompound nbttagcompound = nbttaglist.getCompoundTagAt(i);
@@ -217,8 +222,12 @@ public class AlchemyFlask extends Item {
     }
 
     public void addInformation(ItemStack par1ItemStack, EntityPlayer par2EntityPlayer, List par3List, boolean par4) {
-        par3List.add(EnumChatFormatting.BLUE + StatCollector.translateToLocal("tooltip.alchemyflask.swigsleft") + " "
-                + (par1ItemStack.getMaxDamage() - par1ItemStack.getItemDamage()) + "/" + par1ItemStack.getMaxDamage());
+        par3List.add(
+                EnumChatFormatting.BLUE + StatCollector.translateToLocal("tooltip.alchemyflask.swigsleft")
+                        + " "
+                        + (par1ItemStack.getMaxDamage() - par1ItemStack.getItemDamage())
+                        + "/"
+                        + par1ItemStack.getMaxDamage());
 
         if (this.isPotionThrowable(par1ItemStack)) {
             par3List.add(EnumChatFormatting.BLUE + StatCollector.translateToLocal("tooltip.alchemyflask.caution"));
@@ -233,8 +242,7 @@ public class AlchemyFlask extends Item {
 
             while (iterator.hasNext()) {
                 PotionEffect potioneffect = (PotionEffect) iterator.next();
-                String s = StatCollector.translateToLocal(potioneffect.getEffectName())
-                        .trim();
+                String s = StatCollector.translateToLocal(potioneffect.getEffectName()).trim();
                 Potion potion = Potion.potionTypes[potioneffect.getPotionID()];
                 Map map = potion.func_111186_k();
 
@@ -248,15 +256,14 @@ public class AlchemyFlask extends Item {
                                 attributemodifier.getName(),
                                 potion.func_111183_a(potioneffect.getAmplifier(), attributemodifier),
                                 attributemodifier.getOperation());
-                        hashmultimap.put(
-                                ((IAttribute) entry.getKey()).getAttributeUnlocalizedName(), attributemodifier1);
+                        hashmultimap
+                                .put(((IAttribute) entry.getKey()).getAttributeUnlocalizedName(), attributemodifier1);
                     }
                 }
 
                 if (potioneffect.getAmplifier() > 0) {
                     s = s + " "
-                            + StatCollector.translateToLocal("potion.potency." + potioneffect.getAmplifier())
-                                    .trim();
+                            + StatCollector.translateToLocal("potion.potency." + potioneffect.getAmplifier()).trim();
                 }
 
                 if (potioneffect.getDuration() > 20) {
@@ -292,20 +299,18 @@ public class AlchemyFlask extends Item {
                 }
 
                 if (d0 > 0.0D) {
-                    par3List.add(EnumChatFormatting.BLUE
-                            + StatCollector.translateToLocalFormatted(
-                                    "attribute.modifier.plus." + attributemodifier2.getOperation(), new Object[] {
-                                        ItemStack.field_111284_a.format(d1),
-                                        StatCollector.translateToLocal("attribute.name." + (String) entry1.getKey())
-                                    }));
+                    par3List.add(
+                            EnumChatFormatting.BLUE + StatCollector.translateToLocalFormatted(
+                                    "attribute.modifier.plus." + attributemodifier2.getOperation(),
+                                    new Object[] { ItemStack.field_111284_a.format(d1), StatCollector
+                                            .translateToLocal("attribute.name." + (String) entry1.getKey()) }));
                 } else if (d0 < 0.0D) {
                     d1 *= -1.0D;
-                    par3List.add(EnumChatFormatting.RED
-                            + StatCollector.translateToLocalFormatted(
-                                    "attribute.modifier.take." + attributemodifier2.getOperation(), new Object[] {
-                                        ItemStack.field_111284_a.format(d1),
-                                        StatCollector.translateToLocal("attribute.name." + (String) entry1.getKey())
-                                    }));
+                    par3List.add(
+                            EnumChatFormatting.RED + StatCollector.translateToLocalFormatted(
+                                    "attribute.modifier.take." + attributemodifier2.getOperation(),
+                                    new Object[] { ItemStack.field_111284_a.format(d1), StatCollector
+                                            .translateToLocal("attribute.name." + (String) entry1.getKey()) }));
                 }
             }
         }

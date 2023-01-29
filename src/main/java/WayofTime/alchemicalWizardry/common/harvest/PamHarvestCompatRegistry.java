@@ -3,6 +3,7 @@ package WayofTime.alchemicalWizardry.common.harvest;
 import WayofTime.alchemicalWizardry.api.harvest.HarvestRegistry;
 
 public class PamHarvestCompatRegistry {
+
     public static void registerPamHandlers() {
         registerSeededHandler("blackberry", 7);
         registerSeededHandler("blueberry", 7);
@@ -111,8 +112,10 @@ public class PamHarvestCompatRegistry {
     public static void registerFruitHandler(String name, int harvestMeta, int resetMeta) {
         String block = "harvestcraft:pam" + name;
 
-        GenericPamSeedlessFruitHarvestHandler handler =
-                new GenericPamSeedlessFruitHarvestHandler(block, harvestMeta, resetMeta);
+        GenericPamSeedlessFruitHarvestHandler handler = new GenericPamSeedlessFruitHarvestHandler(
+                block,
+                harvestMeta,
+                resetMeta);
         if (handler.isHarvesterValid()) {
             HarvestRegistry.registerHarvestHandler(handler);
         }

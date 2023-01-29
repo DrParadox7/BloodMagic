@@ -3,6 +3,7 @@ package WayofTime.alchemicalWizardry.common.bloodAltarUpgrade;
 import net.minecraft.block.Block;
 
 public class AltarComponent {
+
     private int x;
     private int y;
     private int z;

@@ -7,6 +7,7 @@ import WayofTime.alchemicalWizardry.api.spell.SpellParadigm;
 import WayofTime.alchemicalWizardry.api.spell.SpellParadigmProjectile;
 
 public class CSEProjectileDefensiveWind extends ComplexSpellEffect {
+
     public CSEProjectileDefensiveWind() {
         super(ComplexSpellType.WIND, ComplexSpellModifier.DEFENSIVE);
     }

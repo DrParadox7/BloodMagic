@@ -1,14 +1,17 @@
 package WayofTime.alchemicalWizardry.client.nei;
 
+import java.util.ArrayList;
+
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
+
 import WayofTime.alchemicalWizardry.api.items.interfaces.IBloodOrb;
 import codechicken.nei.ItemList;
 import codechicken.nei.api.API;
 import codechicken.nei.api.IConfigureNEI;
-import java.util.ArrayList;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
 
 public class NEIConfig implements IConfigureNEI {
+
     private static ArrayList<Item> bloodOrbs = null;
 
     public static ArrayList<Item> getBloodOrbs() {

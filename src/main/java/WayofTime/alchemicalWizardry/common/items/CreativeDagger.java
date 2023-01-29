@@ -1,10 +1,5 @@
 package WayofTime.alchemicalWizardry.common.items;
 
-import WayofTime.alchemicalWizardry.AlchemicalWizardry;
-import WayofTime.alchemicalWizardry.api.event.SacrificeKnifeUsedEvent;
-import WayofTime.alchemicalWizardry.api.sacrifice.PlayerSacrificeHandler;
-import WayofTime.alchemicalWizardry.api.tile.IBloodAltar;
-import WayofTime.alchemicalWizardry.common.spell.complex.effect.SpellHelper;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
@@ -15,7 +10,14 @@ import net.minecraft.world.World;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.util.FakePlayer;
 
+import WayofTime.alchemicalWizardry.AlchemicalWizardry;
+import WayofTime.alchemicalWizardry.api.event.SacrificeKnifeUsedEvent;
+import WayofTime.alchemicalWizardry.api.sacrifice.PlayerSacrificeHandler;
+import WayofTime.alchemicalWizardry.api.tile.IBloodAltar;
+import WayofTime.alchemicalWizardry.common.spell.complex.effect.SpellHelper;
+
 public class CreativeDagger extends Item {
+
     public CreativeDagger() {
         super();
         setTextureName("AlchemicalWizardry:SacrificialDagger");

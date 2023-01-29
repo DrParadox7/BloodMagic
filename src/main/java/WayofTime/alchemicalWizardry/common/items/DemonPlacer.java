@@ -1,11 +1,7 @@
 package WayofTime.alchemicalWizardry.common.items;
 
-import WayofTime.alchemicalWizardry.api.summoningRegistry.SummoningRegistry;
-import WayofTime.alchemicalWizardry.common.entity.mob.EntityDemon;
-import WayofTime.alchemicalWizardry.common.spell.complex.effect.SpellHelper;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
 import java.util.List;
+
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.renderer.texture.IIconRegister;
@@ -25,7 +21,14 @@ import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.util.StatCollector;
 import net.minecraft.world.World;
 
+import WayofTime.alchemicalWizardry.api.summoningRegistry.SummoningRegistry;
+import WayofTime.alchemicalWizardry.common.entity.mob.EntityDemon;
+import WayofTime.alchemicalWizardry.common.spell.complex.effect.SpellHelper;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
+
 public class DemonPlacer extends Item {
+
     public DemonPlacer() {
         super();
         this.setHasSubtypes(true);
@@ -35,10 +38,9 @@ public class DemonPlacer extends Item {
 
     @SideOnly(Side.CLIENT)
     public int getColorFromItemStack(ItemStack par1ItemStack, int par2) {
-        EntityEggInfo entityegginfo =
-                (EntityEggInfo) EntityList.entityEggs.get(Integer.valueOf(par1ItemStack.getItemDamage()));
-        return entityegginfo != null
-                ? (par2 == 0 ? entityegginfo.primaryColor : entityegginfo.secondaryColor)
+        EntityEggInfo entityegginfo = (EntityEggInfo) EntityList.entityEggs
+                .get(Integer.valueOf(par1ItemStack.getItemDamage()));
+        return entityegginfo != null ? (par2 == 0 ? entityegginfo.primaryColor : entityegginfo.secondaryColor)
                 : 16777215;
     }
 
@@ -46,17 +48,8 @@ public class DemonPlacer extends Item {
      * Callback for item usage. If the item does something special on right clicking, he will have one of those. Return
      * True if something happen and false if it don't. This is for ITEMS, not BLOCKS
      */
-    public boolean onItemUse(
-            ItemStack par1ItemStack,
-            EntityPlayer par2EntityPlayer,
-            World par3World,
-            int par4,
-            int par5,
-            int par6,
-            int par7,
-            float par8,
-            float par9,
-            float par10) {
+    public boolean onItemUse(ItemStack par1ItemStack, EntityPlayer par2EntityPlayer, World par3World, int par4,
+            int par5, int par6, int par7, float par8, float par9, float par10) {
         if (par3World.isRemote) {
             return true;
         } else {
@@ -100,8 +93,8 @@ public class DemonPlacer extends Item {
         if (par2World.isRemote) {
             return par1ItemStack;
         } else {
-            MovingObjectPosition movingobjectposition =
-                    this.getMovingObjectPositionFromPlayer(par2World, par3EntityPlayer, true);
+            MovingObjectPosition movingobjectposition = this
+                    .getMovingObjectPositionFromPlayer(par2World, par3EntityPlayer, true);
 
             if (movingobjectposition == null) {
                 return par1ItemStack;
@@ -121,8 +114,13 @@ public class DemonPlacer extends Item {
 
                     if (par2World.getBlock(i, j, k).getMaterial() == Material.water) {
                         String demonName = DemonPlacer.getDemonString(par1ItemStack);
-                        Entity entity =
-                                spawnCreature(par2World, demonName, (double) i, (double) j, (double) k, par1ItemStack);
+                        Entity entity = spawnCreature(
+                                par2World,
+                                demonName,
+                                (double) i,
+                                (double) j,
+                                (double) k,
+                                par1ItemStack);
 
                         if (entity != null) {
                             if (entity instanceof EntityLivingBase && par1ItemStack.hasDisplayName()) {
@@ -145,8 +143,8 @@ public class DemonPlacer extends Item {
      * Spawns the creature specified by the egg's type in the location specified by the last three parameters.
      * Parameters: world, entityID, x, y, z.
      */
-    public static Entity spawnCreature(
-            World par0World, String par1, double par2, double par4, double par6, ItemStack itemStack) {
+    public static Entity spawnCreature(World par0World, String par1, double par2, double par4, double par6,
+            ItemStack itemStack) {
         Entity entity = null;
 
         for (int j = 0; j < 1; ++j) {
@@ -155,14 +153,17 @@ public class DemonPlacer extends Item {
             if (entity != null && entity instanceof EntityLivingBase) {
                 EntityLiving entityliving = (EntityLiving) entity;
                 entity.setLocationAndAngles(
-                        par2, par4, par6, MathHelper.wrapAngleTo180_float(par0World.rand.nextFloat() * 360.0F), 0.0F);
+                        par2,
+                        par4,
+                        par6,
+                        MathHelper.wrapAngleTo180_float(par0World.rand.nextFloat() * 360.0F),
+                        0.0F);
                 entityliving.rotationYawHead = entityliving.rotationYaw;
                 entityliving.renderYawOffset = entityliving.rotationYaw;
                 if (entityliving instanceof EntityDemon) {
                     Entity owner = SpellHelper.getPlayerForUsername(DemonPlacer.getOwnerName(itemStack));
                     if (owner != null) {
-                        ((EntityDemon) entityliving)
-                                .func_152115_b(owner.getPersistentID().toString());
+                        ((EntityDemon) entityliving).func_152115_b(owner.getPersistentID().toString());
 
                         if (!DemonPlacer.getOwnerName(itemStack).equals("")) {
                             ((EntityDemon) entityliving).setTamed(true);
@@ -215,8 +216,9 @@ public class DemonPlacer extends Item {
 
         if (!(par1ItemStack.getTagCompound() == null)) {
             if (!par1ItemStack.getTagCompound().getString("ownerName").equals("")) {
-                par3List.add(StatCollector.translateToLocal("tooltip.owner.demonsowner") + " "
-                        + par1ItemStack.getTagCompound().getString("ownerName"));
+                par3List.add(
+                        StatCollector.translateToLocal("tooltip.owner.demonsowner") + " "
+                                + par1ItemStack.getTagCompound().getString("ownerName"));
             }
         }
     }

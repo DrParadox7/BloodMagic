@@ -3,6 +3,7 @@ package WayofTime.alchemicalWizardry.common.spell.complex.effect.impactEffects.t
 import WayofTime.alchemicalWizardry.api.spell.IOnSummonTool;
 
 public abstract class SummonToolEffect implements IOnSummonTool {
+
     protected int powerUpgrades;
     protected int potencyUpgrades;
     protected int costUpgrades;

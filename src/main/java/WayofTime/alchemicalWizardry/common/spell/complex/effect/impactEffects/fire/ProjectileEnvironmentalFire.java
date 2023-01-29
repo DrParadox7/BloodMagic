@@ -1,12 +1,14 @@
 package WayofTime.alchemicalWizardry.common.spell.complex.effect.impactEffects.fire;
 
-import WayofTime.alchemicalWizardry.api.spell.ProjectileUpdateEffect;
-import WayofTime.alchemicalWizardry.common.spell.complex.effect.SpellHelper;
 import net.minecraft.entity.Entity;
 import net.minecraft.util.Vec3;
 import net.minecraft.world.World;
 
+import WayofTime.alchemicalWizardry.api.spell.ProjectileUpdateEffect;
+import WayofTime.alchemicalWizardry.common.spell.complex.effect.SpellHelper;
+
 public class ProjectileEnvironmentalFire extends ProjectileUpdateEffect {
+
     public ProjectileEnvironmentalFire(int power, int potency, int cost) {
         super(power, potency, cost);
     }

@@ -1,14 +1,17 @@
 package WayofTime.alchemicalWizardry.common.renderer.mob;
 
-import WayofTime.alchemicalWizardry.common.entity.mob.EntitySmallEarthGolem;
 import net.minecraft.client.model.ModelBase;
 import net.minecraft.client.renderer.entity.RenderLiving;
 import net.minecraft.entity.Entity;
 import net.minecraft.util.ResourceLocation;
 
+import WayofTime.alchemicalWizardry.common.entity.mob.EntitySmallEarthGolem;
+
 public class RenderSmallEarthGolem extends RenderLiving {
-    private static final ResourceLocation field_110833_a =
-            new ResourceLocation("alchemicalwizardry", "textures/models/SmallEarthGolem.png");
+
+    private static final ResourceLocation field_110833_a = new ResourceLocation(
+            "alchemicalwizardry",
+            "textures/models/SmallEarthGolem.png");
 
     public RenderSmallEarthGolem(ModelBase par1ModelBase, float par2) {
         super(par1ModelBase, par2);

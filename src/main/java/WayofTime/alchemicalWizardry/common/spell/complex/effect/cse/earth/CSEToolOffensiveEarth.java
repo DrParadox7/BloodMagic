@@ -8,6 +8,7 @@ import WayofTime.alchemicalWizardry.api.spell.SpellParadigmTool;
 import WayofTime.alchemicalWizardry.common.spell.complex.effect.impactEffects.earth.ToolOffensiveEarth;
 
 public class CSEToolOffensiveEarth extends ComplexSpellEffect {
+
     public CSEToolOffensiveEarth() {
         super(ComplexSpellType.EARTH, ComplexSpellModifier.OFFENSIVE);
     }
@@ -22,9 +23,8 @@ public class CSEToolOffensiveEarth extends ComplexSpellEffect {
     @Override
     public void modifyParadigm(SpellParadigm parad) {
         if (parad instanceof SpellParadigmTool) {
-            ((SpellParadigmTool) parad)
-                    .addItemManipulatorEffect(new ToolOffensiveEarth(
-                            this.powerEnhancement, this.potencyEnhancement, this.costEnhancement));
+            ((SpellParadigmTool) parad).addItemManipulatorEffect(
+                    new ToolOffensiveEarth(this.powerEnhancement, this.potencyEnhancement, this.costEnhancement));
         }
     }
 

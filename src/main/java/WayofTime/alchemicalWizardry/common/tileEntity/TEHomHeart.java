@@ -1,14 +1,16 @@
 package WayofTime.alchemicalWizardry.common.tileEntity;
 
-import WayofTime.alchemicalWizardry.common.spell.simple.HomSpell;
-import WayofTime.alchemicalWizardry.common.spell.simple.HomSpellRegistry;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.tileentity.TileEntitySkull;
 import net.minecraft.world.World;
 
+import WayofTime.alchemicalWizardry.common.spell.simple.HomSpell;
+import WayofTime.alchemicalWizardry.common.spell.simple.HomSpellRegistry;
+
 public class TEHomHeart extends TileEntity {
+
     public boolean canCastSpell(ItemStack par1ItemStack, World par2World, EntityPlayer par3EntityPlayer) {
         return true;
     }

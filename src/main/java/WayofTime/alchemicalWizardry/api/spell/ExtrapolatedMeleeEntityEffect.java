@@ -1,6 +1,7 @@
 package WayofTime.alchemicalWizardry.api.spell;
 
 import java.util.List;
+
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.AxisAlignedBB;
@@ -8,6 +9,7 @@ import net.minecraft.util.Vec3;
 import net.minecraft.world.World;
 
 public abstract class ExtrapolatedMeleeEntityEffect implements IMeleeSpellEntityEffect {
+
     protected float range;
     protected float radius;
     protected int powerUpgrades;

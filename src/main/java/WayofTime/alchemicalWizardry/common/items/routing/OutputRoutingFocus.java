@@ -1,14 +1,7 @@
 package WayofTime.alchemicalWizardry.common.items.routing;
 
-import WayofTime.alchemicalWizardry.api.RoutingFocusLogic;
-import WayofTime.alchemicalWizardry.common.routing.RoutingFocusLogicLimitDefault;
-import WayofTime.alchemicalWizardry.common.routing.RoutingFocusLogicLimitGlobal;
-import WayofTime.alchemicalWizardry.common.routing.RoutingFocusLogicLimitIgnMeta;
-import WayofTime.alchemicalWizardry.common.routing.RoutingFocusLogicLimitMatchNBT;
-import WayofTime.alchemicalWizardry.common.routing.RoutingFocusLogicLimitModItems;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
 import java.util.List;
+
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
@@ -18,7 +11,17 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.IIcon;
 import net.minecraft.util.StatCollector;
 
+import WayofTime.alchemicalWizardry.api.RoutingFocusLogic;
+import WayofTime.alchemicalWizardry.common.routing.RoutingFocusLogicLimitDefault;
+import WayofTime.alchemicalWizardry.common.routing.RoutingFocusLogicLimitGlobal;
+import WayofTime.alchemicalWizardry.common.routing.RoutingFocusLogicLimitIgnMeta;
+import WayofTime.alchemicalWizardry.common.routing.RoutingFocusLogicLimitMatchNBT;
+import WayofTime.alchemicalWizardry.common.routing.RoutingFocusLogicLimitModItems;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
+
 public class OutputRoutingFocus extends RoutingFocus implements ILimitedRoutingFocus {
+
     IIcon modItemIcon;
     IIcon ignMetaIcon;
     IIcon matchNBTIcon;

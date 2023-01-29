@@ -8,6 +8,7 @@ import WayofTime.alchemicalWizardry.api.spell.SpellParadigmMelee;
 import WayofTime.alchemicalWizardry.common.spell.complex.effect.impactEffects.wind.MeleeEnvironmentalWind;
 
 public class CSEMeleeEnvironmentalWind extends ComplexSpellEffect {
+
     public CSEMeleeEnvironmentalWind() {
         super(ComplexSpellType.WIND, ComplexSpellModifier.ENVIRONMENTAL);
     }
@@ -23,9 +24,8 @@ public class CSEMeleeEnvironmentalWind extends ComplexSpellEffect {
     @Override
     public void modifyParadigm(SpellParadigm parad) {
         if (parad instanceof SpellParadigmMelee) {
-            ((SpellParadigmMelee) parad)
-                    .addWorldEffect(new MeleeEnvironmentalWind(
-                            this.powerEnhancement, this.potencyEnhancement, this.costEnhancement));
+            ((SpellParadigmMelee) parad).addWorldEffect(
+                    new MeleeEnvironmentalWind(this.powerEnhancement, this.potencyEnhancement, this.costEnhancement));
         }
     }
 
@@ -36,8 +36,7 @@ public class CSEMeleeEnvironmentalWind extends ComplexSpellEffect {
 
     @Override
     public int getCostOfEffect() {
-        return (int) (100
-                * (1.0 * this.potencyEnhancement + 1)
+        return (int) (100 * (1.0 * this.potencyEnhancement + 1)
                 * (0.7 * this.powerEnhancement + 1)
                 * Math.pow(0.85, costEnhancement));
     }

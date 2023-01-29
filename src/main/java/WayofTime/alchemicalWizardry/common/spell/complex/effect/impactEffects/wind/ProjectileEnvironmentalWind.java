@@ -1,15 +1,18 @@
 package WayofTime.alchemicalWizardry.common.spell.complex.effect.impactEffects.wind;
 
-import WayofTime.alchemicalWizardry.api.spell.EntitySpellProjectile;
-import WayofTime.alchemicalWizardry.api.spell.ProjectileUpdateEffect;
-import WayofTime.alchemicalWizardry.common.spell.complex.effect.SpellHelper;
 import java.util.List;
+
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.world.World;
 
+import WayofTime.alchemicalWizardry.api.spell.EntitySpellProjectile;
+import WayofTime.alchemicalWizardry.api.spell.ProjectileUpdateEffect;
+import WayofTime.alchemicalWizardry.common.spell.complex.effect.SpellHelper;
+
 public class ProjectileEnvironmentalWind extends ProjectileUpdateEffect {
+
     public ProjectileEnvironmentalWind(int power, int potency, int cost) {
         super(power, potency, cost);
     }
@@ -25,7 +28,12 @@ public class ProjectileEnvironmentalWind extends ProjectileUpdateEffect {
             Entity shooter = ((EntitySpellProjectile) projectile).shootingEntity;
             if (shooter instanceof EntityPlayer) {
                 List<Entity> entitylist = SpellHelper.getEntitiesInRange(
-                        worldObj, projectile.posX, projectile.posY, projectile.posZ, horizRange, vertRange);
+                        worldObj,
+                        projectile.posX,
+                        projectile.posY,
+                        projectile.posZ,
+                        horizRange,
+                        vertRange);
                 if (entitylist != null) {
                     for (Entity entity : entitylist) {
                         if (entity instanceof EntityItem) {

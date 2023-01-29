@@ -5,6 +5,7 @@ import net.minecraft.client.model.ModelRenderer;
 import net.minecraft.entity.Entity;
 
 public class ModelShade extends ModelBase {
+
     // fields
     ModelRenderer body;
     ModelRenderer tail1;

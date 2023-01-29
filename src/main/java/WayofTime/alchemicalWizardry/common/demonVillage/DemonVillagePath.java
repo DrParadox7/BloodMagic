@@ -1,9 +1,5 @@
 package WayofTime.alchemicalWizardry.common.demonVillage;
 
-import WayofTime.alchemicalWizardry.ModBlocks;
-import WayofTime.alchemicalWizardry.api.Int3;
-import WayofTime.alchemicalWizardry.common.demonVillage.tileEntity.IRoadWard;
-import WayofTime.alchemicalWizardry.common.demonVillage.tileEntity.TEDemonPortal;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockFlower;
 import net.minecraft.block.material.Material;
@@ -11,7 +7,13 @@ import net.minecraft.init.Blocks;
 import net.minecraft.world.World;
 import net.minecraftforge.common.util.ForgeDirection;
 
+import WayofTime.alchemicalWizardry.ModBlocks;
+import WayofTime.alchemicalWizardry.api.Int3;
+import WayofTime.alchemicalWizardry.common.demonVillage.tileEntity.IRoadWard;
+import WayofTime.alchemicalWizardry.common.demonVillage.tileEntity.TEDemonPortal;
+
 public class DemonVillagePath {
+
     public int xPos;
     public int yPos;
     public int zPos;
@@ -38,7 +40,15 @@ public class DemonVillagePath {
         int value = 0;
 
         int finalYPos = this.constructPartialPath(
-                portal, world, clearance, xi - rad * dir.offsetX, yi, zi - rad * dir.offsetZ, dir, length + rad, false);
+                portal,
+                world,
+                clearance,
+                xi - rad * dir.offsetX,
+                yi,
+                zi - rad * dir.offsetZ,
+                dir,
+                length + rad,
+                false);
 
         for (int i = -rad; i <= rad; i++) {
             value = Math.max(
@@ -64,6 +74,7 @@ public class DemonVillagePath {
     }
 
     public class Int3AndBool {
+
         public Int3 coords;
         public boolean bool;
 
@@ -84,18 +95,10 @@ public class DemonVillagePath {
      * @param dir
      * @param length
      * @param doConstruct
-     * @return				length if doConstruct, yi if !doConstruct
+     * @return length if doConstruct, yi if !doConstruct
      */
-    public int constructPartialPath(
-            TEDemonPortal portal,
-            World world,
-            int clearance,
-            int xi,
-            int yi,
-            int zi,
-            ForgeDirection dir,
-            int length,
-            boolean doConstruct) {
+    public int constructPartialPath(TEDemonPortal portal, World world, int clearance, int xi, int yi, int zi,
+            ForgeDirection dir, int length, boolean doConstruct) {
         for (int i = 0; i < length; i++) {
             int xOffset = i * dir.offsetX;
             int zOffset = i * dir.offsetZ;
@@ -110,10 +113,9 @@ public class DemonVillagePath {
 
                 if ((this.forceReplaceBlock(block1))
                         || (!block1.isReplaceable(world, xi + xOffset, yi + sign * yOffset, zi + zOffset)
-                                        && this.isBlockReplaceable(block1))
-                                && (this.forceCanTunnelUnder(highBlock1)
-                                        || highBlock1.isReplaceable(
-                                                world, xi + xOffset, yi + sign * yOffset + 1, zi + zOffset))) {
+                                && this.isBlockReplaceable(block1))
+                                && (this.forceCanTunnelUnder(highBlock1) || highBlock1
+                                        .isReplaceable(world, xi + xOffset, yi + sign * yOffset + 1, zi + zOffset))) {
                     if (doConstruct) {
                         world.setBlock(
                                 xi + xOffset,
@@ -131,12 +133,11 @@ public class DemonVillagePath {
                     Block block2 = world.getBlock(xi + xOffset, yi + sign * yOffset, zi + zOffset);
                     Block highBlock2 = world.getBlock(xi + xOffset, yi + sign * yOffset + 1, zi + zOffset);
 
-                    if ((this.forceReplaceBlock(block2))
-                            || (!block2.isReplaceable(world, xi + xOffset, yi + sign * yOffset, zi + zOffset)
-                                            && this.isBlockReplaceable(block2))
-                                    && (this.forceCanTunnelUnder(highBlock2)
-                                            || highBlock2.isReplaceable(
-                                                    world, xi + xOffset, yi + sign * yOffset + 1, zi + zOffset))) {
+                    if ((this.forceReplaceBlock(block2)) || (!block2
+                            .isReplaceable(world, xi + xOffset, yi + sign * yOffset, zi + zOffset)
+                            && this.isBlockReplaceable(block2))
+                            && (this.forceCanTunnelUnder(highBlock2) || highBlock2
+                                    .isReplaceable(world, xi + xOffset, yi + sign * yOffset + 1, zi + zOffset))) {
                         if (doConstruct) {
                             world.setBlock(
                                     xi + xOffset,
@@ -158,14 +159,18 @@ public class DemonVillagePath {
                 if (createBridgeInAirIfObstructed) {
                     Block block1 = world.getBlock(xi + xOffset, yi, zi + zOffset);
 
-                    if (block1.isReplaceable(world, xi + xOffset, yi, zi + zOffset)
-                            || !this.isBlockReplaceable(block1)
+                    if (block1.isReplaceable(world, xi + xOffset, yi, zi + zOffset) || !this.isBlockReplaceable(block1)
                             || !this.forceReplaceBlock(block1)) {
                         returnAmount = false;
 
                         if (doConstruct) {
                             world.setBlock(
-                                    xi + xOffset, yi, zi + zOffset, portal.getRoadBlock(), portal.getRoadMeta(), 3);
+                                    xi + xOffset,
+                                    yi,
+                                    zi + zOffset,
+                                    portal.getRoadBlock(),
+                                    portal.getRoadMeta(),
+                                    3);
                         }
                     } else {
                         returnAmount = true;
@@ -174,14 +179,18 @@ public class DemonVillagePath {
                 } else if (tunnelIfObstructed) {
                     Block block1 = world.getBlock(xi + xOffset, yi, zi + zOffset);
 
-                    if (!block1.isReplaceable(world, xi + xOffset, yi, zi + zOffset)
-                            || this.isBlockReplaceable(block1)
+                    if (!block1.isReplaceable(world, xi + xOffset, yi, zi + zOffset) || this.isBlockReplaceable(block1)
                             || !this.forceReplaceBlock(block1)) {
                         returnAmount = false;
 
                         if (doConstruct) {
                             world.setBlock(
-                                    xi + xOffset, yi, zi + zOffset, portal.getRoadBlock(), portal.getRoadMeta(), 3);
+                                    xi + xOffset,
+                                    yi,
+                                    zi + zOffset,
+                                    portal.getRoadBlock(),
+                                    portal.getRoadMeta(),
+                                    3);
                             world.setBlockToAir(xi + xOffset, yi + 1, zi + zOffset);
                             world.setBlockToAir(xi + xOffset, yi + 2, zi + zOffset);
                             world.setBlockToAir(xi + xOffset, yi + 3, zi + zOffset);
@@ -217,10 +226,9 @@ public class DemonVillagePath {
 
                 if ((this.forceReplaceBlock(block1))
                         || (!block1.isReplaceable(world, xi + xOffset, yi + sign * yOffset, zi + zOffset)
-                                        && this.isBlockReplaceable(block1))
-                                && (this.forceCanTunnelUnder(highBlock1)
-                                        || highBlock1.isReplaceable(
-                                                world, xi + xOffset, yi + sign * yOffset + 1, zi + zOffset))) {
+                                && this.isBlockReplaceable(block1))
+                                && (this.forceCanTunnelUnder(highBlock1) || highBlock1
+                                        .isReplaceable(world, xi + xOffset, yi + sign * yOffset + 1, zi + zOffset))) {
                     yi += sign * yOffset;
                     break;
                 } else {
@@ -228,12 +236,11 @@ public class DemonVillagePath {
                     Block block2 = world.getBlock(xi + xOffset, yi + sign * yOffset, zi + zOffset);
                     Block highBlock2 = world.getBlock(xi + xOffset, yi + sign * yOffset + 1, zi + zOffset);
 
-                    if ((this.forceReplaceBlock(block2))
-                            || (!block2.isReplaceable(world, xi + xOffset, yi + sign * yOffset, zi + zOffset)
-                                            && this.isBlockReplaceable(block2))
-                                    && (this.forceCanTunnelUnder(highBlock2)
-                                            || highBlock2.isReplaceable(
-                                                    world, xi + xOffset, yi + sign * yOffset + 1, zi + zOffset))) {
+                    if ((this.forceReplaceBlock(block2)) || (!block2
+                            .isReplaceable(world, xi + xOffset, yi + sign * yOffset, zi + zOffset)
+                            && this.isBlockReplaceable(block2))
+                            && (this.forceCanTunnelUnder(highBlock2) || highBlock2
+                                    .isReplaceable(world, xi + xOffset, yi + sign * yOffset + 1, zi + zOffset))) {
                         yi += sign * yOffset;
                         break;
                     }
@@ -249,10 +256,8 @@ public class DemonVillagePath {
     }
 
     public boolean isBlockReplaceable(Block block) {
-        return !(block.getMaterial() == Material.leaves
-                        || block.getMaterial() == Material.vine
-                        || block instanceof IRoadWard)
-                && !block.equals(ModBlocks.blockDemonPortal);
+        return !(block.getMaterial() == Material.leaves || block.getMaterial() == Material.vine
+                || block instanceof IRoadWard) && !block.equals(ModBlocks.blockDemonPortal);
     }
 
     public boolean forceReplaceBlock(Block block) {

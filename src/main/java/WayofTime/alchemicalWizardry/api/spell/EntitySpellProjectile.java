@@ -1,11 +1,10 @@
 package WayofTime.alchemicalWizardry.api.spell;
 
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
+
 import net.minecraft.block.Block;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.IProjectile;
@@ -20,7 +19,11 @@ import net.minecraft.util.Vec3;
 import net.minecraft.world.World;
 import net.minecraftforge.common.util.Constants;
 
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
+
 public class EntitySpellProjectile extends Entity implements IProjectile {
+
     private int xTile = -1;
     private int yTile = -1;
     private int zTile = -1;
@@ -88,8 +91,7 @@ public class EntitySpellProjectile extends Entity implements IProjectile {
     }
 
     /**
-     * Similar to setArrowHeading, it's point the throwable entity to a x, y, z
-     * direction.
+     * Similar to setArrowHeading, it's point the throwable entity to a x, y, z direction.
      */
     @Override
     public void setThrowableHeading(double var1, double var3, double var5, float var7, float var8) {
@@ -189,7 +191,7 @@ public class EntitySpellProjectile extends Entity implements IProjectile {
             Block var18 = worldObj.getBlock(xTile, yTile, zTile);
             int var19 = worldObj.getBlockMetadata(xTile, yTile, zTile);
 
-            //            if (var18.equals(Block.getBlockById(inTile)) && var19 == inData)
+            // if (var18.equals(Block.getBlockById(inTile)) && var19 == inData)
             {
                 // this.groundImpact();
                 // this.setDead();
@@ -217,7 +219,8 @@ public class EntitySpellProjectile extends Entity implements IProjectile {
 
             Entity var5 = null;
             List var6 = worldObj.getEntitiesWithinAABBExcludingEntity(
-                    this, boundingBox.addCoord(motionX, motionY, motionZ).expand(1.0D, 1.0D, 1.0D));
+                    this,
+                    boundingBox.addCoord(motionX, motionY, motionZ).expand(1.0D, 1.0D, 1.0D));
             double var7 = 0.0D;
             Iterator var9 = var6.iterator();
             float var11;
@@ -299,16 +302,16 @@ public class EntitySpellProjectile extends Entity implements IProjectile {
             effectList.appendTag(eff.getTag());
         }
 
-        //        for (String str : this.effectList)
-        //        {
-        //            if (str != null)
-        //            {
-        //                NBTTagCompound tag = new NBTTagCompound();
+        // for (String str : this.effectList)
+        // {
+        // if (str != null)
+        // {
+        // NBTTagCompound tag = new NBTTagCompound();
         //
-        //                tag.setString("Class", str);
-        //                effectList.appendTag(tag);
-        //            }
-        //        }
+        // tag.setString("Class", str);
+        // effectList.appendTag(tag);
+        // }
+        // }
 
         par1NBTTagCompound.setTag("Effects", effectList);
         par1NBTTagCompound.setInteger("blocksBroken", blocksBroken);
@@ -342,13 +345,13 @@ public class EntitySpellProjectile extends Entity implements IProjectile {
         }
         this.spellEffectList = spellEffectList;
 
-        //		this.effectList = new LinkedList();
-        //        for (int i = 0; i < tagList.tagCount(); i++)
-        //        {
-        //            NBTTagCompound tag = (NBTTagCompound) tagList.tagAt(i);
+        // this.effectList = new LinkedList();
+        // for (int i = 0; i < tagList.tagCount(); i++)
+        // {
+        // NBTTagCompound tag = (NBTTagCompound) tagList.tagAt(i);
         //
-        //            this.effectList.add(tag.getString("Class"));
-        //        }
+        // this.effectList.add(tag.getString("Class"));
+        // }
 
         // SpellParadigmProjectile parad = SpellParadigmProjectile.getParadigmForStringArray(effectList);
         SpellParadigmProjectile parad = SpellParadigmProjectile.getParadigmForEffectArray(spellEffectList);
@@ -357,8 +360,8 @@ public class EntitySpellProjectile extends Entity implements IProjectile {
     }
 
     /**
-     * returns if this entity triggers Block.onEntityWalking on the blocks they
-     * walk on. used for spiders and wolves to prevent them from trampling crops
+     * returns if this entity triggers Block.onEntityWalking on the blocks they walk on. used for spiders and wolves to
+     * prevent them from trampling crops
      */
     @Override
     protected boolean canTriggerWalking() {
@@ -385,8 +388,7 @@ public class EntitySpellProjectile extends Entity implements IProjectile {
     }
 
     /**
-     * Whether the arrow has a stream of critical hit particles flying behind
-     * it.
+     * Whether the arrow has a stream of critical hit particles flying behind it.
      */
     public void setIsCritical(boolean par1) {
         byte var2 = dataWatcher.getWatchableObjectByte(16);
@@ -398,8 +400,7 @@ public class EntitySpellProjectile extends Entity implements IProjectile {
     }
 
     /**
-     * Whether the arrow has a stream of critical hit particles flying behind
-     * it.
+     * Whether the arrow has a stream of critical hit particles flying behind it.
      */
     public boolean getIsCritical() {
         byte var1 = dataWatcher.getWatchableObjectByte(16);
@@ -420,7 +421,7 @@ public class EntitySpellProjectile extends Entity implements IProjectile {
     }
 
     private void onImpact(Entity mop) // TODO
-            {
+    {
         if (mop == shootingEntity && ticksInAir > 3) {
             shootingEntity.attackEntityFrom(DamageSource.causePlayerDamage(shootingEntity), 1);
             this.setDead();
@@ -493,27 +494,63 @@ public class EntitySpellProjectile extends Entity implements IProjectile {
                 switch (sideHit) {
                     case 0:
                         worldObj.spawnParticle(
-                                "smoke", posX, posY, posZ, gaussian(0.1D), -gaussian(0.1D), gaussian(0.1D));
+                                "smoke",
+                                posX,
+                                posY,
+                                posZ,
+                                gaussian(0.1D),
+                                -gaussian(0.1D),
+                                gaussian(0.1D));
                         break;
                     case 1:
                         worldObj.spawnParticle(
-                                "smoke", posX, posY, posZ, gaussian(0.1D), gaussian(0.1D), gaussian(0.1D));
+                                "smoke",
+                                posX,
+                                posY,
+                                posZ,
+                                gaussian(0.1D),
+                                gaussian(0.1D),
+                                gaussian(0.1D));
                         break;
                     case 2:
                         worldObj.spawnParticle(
-                                "smoke", posX, posY, posZ, gaussian(0.1D), gaussian(0.1D), -gaussian(0.1D));
+                                "smoke",
+                                posX,
+                                posY,
+                                posZ,
+                                gaussian(0.1D),
+                                gaussian(0.1D),
+                                -gaussian(0.1D));
                         break;
                     case 3:
                         worldObj.spawnParticle(
-                                "smoke", posX, posY, posZ, gaussian(0.1D), gaussian(0.1D), gaussian(0.1D));
+                                "smoke",
+                                posX,
+                                posY,
+                                posZ,
+                                gaussian(0.1D),
+                                gaussian(0.1D),
+                                gaussian(0.1D));
                         break;
                     case 4:
                         worldObj.spawnParticle(
-                                "smoke", posX, posY, posZ, -gaussian(0.1D), gaussian(0.1D), gaussian(0.1D));
+                                "smoke",
+                                posX,
+                                posY,
+                                posZ,
+                                -gaussian(0.1D),
+                                gaussian(0.1D),
+                                gaussian(0.1D));
                         break;
                     case 5:
                         worldObj.spawnParticle(
-                                "smoke", posX, posY, posZ, gaussian(0.1D), gaussian(0.1D), gaussian(0.1D));
+                                "smoke",
+                                posX,
+                                posY,
+                                posZ,
+                                gaussian(0.1D),
+                                gaussian(0.1D),
+                                gaussian(0.1D));
                         break;
                 }
             }

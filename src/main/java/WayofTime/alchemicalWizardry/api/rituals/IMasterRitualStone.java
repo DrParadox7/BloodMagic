@@ -1,10 +1,12 @@
 package WayofTime.alchemicalWizardry.api.rituals;
 
-import WayofTime.alchemicalWizardry.api.alchemy.energy.ISegmentedReagentHandler;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.world.World;
 
+import WayofTime.alchemicalWizardry.api.alchemy.energy.ISegmentedReagentHandler;
+
 public interface IMasterRitualStone extends ISegmentedReagentHandler {
+
     void performRitual(World world, int x, int y, int z, String ritualID);
 
     String getOwner();

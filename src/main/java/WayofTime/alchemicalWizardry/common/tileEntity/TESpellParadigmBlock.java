@@ -1,17 +1,19 @@
 package WayofTime.alchemicalWizardry.common.tileEntity;
 
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.ItemStack;
+import net.minecraft.world.World;
+import net.minecraftforge.common.util.ForgeDirection;
+
 import WayofTime.alchemicalWizardry.api.spell.SpellParadigm;
 import WayofTime.alchemicalWizardry.api.spell.SpellParadigmMelee;
 import WayofTime.alchemicalWizardry.api.spell.SpellParadigmProjectile;
 import WayofTime.alchemicalWizardry.api.spell.SpellParadigmSelf;
 import WayofTime.alchemicalWizardry.api.spell.SpellParadigmTool;
 import WayofTime.alchemicalWizardry.api.tile.ISpellParadigmTile;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.item.ItemStack;
-import net.minecraft.world.World;
-import net.minecraftforge.common.util.ForgeDirection;
 
 public class TESpellParadigmBlock extends TESpellBlock implements ISpellParadigmTile {
+
     public SpellParadigm getSpellParadigm() {
         int meta = worldObj.getBlockMetadata(xCoord, yCoord, zCoord);
         switch (meta) {

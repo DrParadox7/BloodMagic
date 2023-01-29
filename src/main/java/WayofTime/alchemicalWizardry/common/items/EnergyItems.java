@@ -1,10 +1,5 @@
 package WayofTime.alchemicalWizardry.common.items;
 
-import WayofTime.alchemicalWizardry.AlchemicalWizardry;
-import WayofTime.alchemicalWizardry.api.items.interfaces.IBindable;
-import WayofTime.alchemicalWizardry.api.soulNetwork.LifeEssenceNetwork;
-import WayofTime.alchemicalWizardry.api.soulNetwork.SoulNetworkHandler;
-import WayofTime.alchemicalWizardry.common.spell.complex.effect.SpellHelper;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -13,7 +8,14 @@ import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.DamageSource;
 import net.minecraft.world.World;
 
+import WayofTime.alchemicalWizardry.AlchemicalWizardry;
+import WayofTime.alchemicalWizardry.api.items.interfaces.IBindable;
+import WayofTime.alchemicalWizardry.api.soulNetwork.LifeEssenceNetwork;
+import WayofTime.alchemicalWizardry.api.soulNetwork.SoulNetworkHandler;
+import WayofTime.alchemicalWizardry.common.spell.complex.effect.SpellHelper;
+
 public class EnergyItems extends Item implements IBindable {
+
     private int energyUsed;
 
     public EnergyItems() {
@@ -77,7 +79,16 @@ public class EnergyItems extends Item implements IBindable {
                 double posZ = player.posZ;
 
                 SpellHelper.sendIndexedParticleToAllAround(
-                        world, posX, posY, posZ, 20, world.provider.dimensionId, 4, posX, posY, posZ);
+                        world,
+                        posX,
+                        posY,
+                        posZ,
+                        20,
+                        world.provider.dimensionId,
+                        4,
+                        posX,
+                        posY,
+                        posZ);
                 world.playSoundEffect(
                         (double) ((float) player.posX + 0.5F),
                         (double) ((float) player.posY + 0.5F),
@@ -92,8 +103,7 @@ public class EnergyItems extends Item implements IBindable {
 
     @Deprecated
     public static boolean syphonWhileInContainer(ItemStack ist, int damageToBeDone) {
-        if (ist.getTagCompound() != null
-                && !(ist.getTagCompound().getString("ownerName").equals(""))) {
+        if (ist.getTagCompound() != null && !(ist.getTagCompound().getString("ownerName").equals(""))) {
             String ownerName = ist.getTagCompound().getString("ownerName");
 
             if (MinecraftServer.getServer() == null) {
@@ -119,8 +129,7 @@ public class EnergyItems extends Item implements IBindable {
     }
 
     public static boolean canSyphonInContainer(ItemStack ist, int damageToBeDone) {
-        if (ist.getTagCompound() != null
-                && !(ist.getTagCompound().getString("ownerName").equals(""))) {
+        if (ist.getTagCompound() != null && !(ist.getTagCompound().getString("ownerName").equals(""))) {
             String ownerName = ist.getTagCompound().getString("ownerName");
 
             if (MinecraftServer.getServer() == null) {

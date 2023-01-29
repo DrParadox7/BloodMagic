@@ -1,12 +1,5 @@
 package WayofTime.alchemicalWizardry.common.tileEntity;
 
-import WayofTime.alchemicalWizardry.api.alchemy.energy.Reagent;
-import WayofTime.alchemicalWizardry.api.alchemy.energy.ReagentContainer;
-import WayofTime.alchemicalWizardry.api.alchemy.energy.ReagentRegistry;
-import WayofTime.alchemicalWizardry.api.alchemy.energy.ReagentStack;
-import WayofTime.alchemicalWizardry.api.items.interfaces.IBloodOrb;
-import WayofTime.alchemicalWizardry.api.soulNetwork.SoulNetworkHandler;
-import WayofTime.alchemicalWizardry.common.spell.complex.effect.SpellHelper;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
@@ -18,7 +11,16 @@ import net.minecraft.network.play.server.S35PacketUpdateTileEntity;
 import net.minecraftforge.common.util.Constants;
 import net.minecraftforge.common.util.ForgeDirection;
 
+import WayofTime.alchemicalWizardry.api.alchemy.energy.Reagent;
+import WayofTime.alchemicalWizardry.api.alchemy.energy.ReagentContainer;
+import WayofTime.alchemicalWizardry.api.alchemy.energy.ReagentRegistry;
+import WayofTime.alchemicalWizardry.api.alchemy.energy.ReagentStack;
+import WayofTime.alchemicalWizardry.api.items.interfaces.IBloodOrb;
+import WayofTime.alchemicalWizardry.api.soulNetwork.SoulNetworkHandler;
+import WayofTime.alchemicalWizardry.common.spell.complex.effect.SpellHelper;
+
 public class TEAlchemicCalcinator extends TEReagentConduit implements IInventory {
+
     protected ItemStack[] inv;
     protected ReagentContainer bufferTank = new ReagentContainer(Reagent.REAGENT_SIZE * 2);
 
@@ -138,7 +140,16 @@ public class TEAlchemicCalcinator extends TEReagentConduit implements IInventory
 
         if (worldObj.getWorldTime() % 4 == 0) {
             SpellHelper.sendIndexedParticleToAllAround(
-                    worldObj, xCoord, yCoord, zCoord, 20, worldObj.provider.dimensionId, 1, xCoord, yCoord, zCoord);
+                    worldObj,
+                    xCoord,
+                    yCoord,
+                    zCoord,
+                    20,
+                    worldObj.provider.dimensionId,
+                    1,
+                    xCoord,
+                    yCoord,
+                    zCoord);
         }
 
         if (progress >= ticksPerReagent) {

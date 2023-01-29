@@ -1,12 +1,15 @@
 package WayofTime.alchemicalWizardry.common.omega;
 
-import WayofTime.alchemicalWizardry.api.alchemy.energy.Reagent;
-import WayofTime.alchemicalWizardry.common.items.armour.OmegaArmour;
 import java.util.HashMap;
+
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 
+import WayofTime.alchemicalWizardry.api.alchemy.energy.Reagent;
+import WayofTime.alchemicalWizardry.common.items.armour.OmegaArmour;
+
 public class OmegaRegistry {
+
     public static HashMap<Reagent, OmegaParadigm> omegaList = new HashMap();
 
     public static void registerParadigm(Reagent reagent, OmegaParadigm parad) {

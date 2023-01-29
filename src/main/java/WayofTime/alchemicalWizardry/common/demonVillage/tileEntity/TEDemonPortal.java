@@ -1,20 +1,5 @@
 package WayofTime.alchemicalWizardry.common.demonVillage.tileEntity;
 
-import WayofTime.alchemicalWizardry.AlchemicalWizardry;
-import WayofTime.alchemicalWizardry.api.Int3;
-import WayofTime.alchemicalWizardry.common.block.BlockTeleposer;
-import WayofTime.alchemicalWizardry.common.demonVillage.BuildingSchematic;
-import WayofTime.alchemicalWizardry.common.demonVillage.DemonBuilding;
-import WayofTime.alchemicalWizardry.common.demonVillage.DemonCrosspath;
-import WayofTime.alchemicalWizardry.common.demonVillage.DemonVillagePath;
-import WayofTime.alchemicalWizardry.common.demonVillage.DemonVillagePath.Int3AndBool;
-import WayofTime.alchemicalWizardry.common.demonVillage.GridSpace;
-import WayofTime.alchemicalWizardry.common.demonVillage.GridSpaceHolder;
-import WayofTime.alchemicalWizardry.common.demonVillage.demonHoard.DemonPacketRegistry;
-import WayofTime.alchemicalWizardry.common.demonVillage.demonHoard.DemonType;
-import WayofTime.alchemicalWizardry.common.demonVillage.demonHoard.demon.IHoardDemon;
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -28,6 +13,7 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Random;
 import java.util.Set;
+
 import net.minecraft.block.Block;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityCreature;
@@ -40,7 +26,25 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraftforge.common.util.Constants;
 import net.minecraftforge.common.util.ForgeDirection;
 
+import WayofTime.alchemicalWizardry.AlchemicalWizardry;
+import WayofTime.alchemicalWizardry.api.Int3;
+import WayofTime.alchemicalWizardry.common.block.BlockTeleposer;
+import WayofTime.alchemicalWizardry.common.demonVillage.BuildingSchematic;
+import WayofTime.alchemicalWizardry.common.demonVillage.DemonBuilding;
+import WayofTime.alchemicalWizardry.common.demonVillage.DemonCrosspath;
+import WayofTime.alchemicalWizardry.common.demonVillage.DemonVillagePath;
+import WayofTime.alchemicalWizardry.common.demonVillage.DemonVillagePath.Int3AndBool;
+import WayofTime.alchemicalWizardry.common.demonVillage.GridSpace;
+import WayofTime.alchemicalWizardry.common.demonVillage.GridSpaceHolder;
+import WayofTime.alchemicalWizardry.common.demonVillage.demonHoard.DemonPacketRegistry;
+import WayofTime.alchemicalWizardry.common.demonVillage.demonHoard.DemonType;
+import WayofTime.alchemicalWizardry.common.demonVillage.demonHoard.demon.IHoardDemon;
+
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+
 public class TEDemonPortal extends TileEntity {
+
     public DemonType type = DemonType.FIRE;
 
     public static boolean printDebug = false;
@@ -58,7 +62,7 @@ public class TEDemonPortal extends TileEntity {
     public static float demonHoardChance = 0.8f;
     public static float portalTickRate = 1f;
 
-    public static int[] tierCostList = new int[] {1500};
+    public static int[] tierCostList = new int[] { 1500 };
 
     public Set<IHoardDemon> hoardList = new HashSet();
 
@@ -198,12 +202,11 @@ public class TEDemonPortal extends TileEntity {
     }
 
     public void notifyDemons(EntityLivingBase demon, EntityLivingBase target, double radius) // TODO
-            {
+    {
         this.lockdownTimer = 1000;
         for (IHoardDemon thrallDemon : this.hoardList) {
             if (thrallDemon instanceof EntityCreature) {
-                if (thrallDemon != demon
-                        && ((EntityCreature) thrallDemon).getAttackTarget() == null
+                if (thrallDemon != demon && ((EntityCreature) thrallDemon).getAttackTarget() == null
                         && !((EntityCreature) thrallDemon).isOnSameTeam(target)) {
                     double xf = demon.posX;
                     double yf = demon.posY;
@@ -297,7 +300,8 @@ public class TEDemonPortal extends TileEntity {
     }
 
     /**
-     * Randomly increase one of the cooldowns such that a road, house, or a demon portal tier is caused. Demons are also randomly spawned via this mechanic.
+     * Randomly increase one of the cooldowns such that a road, house, or a demon portal tier is caused. Demons are also
+     * randomly spawned via this mechanic.
      */
     @Override
     public void updateEntity() {
@@ -328,9 +332,8 @@ public class TEDemonPortal extends TileEntity {
         this.incrementPoints();
         this.assignPoints();
 
-        if (printDebug)
-            AlchemicalWizardry.logger.info(
-                    "Roads: " + roadCooldown + " Buildings: " + houseCooldown + " Lockdown: " + lockdownTimer);
+        if (printDebug) AlchemicalWizardry.logger
+                .info("Roads: " + roadCooldown + " Buildings: " + houseCooldown + " Lockdown: " + lockdownTimer);
 
         if (buildingStage >= 0 && buildingStage <= 2) {
             if (printDebug) AlchemicalWizardry.logger.info("BuildingStage = " + buildingStage);
@@ -374,9 +377,9 @@ public class TEDemonPortal extends TileEntity {
             }
         }
 
-        //        this.houseCooldown = Math.max(0, this.houseCooldown - 1); //Current dummy implementation of the
+        // this.houseCooldown = Math.max(0, this.houseCooldown - 1); //Current dummy implementation of the
         // increasing costs
-        //        this.roadCooldown = Math.max(0, this.roadCooldown - 1);
+        // this.roadCooldown = Math.max(0, this.roadCooldown - 1);
     }
 
     public void assignPoints() {
@@ -425,8 +428,8 @@ public class TEDemonPortal extends TileEntity {
 
         this.nextDemonPortalName = par1NBTTagCompound.getString("nextDemonPortalName");
         this.buildingStage = par1NBTTagCompound.getInteger("buildingStage");
-        this.nextDemonPortalDirection =
-                ForgeDirection.getOrientation(par1NBTTagCompound.getInteger("nextDemonPortalDirection"));
+        this.nextDemonPortalDirection = ForgeDirection
+                .getOrientation(par1NBTTagCompound.getInteger("nextDemonPortalDirection"));
 
         this.pointPool = par1NBTTagCompound.getFloat("pointPool");
         this.lockdownTimer = par1NBTTagCompound.getInteger("lockdownTimer");
@@ -499,8 +502,9 @@ public class TEDemonPortal extends TileEntity {
                 dir = ForgeDirection.NORTH;
         }
 
-        Int3 road =
-                findRoadSpaceFromDirection(dir, (rand.nextInt(negXRadius + negZRadius + posXRadius + posZRadius)) + 1);
+        Int3 road = findRoadSpaceFromDirection(
+                dir,
+                (rand.nextInt(negXRadius + negZRadius + posXRadius + posZRadius)) + 1);
         if (road == null) {
             return 0;
         }
@@ -519,7 +523,7 @@ public class TEDemonPortal extends TileEntity {
     }
 
     public int createRandomRoad() // Return the number of road spaces
-            {
+    {
         int next = rand.nextInt(4);
         ForgeDirection dir;
 
@@ -540,8 +544,9 @@ public class TEDemonPortal extends TileEntity {
                 dir = ForgeDirection.NORTH;
         }
 
-        Int3 road =
-                findRoadSpaceFromDirection(dir, (rand.nextInt(negXRadius + negZRadius + posXRadius + posZRadius)) + 1);
+        Int3 road = findRoadSpaceFromDirection(
+                dir,
+                (rand.nextInt(negXRadius + negZRadius + posXRadius + posZRadius)) + 1);
 
         int x = road.xCoord;
         int yLevel = road.yCoord;
@@ -574,9 +579,8 @@ public class TEDemonPortal extends TileEntity {
             return 0;
         }
         if (printDebug) AlchemicalWizardry.logger.info("I got here!");
-        if (printDebug)
-            AlchemicalWizardry.logger.info(
-                    "Distance: " + distance + " Direction: " + dominantDirection.toString() + " yLevel: " + yLevel);
+        if (printDebug) AlchemicalWizardry.logger
+                .info("Distance: " + distance + " Direction: " + dominantDirection.toString() + " yLevel: " + yLevel);
 
         this.createGriddedRoad(x, yLevel, z, dominantDirection, distance + 1, true);
 
@@ -614,15 +618,15 @@ public class TEDemonPortal extends TileEntity {
     }
 
     public int getLength(ForgeDirection dir, int maxLength, int x, int z) // Number of spaces forward
-            {
+    {
         for (int i = 1; i <= maxLength; i++) {
             GridSpace space = this.getGridSpace(x + i * dir.offsetX, z + i * dir.offsetZ);
             if (space.isEmpty()) {
                 for (int k = 1; k <= this.getRoadSpacer(); k++) {
-                    GridSpace space1 = this.getGridSpace(
-                            x + i * dir.offsetX + dir.offsetZ * k, z + i * dir.offsetZ + dir.offsetX * k);
-                    GridSpace space2 = this.getGridSpace(
-                            x + i * dir.offsetX - dir.offsetZ * k, z + i * dir.offsetZ - dir.offsetX * k);
+                    GridSpace space1 = this
+                            .getGridSpace(x + i * dir.offsetX + dir.offsetZ * k, z + i * dir.offsetZ + dir.offsetX * k);
+                    GridSpace space2 = this
+                            .getGridSpace(x + i * dir.offsetX - dir.offsetZ * k, z + i * dir.offsetZ - dir.offsetX * k);
 
                     if (space1.isRoadSegment() || space2.isRoadSegment()) {
                         return i - 1;
@@ -641,7 +645,7 @@ public class TEDemonPortal extends TileEntity {
     }
 
     public Int3 findRoadSpaceFromDirection(ForgeDirection dir, int amount) // TODO
-            {
+    {
         int index = 0;
         if (dir == ForgeDirection.NORTH) {
             if (printDebug) System.out.print("NORTH!");
@@ -825,14 +829,9 @@ public class TEDemonPortal extends TileEntity {
         return new Int3(0, 0, 0);
     }
 
-    public int createGriddedRoad(
-            int gridXi,
-            int yi,
-            int gridZi,
-            ForgeDirection dir,
-            int gridLength,
+    public int createGriddedRoad(int gridXi, int yi, int gridZi, ForgeDirection dir, int gridLength,
             boolean convertStarter) // Total grid length
-            {
+    {
         if (gridLength == 0 || gridLength == 1) {
             return 0;
         }
@@ -970,23 +969,23 @@ public class TEDemonPortal extends TileEntity {
     }
 
     public void rightClickBlock(EntityPlayer player, int side) {
-        //        if (worldObj.isRemote)
-        //        {
-        //            return;
-        //        }
+        // if (worldObj.isRemote)
+        // {
+        // return;
+        // }
         //
-        //        this.initialize();
+        // this.initialize();
         //
-        //        if (ForgeDirection.getOrientation(side) == ForgeDirection.UP)
-        //        {
-        //            this.createRandomBuilding(DemonBuilding.BUILDING_HOUSE, 0);
-        //        } else if (ForgeDirection.getOrientation(side) == ForgeDirection.DOWN)
-        //        {
-        //            this.createRandomBuilding(DemonBuilding.BUILDING_PORTAL, 0);
-        //        } else
-        //        {
-        //            this.createRandomRoad();
-        //        }
+        // if (ForgeDirection.getOrientation(side) == ForgeDirection.UP)
+        // {
+        // this.createRandomBuilding(DemonBuilding.BUILDING_HOUSE, 0);
+        // } else if (ForgeDirection.getOrientation(side) == ForgeDirection.DOWN)
+        // {
+        // this.createRandomBuilding(DemonBuilding.BUILDING_PORTAL, 0);
+        // } else
+        // {
+        // this.createRandomRoad();
+        // }
     }
 
     public int createRandomBuilding(int type, int tier) {
@@ -1001,15 +1000,15 @@ public class TEDemonPortal extends TileEntity {
     }
 
     public int createPortalBuilding(int buildingTier) // TODO Telepose block next time, then build the new building.
-            {
+    {
         if (printDebug) AlchemicalWizardry.logger.info("Hello, I am here!");
         int x = 0;
         int z = 0;
 
-        //        GridSpace home = this.getGridSpace(x, z);
-        //        int yLevel = home.getYLevel();
+        // GridSpace home = this.getGridSpace(x, z);
+        // int yLevel = home.getYLevel();
 
-        //        GridSpaceHolder grid = this.createGSH();
+        // GridSpaceHolder grid = this.createGSH();
 
         List<ForgeDirection> directions = new ArrayList();
 
@@ -1043,31 +1042,30 @@ public class TEDemonPortal extends TileEntity {
             return 0;
         }
 
-        ForgeDirection chosenDirection = (ForgeDirection) schemMap.keySet()
-                .toArray()[new Random().nextInt(schemMap.keySet().size())];
+        ForgeDirection chosenDirection = (ForgeDirection) schemMap.keySet().toArray()[new Random()
+                .nextInt(schemMap.keySet().size())];
         DemonBuilding build = schemMap.get(chosenDirection)
                 .get(new Random().nextInt(schemMap.get(chosenDirection).size()));
-        //        Int3 portalSpace = build.getDoorSpace(chosenDirection);
+        // Int3 portalSpace = build.getDoorSpace(chosenDirection);
 
         this.nextDemonPortalDirection = chosenDirection;
         this.nextDemonPortalName = build.getName();
 
-        //        build.destroyAllInField(worldObj, xCoord + (x) * 5, yLevel, zCoord + (z) * 5,
+        // build.destroyAllInField(worldObj, xCoord + (x) * 5, yLevel, zCoord + (z) * 5,
         // chosenDirection.getOpposite());
         //
-        //        int yOffset = portalSpace.yCoord;
-        //        build.buildAll(worldObj, xCoord + (x) * 5, yLevel, zCoord + (z) * 5, chosenDirection.getOpposite());
-        //        build.setAllGridSpaces(x, z, yLevel, chosenDirection.getOpposite(), GridSpace.MAIN_PORTAL, grid);
-        //        this.loadGSH(grid);
+        // int yOffset = portalSpace.yCoord;
+        // build.buildAll(worldObj, xCoord + (x) * 5, yLevel, zCoord + (z) * 5, chosenDirection.getOpposite());
+        // build.setAllGridSpaces(x, z, yLevel, chosenDirection.getOpposite(), GridSpace.MAIN_PORTAL, grid);
+        // this.loadGSH(grid);
 
         return build.getNumberOfGridSpaces();
     }
 
     /**
-     * The Stage is at what point the portal is in reacting to the creation of the Demon Portal.
-     * Stage == 0 means just the saving
-     * Stage == 1 means to telepose the portal
-     * Stage == 2 means the teleposition is complete and that the building may be constructed
+     * The Stage is at what point the portal is in reacting to the creation of the Demon Portal. Stage == 0 means just
+     * the saving Stage == 1 means to telepose the portal Stage == 2 means the teleposition is complete and that the
+     * building may be constructed
      */
     public void createPortalBuilding(int stage, String name, int tier) {
         for (DemonBuilding build : TEDemonPortal.buildingList) {
@@ -1096,7 +1094,15 @@ public class TEDemonPortal extends TileEntity {
                         int yDestination = yLevel + yOffset;
                         if (yCoord != yDestination) {
                             BlockTeleposer.swapBlocks(
-                                    this, worldObj, worldObj, xCoord, yCoord, zCoord, xCoord, yDestination, zCoord);
+                                    this,
+                                    worldObj,
+                                    worldObj,
+                                    xCoord,
+                                    yCoord,
+                                    zCoord,
+                                    xCoord,
+                                    yDestination,
+                                    zCoord);
                         } else {
                             // Nuthin - just as a reminder that we can now increment properly
                         }
@@ -1104,7 +1110,11 @@ public class TEDemonPortal extends TileEntity {
 
                     case 2:
                         build.destroyAllInField(
-                                worldObj, xCoord + (x) * 5, yLevel, zCoord + (z) * 5, chosenDirection.getOpposite());
+                                worldObj,
+                                xCoord + (x) * 5,
+                                yLevel,
+                                zCoord + (z) * 5,
+                                chosenDirection.getOpposite());
 
                         build.buildAll(
                                 this,
@@ -1115,7 +1125,12 @@ public class TEDemonPortal extends TileEntity {
                                 chosenDirection.getOpposite(),
                                 true);
                         build.setAllGridSpaces(
-                                x, z, yLevel, chosenDirection.getOpposite(), GridSpace.MAIN_PORTAL, grid);
+                                x,
+                                z,
+                                yLevel,
+                                chosenDirection.getOpposite(),
+                                GridSpace.MAIN_PORTAL,
+                                grid);
                         this.loadGSH(grid);
                         break;
                 }
@@ -1146,8 +1161,10 @@ public class TEDemonPortal extends TileEntity {
                 dir = ForgeDirection.NORTH;
         }
 
-        Int3 space = this.findRoadSpaceFromDirection(
-                dir, (rand.nextInt(negXRadius + negZRadius + posXRadius + posZRadius)) + 1); // Second: 1 *
+        Int3 space = this
+                .findRoadSpaceFromDirection(dir, (rand.nextInt(negXRadius + negZRadius + posXRadius + posZRadius)) + 1); // Second:
+                                                                                                                         // 1
+                                                                                                                         // *
 
         int x = space.xCoord;
         int z = space.zCoord;
@@ -1202,8 +1219,8 @@ public class TEDemonPortal extends TileEntity {
             return 0;
         }
 
-        ForgeDirection chosenDirection = (ForgeDirection) schemMap.keySet()
-                .toArray()[new Random().nextInt(schemMap.keySet().size())];
+        ForgeDirection chosenDirection = (ForgeDirection) schemMap.keySet().toArray()[new Random()
+                .nextInt(schemMap.keySet().size())];
         DemonBuilding build = schemMap.get(chosenDirection)
                 .get(new Random().nextInt(schemMap.get(chosenDirection).size()));
 
@@ -1212,7 +1229,11 @@ public class TEDemonPortal extends TileEntity {
         int zOff = offsetSpace.zCoord;
 
         build.destroyAllInField(
-                worldObj, xCoord + (x + xOff) * 5, yLevel, zCoord + (z + zOff) * 5, chosenDirection.getOpposite());
+                worldObj,
+                xCoord + (x + xOff) * 5,
+                yLevel,
+                zCoord + (z + zOff) * 5,
+                chosenDirection.getOpposite());
         build.buildAll(
                 this,
                 worldObj,

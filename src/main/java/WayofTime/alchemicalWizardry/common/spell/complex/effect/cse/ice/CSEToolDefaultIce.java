@@ -9,6 +9,7 @@ import WayofTime.alchemicalWizardry.common.spell.complex.effect.SpellHelper;
 import WayofTime.alchemicalWizardry.common.spell.complex.effect.impactEffects.ice.ToolDefaultIce;
 
 public class CSEToolDefaultIce extends ComplexSpellEffect {
+
     public CSEToolDefaultIce() {
         super(ComplexSpellType.ICE, ComplexSpellModifier.DEFAULT);
     }
@@ -24,14 +25,12 @@ public class CSEToolDefaultIce extends ComplexSpellEffect {
     @Override
     public void modifyParadigm(SpellParadigm parad) {
         if (parad instanceof SpellParadigmTool) {
-            ((SpellParadigmTool) parad)
-                    .addLeftClickEffect(
-                            new ToolDefaultIce(this.powerEnhancement, this.potencyEnhancement, this.costEnhancement));
+            ((SpellParadigmTool) parad).addLeftClickEffect(
+                    new ToolDefaultIce(this.powerEnhancement, this.potencyEnhancement, this.costEnhancement));
 
-            ((SpellParadigmTool) parad)
-                    .addToolString(
-                            "FrostTouch",
-                            "FrostTouch" + " " + SpellHelper.getNumeralForInt((this.powerEnhancement + 1)));
+            ((SpellParadigmTool) parad).addToolString(
+                    "FrostTouch",
+                    "FrostTouch" + " " + SpellHelper.getNumeralForInt((this.powerEnhancement + 1)));
 
             ((SpellParadigmTool) parad).addCritChance("FrostCrit", this.potencyEnhancement * 0.5f);
         }
@@ -44,8 +43,7 @@ public class CSEToolDefaultIce extends ComplexSpellEffect {
 
     @Override
     public int getCostOfEffect() {
-        return (int) (500
-                * (1 + this.powerEnhancement * 0.3f)
+        return (int) (500 * (1 + this.powerEnhancement * 0.3f)
                 * (1 + this.potencyEnhancement * 0.1f)
                 * Math.pow(0.85, costEnhancement));
     }

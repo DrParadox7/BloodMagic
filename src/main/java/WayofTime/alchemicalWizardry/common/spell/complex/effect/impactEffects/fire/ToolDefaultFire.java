@@ -1,12 +1,15 @@
 package WayofTime.alchemicalWizardry.common.spell.complex.effect.impactEffects.fire;
 
-import WayofTime.alchemicalWizardry.common.spell.complex.effect.impactEffects.tool.ItemManipulator;
 import java.util.LinkedList;
 import java.util.List;
+
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.FurnaceRecipes;
 
+import WayofTime.alchemicalWizardry.common.spell.complex.effect.impactEffects.tool.ItemManipulator;
+
 public class ToolDefaultFire extends ItemManipulator {
+
     public ToolDefaultFire(int power, int potency, int cost) {
         super(power, potency, cost);
     }

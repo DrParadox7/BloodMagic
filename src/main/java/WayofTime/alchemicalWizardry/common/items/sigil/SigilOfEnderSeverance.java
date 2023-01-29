@@ -1,13 +1,7 @@
 package WayofTime.alchemicalWizardry.common.items.sigil;
 
-import WayofTime.alchemicalWizardry.AlchemicalWizardry;
-import WayofTime.alchemicalWizardry.api.items.interfaces.IHolding;
-import WayofTime.alchemicalWizardry.api.items.interfaces.ISigil;
-import WayofTime.alchemicalWizardry.common.items.EnergyItems;
-import WayofTime.alchemicalWizardry.common.spell.complex.effect.SpellHelper;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
 import java.util.List;
+
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLiving;
@@ -19,7 +13,16 @@ import net.minecraft.util.IIcon;
 import net.minecraft.util.StatCollector;
 import net.minecraft.world.World;
 
+import WayofTime.alchemicalWizardry.AlchemicalWizardry;
+import WayofTime.alchemicalWizardry.api.items.interfaces.IHolding;
+import WayofTime.alchemicalWizardry.api.items.interfaces.ISigil;
+import WayofTime.alchemicalWizardry.common.items.EnergyItems;
+import WayofTime.alchemicalWizardry.common.spell.complex.effect.SpellHelper;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
+
 public class SigilOfEnderSeverance extends EnergyItems implements IHolding, ISigil {
+
     @SideOnly(Side.CLIENT)
     private IIcon activeIcon;
 
@@ -44,8 +47,9 @@ public class SigilOfEnderSeverance extends EnergyItems implements IHolding, ISig
                 par3List.add(StatCollector.translateToLocal("tooltip.sigil.state.deactivated"));
             }
 
-            par3List.add(StatCollector.translateToLocal("tooltip.owner.currentowner") + " "
-                    + par1ItemStack.getTagCompound().getString("ownerName"));
+            par3List.add(
+                    StatCollector.translateToLocal("tooltip.owner.currentowner") + " "
+                            + par1ItemStack.getTagCompound().getString("ownerName"));
         }
     }
 
@@ -124,8 +128,8 @@ public class SigilOfEnderSeverance extends EnergyItems implements IHolding, ISig
         }
 
         if (par1ItemStack.getTagCompound().getBoolean("isActive")) {
-            List<Entity> list = SpellHelper.getEntitiesInRange(
-                    par2World, par3Entity.posX, par3Entity.posY, par3Entity.posZ, 4.5, 4.5);
+            List<Entity> list = SpellHelper
+                    .getEntitiesInRange(par2World, par3Entity.posX, par3Entity.posY, par3Entity.posZ, 4.5, 4.5);
             for (Entity entity : list) {
                 if (!entity.equals(par3Entity) && entity instanceof EntityLiving) {
                     ((EntityLiving) entity)

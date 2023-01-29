@@ -1,8 +1,7 @@
 package WayofTime.alchemicalWizardry.common.harvest;
 
-import WayofTime.alchemicalWizardry.api.harvest.IHarvestHandler;
-import cpw.mods.fml.common.registry.GameRegistry;
 import java.util.List;
+
 import net.minecraft.block.Block;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.item.Item;
@@ -10,7 +9,11 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
 import net.minecraftforge.common.IPlantable;
 
+import WayofTime.alchemicalWizardry.api.harvest.IHarvestHandler;
+import cpw.mods.fml.common.registry.GameRegistry;
+
 public class GenericSeededHarvestHandler implements IHarvestHandler {
+
     public Block harvestBlock;
     public int harvestMeta;
     public IPlantable harvestSeed;

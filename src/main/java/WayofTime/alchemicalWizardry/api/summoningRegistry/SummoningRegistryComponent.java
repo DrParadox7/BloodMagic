@@ -7,6 +7,7 @@ import net.minecraft.world.World;
 import net.minecraftforge.oredict.OreDictionary;
 
 public class SummoningRegistryComponent {
+
     public ItemStack[] ring1 = new ItemStack[6];
     public ItemStack[] ring2 = new ItemStack[6];
     public ItemStack[] ring3 = new ItemStack[6];
@@ -14,13 +15,8 @@ public class SummoningRegistryComponent {
     public int summoningCost;
     public int bloodOrbLevel;
 
-    public SummoningRegistryComponent(
-            SummoningHelper s,
-            ItemStack[] newRing1,
-            ItemStack[] newRing2,
-            ItemStack[] newRing3,
-            int amount,
-            int bloodOrbLevel) {
+    public SummoningRegistryComponent(SummoningHelper s, ItemStack[] newRing1, ItemStack[] newRing2,
+            ItemStack[] newRing3, int amount, int bloodOrbLevel) {
         this.summoningHelper = s;
         this.ring1 = newRing1;
         this.ring2 = newRing2;
@@ -150,7 +146,7 @@ public class SummoningRegistryComponent {
                 }
 
                 if ((checkedItemStack.getItemDamage() == recipeItemStack.getItemDamage()
-                                || OreDictionary.WILDCARD_VALUE == recipeItemStack.getItemDamage())
+                        || OreDictionary.WILDCARD_VALUE == recipeItemStack.getItemDamage())
                         && checkedItemStack.getItem() == recipeItemStack.getItem()) {
                     test = true;
                     checkList[j] = true;

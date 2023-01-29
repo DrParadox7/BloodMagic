@@ -8,6 +8,7 @@ import WayofTime.alchemicalWizardry.api.spell.SpellParadigmTool;
 import WayofTime.alchemicalWizardry.common.spell.complex.effect.SpellHelper;
 
 public class CSEToolOffensiveIce extends ComplexSpellEffect {
+
     public CSEToolOffensiveIce() {
         super(ComplexSpellType.ICE, ComplexSpellModifier.OFFENSIVE);
     }
@@ -25,9 +26,9 @@ public class CSEToolOffensiveIce extends ComplexSpellEffect {
         if (parad instanceof SpellParadigmTool) {
             ((SpellParadigmTool) parad).addDamageToHash("Sharpness", (this.powerEnhancement + 1) * 1.5f);
 
-            ((SpellParadigmTool) parad)
-                    .addToolString(
-                            "Sharpness", "Sharpness" + " " + SpellHelper.getNumeralForInt((this.powerEnhancement + 1)));
+            ((SpellParadigmTool) parad).addToolString(
+                    "Sharpness",
+                    "Sharpness" + " " + SpellHelper.getNumeralForInt((this.powerEnhancement + 1)));
 
             ((SpellParadigmTool) parad).addCritChance("SharpCrit", this.potencyEnhancement);
         }
@@ -40,8 +41,7 @@ public class CSEToolOffensiveIce extends ComplexSpellEffect {
 
     @Override
     public int getCostOfEffect() {
-        return (int) (1000
-                * (1 + this.powerEnhancement * 0.3f)
+        return (int) (1000 * (1 + this.powerEnhancement * 0.3f)
                 * (1 + this.potencyEnhancement * 0.2f)
                 * Math.pow(0.85, costEnhancement));
     }

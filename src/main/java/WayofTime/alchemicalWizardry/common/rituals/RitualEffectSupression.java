@@ -1,5 +1,15 @@
 package WayofTime.alchemicalWizardry.common.rituals;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import net.minecraft.block.Block;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.potion.Potion;
+import net.minecraft.potion.PotionEffect;
+import net.minecraft.tileentity.TileEntity;
+import net.minecraft.world.World;
+
 import WayofTime.alchemicalWizardry.AlchemicalWizardry;
 import WayofTime.alchemicalWizardry.api.alchemy.energy.ReagentRegistry;
 import WayofTime.alchemicalWizardry.api.rituals.IMasterRitualStone;
@@ -8,16 +18,9 @@ import WayofTime.alchemicalWizardry.api.rituals.RitualEffect;
 import WayofTime.alchemicalWizardry.api.soulNetwork.SoulNetworkHandler;
 import WayofTime.alchemicalWizardry.common.spell.complex.effect.SpellHelper;
 import WayofTime.alchemicalWizardry.common.tileEntity.TESpectralContainer;
-import java.util.ArrayList;
-import java.util.List;
-import net.minecraft.block.Block;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.potion.Potion;
-import net.minecraft.potion.PotionEffect;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.world.World;
 
 public class RitualEffectSupression extends RitualEffect {
+
     public static final int aquasalusDrain = 15;
     public static final int aetherDrain = 15;
 
@@ -33,8 +36,8 @@ public class RitualEffectSupression extends RitualEffect {
 
         Block blockish = world.getBlock(x, y - 1, z);
 
-        boolean hasAquasalus =
-                this.canDrainReagent(ritualStone, ReagentRegistry.aquasalusReagent, aquasalusDrain, false);
+        boolean hasAquasalus = this
+                .canDrainReagent(ritualStone, ReagentRegistry.aquasalusReagent, aquasalusDrain, false);
         boolean hasAether = this.canDrainReagent(ritualStone, ReagentRegistry.aetherReagent, aetherDrain, false);
 
         int costMod = this.getCostModifier(blockish);
@@ -69,8 +72,8 @@ public class RitualEffectSupression extends RitualEffect {
                         Block block = world.getBlock(x + i, y + j, z + k);
 
                         if (SpellHelper.isBlockFluid(block)) {
-                            TESpectralContainer.createSpectralBlockAtLocation(
-                                    world, x + i, y + j, z + k, 3 * masterRadius);
+                            TESpectralContainer
+                                    .createSpectralBlockAtLocation(world, x + i, y + j, z + k, 3 * masterRadius);
                         } else {
                             TileEntity tile = world.getTileEntity(x + i, y + j, z + k);
                             if (tile instanceof TESpectralContainer) {

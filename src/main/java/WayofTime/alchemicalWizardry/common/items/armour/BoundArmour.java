@@ -1,19 +1,7 @@
 package WayofTime.alchemicalWizardry.common.items.armour;
 
-import WayofTime.alchemicalWizardry.AlchemicalWizardry;
-import WayofTime.alchemicalWizardry.ModItems;
-import WayofTime.alchemicalWizardry.api.alchemy.energy.IAlchemyGoggles;
-import WayofTime.alchemicalWizardry.api.items.interfaces.ArmourUpgrade;
-import WayofTime.alchemicalWizardry.api.items.interfaces.IBindable;
-import WayofTime.alchemicalWizardry.api.items.interfaces.ILPGauge;
-import WayofTime.alchemicalWizardry.common.items.EnergyItems;
-import WayofTime.alchemicalWizardry.common.items.sigil.SigilDivination;
-import WayofTime.alchemicalWizardry.common.renderer.model.ModelOmegaArmour;
-import cpw.mods.fml.common.Optional;
-import cpw.mods.fml.common.Optional.Interface;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
 import java.util.List;
+
 import net.minecraft.client.model.ModelBiped;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.entity.Entity;
@@ -31,18 +19,31 @@ import net.minecraft.util.StatCollector;
 import net.minecraft.world.World;
 import net.minecraftforge.common.ISpecialArmor;
 import net.minecraftforge.common.util.Constants;
+
 import thaumcraft.api.IGoggles;
 import thaumcraft.api.IRunicArmor;
 import thaumcraft.api.nodes.IRevealer;
+import WayofTime.alchemicalWizardry.AlchemicalWizardry;
+import WayofTime.alchemicalWizardry.ModItems;
+import WayofTime.alchemicalWizardry.api.alchemy.energy.IAlchemyGoggles;
+import WayofTime.alchemicalWizardry.api.items.interfaces.ArmourUpgrade;
+import WayofTime.alchemicalWizardry.api.items.interfaces.IBindable;
+import WayofTime.alchemicalWizardry.api.items.interfaces.ILPGauge;
+import WayofTime.alchemicalWizardry.common.items.EnergyItems;
+import WayofTime.alchemicalWizardry.common.items.sigil.SigilDivination;
+import WayofTime.alchemicalWizardry.common.renderer.model.ModelOmegaArmour;
+import cpw.mods.fml.common.Optional;
+import cpw.mods.fml.common.Optional.Interface;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 
 @Optional.InterfaceList(
-        value = {
-            @Interface(iface = "thaumcraft.api.nodes.IRevealer", modid = "Thaumcraft"),
-            @Interface(iface = "thaumcraft.api.IGoggles", modid = "Thaumcraft"),
-            @Interface(iface = "thaumcraft.api.IRunicArmor", modid = "Thaumcraft")
-        })
+        value = { @Interface(iface = "thaumcraft.api.nodes.IRevealer", modid = "Thaumcraft"),
+                @Interface(iface = "thaumcraft.api.IGoggles", modid = "Thaumcraft"),
+                @Interface(iface = "thaumcraft.api.IRunicArmor", modid = "Thaumcraft") })
 public class BoundArmour extends ItemArmor
         implements IAlchemyGoggles, ISpecialArmor, IBindable, IRevealer, IGoggles, IRunicArmor, ILPGauge {
+
     private static int invSize = 9;
 
     @SideOnly(Side.CLIENT)
@@ -110,8 +111,7 @@ public class BoundArmour extends ItemArmor
 
                 if ((entityLiving instanceof EntityPlayer)) {
                     if (((EntityPlayer) entityLiving).getItemInUseDuration() > 0) {
-                        EnumAction enumaction =
-                                ((EntityPlayer) entityLiving).getItemInUse().getItemUseAction();
+                        EnumAction enumaction = ((EntityPlayer) entityLiving).getItemInUse().getItemUseAction();
                         if (enumaction == EnumAction.block) {
                             this.model.heldItemRight = 3;
                         } else if (enumaction == EnumAction.bow) {
@@ -178,30 +178,25 @@ public class BoundArmour extends ItemArmor
     }
 
     @Override
-    public ArmorProperties getProperties(
-            EntityLivingBase player, ItemStack armor, DamageSource source, double damage, int slot) {
+    public ArmorProperties getProperties(EntityLivingBase player, ItemStack armor, DamageSource source, double damage,
+            int slot) {
         double armourReduction = 0.0;
 
         int f = 0;
         int h = 0;
 
         if (player.isPotionActive(AlchemicalWizardry.customPotionSoulFray)) {
-            f = player.getActivePotionEffect(AlchemicalWizardry.customPotionSoulFray)
-                            .getAmplifier()
-                    + 1;
+            f = player.getActivePotionEffect(AlchemicalWizardry.customPotionSoulFray).getAmplifier() + 1;
         }
 
         double damageAmount = 0.25;
 
         if (player.isPotionActive(AlchemicalWizardry.customPotionSoulHarden)) {
-            h = player.getActivePotionEffect(AlchemicalWizardry.customPotionSoulHarden)
-                            .getAmplifier()
-                    + 1;
+            h = player.getActivePotionEffect(AlchemicalWizardry.customPotionSoulHarden).getAmplifier() + 1;
         }
 
         armourReduction = isAffectedBySoulHarden()
-                ? 1
-                        - (1 - this.getBaseArmourReduction()) * Math.pow(1.0 / 3.0, Math.max(0, h - f))
+                ? 1 - (1 - this.getBaseArmourReduction()) * Math.pow(1.0 / 3.0, Math.max(0, h - f))
                         - 0.1 * Math.max(0, f - h)
                 : getBaseArmourReduction();
 
@@ -230,8 +225,7 @@ public class BoundArmour extends ItemArmor
             return new ArmorProperties(-1, 0, 0);
         }
 
-        if (helmet.getItem() instanceof BoundArmour
-                && plate.getItem() instanceof BoundArmour
+        if (helmet.getItem() instanceof BoundArmour && plate.getItem() instanceof BoundArmour
                 && leggings.getItem() instanceof BoundArmour
                 && boots.getItem() instanceof BoundArmour) {
             if (source.isUnblockable()) {
@@ -284,8 +278,9 @@ public class BoundArmour extends ItemArmor
 
         if (!(par1ItemStack.getTagCompound() == null)) {
             if (!par1ItemStack.getTagCompound().getString("ownerName").equals("")) {
-                par3List.add(StatCollector.translateToLocal("tooltip.owner.currentowner") + " "
-                        + par1ItemStack.getTagCompound().getString("ownerName"));
+                par3List.add(
+                        StatCollector.translateToLocal("tooltip.owner.currentowner") + " "
+                                + par1ItemStack.getTagCompound().getString("ownerName"));
             }
 
             ItemStack[] inv = getInternalInventory(par1ItemStack);
@@ -296,8 +291,11 @@ public class BoundArmour extends ItemArmor
 
             for (int i = 0; i < invSize; i++) {
                 if (inv[i] != null) {
-                    par3List.add(StatCollector.translateToLocal("tooltip.item.iteminslot") + " " + i + ": "
-                            + inv[i].getDisplayName());
+                    par3List.add(
+                            StatCollector.translateToLocal("tooltip.item.iteminslot") + " "
+                                    + i
+                                    + ": "
+                                    + inv[i].getDisplayName());
                 }
             }
         }
@@ -365,8 +363,8 @@ public class BoundArmour extends ItemArmor
         }
     }
 
-    public void tickInternalInventory(
-            ItemStack par1ItemStack, World par2World, EntityPlayer par3Entity, int par4, boolean par5) {
+    public void tickInternalInventory(ItemStack par1ItemStack, World par2World, EntityPlayer par3Entity, int par4,
+            boolean par5) {
         ItemStack[] inv = getInternalInventory(par1ItemStack);
 
         if (inv == null) {
@@ -387,8 +385,10 @@ public class BoundArmour extends ItemArmor
 
                 if (par2World.getWorldTime() % 200 == 0) {
                     if (getUpgradeCostMultiplier(par1ItemStack) > 0.02f) {
-                        EnergyItems.syphonBatteries(par1ItemStack, par3Entity, (int)
-                                (((ArmourUpgrade) inv[i].getItem()).getEnergyForTenSeconds()
+                        EnergyItems.syphonBatteries(
+                                par1ItemStack,
+                                par3Entity,
+                                (int) (((ArmourUpgrade) inv[i].getItem()).getEnergyForTenSeconds()
                                         * getUpgradeCostMultiplier(par1ItemStack)));
                     }
                 }

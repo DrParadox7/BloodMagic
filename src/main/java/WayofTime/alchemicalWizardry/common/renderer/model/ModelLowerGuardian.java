@@ -1,13 +1,15 @@
 package WayofTime.alchemicalWizardry.common.renderer.model;
 
-import WayofTime.alchemicalWizardry.common.entity.mob.EntityLowerGuardian;
 import net.minecraft.client.model.ModelBase;
 import net.minecraft.client.model.ModelRenderer;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.util.MathHelper;
 
+import WayofTime.alchemicalWizardry.common.entity.mob.EntityLowerGuardian;
+
 public class ModelLowerGuardian extends ModelBase {
+
     // fields
     ModelRenderer Body;
     ModelRenderer Torso;

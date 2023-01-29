@@ -1,14 +1,7 @@
 package WayofTime.alchemicalWizardry.common.items.sigil;
 
-import WayofTime.alchemicalWizardry.AlchemicalWizardry;
-import WayofTime.alchemicalWizardry.ModBlocks;
-import WayofTime.alchemicalWizardry.api.items.interfaces.ArmourUpgrade;
-import WayofTime.alchemicalWizardry.api.items.interfaces.ISigil;
-import WayofTime.alchemicalWizardry.common.items.EnergyItems;
-import WayofTime.alchemicalWizardry.common.tileEntity.TESpectralBlock;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
 import java.util.List;
+
 import net.minecraft.block.Block;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.entity.Entity;
@@ -20,7 +13,17 @@ import net.minecraft.util.IIcon;
 import net.minecraft.util.StatCollector;
 import net.minecraft.world.World;
 
+import WayofTime.alchemicalWizardry.AlchemicalWizardry;
+import WayofTime.alchemicalWizardry.ModBlocks;
+import WayofTime.alchemicalWizardry.api.items.interfaces.ArmourUpgrade;
+import WayofTime.alchemicalWizardry.api.items.interfaces.ISigil;
+import WayofTime.alchemicalWizardry.common.items.EnergyItems;
+import WayofTime.alchemicalWizardry.common.tileEntity.TESpectralBlock;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
+
 public class SigilOfTheBridge extends EnergyItems implements ArmourUpgrade, ISigil {
+
     @SideOnly(Side.CLIENT)
     private IIcon activeIcon;
 
@@ -48,8 +51,9 @@ public class SigilOfTheBridge extends EnergyItems implements ArmourUpgrade, ISig
                 par3List.add(StatCollector.translateToLocal("tooltip.sigil.state.deactivated"));
             }
 
-            par3List.add(StatCollector.translateToLocal("tooltip.owner.currentowner") + " "
-                    + par1ItemStack.getTagCompound().getString("ownerName"));
+            par3List.add(
+                    StatCollector.translateToLocal("tooltip.owner.currentowner") + " "
+                            + par1ItemStack.getTagCompound().getString("ownerName"));
         }
     }
 
@@ -123,10 +127,9 @@ public class SigilOfTheBridge extends EnergyItems implements ArmourUpgrade, ISig
         }
 
         if (par1ItemStack.getTagCompound().getBoolean("isActive")) {
-            if (par2World.getWorldTime() % tickDelay
-                    == par1ItemStack.getTagCompound().getInteger("worldTimeDelay")) {
-                if (EnergyItems.syphonBatteries(
-                        par1ItemStack, (EntityPlayer) par3Entity, this.getLPUsed(par1ItemStack))) {
+            if (par2World.getWorldTime() % tickDelay == par1ItemStack.getTagCompound().getInteger("worldTimeDelay")) {
+                if (EnergyItems
+                        .syphonBatteries(par1ItemStack, (EntityPlayer) par3Entity, this.getLPUsed(par1ItemStack))) {
                     this.setLPUsed(par1ItemStack, 0);
                 } else {
                     par1ItemStack.getTagCompound().setBoolean("isActive", false);
@@ -195,8 +198,7 @@ public class SigilOfTheBridge extends EnergyItems implements ArmourUpgrade, ISig
             par1ItemStack.setTagCompound(new NBTTagCompound());
         }
 
-        par1ItemStack
-                .getTagCompound()
+        par1ItemStack.getTagCompound()
                 .setInteger("LPUsed", par1ItemStack.getTagCompound().getInteger("LPUsed") + addedLP);
     }
 

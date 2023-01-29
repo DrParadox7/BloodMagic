@@ -1,5 +1,14 @@
 package WayofTime.alchemicalWizardry.common.rituals;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Random;
+
+import net.minecraft.block.Block;
+import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.util.MathHelper;
+import net.minecraft.world.World;
+
 import WayofTime.alchemicalWizardry.api.rituals.IMasterRitualStone;
 import WayofTime.alchemicalWizardry.api.rituals.LocalRitualStorage;
 import WayofTime.alchemicalWizardry.api.rituals.RitualComponent;
@@ -7,15 +16,9 @@ import WayofTime.alchemicalWizardry.api.rituals.RitualEffect;
 import WayofTime.alchemicalWizardry.api.soulNetwork.SoulNetworkHandler;
 import WayofTime.alchemicalWizardry.common.demonVillage.demonHoard.demon.EntityMinorDemonGrunt;
 import WayofTime.alchemicalWizardry.common.demonVillage.demonHoard.demon.IHoardDemon;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Random;
-import net.minecraft.block.Block;
-import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.util.MathHelper;
-import net.minecraft.world.World;
 
 public class RitualEffectAlphaPact extends RitualEffect {
+
     Random rand = new Random();
 
     @Override
@@ -59,13 +62,12 @@ public class RitualEffectAlphaPact extends RitualEffect {
                     world.spawnEntityInWorld((EntityLivingBase) demon);
                     storage.thrallDemon(demon);
                 }
-            } else {
-            }
+            } else {}
         }
     }
 
-    public IHoardDemon getRandomDemonForStage(
-            World world, int x, int y, int z, int horizontalRange, int verticalRange) {
+    public IHoardDemon getRandomDemonForStage(World world, int x, int y, int z, int horizontalRange,
+            int verticalRange) {
         EntityLivingBase entityLiving = new EntityMinorDemonGrunt(world);
 
         boolean isGood = false;
@@ -98,10 +100,7 @@ public class RitualEffectAlphaPact extends RitualEffect {
                 }
             }
 
-            if (entityLiving
-                            .worldObj
-                            .getCollidingBoundingBoxes(entityLiving, entityLiving.boundingBox)
-                            .isEmpty()
+            if (entityLiving.worldObj.getCollidingBoundingBoxes(entityLiving, entityLiving.boundingBox).isEmpty()
                     && !entityLiving.worldObj.isAnyLiquid(entityLiving.boundingBox)) {
                 entityLiving.setPositionAndUpdate(newX, newY, newZ);
                 isGood = true;

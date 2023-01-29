@@ -1,14 +1,15 @@
 package WayofTime.alchemicalWizardry.common.commands.sub;
 
-import WayofTime.alchemicalWizardry.api.command.SubCommandBase;
-import WayofTime.alchemicalWizardry.api.items.interfaces.IBindable;
-import WayofTime.alchemicalWizardry.common.items.EnergyItems;
 import net.minecraft.command.ICommand;
 import net.minecraft.command.ICommandSender;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ChatComponentTranslation;
 import net.minecraft.util.StatCollector;
+
+import WayofTime.alchemicalWizardry.api.command.SubCommandBase;
+import WayofTime.alchemicalWizardry.api.items.interfaces.IBindable;
+import WayofTime.alchemicalWizardry.common.items.EnergyItems;
 
 public class SubCommandBind extends SubCommandBase {
 

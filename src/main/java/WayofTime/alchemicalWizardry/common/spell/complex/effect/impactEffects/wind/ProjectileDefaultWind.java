@@ -1,11 +1,13 @@
 package WayofTime.alchemicalWizardry.common.spell.complex.effect.impactEffects.wind;
 
-import WayofTime.alchemicalWizardry.api.spell.ProjectileImpactEffect;
 import net.minecraft.entity.Entity;
 import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.world.World;
 
+import WayofTime.alchemicalWizardry.api.spell.ProjectileImpactEffect;
+
 public class ProjectileDefaultWind extends ProjectileImpactEffect {
+
     public ProjectileDefaultWind(int power, int potency, int cost) {
         super(power, potency, cost);
     }

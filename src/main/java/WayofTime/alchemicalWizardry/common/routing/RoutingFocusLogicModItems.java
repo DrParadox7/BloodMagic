@@ -1,11 +1,13 @@
 package WayofTime.alchemicalWizardry.common.routing;
 
-import WayofTime.alchemicalWizardry.api.RoutingFocusLogic;
-import cpw.mods.fml.common.registry.GameData;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 
+import WayofTime.alchemicalWizardry.api.RoutingFocusLogic;
+import cpw.mods.fml.common.registry.GameData;
+
 public class RoutingFocusLogicModItems extends RoutingFocusLogic {
+
     @Override
     public boolean getDefaultMatch(ItemStack keyStack, ItemStack checkedStack) {
         if (keyStack != null && checkedStack != null && keyStack.getItem() != null && checkedStack.getItem() != null) {

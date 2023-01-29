@@ -8,6 +8,7 @@ import WayofTime.alchemicalWizardry.api.spell.SpellParadigmProjectile;
 import WayofTime.alchemicalWizardry.common.spell.complex.effect.impactEffects.wind.ProjectileOffensiveWind;
 
 public class CSEProjectileOffensiveWind extends ComplexSpellEffect {
+
     public CSEProjectileOffensiveWind() {
         super(ComplexSpellType.WIND, ComplexSpellModifier.OFFENSIVE);
     }
@@ -23,9 +24,8 @@ public class CSEProjectileOffensiveWind extends ComplexSpellEffect {
     @Override
     public void modifyParadigm(SpellParadigm parad) {
         if (parad instanceof SpellParadigmProjectile) {
-            ((SpellParadigmProjectile) parad)
-                    .addImpactEffect(new ProjectileOffensiveWind(
-                            this.powerEnhancement, this.potencyEnhancement, this.costEnhancement));
+            ((SpellParadigmProjectile) parad).addImpactEffect(
+                    new ProjectileOffensiveWind(this.powerEnhancement, this.potencyEnhancement, this.costEnhancement));
         }
     }
 
@@ -36,8 +36,7 @@ public class CSEProjectileOffensiveWind extends ComplexSpellEffect {
 
     @Override
     public int getCostOfEffect() {
-        return (int) (100
-                * (0.5 * this.potencyEnhancement + 1)
+        return (int) (100 * (0.5 * this.potencyEnhancement + 1)
                 * (this.powerEnhancement + 1)
                 * Math.pow(0.85, costEnhancement));
     }

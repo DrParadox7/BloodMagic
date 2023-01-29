@@ -1,12 +1,14 @@
 package WayofTime.alchemicalWizardry.common.spell.complex.effect.impactEffects.wind;
 
-import WayofTime.alchemicalWizardry.api.spell.ExtrapolatedMeleeEntityEffect;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.world.World;
 
+import WayofTime.alchemicalWizardry.api.spell.ExtrapolatedMeleeEntityEffect;
+
 public class MeleeDefaultWind extends ExtrapolatedMeleeEntityEffect {
+
     public MeleeDefaultWind(int power, int potency, int cost) {
         super(power, potency, cost);
         this.setRange(4 + 2.0f * potency);

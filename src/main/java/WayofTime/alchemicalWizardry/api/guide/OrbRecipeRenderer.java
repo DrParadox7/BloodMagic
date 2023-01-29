@@ -1,5 +1,15 @@
 package WayofTime.alchemicalWizardry.api.guide;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.FontRenderer;
+import net.minecraft.item.ItemStack;
+import net.minecraft.item.crafting.IRecipe;
+import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.StatCollector;
+
 import WayofTime.alchemicalWizardry.api.items.ShapedBloodOrbRecipe;
 import WayofTime.alchemicalWizardry.api.items.ShapelessBloodOrbRecipe;
 import WayofTime.alchemicalWizardry.api.spell.APISpellHelper;
@@ -11,16 +21,9 @@ import amerifrance.guideapi.api.base.Book;
 import amerifrance.guideapi.api.util.GuiHelper;
 import amerifrance.guideapi.gui.GuiBase;
 import cpw.mods.fml.relauncher.ReflectionHelper;
-import java.util.ArrayList;
-import java.util.List;
-import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.FontRenderer;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.crafting.IRecipe;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.StatCollector;
 
 public class OrbRecipeRenderer implements IRecipeRenderer {
+
     public IRecipe recipe;
 
     public OrbRecipeRenderer(IRecipe recipe) {
@@ -28,18 +31,9 @@ public class OrbRecipeRenderer implements IRecipeRenderer {
     }
 
     @Override
-    public void draw(
-            Book book,
-            CategoryAbstract category,
-            EntryAbstract entry,
-            int guiLeft,
-            int guiTop,
-            int mouseX,
-            int mouseY,
-            GuiBase guiBase,
-            FontRenderer fontRenderer) {
-        Minecraft.getMinecraft()
-                .getTextureManager()
+    public void draw(Book book, CategoryAbstract category, EntryAbstract entry, int guiLeft, int guiTop, int mouseX,
+            int mouseY, GuiBase guiBase, FontRenderer fontRenderer) {
+        Minecraft.getMinecraft().getTextureManager()
                 .bindTexture(new ResourceLocation(ModInformation.GUITEXLOC + "recipe_elements.png"));
         guiBase.drawTexturedModalRect(guiLeft + 42, guiTop + 53, 0, 0, 105, 65);
 
@@ -75,7 +69,9 @@ public class OrbRecipeRenderer implements IRecipeRenderer {
                             GuiHelper.drawItemStack(APISpellHelper.getOrbForLevel((Integer) component), stackX, stackY);
                             if (GuiHelper.isMouseBetween(mouseX, mouseY, stackX, stackY, 15, 15)) {
                                 guiBase.renderToolTip(
-                                        APISpellHelper.getOrbForLevel((Integer) component), stackX, stackY);
+                                        APISpellHelper.getOrbForLevel((Integer) component),
+                                        stackX,
+                                        stackY);
                             }
                         } else {
                             if (((ArrayList<ItemStack>) component).isEmpty()) return;
@@ -112,7 +108,9 @@ public class OrbRecipeRenderer implements IRecipeRenderer {
                             GuiHelper.drawItemStack(APISpellHelper.getOrbForLevel((Integer) component), stackX, stackY);
                             if (GuiHelper.isMouseBetween(mouseX, mouseY, stackX, stackY, 15, 15)) {
                                 guiBase.renderToolTip(
-                                        APISpellHelper.getOrbForLevel((Integer) component), stackX, stackY);
+                                        APISpellHelper.getOrbForLevel((Integer) component),
+                                        stackX,
+                                        stackY);
                             }
                         } else {
                             if (((ArrayList<ItemStack>) component).isEmpty()) return;
@@ -134,16 +132,8 @@ public class OrbRecipeRenderer implements IRecipeRenderer {
     }
 
     @Override
-    public void drawExtras(
-            Book book,
-            CategoryAbstract category,
-            EntryAbstract entry,
-            int guiLeft,
-            int guiTop,
-            int mouseX,
-            int mouseY,
-            GuiBase guiBase,
-            FontRenderer fontRenderer) {
+    public void drawExtras(Book book, CategoryAbstract category, EntryAbstract entry, int guiLeft, int guiTop,
+            int mouseX, int mouseY, GuiBase guiBase, FontRenderer fontRenderer) {
         // TODO Auto-generated method stub
 
     }

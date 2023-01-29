@@ -7,6 +7,7 @@ public interface IBlockInteractHandler {
 
     /**
      * Returns a boolean[6] of all sides. when true, this side is accessible
+     * 
      * @return
      */
     public boolean[] getSides();
@@ -18,8 +19,8 @@ public interface IBlockInteractHandler {
     public int getRemainingCount();
 
     /**
-     * When invoked, the drone will abort searching the area. Could be used to abort early when full of RF energy for example, when importing RF.
-     * (It's useless to search any further)
+     * When invoked, the drone will abort searching the area. Could be used to abort early when full of RF energy for
+     * example, when importing RF. (It's useless to search any further)
      */
     public void abort();
 }

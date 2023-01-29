@@ -1,14 +1,17 @@
 package WayofTime.alchemicalWizardry.common.renderer.mob;
 
-import WayofTime.alchemicalWizardry.common.entity.mob.EntityBoulderFist;
 import net.minecraft.client.model.ModelBase;
 import net.minecraft.client.renderer.entity.RenderLiving;
 import net.minecraft.entity.Entity;
 import net.minecraft.util.ResourceLocation;
 
+import WayofTime.alchemicalWizardry.common.entity.mob.EntityBoulderFist;
+
 public class RenderBoulderFist extends RenderLiving {
-    private static final ResourceLocation field_110833_a =
-            new ResourceLocation("alchemicalwizardry", "textures/models/BoulderFist.png");
+
+    private static final ResourceLocation field_110833_a = new ResourceLocation(
+            "alchemicalwizardry",
+            "textures/models/BoulderFist.png");
 
     public RenderBoulderFist(ModelBase par1ModelBase, float par2) {
         super(par1ModelBase, par2);

@@ -1,20 +1,24 @@
 package WayofTime.alchemicalWizardry.common.items.potion;
 
-import WayofTime.alchemicalWizardry.AlchemicalWizardry;
-import WayofTime.alchemicalWizardry.api.alchemy.AlchemyRecipeRegistry;
-import WayofTime.alchemicalWizardry.common.IBindingAgent;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
 import java.util.List;
+
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumChatFormatting;
 import net.minecraft.util.StatCollector;
+
 import org.lwjgl.input.Keyboard;
 
+import WayofTime.alchemicalWizardry.AlchemicalWizardry;
+import WayofTime.alchemicalWizardry.api.alchemy.AlchemyRecipeRegistry;
+import WayofTime.alchemicalWizardry.common.IBindingAgent;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
+
 public class StandardBindingAgent extends Item implements IBindingAgent {
+
     public StandardBindingAgent() {
         super();
         setCreativeTab(AlchemicalWizardry.tabBloodMagic);
@@ -48,9 +52,15 @@ public class StandardBindingAgent extends Item implements IBindingAgent {
                 }
             }
         } else {
-            par3List.add("-" + StatCollector.translateToLocal("tooltip.alchemy.press") + " " + EnumChatFormatting.BLUE
-                    + StatCollector.translateToLocal("tooltip.alchemy.shift") + EnumChatFormatting.GRAY + " "
-                    + StatCollector.translateToLocal("tooltip.alchemy.forrecipe") + "-");
+            par3List.add(
+                    "-" + StatCollector.translateToLocal("tooltip.alchemy.press")
+                            + " "
+                            + EnumChatFormatting.BLUE
+                            + StatCollector.translateToLocal("tooltip.alchemy.shift")
+                            + EnumChatFormatting.GRAY
+                            + " "
+                            + StatCollector.translateToLocal("tooltip.alchemy.forrecipe")
+                            + "-");
         }
     }
 }

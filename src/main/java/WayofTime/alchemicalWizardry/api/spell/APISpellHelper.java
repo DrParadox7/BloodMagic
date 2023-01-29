@@ -1,11 +1,8 @@
 package WayofTime.alchemicalWizardry.api.spell;
 
-import WayofTime.alchemicalWizardry.ModItems;
-import WayofTime.alchemicalWizardry.api.alchemy.energy.Reagent;
-import WayofTime.alchemicalWizardry.api.alchemy.energy.ReagentRegistry;
-import cpw.mods.fml.common.registry.GameRegistry;
 import java.util.ArrayList;
 import java.util.List;
+
 import net.minecraft.block.Block;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.item.EntityItem;
@@ -21,9 +18,16 @@ import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.util.Vec3;
 import net.minecraft.world.World;
 
+import WayofTime.alchemicalWizardry.ModItems;
+import WayofTime.alchemicalWizardry.api.alchemy.energy.Reagent;
+import WayofTime.alchemicalWizardry.api.alchemy.energy.ReagentRegistry;
+import cpw.mods.fml.common.registry.GameRegistry;
+
 public class APISpellHelper {
+
     /**
      * Thanks Kihira! <3
+     * 
      * @param player
      * @return persistent data tag
      */
@@ -203,9 +207,9 @@ public class APISpellHelper {
         float f6 = MathHelper.sin(-f1 * 0.017453292F);
         float f7 = f4 * f5;
         float f8 = f3 * f5;
-        //        if (player instanceof EntityPlayerMP)
+        // if (player instanceof EntityPlayerMP)
         {
-            //            d3 = ((EntityPlayerMP) player).theItemInWorldManager.getBlockReachDistance();
+            // d3 = ((EntityPlayerMP) player).theItemInWorldManager.getBlockReachDistance();
         }
         Vec3 vec31 = vec3.addVector((double) f7 * range, (double) f6 * range, (double) f8 * range);
         return world.func_147447_a(vec3, vec31, par3, !par3, par3);
@@ -215,8 +219,8 @@ public class APISpellHelper {
         return Vec3.createVectorHelper(x, y, z);
     }
 
-    public static List<ItemStack> getItemsFromBlock(
-            World world, Block block, int x, int y, int z, int meta, boolean silkTouch, int fortune) {
+    public static List<ItemStack> getItemsFromBlock(World world, Block block, int x, int y, int z, int meta,
+            boolean silkTouch, int fortune) {
         boolean canSilk = block.canSilkHarvest(world, null, x, y, z, meta);
 
         if (canSilk && silkTouch) {
@@ -321,7 +325,7 @@ public class APISpellHelper {
     }
 
     public static IRecipe getRecipeForItemStack(ItemStack reqStack) // Does not match NBT. Durrr! -smack-
-            {
+    {
         if (reqStack == null) {
             return null; // Why are you even doing this to yourself!? You know this can't be healthy!
         }
@@ -330,10 +334,9 @@ public class APISpellHelper {
             if (posRecipe instanceof IRecipe) {
                 ItemStack outputStack = ((IRecipe) posRecipe).getRecipeOutput();
                 if (outputStack != null) {
-                    if (outputStack.getItem() == reqStack.getItem()
-                            && (outputStack.getItem().getHasSubtypes()
-                                    ? outputStack.getItemDamage() == reqStack.getItemDamage()
-                                    : true)) {
+                    if (outputStack.getItem() == reqStack.getItem() && (outputStack.getItem().getHasSubtypes()
+                            ? outputStack.getItemDamage() == reqStack.getItemDamage()
+                            : true)) {
                         return (IRecipe) posRecipe;
                     }
                 }

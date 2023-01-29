@@ -1,6 +1,7 @@
 package pneumaticCraft.api.client.pneumaticHelmet;
 
 import java.util.List;
+
 import net.minecraft.client.gui.FontRenderer;
 
 /**
@@ -8,6 +9,7 @@ import net.minecraft.client.gui.FontRenderer;
  * safely be casted to GuiSreen if needed.
  */
 public interface IGuiScreen {
+
     public List getButtonList();
 
     public FontRenderer getFontRenderer();

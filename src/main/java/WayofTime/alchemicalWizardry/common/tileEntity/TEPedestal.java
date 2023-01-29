@@ -1,14 +1,16 @@
 package WayofTime.alchemicalWizardry.common.tileEntity;
 
-import WayofTime.alchemicalWizardry.common.NewPacketHandler;
-import WayofTime.alchemicalWizardry.common.spell.complex.effect.SpellHelper;
 import net.minecraft.entity.effect.EntityLightningBolt;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.Packet;
 
+import WayofTime.alchemicalWizardry.common.NewPacketHandler;
+import WayofTime.alchemicalWizardry.common.spell.complex.effect.SpellHelper;
+
 public class TEPedestal extends TEInventory {
+
     public static final int sizeInv = 1;
 
     private int resultID;
@@ -78,8 +80,10 @@ public class TEPedestal extends TEInventory {
         if (intData.length == 3) {
             for (int i = 0; i < 1; i++) {
                 if (intData[i * 3 + 2] != 0) {
-                    ItemStack is =
-                            new ItemStack(Item.getItemById(intData[i * 3]), intData[i * 3 + 2], intData[i * 3 + 1]);
+                    ItemStack is = new ItemStack(
+                            Item.getItemById(intData[i * 3]),
+                            intData[i * 3 + 2],
+                            intData[i * 3 + 1]);
                     inv[i] = is;
                 } else {
                     inv[i] = null;
@@ -118,7 +122,16 @@ public class TEPedestal extends TEInventory {
 
         for (int i = 0; i < 16; i++) {
             SpellHelper.sendIndexedParticleToAllAround(
-                    worldObj, xCoord, yCoord, zCoord, 20, worldObj.provider.dimensionId, 2, xCoord, yCoord, zCoord);
+                    worldObj,
+                    xCoord,
+                    yCoord,
+                    zCoord,
+                    20,
+                    worldObj.provider.dimensionId,
+                    2,
+                    xCoord,
+                    yCoord,
+                    zCoord);
         }
     }
 }

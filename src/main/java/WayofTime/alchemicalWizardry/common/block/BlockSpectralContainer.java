@@ -1,10 +1,8 @@
 package WayofTime.alchemicalWizardry.common.block;
 
-import WayofTime.alchemicalWizardry.common.tileEntity.TESpectralContainer;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
 import java.util.List;
 import java.util.Random;
+
 import net.minecraft.block.BlockContainer;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.renderer.texture.IIconRegister;
@@ -14,7 +12,12 @@ import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 
+import WayofTime.alchemicalWizardry.common.tileEntity.TESpectralContainer;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
+
 public class BlockSpectralContainer extends BlockContainer {
+
     public BlockSpectralContainer() {
         super(Material.cloth);
         this.setBlockName("blockSpectralContainer");
@@ -38,14 +41,8 @@ public class BlockSpectralContainer extends BlockContainer {
     }
 
     @Override
-    public void addCollisionBoxesToList(
-            World par1World,
-            int par2,
-            int par3,
-            int par4,
-            AxisAlignedBB par5AxisAlignedBB,
-            List par6List,
-            Entity par7Entity) {}
+    public void addCollisionBoxesToList(World par1World, int par2, int par3, int par4, AxisAlignedBB par5AxisAlignedBB,
+            List par6List, Entity par7Entity) {}
 
     public int quantityDropped(Random par1Random) {
         return 0;

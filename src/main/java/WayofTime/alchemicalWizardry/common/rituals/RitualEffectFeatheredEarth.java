@@ -1,20 +1,23 @@
 package WayofTime.alchemicalWizardry.common.rituals;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.effect.EntityLightningBolt;
+import net.minecraft.util.AxisAlignedBB;
+import net.minecraft.world.World;
+
 import WayofTime.alchemicalWizardry.AlchemicalWizardry;
 import WayofTime.alchemicalWizardry.api.alchemy.energy.ReagentRegistry;
 import WayofTime.alchemicalWizardry.api.rituals.IMasterRitualStone;
 import WayofTime.alchemicalWizardry.api.rituals.RitualComponent;
 import WayofTime.alchemicalWizardry.api.rituals.RitualEffect;
 import WayofTime.alchemicalWizardry.api.soulNetwork.SoulNetworkHandler;
-import java.util.ArrayList;
-import java.util.List;
-import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.entity.effect.EntityLightningBolt;
-import net.minecraft.util.AxisAlignedBB;
-import net.minecraft.world.World;
 
 public class RitualEffectFeatheredEarth extends RitualEffect // Nullifies all fall damage in the area of effect
 {
+
     public static final int terraeDrain = 1;
     public static final int orbisTerraeDrain = 1;
     public static final int aetherDrain = 1;
@@ -40,8 +43,8 @@ public class RitualEffectFeatheredEarth extends RitualEffect // Nullifies all fa
         }
 
         boolean hasTerrae = this.canDrainReagent(ritualStone, ReagentRegistry.terraeReagent, terraeDrain, false);
-        boolean hasOrbisTerrae =
-                this.canDrainReagent(ritualStone, ReagentRegistry.orbisTerraeReagent, orbisTerraeDrain, false);
+        boolean hasOrbisTerrae = this
+                .canDrainReagent(ritualStone, ReagentRegistry.orbisTerraeReagent, orbisTerraeDrain, false);
         boolean hasAether = this.canDrainReagent(ritualStone, ReagentRegistry.aetherReagent, aetherDrain, false);
 
         int range = this.getHorizontalRangeForReagent(hasTerrae, hasOrbisTerrae);

@@ -1,11 +1,13 @@
 package WayofTime.alchemicalWizardry.common.spell.complex.effect.impactEffects.wind;
 
-import WayofTime.alchemicalWizardry.common.spell.complex.effect.impactEffects.tool.LeftClickEffect;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.Vec3;
 
+import WayofTime.alchemicalWizardry.common.spell.complex.effect.impactEffects.tool.LeftClickEffect;
+
 public class ToolDefensiveWind extends LeftClickEffect {
+
     public ToolDefensiveWind(int power, int potency, int cost) {
         super(power, potency, cost);
     }

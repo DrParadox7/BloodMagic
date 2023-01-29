@@ -3,8 +3,10 @@ package WayofTime.alchemicalWizardry.api.rituals;
 import net.minecraft.world.World;
 
 public interface IRitualStone {
+
     /**
      * x, y, and z give the position of the Ritual Stone
+     * 
      * @param world
      * @param x
      * @param y

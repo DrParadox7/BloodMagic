@@ -8,6 +8,7 @@ import WayofTime.alchemicalWizardry.api.spell.SpellParadigmTool;
 import WayofTime.alchemicalWizardry.common.spell.complex.effect.impactEffects.wind.ToolOffensiveWind;
 
 public class CSEToolOffensiveWind extends ComplexSpellEffect {
+
     public CSEToolOffensiveWind() {
         super(ComplexSpellType.WIND, ComplexSpellModifier.OFFENSIVE);
     }
@@ -23,9 +24,8 @@ public class CSEToolOffensiveWind extends ComplexSpellEffect {
     @Override
     public void modifyParadigm(SpellParadigm parad) {
         if (parad instanceof SpellParadigmTool) {
-            ((SpellParadigmTool) parad)
-                    .addLeftClickEffect(new ToolOffensiveWind(
-                            this.powerEnhancement, this.potencyEnhancement, this.costEnhancement));
+            ((SpellParadigmTool) parad).addLeftClickEffect(
+                    new ToolOffensiveWind(this.powerEnhancement, this.potencyEnhancement, this.costEnhancement));
         }
     }
 

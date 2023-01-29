@@ -1,14 +1,15 @@
 package WayofTime.alchemicalWizardry.common.commands.sub;
 
-import WayofTime.alchemicalWizardry.api.command.ISubCommand;
-import WayofTime.alchemicalWizardry.api.command.SubCommandBase;
-import WayofTime.alchemicalWizardry.common.commands.CommandBloodMagic;
 import net.minecraft.command.ICommand;
 import net.minecraft.command.ICommandSender;
 import net.minecraft.util.ChatComponentText;
 import net.minecraft.util.ChatStyle;
 import net.minecraft.util.EnumChatFormatting;
 import net.minecraft.util.StatCollector;
+
+import WayofTime.alchemicalWizardry.api.command.ISubCommand;
+import WayofTime.alchemicalWizardry.api.command.SubCommandBase;
+import WayofTime.alchemicalWizardry.common.commands.CommandBloodMagic;
 
 public class SubCommandHelp extends SubCommandBase {
 
@@ -37,12 +38,13 @@ public class SubCommandHelp extends SubCommandBase {
 
         if (args.length > 0) return;
 
-        for (ISubCommand subCommand :
-                ((CommandBloodMagic) getParentCommand()).getSubCommands().values())
-            commandSender.addChatMessage(new ChatComponentText(StatCollector.translateToLocalFormatted(
-                            "commands.format.help",
-                            capitalizeFirstLetter(subCommand.getSubCommandName()),
-                            subCommand.getArgUsage(commandSender)))
-                    .setChatStyle(new ChatStyle().setColor(EnumChatFormatting.GREEN)));
+        for (ISubCommand subCommand : ((CommandBloodMagic) getParentCommand()).getSubCommands().values())
+            commandSender.addChatMessage(
+                    new ChatComponentText(
+                            StatCollector.translateToLocalFormatted(
+                                    "commands.format.help",
+                                    capitalizeFirstLetter(subCommand.getSubCommandName()),
+                                    subCommand.getArgUsage(commandSender)))
+                                            .setChatStyle(new ChatStyle().setColor(EnumChatFormatting.GREEN)));
     }
 }

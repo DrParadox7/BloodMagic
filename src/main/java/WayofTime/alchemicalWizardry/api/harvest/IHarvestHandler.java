@@ -4,6 +4,7 @@ import net.minecraft.block.Block;
 import net.minecraft.world.World;
 
 public interface IHarvestHandler {
+
     /**
      * A handler that is used to harvest and replant the block at the specified location
      *

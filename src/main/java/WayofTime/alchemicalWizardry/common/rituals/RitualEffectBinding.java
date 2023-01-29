@@ -1,15 +1,9 @@
 package WayofTime.alchemicalWizardry.common.rituals;
 
-import WayofTime.alchemicalWizardry.AlchemicalWizardry;
-import WayofTime.alchemicalWizardry.api.bindingRegistry.BindingRegistry;
-import WayofTime.alchemicalWizardry.api.rituals.IMasterRitualStone;
-import WayofTime.alchemicalWizardry.api.rituals.RitualComponent;
-import WayofTime.alchemicalWizardry.api.rituals.RitualEffect;
-import WayofTime.alchemicalWizardry.api.soulNetwork.SoulNetworkHandler;
-import WayofTime.alchemicalWizardry.common.spell.complex.effect.SpellHelper;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+
 import net.minecraft.entity.effect.EntityLightningBolt;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
@@ -19,7 +13,16 @@ import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.world.World;
 
+import WayofTime.alchemicalWizardry.AlchemicalWizardry;
+import WayofTime.alchemicalWizardry.api.bindingRegistry.BindingRegistry;
+import WayofTime.alchemicalWizardry.api.rituals.IMasterRitualStone;
+import WayofTime.alchemicalWizardry.api.rituals.RitualComponent;
+import WayofTime.alchemicalWizardry.api.rituals.RitualEffect;
+import WayofTime.alchemicalWizardry.api.soulNetwork.SoulNetworkHandler;
+import WayofTime.alchemicalWizardry.common.spell.complex.effect.SpellHelper;
+
 public class RitualEffectBinding extends RitualEffect {
+
     @Override
     public void performEffect(IMasterRitualStone ritualStone) {
         String owner = ritualStone.getOwner();
@@ -42,9 +45,12 @@ public class RitualEffectBinding extends RitualEffect {
             if (ritualStone.getVar1() == 0) {
                 int d0 = 0;
                 AxisAlignedBB axisalignedbb = AxisAlignedBB.getBoundingBox(
-                                (double) x, (double) y + 1, (double) z, (double) (x + 1), (double) (y + 2), (double)
-                                        (z + 1))
-                        .expand(d0, d0, d0);
+                        (double) x,
+                        (double) y + 1,
+                        (double) z,
+                        (double) (x + 1),
+                        (double) (y + 2),
+                        (double) (z + 1)).expand(d0, d0, d0);
                 List list = world.getEntitiesWithinAABB(EntityItem.class, axisalignedbb);
                 Iterator iterator = list.iterator();
                 EntityItem item;
@@ -70,7 +76,16 @@ public class RitualEffectBinding extends RitualEffect {
 
                     if (world.rand.nextInt(10) == 0) {
                         SpellHelper.sendIndexedParticleToAllAround(
-                                world, x, y, z, 20, world.provider.dimensionId, 1, x, y, z);
+                                world,
+                                x,
+                                y,
+                                z,
+                                20,
+                                world.provider.dimensionId,
+                                1,
+                                x,
+                                y,
+                                z);
                     }
                 }
 

@@ -1,13 +1,16 @@
 package WayofTime.alchemicalWizardry.common.harvest;
 
-import WayofTime.alchemicalWizardry.api.harvest.IHarvestHandler;
-import cpw.mods.fml.common.registry.GameRegistry;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+
 import net.minecraft.block.Block;
 import net.minecraft.world.World;
 
+import WayofTime.alchemicalWizardry.api.harvest.IHarvestHandler;
+import cpw.mods.fml.common.registry.GameRegistry;
+
 public class AgriCraftCropHarvestHandler implements IHarvestHandler {
+
     public Block harvestBlock;
     public Method isMature;
     public Method harvest;

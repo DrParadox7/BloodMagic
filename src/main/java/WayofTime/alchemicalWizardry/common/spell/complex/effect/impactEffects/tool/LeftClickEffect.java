@@ -1,10 +1,12 @@
 package WayofTime.alchemicalWizardry.common.spell.complex.effect.impactEffects.tool;
 
-import WayofTime.alchemicalWizardry.api.spell.ILeftClickEffect;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.item.ItemStack;
 
+import WayofTime.alchemicalWizardry.api.spell.ILeftClickEffect;
+
 public abstract class LeftClickEffect implements ILeftClickEffect {
+
     protected int powerUpgrades;
     protected int potencyUpgrades;
     protected int costUpgrades;

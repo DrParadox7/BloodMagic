@@ -1,13 +1,7 @@
 package WayofTime.alchemicalWizardry.common.items.sigil;
 
-import WayofTime.alchemicalWizardry.AlchemicalWizardry;
-import WayofTime.alchemicalWizardry.api.items.interfaces.ArmourUpgrade;
-import WayofTime.alchemicalWizardry.api.items.interfaces.ISigil;
-import WayofTime.alchemicalWizardry.common.items.EnergyItems;
-import cpw.mods.fml.common.eventhandler.Event.Result;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
 import java.util.List;
+
 import net.minecraft.block.Block;
 import net.minecraft.block.IGrowable;
 import net.minecraft.client.renderer.texture.IIconRegister;
@@ -22,7 +16,16 @@ import net.minecraftforge.common.IPlantable;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.entity.player.BonemealEvent;
 
+import WayofTime.alchemicalWizardry.AlchemicalWizardry;
+import WayofTime.alchemicalWizardry.api.items.interfaces.ArmourUpgrade;
+import WayofTime.alchemicalWizardry.api.items.interfaces.ISigil;
+import WayofTime.alchemicalWizardry.common.items.EnergyItems;
+import cpw.mods.fml.common.eventhandler.Event.Result;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
+
 public class SigilOfGrowth extends EnergyItems implements ArmourUpgrade, ISigil {
+
     @SideOnly(Side.CLIENT)
     private IIcon activeIcon;
 
@@ -50,8 +53,9 @@ public class SigilOfGrowth extends EnergyItems implements ArmourUpgrade, ISigil 
                 par3List.add(StatCollector.translateToLocal("tooltip.sigil.state.deactivated"));
             }
 
-            par3List.add(StatCollector.translateToLocal("tooltip.owner.currentowner") + " "
-                    + par1ItemStack.getTagCompound().getString("ownerName"));
+            par3List.add(
+                    StatCollector.translateToLocal("tooltip.owner.currentowner") + " "
+                            + par1ItemStack.getTagCompound().getString("ownerName"));
         }
     }
 
@@ -89,17 +93,8 @@ public class SigilOfGrowth extends EnergyItems implements ArmourUpgrade, ISigil 
     }
 
     @Override
-    public boolean onItemUse(
-            ItemStack par1ItemStack,
-            EntityPlayer par2EntityPlayer,
-            World par3World,
-            int par4,
-            int par5,
-            int par6,
-            int par7,
-            float par8,
-            float par9,
-            float par10) {
+    public boolean onItemUse(ItemStack par1ItemStack, EntityPlayer par2EntityPlayer, World par3World, int par4,
+            int par5, int par6, int par7, float par8, float par9, float par10) {
         if (EnergyItems.checkAndSetItemOwner(par1ItemStack, par2EntityPlayer)) {
             if (applyBonemeal(par1ItemStack, par3World, par4, par5, par6, par2EntityPlayer)) {
                 EnergyItems.syphonBatteries(par1ItemStack, par2EntityPlayer, getEnergyUsed());
@@ -154,8 +149,7 @@ public class SigilOfGrowth extends EnergyItems implements ArmourUpgrade, ISigil 
         }
 
         if (par1ItemStack.getTagCompound().getBoolean("isActive")) {
-            if (par2World.getWorldTime() % tickDelay
-                    == par1ItemStack.getTagCompound().getInteger("worldTimeDelay")) {
+            if (par2World.getWorldTime() % tickDelay == par1ItemStack.getTagCompound().getInteger("worldTimeDelay")) {
                 if (!EnergyItems.syphonBatteries(par1ItemStack, (EntityPlayer) par3Entity, getEnergyUsed())) {
                     par1ItemStack.getTagCompound().setBoolean("isActive", false);
                 }
@@ -182,13 +176,8 @@ public class SigilOfGrowth extends EnergyItems implements ArmourUpgrade, ISigil 
         }
     }
 
-    public static boolean applyBonemeal(
-            ItemStack p_150919_0_,
-            World p_150919_1_,
-            int p_150919_2_,
-            int p_150919_3_,
-            int p_150919_4_,
-            EntityPlayer player) {
+    public static boolean applyBonemeal(ItemStack p_150919_0_, World p_150919_1_, int p_150919_2_, int p_150919_3_,
+            int p_150919_4_, EntityPlayer player) {
         Block block = p_150919_1_.getBlock(p_150919_2_, p_150919_3_, p_150919_4_);
 
         BonemealEvent event = new BonemealEvent(player, p_150919_1_, block, p_150919_2_, p_150919_3_, p_150919_4_);

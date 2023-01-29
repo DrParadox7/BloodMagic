@@ -3,6 +3,7 @@ package WayofTime.alchemicalWizardry.common.demonVillage;
 import net.minecraft.nbt.NBTTagCompound;
 
 public class GridSpace {
+
     public static final int EMPTY = 0;
     public static final int MAIN_PORTAL = 1;
     public static final int MINI_PORTAL = 2;

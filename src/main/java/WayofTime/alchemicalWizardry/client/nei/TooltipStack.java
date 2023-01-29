@@ -1,7 +1,8 @@
 package WayofTime.alchemicalWizardry.client.nei;
 
-import codechicken.nei.PositionedStack;
 import java.util.List;
+
+import codechicken.nei.PositionedStack;
 
 public class TooltipStack extends PositionedStack {
 

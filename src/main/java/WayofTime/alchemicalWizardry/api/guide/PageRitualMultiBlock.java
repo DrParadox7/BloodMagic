@@ -1,11 +1,14 @@
 package WayofTime.alchemicalWizardry.api.guide;
 
-import WayofTime.alchemicalWizardry.api.rituals.RitualComponent;
-import WayofTime.alchemicalWizardry.api.rituals.Rituals;
 import java.util.List;
+
 import net.minecraft.item.ItemStack;
 
+import WayofTime.alchemicalWizardry.api.rituals.RitualComponent;
+import WayofTime.alchemicalWizardry.api.rituals.Rituals;
+
 public class PageRitualMultiBlock extends PageMultiBlock {
+
     private static ItemStack blankStone;
     private static ItemStack waterStone;
     private static ItemStack fireStone;
@@ -15,13 +18,13 @@ public class PageRitualMultiBlock extends PageMultiBlock {
     private static ItemStack dawnStone;
 
     static {
-        //		blankStone = new ItemStack(ModBlocks.ritualStone, 1, RitualComponent.BLANK);
-        //		waterStone = new ItemStack(ModBlocks.ritualStone, 1, RitualComponent.WATER);
-        //		fireStone = new ItemStack(ModBlocks.ritualStone, 1, RitualComponent.FIRE);
-        //		earthStone = new ItemStack(ModBlocks.ritualStone, 1, RitualComponent.EARTH);
-        //		airStone = new ItemStack(ModBlocks.ritualStone, 1, RitualComponent.AIR);
-        //		duskStone = new ItemStack(ModBlocks.ritualStone, 1, RitualComponent.DUSK);
-        //		dawnStone = new ItemStack(ModBlocks.ritualStone, 1, RitualComponent.DAWN);
+        // blankStone = new ItemStack(ModBlocks.ritualStone, 1, RitualComponent.BLANK);
+        // waterStone = new ItemStack(ModBlocks.ritualStone, 1, RitualComponent.WATER);
+        // fireStone = new ItemStack(ModBlocks.ritualStone, 1, RitualComponent.FIRE);
+        // earthStone = new ItemStack(ModBlocks.ritualStone, 1, RitualComponent.EARTH);
+        // airStone = new ItemStack(ModBlocks.ritualStone, 1, RitualComponent.AIR);
+        // duskStone = new ItemStack(ModBlocks.ritualStone, 1, RitualComponent.DUSK);
+        // dawnStone = new ItemStack(ModBlocks.ritualStone, 1, RitualComponent.DAWN);
     }
 
     private PageRitualMultiBlock(ItemStack[][][] structure) {
@@ -54,15 +57,21 @@ public class PageRitualMultiBlock extends PageMultiBlock {
         System.out.println(
                 "Min: (" + minX + ", " + minY + ", " + minZ + "), Max: (" + maxX + ", " + maxY + ", " + maxZ + ")");
 
-        ItemStack[][][] tempStructure = new ItemStack[maxY - minY + 1][maxX - minX + 1]
-                [maxZ - minZ + 1]; // First value is vertical, second is down to the left, third is down to the right
+        ItemStack[][][] tempStructure = new ItemStack[maxY - minY + 1][maxX - minX + 1][maxZ - minZ + 1]; // First value
+                                                                                                          // is
+                                                                                                          // vertical,
+                                                                                                          // second is
+                                                                                                          // down to the
+                                                                                                          // left, third
+                                                                                                          // is down to
+                                                                                                          // the right
 
         for (RitualComponent comp : ritualComponents) {
-            tempStructure[comp.getY() - minY][comp.getX() - minX][comp.getZ() - minZ] =
-                    getStackForRitualStone(comp.getStoneType());
+            tempStructure[comp.getY() - minY][comp.getX() - minX][comp.getZ() - minZ] = getStackForRitualStone(
+                    comp.getStoneType());
         }
 
-        //		tempStructure[-minY][-minX][-minZ] = new ItemStack(ModBlocks.blockMasterStone);
+        // tempStructure[-minY][-minX][-minZ] = new ItemStack(ModBlocks.blockMasterStone);
 
         return new PageRitualMultiBlock(tempStructure);
     }

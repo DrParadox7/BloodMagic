@@ -1,15 +1,8 @@
 package WayofTime.alchemicalWizardry.common.rituals;
 
-import WayofTime.alchemicalWizardry.AlchemicalWizardry;
-import WayofTime.alchemicalWizardry.ModBlocks;
-import WayofTime.alchemicalWizardry.api.alchemy.energy.ReagentRegistry;
-import WayofTime.alchemicalWizardry.api.rituals.IMasterRitualStone;
-import WayofTime.alchemicalWizardry.api.rituals.RitualComponent;
-import WayofTime.alchemicalWizardry.api.rituals.RitualEffect;
-import WayofTime.alchemicalWizardry.api.soulNetwork.SoulNetworkHandler;
-import WayofTime.alchemicalWizardry.common.spell.complex.effect.SpellHelper;
 import java.util.ArrayList;
 import java.util.List;
+
 import net.minecraft.block.Block;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.init.Blocks;
@@ -21,7 +14,17 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
 import net.minecraftforge.common.util.ForgeDirection;
 
+import WayofTime.alchemicalWizardry.AlchemicalWizardry;
+import WayofTime.alchemicalWizardry.ModBlocks;
+import WayofTime.alchemicalWizardry.api.alchemy.energy.ReagentRegistry;
+import WayofTime.alchemicalWizardry.api.rituals.IMasterRitualStone;
+import WayofTime.alchemicalWizardry.api.rituals.RitualComponent;
+import WayofTime.alchemicalWizardry.api.rituals.RitualEffect;
+import WayofTime.alchemicalWizardry.api.soulNetwork.SoulNetworkHandler;
+import WayofTime.alchemicalWizardry.common.spell.complex.effect.SpellHelper;
+
 public class RitualEffectCrushing extends RitualEffect {
+
     public static final int crystallosDrain = 10;
     public static final int orbisTerraeDrain = 10;
     public static final int potentiaDrain = 10;
@@ -67,14 +70,14 @@ public class RitualEffectCrushing extends RitualEffect {
             return; // Prevents overflow
         }
 
-        boolean hasCrystallos =
-                this.canDrainReagent(ritualStone, ReagentRegistry.crystallosReagent, crystallosDrain, false);
-        boolean hasOrbisTerrae =
-                this.canDrainReagent(ritualStone, ReagentRegistry.orbisTerraeReagent, orbisTerraeDrain, false);
+        boolean hasCrystallos = this
+                .canDrainReagent(ritualStone, ReagentRegistry.crystallosReagent, crystallosDrain, false);
+        boolean hasOrbisTerrae = this
+                .canDrainReagent(ritualStone, ReagentRegistry.orbisTerraeReagent, orbisTerraeDrain, false);
         boolean hasPotentia = this.canDrainReagent(ritualStone, ReagentRegistry.potentiaReagent, potentiaDrain, false);
         boolean hasVirtus = this.canDrainReagent(ritualStone, ReagentRegistry.virtusReagent, virtusDrain, false);
-        boolean hasIncendium =
-                this.canDrainReagent(ritualStone, ReagentRegistry.incendiumReagent, incendiumDrain, false);
+        boolean hasIncendium = this
+                .canDrainReagent(ritualStone, ReagentRegistry.incendiumReagent, incendiumDrain, false);
 
         boolean isSilkTouch = hasCrystallos;
         int fortuneLevel = 0;
@@ -118,22 +121,24 @@ public class RitualEffectCrushing extends RitualEffect {
 
                                 if (hasCrystallos) {
                                     this.canDrainReagent(
-                                            ritualStone, ReagentRegistry.crystallosReagent, crystallosDrain, true);
+                                            ritualStone,
+                                            ReagentRegistry.crystallosReagent,
+                                            crystallosDrain,
+                                            true);
                                 }
                             } else {
-                                ArrayList<ItemStack> itemDropList =
-                                        block.getDrops(world, x + i, y + j, z + k, meta, fortuneLevel);
+                                ArrayList<ItemStack> itemDropList = block
+                                        .getDrops(world, x + i, y + j, z + k, meta, fortuneLevel);
 
                                 if (itemDropList != null) {
                                     int invSize = tileEntity.getSizeInventory();
 
                                     for (ItemStack item : itemDropList) {
-                                        hasIncendium = hasIncendium
-                                                && this.canDrainReagent(
-                                                        ritualStone,
-                                                        ReagentRegistry.incendiumReagent,
-                                                        incendiumDrain,
-                                                        false);
+                                        hasIncendium = hasIncendium && this.canDrainReagent(
+                                                ritualStone,
+                                                ReagentRegistry.incendiumReagent,
+                                                incendiumDrain,
+                                                false);
                                         ItemStack copyStack = item.copyItemStack(item);
 
                                         if (this.usesIncendium(copyStack)) {
@@ -145,8 +150,8 @@ public class RitualEffectCrushing extends RitualEffect {
                                                     true);
                                         }
 
-                                        SpellHelper.insertStackIntoInventory(
-                                                copyStack, tileEntity, ForgeDirection.DOWN);
+                                        SpellHelper
+                                                .insertStackIntoInventory(copyStack, tileEntity, ForgeDirection.DOWN);
                                         if (copyStack.stackSize > 0) {
                                             world.spawnEntityInWorld(
                                                     new EntityItem(world, x + 0.4, y + 2, z + 0.5, copyStack));
@@ -162,11 +167,17 @@ public class RitualEffectCrushing extends RitualEffect {
                                     }
                                     if (hasPotentia) {
                                         this.canDrainReagent(
-                                                ritualStone, ReagentRegistry.potentiaReagent, potentiaDrain, true);
+                                                ritualStone,
+                                                ReagentRegistry.potentiaReagent,
+                                                potentiaDrain,
+                                                true);
                                     }
                                     if (hasVirtus) {
                                         this.canDrainReagent(
-                                                ritualStone, ReagentRegistry.virtusReagent, virtusDrain, true);
+                                                ritualStone,
+                                                ReagentRegistry.virtusReagent,
+                                                virtusDrain,
+                                                true);
                                     }
                                 }
                             }

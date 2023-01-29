@@ -4,34 +4,39 @@ import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+
 import net.minecraft.item.ItemStack;
 
 public class AltarRecipeRegistry {
+
     public static List<AltarRecipe> altarRecipes = new LinkedList<>();
     public static Map<Integer, ItemStack> orbMap = new HashMap<>();
 
-    public static void registerAltarRecipe(
-            ItemStack result,
-            ItemStack requiredItem,
-            int minTier,
-            int liquidRequired,
-            int consumptionRate,
-            int drainRate,
-            boolean canBeFilled) {
-        altarRecipes.add(new AltarRecipe(
-                result, requiredItem, minTier, liquidRequired, consumptionRate, drainRate, canBeFilled));
+    public static void registerAltarRecipe(ItemStack result, ItemStack requiredItem, int minTier, int liquidRequired,
+            int consumptionRate, int drainRate, boolean canBeFilled) {
+        altarRecipes.add(
+                new AltarRecipe(
+                        result,
+                        requiredItem,
+                        minTier,
+                        liquidRequired,
+                        consumptionRate,
+                        drainRate,
+                        canBeFilled));
     }
 
-    public static void registerNBTAltarRecipe(
-            ItemStack result,
-            ItemStack requiredItem,
-            int minTier,
-            int liquidRequired,
-            int consumptionRate,
-            int drainRate,
-            boolean canBeFilled) {
-        altarRecipes.add(new AltarRecipe(
-                result, requiredItem, minTier, liquidRequired, consumptionRate, drainRate, canBeFilled, true));
+    public static void registerNBTAltarRecipe(ItemStack result, ItemStack requiredItem, int minTier, int liquidRequired,
+            int consumptionRate, int drainRate, boolean canBeFilled) {
+        altarRecipes.add(
+                new AltarRecipe(
+                        result,
+                        requiredItem,
+                        minTier,
+                        liquidRequired,
+                        consumptionRate,
+                        drainRate,
+                        canBeFilled,
+                        true));
     }
 
     public static void registerAltarOrbRecipe(ItemStack orbStack, int minTier, int consumptionRate) {

@@ -1,5 +1,10 @@
 package WayofTime.alchemicalWizardry.client;
 
+import net.minecraft.item.ItemBlock;
+import net.minecraft.world.World;
+import net.minecraftforge.client.MinecraftForgeClient;
+import net.minecraftforge.common.MinecraftForge;
+
 import WayofTime.alchemicalWizardry.AlchemicalWizardry;
 import WayofTime.alchemicalWizardry.ModBlocks;
 import WayofTime.alchemicalWizardry.api.spell.EntitySpellProjectile;
@@ -97,67 +102,81 @@ import cpw.mods.fml.client.FMLClientHandler;
 import cpw.mods.fml.client.registry.ClientRegistry;
 import cpw.mods.fml.client.registry.RenderingRegistry;
 import cpw.mods.fml.common.FMLCommonHandler;
-import net.minecraft.item.ItemBlock;
-import net.minecraft.world.World;
-import net.minecraftforge.client.MinecraftForgeClient;
-import net.minecraftforge.common.MinecraftForge;
 
 public class ClientProxy extends CommonProxy {
+
     public static int renderPass;
 
     @Override
     public void registerPostSideObjects() {
-        //    	BUEntries entries = new BUEntries();
-        //    	entries.postInit();
+        // BUEntries entries = new BUEntries();
+        // entries.postInit();
     }
 
     @Override
     public void registerRenderers() {
+        RenderingRegistry
+                .registerEntityRenderingHandler(EnergyBlastProjectile.class, new RenderEnergyBlastProjectile());
         RenderingRegistry.registerEntityRenderingHandler(
-                EnergyBlastProjectile.class, new RenderEnergyBlastProjectile());
-        RenderingRegistry.registerEntityRenderingHandler(
-                EntityEnergyBazookaMainProjectile.class, new RenderEnergyBazookaMainProjectile());
-        RenderingRegistry.registerEntityRenderingHandler(
-                EntitySpellProjectile.class, new RenderEnergyBlastProjectile());
+                EntityEnergyBazookaMainProjectile.class,
+                new RenderEnergyBazookaMainProjectile());
+        RenderingRegistry
+                .registerEntityRenderingHandler(EntitySpellProjectile.class, new RenderEnergyBlastProjectile());
         RenderingRegistry.registerEntityRenderingHandler(EntityParticleBeam.class, new RenderEnergyBlastProjectile());
         RenderingRegistry.registerEntityRenderingHandler(EntityMeteor.class, new RenderMeteor());
         RenderingRegistry.registerEntityRenderingHandler(
-                EntityFallenAngel.class, new RenderFallenAngel(new ModelFallenAngel(), 0.5F));
+                EntityFallenAngel.class,
+                new RenderFallenAngel(new ModelFallenAngel(), 0.5F));
         RenderingRegistry.registerEntityRenderingHandler(
-                EntityLowerGuardian.class, new RenderLowerGuardian(new ModelLowerGuardian(), 0.5F));
+                EntityLowerGuardian.class,
+                new RenderLowerGuardian(new ModelLowerGuardian(), 0.5F));
+        RenderingRegistry
+                .registerEntityRenderingHandler(EntityBileDemon.class, new RenderBileDemon(new ModelBileDemon(), 1.5F));
         RenderingRegistry.registerEntityRenderingHandler(
-                EntityBileDemon.class, new RenderBileDemon(new ModelBileDemon(), 1.5F));
+                EntityWingedFireDemon.class,
+                new RenderWingedFireDemon(new ModelWingedFireDemon(), 1.0F));
         RenderingRegistry.registerEntityRenderingHandler(
-                EntityWingedFireDemon.class, new RenderWingedFireDemon(new ModelWingedFireDemon(), 1.0F));
+                EntitySmallEarthGolem.class,
+                new RenderSmallEarthGolem(new ModelSmallEarthGolem(), 0.5F));
+        RenderingRegistry
+                .registerEntityRenderingHandler(EntityIceDemon.class, new RenderIceDemon(new ModelIceDemon(), 0.5F));
         RenderingRegistry.registerEntityRenderingHandler(
-                EntitySmallEarthGolem.class, new RenderSmallEarthGolem(new ModelSmallEarthGolem(), 0.5F));
-        RenderingRegistry.registerEntityRenderingHandler(
-                EntityIceDemon.class, new RenderIceDemon(new ModelIceDemon(), 0.5F));
-        RenderingRegistry.registerEntityRenderingHandler(
-                EntityBoulderFist.class, new RenderBoulderFist(new ModelBoulderFist(), 0.5F));
+                EntityBoulderFist.class,
+                new RenderBoulderFist(new ModelBoulderFist(), 0.5F));
         RenderingRegistry.registerEntityRenderingHandler(EntityShade.class, new RenderShade(new ModelShade(), 0.5F));
         RenderingRegistry.registerEntityRenderingHandler(
-                EntityAirElemental.class, new RenderElemental(new ModelElemental(), 0.5F));
+                EntityAirElemental.class,
+                new RenderElemental(new ModelElemental(), 0.5F));
         RenderingRegistry.registerEntityRenderingHandler(
-                EntityWaterElemental.class, new RenderElemental(new ModelElemental(), 0.5F));
+                EntityWaterElemental.class,
+                new RenderElemental(new ModelElemental(), 0.5F));
         RenderingRegistry.registerEntityRenderingHandler(
-                EntityEarthElemental.class, new RenderElemental(new ModelElemental(), 0.5F));
+                EntityEarthElemental.class,
+                new RenderElemental(new ModelElemental(), 0.5F));
         RenderingRegistry.registerEntityRenderingHandler(
-                EntityFireElemental.class, new RenderElemental(new ModelElemental(), 0.5F));
+                EntityFireElemental.class,
+                new RenderElemental(new ModelElemental(), 0.5F));
         RenderingRegistry.registerEntityRenderingHandler(
-                EntityShadeElemental.class, new RenderElemental(new ModelElemental(), 0.5F));
+                EntityShadeElemental.class,
+                new RenderElemental(new ModelElemental(), 0.5F));
         RenderingRegistry.registerEntityRenderingHandler(
-                EntityHolyElemental.class, new RenderElemental(new ModelElemental(), 0.5F));
+                EntityHolyElemental.class,
+                new RenderElemental(new ModelElemental(), 0.5F));
         RenderingRegistry.registerEntityRenderingHandler(
-                EntityMinorDemonGrunt.class, new RenderMinorDemonGrunt(new ModelMinorDemonGrunt(), 0.5F));
+                EntityMinorDemonGrunt.class,
+                new RenderMinorDemonGrunt(new ModelMinorDemonGrunt(), 0.5F));
         RenderingRegistry.registerEntityRenderingHandler(
-                EntityMinorDemonGruntFire.class, new RenderMinorDemonGrunt(new ModelMinorDemonGrunt(), 0.5F));
+                EntityMinorDemonGruntFire.class,
+                new RenderMinorDemonGrunt(new ModelMinorDemonGrunt(), 0.5F));
         RenderingRegistry.registerEntityRenderingHandler(
-                EntityMinorDemonGruntIce.class, new RenderMinorDemonGrunt(new ModelMinorDemonGrunt(), 0.5F));
+                EntityMinorDemonGruntIce.class,
+                new RenderMinorDemonGrunt(new ModelMinorDemonGrunt(), 0.5F));
         RenderingRegistry.registerEntityRenderingHandler(
-                EntityMinorDemonGruntWind.class, new RenderMinorDemonGrunt(new ModelMinorDemonGrunt(), 0.5F));
+                EntityMinorDemonGruntWind.class,
+                new RenderMinorDemonGrunt(new ModelMinorDemonGrunt(), 0.5F));
         RenderingRegistry.registerEntityRenderingHandler(
-                EntityMinorDemonGruntEarth.class, new RenderMinorDemonGrunt(new ModelMinorDemonGrunt(), 0.5F));
+                EntityMinorDemonGruntEarth.class,
+                new RenderMinorDemonGrunt(new ModelMinorDemonGrunt(), 0.5F));
         RenderingRegistry.registerEntityRenderingHandler(
                 EntityMinorDemonGruntGuardian.class,
                 new RenderMinorDemonGruntGuardian(new ModelMinorDemonGruntGuardian(), 0.5F));
@@ -193,21 +212,26 @@ public class ClientProxy extends CommonProxy {
         ClientRegistry.bindTileEntitySpecialRenderer(TEBellJar.class, new RenderCrystalBelljar());
 
         // Item Renderer stuff
+        MinecraftForgeClient
+                .registerItemRenderer(ItemBlock.getItemFromBlock(ModBlocks.blockConduit), new TEConduitItemRenderer());
         MinecraftForgeClient.registerItemRenderer(
-                ItemBlock.getItemFromBlock(ModBlocks.blockConduit), new TEConduitItemRenderer());
+                ItemBlock.getItemFromBlock(ModBlocks.blockSpellEffect),
+                new TESpellEffectBlockItemRenderer());
         MinecraftForgeClient.registerItemRenderer(
-                ItemBlock.getItemFromBlock(ModBlocks.blockSpellEffect), new TESpellEffectBlockItemRenderer());
+                ItemBlock.getItemFromBlock(ModBlocks.blockSpellEnhancement),
+                new TESpellEnhancementBlockItemRenderer());
         MinecraftForgeClient.registerItemRenderer(
-                ItemBlock.getItemFromBlock(ModBlocks.blockSpellEnhancement), new TESpellEnhancementBlockItemRenderer());
+                ItemBlock.getItemFromBlock(ModBlocks.blockSpellParadigm),
+                new TESpellParadigmBlockItemRenderer());
         MinecraftForgeClient.registerItemRenderer(
-                ItemBlock.getItemFromBlock(ModBlocks.blockSpellParadigm), new TESpellParadigmBlockItemRenderer());
-        MinecraftForgeClient.registerItemRenderer(
-                ItemBlock.getItemFromBlock(ModBlocks.blockSpellModifier), new TESpellModifierBlockItemRenderer());
+                ItemBlock.getItemFromBlock(ModBlocks.blockSpellModifier),
+                new TESpellModifierBlockItemRenderer());
         MinecraftForgeClient.registerItemRenderer(
                 ItemBlock.getItemFromBlock(ModBlocks.blockAlchemicCalcinator),
                 new TEAlchemicalCalcinatorItemRenderer());
         MinecraftForgeClient.registerItemRenderer(
-                ItemBlock.getItemFromBlock(ModBlocks.blockCrystalBelljar), new TEBellJarItemRenderer());
+                ItemBlock.getItemFromBlock(ModBlocks.blockCrystalBelljar),
+                new TEBellJarItemRenderer());
     }
 
     @Override
@@ -217,8 +241,8 @@ public class ClientProxy extends CommonProxy {
 
     @Override
     public void InitRendering() {
-        MinecraftForgeClient.registerItemRenderer(
-                ItemBlock.getItemFromBlock(ModBlocks.blockAltar), new TEAltarItemRenderer());
+        MinecraftForgeClient
+                .registerItemRenderer(ItemBlock.getItemFromBlock(ModBlocks.blockAltar), new TEAltarItemRenderer());
     }
 
     @Override

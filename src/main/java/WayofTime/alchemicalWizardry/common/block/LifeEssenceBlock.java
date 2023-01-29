@@ -1,8 +1,5 @@
 package WayofTime.alchemicalWizardry.common.block;
 
-import WayofTime.alchemicalWizardry.AlchemicalWizardry;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.util.IIcon;
@@ -10,7 +7,12 @@ import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraftforge.fluids.BlockFluidClassic;
 
+import WayofTime.alchemicalWizardry.AlchemicalWizardry;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
+
 public class LifeEssenceBlock extends BlockFluidClassic {
+
     public LifeEssenceBlock() {
         super(AlchemicalWizardry.lifeEssenceFluid, Material.water);
         AlchemicalWizardry.lifeEssenceFluid.setBlock(this);

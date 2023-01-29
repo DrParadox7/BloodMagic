@@ -5,6 +5,7 @@ import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
 
 public class ItemSpellParadigmBlock extends ItemBlock {
+
     public ItemSpellParadigmBlock(Block par1) {
         super(par1);
         setHasSubtypes(true);

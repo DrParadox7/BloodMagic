@@ -1,11 +1,7 @@
 package WayofTime.alchemicalWizardry.common.block;
 
-import WayofTime.alchemicalWizardry.ModBlocks;
-import WayofTime.alchemicalWizardry.common.items.ItemComplexSpellCrystal;
-import WayofTime.alchemicalWizardry.common.tileEntity.TESpellParadigmBlock;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
 import java.util.List;
+
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
@@ -14,7 +10,14 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
 
+import WayofTime.alchemicalWizardry.ModBlocks;
+import WayofTime.alchemicalWizardry.common.items.ItemComplexSpellCrystal;
+import WayofTime.alchemicalWizardry.common.tileEntity.TESpellParadigmBlock;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
+
 public class BlockSpellParadigm extends BlockOrientable {
+
     public BlockSpellParadigm() {
         super();
         this.setBlockName("blockSpellParadigm");
@@ -42,8 +45,8 @@ public class BlockSpellParadigm extends BlockOrientable {
     }
 
     @Override
-    public boolean onBlockActivated(
-            World world, int x, int y, int z, EntityPlayer player, int side, float what, float these, float are) {
+    public boolean onBlockActivated(World world, int x, int y, int z, EntityPlayer player, int side, float what,
+            float these, float are) {
         ItemStack stack = player.getCurrentEquippedItem();
 
         if (stack != null && stack.getItem() instanceof ItemComplexSpellCrystal) {

@@ -1,11 +1,11 @@
 package WayofTime.alchemicalWizardry.api.items;
 
-import WayofTime.alchemicalWizardry.api.items.interfaces.IBloodOrb;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
+
 import net.minecraft.block.Block;
 import net.minecraft.inventory.InventoryCrafting;
 import net.minecraft.item.Item;
@@ -15,10 +15,13 @@ import net.minecraft.item.crafting.ShapelessRecipes;
 import net.minecraft.world.World;
 import net.minecraftforge.oredict.OreDictionary;
 
+import WayofTime.alchemicalWizardry.api.items.interfaces.IBloodOrb;
+
 /**
  * Shapeless Blood Orb Recipe Handler by joshie *
  */
 public class ShapelessBloodOrbRecipe implements IRecipe {
+
     private ItemStack output = null;
     private ArrayList<Object> input = new ArrayList<Object>();
 

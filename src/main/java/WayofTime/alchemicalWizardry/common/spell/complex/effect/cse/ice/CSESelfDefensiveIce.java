@@ -8,6 +8,7 @@ import WayofTime.alchemicalWizardry.api.spell.SpellParadigmSelf;
 import WayofTime.alchemicalWizardry.common.spell.complex.effect.impactEffects.ice.SelfDefensiveIce;
 
 public class CSESelfDefensiveIce extends ComplexSpellEffect {
+
     public CSESelfDefensiveIce() {
         super(ComplexSpellType.ICE, ComplexSpellModifier.DEFENSIVE);
     }
@@ -23,9 +24,8 @@ public class CSESelfDefensiveIce extends ComplexSpellEffect {
     @Override
     public void modifyParadigm(SpellParadigm parad) {
         if (parad instanceof SpellParadigmSelf) {
-            ((SpellParadigmSelf) parad)
-                    .addSelfSpellEffect(
-                            new SelfDefensiveIce(this.powerEnhancement, this.potencyEnhancement, this.costEnhancement));
+            ((SpellParadigmSelf) parad).addSelfSpellEffect(
+                    new SelfDefensiveIce(this.powerEnhancement, this.potencyEnhancement, this.costEnhancement));
         }
     }
 
@@ -36,7 +36,8 @@ public class CSESelfDefensiveIce extends ComplexSpellEffect {
 
     @Override
     public int getCostOfEffect() {
-        return (int)
-                (200 * (3 * powerEnhancement + 1) * (2 * potencyEnhancement + 1) * Math.pow(0.85, costEnhancement));
+        return (int) (200 * (3 * powerEnhancement + 1)
+                * (2 * potencyEnhancement + 1)
+                * Math.pow(0.85, costEnhancement));
     }
 }

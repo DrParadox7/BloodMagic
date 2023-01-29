@@ -1,12 +1,7 @@
 package WayofTime.alchemicalWizardry.common.items.armour;
 
-import WayofTime.alchemicalWizardry.ModItems;
-import WayofTime.alchemicalWizardry.common.renderer.model.ModelOmegaEarth;
-import com.google.common.collect.HashMultimap;
-import com.google.common.collect.Multimap;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
 import java.util.UUID;
+
 import net.minecraft.client.model.ModelBiped;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.entity.Entity;
@@ -15,7 +10,17 @@ import net.minecraft.entity.ai.attributes.AttributeModifier;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.IIcon;
 
+import WayofTime.alchemicalWizardry.ModItems;
+import WayofTime.alchemicalWizardry.common.renderer.model.ModelOmegaEarth;
+
+import com.google.common.collect.HashMultimap;
+import com.google.common.collect.Multimap;
+
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
+
 public class OmegaArmourEarth extends OmegaArmour {
+
     @SideOnly(Side.CLIENT)
     private IIcon helmetIcon;
 
@@ -88,34 +93,21 @@ public class OmegaArmourEarth extends OmegaArmour {
         int yLevel = this.getYLevelStored(stack);
         map.put(
                 SharedMonsterAttributes.knockbackResistance.getAttributeUnlocalizedName(),
-                new AttributeModifier(
-                        new UUID(
-                                179618
-                                /** Random number **/
-                                , armorType),
-                        "Knockback modifier" + armorType,
-                        getKnockbackResist(),
-                        0));
-        map.put(
-                SharedMonsterAttributes.maxHealth.getAttributeUnlocalizedName(),
-                new AttributeModifier(
-                        new UUID(
-                                80532
-                                /** Random number **/
-                                , armorType),
-                        "Health modifier" + armorType,
-                        getDefaultArmourBoost() * getHealthBoostModifierForLevel(yLevel),
-                        1));
-        map.put(
-                SharedMonsterAttributes.attackDamage.getAttributeUnlocalizedName(),
-                new AttributeModifier(
-                        new UUID(
-                                85112
-                                /** Random number **/
-                                , armorType),
-                        "Damage modifier" + armorType,
-                        getDefaultArmourBoost() * getDamageModifierForLevel(yLevel),
-                        2));
+                new AttributeModifier(new UUID(179618
+                /** Random number **/
+                        , armorType), "Knockback modifier" + armorType, getKnockbackResist(), 0));
+        map.put(SharedMonsterAttributes.maxHealth.getAttributeUnlocalizedName(), new AttributeModifier(new UUID(80532
+        /** Random number **/
+                , armorType),
+                "Health modifier" + armorType,
+                getDefaultArmourBoost() * getHealthBoostModifierForLevel(yLevel),
+                1));
+        map.put(SharedMonsterAttributes.attackDamage.getAttributeUnlocalizedName(), new AttributeModifier(new UUID(85112
+        /** Random number **/
+                , armorType),
+                "Damage modifier" + armorType,
+                getDefaultArmourBoost() * getDamageModifierForLevel(yLevel),
+                2));
 
         return map;
     }

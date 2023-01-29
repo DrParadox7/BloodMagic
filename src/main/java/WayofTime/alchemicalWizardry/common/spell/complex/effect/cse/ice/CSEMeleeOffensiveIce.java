@@ -8,6 +8,7 @@ import WayofTime.alchemicalWizardry.api.spell.SpellParadigmMelee;
 import WayofTime.alchemicalWizardry.common.spell.complex.effect.impactEffects.ice.MeleeOffensiveIce;
 
 public class CSEMeleeOffensiveIce extends ComplexSpellEffect {
+
     public CSEMeleeOffensiveIce() {
         super(ComplexSpellType.ICE, ComplexSpellModifier.OFFENSIVE);
     }
@@ -23,9 +24,8 @@ public class CSEMeleeOffensiveIce extends ComplexSpellEffect {
     @Override
     public void modifyParadigm(SpellParadigm parad) {
         if (parad instanceof SpellParadigmMelee) {
-            ((SpellParadigmMelee) parad)
-                    .addEntityEffect(new MeleeOffensiveIce(
-                            this.powerEnhancement, this.potencyEnhancement, this.costEnhancement));
+            ((SpellParadigmMelee) parad).addEntityEffect(
+                    new MeleeOffensiveIce(this.powerEnhancement, this.potencyEnhancement, this.costEnhancement));
         }
     }
 
@@ -36,8 +36,7 @@ public class CSEMeleeOffensiveIce extends ComplexSpellEffect {
 
     @Override
     public int getCostOfEffect() {
-        return (int) (40
-                * (1.5 * potencyEnhancement + 1)
+        return (int) (40 * (1.5 * potencyEnhancement + 1)
                 * Math.pow(1.5, powerEnhancement)
                 * Math.pow(0.85, costEnhancement));
     }

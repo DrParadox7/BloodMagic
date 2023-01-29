@@ -1,13 +1,15 @@
 package WayofTime.alchemicalWizardry.common.spell.complex.effect.impactEffects.earth;
 
-import WayofTime.alchemicalWizardry.api.spell.ProjectileImpactEffect;
-import WayofTime.alchemicalWizardry.common.spell.complex.effect.SpellHelper;
 import net.minecraft.block.Block;
 import net.minecraft.entity.Entity;
 import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.world.World;
 
+import WayofTime.alchemicalWizardry.api.spell.ProjectileImpactEffect;
+import WayofTime.alchemicalWizardry.common.spell.complex.effect.SpellHelper;
+
 public class ProjectileDefaultEarth extends ProjectileImpactEffect {
+
     public ProjectileDefaultEarth(int power, int potency, int cost) {
         super(power, potency, cost);
     }
@@ -29,8 +31,7 @@ public class ProjectileDefaultEarth extends ProjectileImpactEffect {
                 for (int k = -horizRange; k <= horizRange; k++) {
                     if (!world.isAirBlock(posX + i, posY + j, posZ + k)) {
                         Block block = world.getBlock(posX + i, posY + j, posZ + k);
-                        if (block == null
-                                || block.getBlockHardness(world, posX + i, posY + j, posZ + k) == -1
+                        if (block == null || block.getBlockHardness(world, posX + i, posY + j, posZ + k) == -1
                                 || SpellHelper.isBlockFluid(block)) {
                             continue;
                         }

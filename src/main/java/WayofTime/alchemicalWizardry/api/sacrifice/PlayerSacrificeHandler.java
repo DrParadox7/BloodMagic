@@ -1,15 +1,17 @@
 package WayofTime.alchemicalWizardry.api.sacrifice;
 
-import WayofTime.alchemicalWizardry.AlchemicalWizardry;
-import WayofTime.alchemicalWizardry.api.spell.APISpellHelper;
-import WayofTime.alchemicalWizardry.api.tile.IBloodAltar;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.potion.Potion;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
 
+import WayofTime.alchemicalWizardry.AlchemicalWizardry;
+import WayofTime.alchemicalWizardry.api.spell.APISpellHelper;
+import WayofTime.alchemicalWizardry.api.tile.IBloodAltar;
+
 public class PlayerSacrificeHandler {
+
     public static float scalingOfSacrifice = 0.001f;
     public static int soulFrayDuration = 400;
     public static Potion soulFrayId;
@@ -31,7 +33,7 @@ public class PlayerSacrificeHandler {
         amount = amount + Math.min(increment, max - amount);
         setPlayerIncense(player, amount);
 
-        //		System.out.println("Amount of incense: " + amount + ", Increment: " + increment);
+        // System.out.println("Amount of incense: " + amount + ", Increment: " + increment);
 
         return true;
     }
@@ -50,8 +52,10 @@ public class PlayerSacrificeHandler {
             if (health > maxHealth / 10.0) {
                 float sacrificedHealth = health - maxHealth / 10.0f;
 
-                if (findAndFillAltar(player.getEntityWorld(), player, (int)
-                        (sacrificedHealth * AlchemicalWizardry.lpPerSacrificeIncense * getModifier(amount)))) {
+                if (findAndFillAltar(
+                        player.getEntityWorld(),
+                        player,
+                        (int) (sacrificedHealth * AlchemicalWizardry.lpPerSacrificeIncense * getModifier(amount)))) {
                     player.setHealth(maxHealth / 10.0f);
                     setPlayerIncense(player, 0);
                     player.addPotionEffect(new PotionEffect(soulFrayId.id, soulFrayDuration));

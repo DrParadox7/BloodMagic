@@ -1,12 +1,14 @@
 package pneumaticCraft.api.universalSensor;
 
-import cpw.mods.fml.common.eventhandler.Event;
 import net.minecraft.tileentity.TileEntity;
+
+import cpw.mods.fml.common.eventhandler.Event;
 
 public interface IEventSensorSetting extends ISensorSetting {
 
     /**
      * This method is only invoked when a subscribed event is triggered.
+     * 
      * @param event
      * @param sensor
      * @param range
@@ -17,6 +19,7 @@ public interface IEventSensorSetting extends ISensorSetting {
 
     /**
      * Should return how long a pulse should hold in ticks. By default this is 5 ticks (1/4 second).
+     * 
      * @return
      */
     public int getRedstonePulseLength();

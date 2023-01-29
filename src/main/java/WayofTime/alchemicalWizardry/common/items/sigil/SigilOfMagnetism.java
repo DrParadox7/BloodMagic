@@ -1,13 +1,7 @@
 package WayofTime.alchemicalWizardry.common.items.sigil;
 
-import WayofTime.alchemicalWizardry.AlchemicalWizardry;
-import WayofTime.alchemicalWizardry.api.items.interfaces.ArmourUpgrade;
-import WayofTime.alchemicalWizardry.api.items.interfaces.IHolding;
-import WayofTime.alchemicalWizardry.api.items.interfaces.ISigil;
-import WayofTime.alchemicalWizardry.common.items.EnergyItems;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
 import java.util.List;
+
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.item.EntityItem;
@@ -20,7 +14,16 @@ import net.minecraft.util.IIcon;
 import net.minecraft.util.StatCollector;
 import net.minecraft.world.World;
 
+import WayofTime.alchemicalWizardry.AlchemicalWizardry;
+import WayofTime.alchemicalWizardry.api.items.interfaces.ArmourUpgrade;
+import WayofTime.alchemicalWizardry.api.items.interfaces.IHolding;
+import WayofTime.alchemicalWizardry.api.items.interfaces.ISigil;
+import WayofTime.alchemicalWizardry.common.items.EnergyItems;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
+
 public class SigilOfMagnetism extends EnergyItems implements ArmourUpgrade, IHolding, ISigil {
+
     @SideOnly(Side.CLIENT)
     private IIcon activeIcon;
 
@@ -47,8 +50,9 @@ public class SigilOfMagnetism extends EnergyItems implements ArmourUpgrade, IHol
                 par3List.add(StatCollector.translateToLocal("tooltip.sigil.state.deactivated"));
             }
 
-            par3List.add(StatCollector.translateToLocal("tooltip.owner.currentowner") + " "
-                    + par1ItemStack.getTagCompound().getString("ownerName"));
+            par3List.add(
+                    StatCollector.translateToLocal("tooltip.owner.currentowner") + " "
+                            + par1ItemStack.getTagCompound().getString("ownerName"));
         }
     }
 
@@ -122,8 +126,7 @@ public class SigilOfMagnetism extends EnergyItems implements ArmourUpgrade, IHol
         }
 
         if (par1ItemStack.getTagCompound().getBoolean("isActive")) {
-            if (par2World.getWorldTime() % tickDelay
-                    == par1ItemStack.getTagCompound().getInteger("worldTimeDelay")) {
+            if (par2World.getWorldTime() % tickDelay == par1ItemStack.getTagCompound().getInteger("worldTimeDelay")) {
                 if (!EnergyItems.syphonBatteries(par1ItemStack, (EntityPlayer) par3Entity, getEnergyUsed())) {
                     par1ItemStack.getTagCompound().setBoolean("isActive", false);
                 }
@@ -137,13 +140,21 @@ public class SigilOfMagnetism extends EnergyItems implements ArmourUpgrade, IHol
             List<EntityItem> entities = par3EntityPlayer.worldObj.getEntitiesWithinAABB(
                     EntityItem.class,
                     AxisAlignedBB.getBoundingBox(
-                                    posX - 0.5f, posY - 0.5f, posZ - 0.5f, posX + 0.5f, posY + 0.5f, posZ + 0.5f)
-                            .expand(range, verticalRange, range));
+                            posX - 0.5f,
+                            posY - 0.5f,
+                            posZ - 0.5f,
+                            posX + 0.5f,
+                            posY + 0.5f,
+                            posZ + 0.5f).expand(range, verticalRange, range));
             List<EntityXPOrb> xpOrbs = par3EntityPlayer.worldObj.getEntitiesWithinAABB(
                     EntityXPOrb.class,
                     AxisAlignedBB.getBoundingBox(
-                                    posX - 0.5f, posY - 0.5f, posZ - 0.5f, posX + 0.5f, posY + 0.5f, posZ + 0.5f)
-                            .expand(range, verticalRange, range));
+                            posX - 0.5f,
+                            posY - 0.5f,
+                            posZ - 0.5f,
+                            posX + 0.5f,
+                            posY + 0.5f,
+                            posZ + 0.5f).expand(range, verticalRange, range));
 
             for (EntityItem entity : entities) {
                 if (entity != null && !par2World.isRemote) {
@@ -168,13 +179,13 @@ public class SigilOfMagnetism extends EnergyItems implements ArmourUpgrade, IHol
         float posZ = Math.round(player.posZ);
         List<EntityItem> entities = player.worldObj.getEntitiesWithinAABB(
                 EntityItem.class,
-                AxisAlignedBB.getBoundingBox(
-                                posX - 0.5f, posY - 0.5f, posZ - 0.5f, posX + 0.5f, posY + 0.5f, posZ + 0.5f)
+                AxisAlignedBB
+                        .getBoundingBox(posX - 0.5f, posY - 0.5f, posZ - 0.5f, posX + 0.5f, posY + 0.5f, posZ + 0.5f)
                         .expand(range, verticalRange, range));
         List<EntityXPOrb> xpOrbs = player.worldObj.getEntitiesWithinAABB(
                 EntityXPOrb.class,
-                AxisAlignedBB.getBoundingBox(
-                                posX - 0.5f, posY - 0.5f, posZ - 0.5f, posX + 0.5f, posY + 0.5f, posZ + 0.5f)
+                AxisAlignedBB
+                        .getBoundingBox(posX - 0.5f, posY - 0.5f, posZ - 0.5f, posX + 0.5f, posY + 0.5f, posZ + 0.5f)
                         .expand(range, verticalRange, range));
 
         for (EntityItem entity : entities) {

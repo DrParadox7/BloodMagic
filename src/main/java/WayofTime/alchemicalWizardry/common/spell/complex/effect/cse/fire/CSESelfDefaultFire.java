@@ -8,6 +8,7 @@ import WayofTime.alchemicalWizardry.api.spell.SpellParadigmSelf;
 import WayofTime.alchemicalWizardry.common.spell.complex.effect.impactEffects.fire.SelfDefaultFire;
 
 public class CSESelfDefaultFire extends ComplexSpellEffect {
+
     public CSESelfDefaultFire() {
         super(ComplexSpellType.FIRE, ComplexSpellModifier.DEFAULT);
     }
@@ -35,9 +36,7 @@ public class CSESelfDefaultFire extends ComplexSpellEffect {
 
     @Override
     public int getCostOfEffect() {
-        return 10
-                * (int) (10
-                        * Math.pow(1.5, this.powerEnhancement + 1.5 * this.potencyEnhancement)
-                        * Math.pow(0.85, costEnhancement));
+        return 10 * (int) (10 * Math.pow(1.5, this.powerEnhancement + 1.5 * this.potencyEnhancement)
+                * Math.pow(0.85, costEnhancement));
     }
 }

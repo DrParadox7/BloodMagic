@@ -1,13 +1,16 @@
 package WayofTime.alchemicalWizardry.api.spell;
 
-import WayofTime.alchemicalWizardry.api.soulNetwork.SoulNetworkHandler;
 import java.util.ArrayList;
 import java.util.List;
+
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
 
+import WayofTime.alchemicalWizardry.api.soulNetwork.SoulNetworkHandler;
+
 public class SpellParadigmMelee extends SpellParadigm {
+
     private List<IMeleeSpellEntityEffect> entityEffectList;
     private List<IMeleeSpellWorldEffect> worldEffectList;
 

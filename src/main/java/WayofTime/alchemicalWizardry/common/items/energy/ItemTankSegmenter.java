@@ -1,12 +1,8 @@
 package WayofTime.alchemicalWizardry.common.items.energy;
 
-import WayofTime.alchemicalWizardry.AlchemicalWizardry;
-import WayofTime.alchemicalWizardry.api.alchemy.energy.*;
-import WayofTime.alchemicalWizardry.api.items.interfaces.IReagentManipulator;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
 import java.util.LinkedList;
 import java.util.List;
+
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
@@ -20,7 +16,14 @@ import net.minecraft.util.StatCollector;
 import net.minecraft.world.World;
 import net.minecraftforge.common.util.ForgeDirection;
 
+import WayofTime.alchemicalWizardry.AlchemicalWizardry;
+import WayofTime.alchemicalWizardry.api.alchemy.energy.*;
+import WayofTime.alchemicalWizardry.api.items.interfaces.IReagentManipulator;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
+
 public class ItemTankSegmenter extends Item implements IReagentManipulator {
+
     @SideOnly(Side.CLIENT)
     public IIcon crystalBody;
 
@@ -73,8 +76,7 @@ public class ItemTankSegmenter extends Item implements IReagentManipulator {
             case 1:
                 Reagent reagent = this.getReagent(stack);
                 if (reagent != null) {
-                    return (reagent.getColourRed() * 256 * 256
-                            + reagent.getColourGreen() * 256
+                    return (reagent.getColourRed() * 256 * 256 + reagent.getColourGreen() * 256
                             + reagent.getColourBlue());
                 }
                 break;
@@ -180,10 +182,14 @@ public class ItemTankSegmenter extends Item implements IReagentManipulator {
                         numberAssigned = 0;
                     }
 
-                    player.addChatComponentMessage(new ChatComponentText(
-                            StatCollector.translateToLocal("message.tanksegmenter.nowhas") + " " + numberAssigned + " "
-                                    + StatCollector.translateToLocal("message.tanksegmenter.tankssetto") + " "
-                                    + reagent.name));
+                    player.addChatComponentMessage(
+                            new ChatComponentText(
+                                    StatCollector.translateToLocal("message.tanksegmenter.nowhas") + " "
+                                            + numberAssigned
+                                            + " "
+                                            + StatCollector.translateToLocal("message.tanksegmenter.tankssetto")
+                                            + " "
+                                            + reagent.name));
 
                     reagentHandler.setTanksTunedToReagent(reagent, numberAssigned);
                 }
@@ -219,8 +225,9 @@ public class ItemTankSegmenter extends Item implements IReagentManipulator {
         this.setReagent(stack, reagent);
 
         if (reagent != null) {
-            player.addChatComponentMessage(new ChatComponentText(
-                    StatCollector.translateToLocal("message.tanksegmenter.setto") + " " + reagent.name));
+            player.addChatComponentMessage(
+                    new ChatComponentText(
+                            StatCollector.translateToLocal("message.tanksegmenter.setto") + " " + reagent.name));
         }
     }
 }

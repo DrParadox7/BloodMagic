@@ -1,5 +1,15 @@
 package WayofTime.alchemicalWizardry.common.rituals;
 
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
+
+import net.minecraft.entity.effect.EntityLightningBolt;
+import net.minecraft.entity.item.EntityItem;
+import net.minecraft.item.ItemStack;
+import net.minecraft.util.AxisAlignedBB;
+import net.minecraft.world.World;
+
 import WayofTime.alchemicalWizardry.AlchemicalWizardry;
 import WayofTime.alchemicalWizardry.ModBlocks;
 import WayofTime.alchemicalWizardry.ModItems;
@@ -13,16 +23,9 @@ import WayofTime.alchemicalWizardry.api.soulNetwork.SoulNetworkHandler;
 import WayofTime.alchemicalWizardry.common.items.EnergyItems;
 import WayofTime.alchemicalWizardry.common.items.armour.BoundArmour;
 import WayofTime.alchemicalWizardry.common.spell.complex.effect.SpellHelper;
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
-import net.minecraft.entity.effect.EntityLightningBolt;
-import net.minecraft.entity.item.EntityItem;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.AxisAlignedBB;
-import net.minecraft.world.World;
 
 public class RitualEffectUnbinding extends RitualEffect {
+
     @Override
     public void performEffect(IMasterRitualStone ritualStone) {
         String owner = ritualStone.getOwner();
@@ -38,9 +41,12 @@ public class RitualEffectUnbinding extends RitualEffect {
         } else {
             int d0 = 0;
             AxisAlignedBB axisalignedbb = AxisAlignedBB.getBoundingBox(
-                            (double) x, (double) y + 1, (double) z, (double) (x + 1), (double) (y + 2), (double)
-                                    (z + 1))
-                    .expand(d0, d0, d0);
+                    (double) x,
+                    (double) y + 1,
+                    (double) z,
+                    (double) (x + 1),
+                    (double) (y + 2),
+                    (double) (z + 1)).expand(d0, d0, d0);
             List list = world.getEntitiesWithinAABB(EntityItem.class, axisalignedbb);
             Iterator iterator = list.iterator();
             EntityItem item;
@@ -56,11 +62,10 @@ public class RitualEffectUnbinding extends RitualEffect {
                     continue;
                 }
 
-                boolean hasSanctus =
-                        this.canDrainReagent(ritualStone, ReagentRegistry.sanctusReagent, sanctusDrain, false);
+                boolean hasSanctus = this
+                        .canDrainReagent(ritualStone, ReagentRegistry.sanctusReagent, sanctusDrain, false);
                 if (hasSanctus) {
-                    if (itemStack.getItem() instanceof IBindable
-                            && !EnergyItems.getOwnerName(itemStack).equals("")) {
+                    if (itemStack.getItem() instanceof IBindable && !EnergyItems.getOwnerName(itemStack).equals("")) {
                         world.addWeatherEffect(new EntityLightningBolt(world, x, y + 1, z - 5));
                         world.addWeatherEffect(new EntityLightningBolt(world, x, y + 1, z + 5));
                         world.addWeatherEffect(new EntityLightningBolt(world, x - 5, y + 1, z));
@@ -104,15 +109,23 @@ public class RitualEffectUnbinding extends RitualEffect {
                         for (ItemStack internalItem : inv) {
                             if (internalItem != null) {
                                 doLightning(world, x, y, z);
-                                EntityItem newItem =
-                                        new EntityItem(world, x + 0.5, y + 1, z + 0.5, internalItem.copy());
+                                EntityItem newItem = new EntityItem(
+                                        world,
+                                        x + 0.5,
+                                        y + 1,
+                                        z + 0.5,
+                                        internalItem.copy());
                                 world.spawnEntityInWorld(newItem);
                             }
                         }
                     }
 
                     EntityItem newItem = new EntityItem(
-                            world, x + 0.5, y + 1, z + 0.5, new ItemStack(ModBlocks.bloodSocket, bloodSockets));
+                            world,
+                            x + 0.5,
+                            y + 1,
+                            z + 0.5,
+                            new ItemStack(ModBlocks.bloodSocket, bloodSockets));
                     world.spawnEntityInWorld(newItem);
                     ritualStone.setActive(false);
                     drain = true;

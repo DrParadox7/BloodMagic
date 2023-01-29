@@ -1,10 +1,8 @@
 package WayofTime.alchemicalWizardry.common.tileEntity;
 
-import WayofTime.alchemicalWizardry.api.sacrifice.IIncense;
-import WayofTime.alchemicalWizardry.api.sacrifice.PlayerSacrificeHandler;
-import WayofTime.alchemicalWizardry.common.spell.complex.effect.SpellHelper;
 import java.util.List;
 import java.util.Random;
+
 import net.minecraft.block.Block;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
@@ -16,7 +14,12 @@ import net.minecraft.network.play.server.S35PacketUpdateTileEntity;
 import net.minecraft.world.World;
 import net.minecraftforge.common.util.Constants;
 
+import WayofTime.alchemicalWizardry.api.sacrifice.IIncense;
+import WayofTime.alchemicalWizardry.api.sacrifice.PlayerSacrificeHandler;
+import WayofTime.alchemicalWizardry.common.spell.complex.effect.SpellHelper;
+
 public class TECrucible extends TEInventory {
+
     private int radius = 5;
 
     public float rColour;
@@ -28,8 +31,8 @@ public class TECrucible extends TEInventory {
     public int maxValue = 0;
     public float incrementValue = 0;
 
-    public int state =
-            0; // 0 is when it gives off gray particles, 1 is when it gives off white particles (player can't use this
+    public int state = 0; // 0 is when it gives off gray particles, 1 is when it gives off white particles (player can't
+                          // use this
     // incense anymore), 2 is the normal colour of the incense, 3 means no particles (it is out)
 
     public TECrucible() {
@@ -74,8 +77,8 @@ public class TECrucible extends TEInventory {
         }
 
         if (ticksRemaining > 0) {
-            List<EntityPlayer> playerList =
-                    SpellHelper.getPlayersInRange(worldObj, xCoord + 0.5, yCoord + 0.5, zCoord + 0.5, radius, radius);
+            List<EntityPlayer> playerList = SpellHelper
+                    .getPlayersInRange(worldObj, xCoord + 0.5, yCoord + 0.5, zCoord + 0.5, radius, radius);
 
             if (playerList != null && !playerList.isEmpty()) {
                 boolean allAreGood = true;

@@ -5,6 +5,7 @@ import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
 
 public class ItemBloodRuneBlock extends ItemBlock {
+
     public ItemBloodRuneBlock(Block block) {
         super(block);
         setHasSubtypes(true);

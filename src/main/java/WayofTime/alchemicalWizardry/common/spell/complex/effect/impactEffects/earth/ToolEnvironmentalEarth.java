@@ -1,28 +1,23 @@
 package WayofTime.alchemicalWizardry.common.spell.complex.effect.impactEffects.earth;
 
-import WayofTime.alchemicalWizardry.api.items.ItemSpellMultiTool;
-import WayofTime.alchemicalWizardry.common.spell.complex.effect.impactEffects.tool.DigAreaEffect;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.world.World;
 import net.minecraftforge.common.util.ForgeDirection;
 
+import WayofTime.alchemicalWizardry.api.items.ItemSpellMultiTool;
+import WayofTime.alchemicalWizardry.common.spell.complex.effect.impactEffects.tool.DigAreaEffect;
+
 public class ToolEnvironmentalEarth extends DigAreaEffect {
+
     public ToolEnvironmentalEarth(int power, int potency, int cost) {
         super(power, potency, cost);
     }
 
     @Override
-    public int digSurroundingArea(
-            ItemStack container,
-            World world,
-            EntityPlayer player,
-            MovingObjectPosition blockPos,
-            String usedToolClass,
-            float blockHardness,
-            int harvestLvl,
-            ItemSpellMultiTool itemTool) {
+    public int digSurroundingArea(ItemStack container, World world, EntityPlayer player, MovingObjectPosition blockPos,
+            String usedToolClass, float blockHardness, int harvestLvl, ItemSpellMultiTool itemTool) {
         if (!blockPos.typeOfHit.equals(MovingObjectPosition.MovingObjectType.BLOCK)) {
             return 0;
         }

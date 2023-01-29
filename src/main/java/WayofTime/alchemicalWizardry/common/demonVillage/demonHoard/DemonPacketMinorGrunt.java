@@ -1,5 +1,7 @@
 package WayofTime.alchemicalWizardry.common.demonVillage.demonHoard;
 
+import net.minecraft.world.World;
+
 import WayofTime.alchemicalWizardry.common.demonVillage.demonHoard.demon.EntityMinorDemonGrunt;
 import WayofTime.alchemicalWizardry.common.demonVillage.demonHoard.demon.EntityMinorDemonGruntEarth;
 import WayofTime.alchemicalWizardry.common.demonVillage.demonHoard.demon.EntityMinorDemonGruntFire;
@@ -11,9 +13,9 @@ import WayofTime.alchemicalWizardry.common.demonVillage.demonHoard.demon.EntityM
 import WayofTime.alchemicalWizardry.common.demonVillage.demonHoard.demon.EntityMinorDemonGruntIce;
 import WayofTime.alchemicalWizardry.common.demonVillage.demonHoard.demon.EntityMinorDemonGruntWind;
 import WayofTime.alchemicalWizardry.common.demonVillage.tileEntity.TEDemonPortal;
-import net.minecraft.world.World;
 
 public class DemonPacketMinorGrunt extends DemonHoardPacket {
+
     @Override
     public boolean canFitType(DemonType type) {
         return true;
@@ -25,14 +27,7 @@ public class DemonPacketMinorGrunt extends DemonHoardPacket {
     }
 
     @Override
-    public int summonDemons(
-            TEDemonPortal teDemonPortal,
-            World world,
-            int x,
-            int y,
-            int z,
-            DemonType type,
-            int tier,
+    public int summonDemons(TEDemonPortal teDemonPortal, World world, int x, int y, int z, DemonType type, int tier,
             boolean spawnGuardian) {
         EntityMinorDemonGrunt entity;
 

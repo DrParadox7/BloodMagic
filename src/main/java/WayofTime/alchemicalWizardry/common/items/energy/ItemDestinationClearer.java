@@ -1,11 +1,7 @@
 package WayofTime.alchemicalWizardry.common.items.energy;
 
-import WayofTime.alchemicalWizardry.AlchemicalWizardry;
-import WayofTime.alchemicalWizardry.api.items.interfaces.IReagentManipulator;
-import WayofTime.alchemicalWizardry.common.tileEntity.TEReagentConduit;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
 import java.util.List;
+
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
@@ -16,7 +12,14 @@ import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.util.StatCollector;
 import net.minecraft.world.World;
 
+import WayofTime.alchemicalWizardry.AlchemicalWizardry;
+import WayofTime.alchemicalWizardry.api.items.interfaces.IReagentManipulator;
+import WayofTime.alchemicalWizardry.common.tileEntity.TEReagentConduit;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
+
 public class ItemDestinationClearer extends Item implements IReagentManipulator {
+
     public ItemDestinationClearer() {
         super();
         this.setCreativeTab(AlchemicalWizardry.tabBloodMagic);

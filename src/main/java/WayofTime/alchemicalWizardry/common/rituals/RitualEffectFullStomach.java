@@ -1,13 +1,8 @@
 package WayofTime.alchemicalWizardry.common.rituals;
 
-import WayofTime.alchemicalWizardry.AlchemicalWizardry;
-import WayofTime.alchemicalWizardry.api.rituals.IMasterRitualStone;
-import WayofTime.alchemicalWizardry.api.rituals.RitualComponent;
-import WayofTime.alchemicalWizardry.api.rituals.RitualEffect;
-import WayofTime.alchemicalWizardry.api.soulNetwork.SoulNetworkHandler;
-import WayofTime.alchemicalWizardry.common.spell.complex.effect.SpellHelper;
 import java.util.ArrayList;
 import java.util.List;
+
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemFood;
@@ -16,6 +11,13 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.FoodStats;
 import net.minecraft.world.World;
+
+import WayofTime.alchemicalWizardry.AlchemicalWizardry;
+import WayofTime.alchemicalWizardry.api.rituals.IMasterRitualStone;
+import WayofTime.alchemicalWizardry.api.rituals.RitualComponent;
+import WayofTime.alchemicalWizardry.api.rituals.RitualEffect;
+import WayofTime.alchemicalWizardry.api.soulNetwork.SoulNetworkHandler;
+import WayofTime.alchemicalWizardry.common.spell.complex.effect.SpellHelper;
 
 public class RitualEffectFullStomach extends RitualEffect {
 
@@ -36,8 +38,8 @@ public class RitualEffectFullStomach extends RitualEffect {
         double horizRange = 16;
         double vertRange = 16;
 
-        List<EntityPlayer> playerList =
-                SpellHelper.getPlayersInRange(world, x + 0.5, y + 0.5, z + 0.5, horizRange, vertRange);
+        List<EntityPlayer> playerList = SpellHelper
+                .getPlayersInRange(world, x + 0.5, y + 0.5, z + 0.5, horizRange, vertRange);
 
         if (playerList == null) {
             return;

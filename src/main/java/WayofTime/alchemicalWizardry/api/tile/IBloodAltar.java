@@ -4,6 +4,7 @@ package WayofTime.alchemicalWizardry.api.tile;
  * Created by Pokefenn.
  */
 public interface IBloodAltar {
+
     int getCapacity();
 
     int getCurrentBlood();
@@ -27,8 +28,9 @@ public interface IBloodAltar {
     void startCycle();
 
     /**
-     * Will set the altar to initiate a cooldown cycle after it crafts before starting to craft again, giving the user time to interact with the altar.
-     * This can only be set while the altar is not active.
+     * Will set the altar to initiate a cooldown cycle after it crafts before starting to craft again, giving the user
+     * time to interact with the altar. This can only be set while the altar is not active.
+     * 
      * @param amount
      */
     void requestPauseAfterCrafting(int amount);

@@ -7,6 +7,7 @@ import WayofTime.alchemicalWizardry.api.spell.SpellParadigm;
 import WayofTime.alchemicalWizardry.api.spell.SpellParadigmTool;
 
 public class CSEToolDefensiveEarth extends ComplexSpellEffect {
+
     public CSEToolDefensiveEarth() {
         super(ComplexSpellType.EARTH, ComplexSpellModifier.DEFENSIVE);
     }
@@ -58,8 +59,7 @@ public class CSEToolDefensiveEarth extends ComplexSpellEffect {
 
     @Override
     public int getCostOfEffect() {
-        return (int) (1000
-                * (1 + this.potencyEnhancement * 0.1f)
+        return (int) (1000 * (1 + this.potencyEnhancement * 0.1f)
                 * (1 + this.powerEnhancement * 0.2f)
                 * Math.pow(0.85, costEnhancement));
     }

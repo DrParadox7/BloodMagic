@@ -1,7 +1,5 @@
 package WayofTime.alchemicalWizardry.common.entity.projectile;
 
-import WayofTime.alchemicalWizardry.common.spell.complex.effect.SpellHelper;
-import WayofTime.alchemicalWizardry.common.spell.simple.SpellTeleport;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayerMP;
@@ -12,7 +10,11 @@ import net.minecraft.world.World;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.entity.living.EnderTeleportEvent;
 
+import WayofTime.alchemicalWizardry.common.spell.complex.effect.SpellHelper;
+import WayofTime.alchemicalWizardry.common.spell.simple.SpellTeleport;
+
 public class TeleportProjectile extends EnergyBlastProjectile {
+
     private boolean isEntityTeleport;
 
     public TeleportProjectile(World par1World) {
@@ -37,17 +39,8 @@ public class TeleportProjectile extends EnergyBlastProjectile {
         this.motionZ *= 3;
     }
 
-    public TeleportProjectile(
-            World par1World,
-            EntityLivingBase par2EntityPlayer,
-            int damage,
-            int maxTicksInAir,
-            double posX,
-            double posY,
-            double posZ,
-            float rotationYaw,
-            float rotationPitch,
-            boolean flag) {
+    public TeleportProjectile(World par1World, EntityLivingBase par2EntityPlayer, int damage, int maxTicksInAir,
+            double posX, double posY, double posZ, float rotationYaw, float rotationPitch, boolean flag) {
         super(par1World, par2EntityPlayer, damage, maxTicksInAir, posX, posY, posZ, rotationYaw, rotationPitch);
         isEntityTeleport = flag;
         this.motionX *= 3;
@@ -74,8 +67,12 @@ public class TeleportProjectile extends EnergyBlastProjectile {
                     EntityPlayerMP entityplayermp = (EntityPlayerMP) shootingEntity;
 
                     if (entityplayermp.worldObj == this.worldObj) {
-                        EnderTeleportEvent event =
-                                new EnderTeleportEvent(entityplayermp, this.posX, this.posY, this.posZ, 5.0F);
+                        EnderTeleportEvent event = new EnderTeleportEvent(
+                                entityplayermp,
+                                this.posX,
+                                this.posY,
+                                this.posZ,
+                                5.0F);
 
                         if (!MinecraftForge.EVENT_BUS.post(event)) {
                             if (shootingEntity.isRiding()) {
@@ -101,8 +98,12 @@ public class TeleportProjectile extends EnergyBlastProjectile {
                     if (shootingEntity != null && shootingEntity instanceof EntityPlayerMP) {
                         EntityPlayerMP entityplayermp = (EntityPlayerMP) shootingEntity;
                         if (entityplayermp.worldObj == this.worldObj) {
-                            EnderTeleportEvent event =
-                                    new EnderTeleportEvent(entityplayermp, this.posX, this.posY, this.posZ, 5.0F);
+                            EnderTeleportEvent event = new EnderTeleportEvent(
+                                    entityplayermp,
+                                    this.posX,
+                                    this.posY,
+                                    this.posZ,
+                                    5.0F);
                             if (!MinecraftForge.EVENT_BUS.post(event)) {
                                 if (shootingEntity.isRiding()) {
                                     shootingEntity.mountEntity((Entity) null);

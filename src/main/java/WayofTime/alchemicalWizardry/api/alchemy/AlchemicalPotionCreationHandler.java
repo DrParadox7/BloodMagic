@@ -1,9 +1,11 @@
 package WayofTime.alchemicalWizardry.api.alchemy;
 
 import java.util.ArrayList;
+
 import net.minecraft.item.ItemStack;
 
 public class AlchemicalPotionCreationHandler {
+
     public static ArrayList<AlchemyPotionHandlerComponent> registeredPotionEffects = new ArrayList();
 
     public static void addPotion(ItemStack itemStack, int potionID, int tickDuration) {

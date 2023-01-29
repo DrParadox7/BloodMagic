@@ -1,13 +1,15 @@
 package WayofTime.alchemicalWizardry.common.entity.projectile;
 
-import WayofTime.alchemicalWizardry.common.spell.complex.effect.SpellHelper;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.world.World;
 
+import WayofTime.alchemicalWizardry.common.spell.complex.effect.SpellHelper;
+
 public class HolyProjectile extends EnergyBlastProjectile {
+
     public HolyProjectile(World par1World) {
         super(par1World);
     }
@@ -20,27 +22,13 @@ public class HolyProjectile extends EnergyBlastProjectile {
         super(par1World, par2EntityPlayer, damage);
     }
 
-    public HolyProjectile(
-            World par1World,
-            EntityLivingBase par2EntityPlayer,
-            int damage,
-            int maxTicksInAir,
-            double posX,
-            double posY,
-            double posZ,
-            float rotationYaw,
-            float rotationPitch) {
+    public HolyProjectile(World par1World, EntityLivingBase par2EntityPlayer, int damage, int maxTicksInAir,
+            double posX, double posY, double posZ, float rotationYaw, float rotationPitch) {
         super(par1World, par2EntityPlayer, damage, maxTicksInAir, posX, posY, posZ, rotationYaw, rotationPitch);
     }
 
-    public HolyProjectile(
-            World par1World,
-            EntityLivingBase par2EntityLivingBase,
-            EntityLivingBase par3EntityLivingBase,
-            float par4,
-            float par5,
-            int damage,
-            int maxTicksInAir) {
+    public HolyProjectile(World par1World, EntityLivingBase par2EntityLivingBase, EntityLivingBase par3EntityLivingBase,
+            float par4, float par5, int damage, int maxTicksInAir) {
         super(par1World, par2EntityLivingBase, par3EntityLivingBase, par4, par5, damage, maxTicksInAir);
     }
 
@@ -57,8 +45,7 @@ public class HolyProjectile extends EnergyBlastProjectile {
             }
 
             this.onImpact(mop.entityHit);
-        } else if (mop.typeOfHit == MovingObjectPosition.MovingObjectType.BLOCK) {
-        }
+        } else if (mop.typeOfHit == MovingObjectPosition.MovingObjectType.BLOCK) {}
 
         this.setDead();
     }

@@ -1,12 +1,14 @@
 package WayofTime.alchemicalWizardry.common.spell.complex.effect.impactEffects.ice;
 
-import WayofTime.alchemicalWizardry.api.spell.ExtrapolatedMeleeEntityEffect;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.projectile.EntitySnowball;
 import net.minecraft.world.World;
 
+import WayofTime.alchemicalWizardry.api.spell.ExtrapolatedMeleeEntityEffect;
+
 public class MeleeEnvironmentalIce extends ExtrapolatedMeleeEntityEffect {
+
     public MeleeEnvironmentalIce(int power, int potency, int cost) {
         super(power, potency, cost);
         this.setMaxNumberHit(1 + potency);
@@ -23,7 +25,10 @@ public class MeleeEnvironmentalIce extends ExtrapolatedMeleeEntityEffect {
             double randZ = (world.rand.nextDouble() - world.rand.nextDouble()) * 3;
 
             EntitySnowball snowball = new EntitySnowball(
-                    world, entity.posX - 3 * randX, entity.posY - 3 * randY, entity.posZ - 3 * randZ);
+                    world,
+                    entity.posX - 3 * randX,
+                    entity.posY - 3 * randY,
+                    entity.posZ - 3 * randZ);
             snowball.motionX = randX;
             snowball.motionY = randY;
             snowball.motionZ = randZ;

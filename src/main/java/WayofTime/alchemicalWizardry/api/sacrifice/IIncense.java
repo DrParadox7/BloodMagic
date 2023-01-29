@@ -3,6 +3,7 @@ package WayofTime.alchemicalWizardry.api.sacrifice;
 import net.minecraft.item.ItemStack;
 
 public interface IIncense {
+
     int getMinLevel(ItemStack stack);
 
     int getMaxLevel(ItemStack stack);

@@ -1,5 +1,13 @@
 package WayofTime.alchemicalWizardry.common.rituals;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.potion.PotionEffect;
+import net.minecraft.world.World;
+
 import WayofTime.alchemicalWizardry.AlchemicalWizardry;
 import WayofTime.alchemicalWizardry.api.alchemy.energy.ReagentRegistry;
 import WayofTime.alchemicalWizardry.api.rituals.IMasterRitualStone;
@@ -7,14 +15,9 @@ import WayofTime.alchemicalWizardry.api.rituals.RitualComponent;
 import WayofTime.alchemicalWizardry.api.rituals.RitualEffect;
 import WayofTime.alchemicalWizardry.api.soulNetwork.SoulNetworkHandler;
 import WayofTime.alchemicalWizardry.common.spell.complex.effect.SpellHelper;
-import java.util.ArrayList;
-import java.util.List;
-import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.potion.PotionEffect;
-import net.minecraft.world.World;
 
 public class RitualEffectJumping extends RitualEffect {
+
     public static final int aetherDrain = 10;
     public static final int terraeDrain = 10;
 
@@ -29,8 +32,8 @@ public class RitualEffectJumping extends RitualEffect {
         int z = ritualStone.getZCoord();
 
         double range = 0.5;
-        List<EntityLivingBase> livingList =
-                SpellHelper.getLivingEntitiesInRange(world, x + 0.5, y + 1.5, z + 0.5, range, range);
+        List<EntityLivingBase> livingList = SpellHelper
+                .getLivingEntitiesInRange(world, x + 0.5, y + 1.5, z + 0.5, range, range);
 
         if (currentEssence < this.getCostPerRefresh() * livingList.size()) {
             SoulNetworkHandler.causeNauseaToPlayer(owner);
@@ -54,7 +57,10 @@ public class RitualEffectJumping extends RitualEffect {
 
                 if (livingEntity instanceof EntityPlayer) {
                     SpellHelper.setPlayerSpeedFromServer(
-                            (EntityPlayer) livingEntity, livingEntity.motionX, motionY, livingEntity.motionZ);
+                            (EntityPlayer) livingEntity,
+                            livingEntity.motionX,
+                            motionY,
+                            livingEntity.motionZ);
                     livingEntity.motionY = motionY;
                     livingEntity.fallDistance = 0;
                     flag++;

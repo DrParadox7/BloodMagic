@@ -1,13 +1,15 @@
 package WayofTime.alchemicalWizardry.common.demonVillage.demonHoard.demon;
 
-import WayofTime.alchemicalWizardry.AlchemicalWizardry;
-import WayofTime.alchemicalWizardry.common.entity.projectile.IceProjectile;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.util.DamageSource;
 import net.minecraft.world.World;
 
+import WayofTime.alchemicalWizardry.AlchemicalWizardry;
+import WayofTime.alchemicalWizardry.common.entity.projectile.IceProjectile;
+
 public class EntityMinorDemonGruntGuardianIce extends EntityMinorDemonGruntGuardian {
+
     public EntityMinorDemonGruntGuardianIce(World par1World) {
         super(par1World);
         this.setDemonID(AlchemicalWizardry.entityMinorDemonGruntGuardianIceID);

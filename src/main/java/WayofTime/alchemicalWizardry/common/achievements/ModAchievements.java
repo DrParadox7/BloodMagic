@@ -1,13 +1,15 @@
 package WayofTime.alchemicalWizardry.common.achievements;
 
-import WayofTime.alchemicalWizardry.ModBlocks;
-import WayofTime.alchemicalWizardry.ModItems;
-import cpw.mods.fml.common.FMLCommonHandler;
 import net.minecraft.item.ItemStack;
 import net.minecraft.stats.Achievement;
 import net.minecraftforge.common.AchievementPage;
 
+import WayofTime.alchemicalWizardry.ModBlocks;
+import WayofTime.alchemicalWizardry.ModItems;
+import cpw.mods.fml.common.FMLCommonHandler;
+
 public class ModAchievements {
+
     public static AchievementPage alchemicalWizardryPage;
 
     public static Achievement firstPrick;
@@ -58,8 +60,8 @@ public class ModAchievements {
         suppressionSigil = new AchievementsMod("suppressionSigil", 6, -2, ModItems.itemSigilOfSupression, masterOrb);
         archmageOrb = new AchievementsMod("archmageOrb", -1, 2, ModItems.archmageBloodOrb, masterOrb);
         energyBazooka = new AchievementsMod("energyBazooka", -3, 2, ModItems.energyBazooka, archmageOrb);
-        demons =
-                new AchievementsMod("demons", 0, 3, new ItemStack(ModItems.baseItems, 1, 29), archmageOrb).setSpecial();
+        demons = new AchievementsMod("demons", 0, 3, new ItemStack(ModItems.baseItems, 1, 29), archmageOrb)
+                .setSpecial();
         transcendentOrb = new AchievementsMod("trancsendentOrb", 0, 5, ModItems.transcendentBloodOrb, demons);
 
         alchemicalWizardryPage = new AchievementPage(

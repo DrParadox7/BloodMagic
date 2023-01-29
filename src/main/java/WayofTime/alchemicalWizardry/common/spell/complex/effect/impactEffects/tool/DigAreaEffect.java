@@ -1,17 +1,20 @@
 package WayofTime.alchemicalWizardry.common.spell.complex.effect.impactEffects.tool;
 
-import WayofTime.alchemicalWizardry.api.items.ItemSpellMultiTool;
-import WayofTime.alchemicalWizardry.api.spell.IDigAreaEffect;
-import WayofTime.alchemicalWizardry.api.spell.SpellParadigmTool;
-import WayofTime.alchemicalWizardry.common.spell.complex.effect.SpellHelper;
 import java.util.List;
+
 import net.minecraft.block.Block;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.world.World;
 
+import WayofTime.alchemicalWizardry.api.items.ItemSpellMultiTool;
+import WayofTime.alchemicalWizardry.api.spell.IDigAreaEffect;
+import WayofTime.alchemicalWizardry.api.spell.SpellParadigmTool;
+import WayofTime.alchemicalWizardry.common.spell.complex.effect.SpellHelper;
+
 public class DigAreaEffect implements IDigAreaEffect {
+
     protected int powerUpgrades;
     protected int potencyUpgrades;
     protected int costUpgrades;
@@ -23,15 +26,8 @@ public class DigAreaEffect implements IDigAreaEffect {
     }
 
     @Override
-    public int digSurroundingArea(
-            ItemStack container,
-            World world,
-            EntityPlayer player,
-            MovingObjectPosition blockPos,
-            String usedToolClass,
-            float blockHardness,
-            int harvestLvl,
-            ItemSpellMultiTool itemTool) {
+    public int digSurroundingArea(ItemStack container, World world, EntityPlayer player, MovingObjectPosition blockPos,
+            String usedToolClass, float blockHardness, int harvestLvl, ItemSpellMultiTool itemTool) {
         if (!blockPos.typeOfHit.equals(MovingObjectPosition.MovingObjectType.BLOCK)) {
             return 0;
         }
@@ -51,15 +47,8 @@ public class DigAreaEffect implements IDigAreaEffect {
         return 0;
     }
 
-    public void breakBlock(
-            ItemStack container,
-            World world,
-            EntityPlayer player,
-            float blockHardness,
-            int x,
-            int y,
-            int z,
-            ItemSpellMultiTool itemTool) {
+    public void breakBlock(ItemStack container, World world, EntityPlayer player, float blockHardness, int x, int y,
+            int z, ItemSpellMultiTool itemTool) {
         int hlvl = -1;
         Block localBlock = world.getBlock(x, y, z);
         int localMeta = world.getBlockMetadata(x, y, z);
@@ -79,9 +68,8 @@ public class DigAreaEffect implements IDigAreaEffect {
 
                     String localToolClass = itemTool.getToolClassForMaterial(localBlock.getMaterial());
 
-                    if (localToolClass != null
-                            && itemTool.getHarvestLevel(container, toolClass)
-                                    >= localBlock.getHarvestLevel(localMeta)) {
+                    if (localToolClass != null && itemTool.getHarvestLevel(container, toolClass)
+                            >= localBlock.getHarvestLevel(localMeta)) {
                         isEffective = true;
                     }
 
@@ -116,8 +104,7 @@ public class DigAreaEffect implements IDigAreaEffect {
                             }
 
                             world.func_147479_m(x, y, z);
-                        } else {
-                        }
+                        } else {}
 
                     } else {
                         world.setBlockToAir(x, y, z);

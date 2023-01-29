@@ -1,6 +1,7 @@
 package WayofTime.alchemicalWizardry.api.alchemy.energy;
 
 public final class ReagentContainerInfo {
+
     public final ReagentStack reagent;
     public final int capacity;
 

@@ -5,6 +5,7 @@ import WayofTime.alchemicalWizardry.api.spell.SpellEffect;
 import WayofTime.alchemicalWizardry.api.spell.SpellParadigm;
 
 public class TESpellEffectBlock extends TESpellBlock {
+
     @Override
     protected void applySpellChange(SpellParadigm parad) {
         parad.addBufferedEffect(this.getSpellEffect());

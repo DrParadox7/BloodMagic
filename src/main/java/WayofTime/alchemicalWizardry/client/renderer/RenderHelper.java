@@ -1,15 +1,8 @@
 package WayofTime.alchemicalWizardry.client.renderer;
 
-import WayofTime.alchemicalWizardry.api.alchemy.energy.IReagentHandler;
-import WayofTime.alchemicalWizardry.api.alchemy.energy.Reagent;
-import WayofTime.alchemicalWizardry.api.alchemy.energy.ReagentContainerInfo;
-import WayofTime.alchemicalWizardry.api.alchemy.energy.ReagentRegistry;
-import WayofTime.alchemicalWizardry.api.alchemy.energy.ReagentStack;
-import WayofTime.alchemicalWizardry.api.spell.APISpellHelper;
-import WayofTime.alchemicalWizardry.common.items.armour.OmegaArmour;
-import WayofTime.alchemicalWizardry.common.spell.complex.effect.SpellHelper;
 import java.util.ArrayList;
 import java.util.List;
+
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiChat;
 import net.minecraft.client.gui.ScaledResolution;
@@ -22,9 +15,20 @@ import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
 import net.minecraftforge.common.util.ForgeDirection;
+
 import org.lwjgl.opengl.GL11;
 
+import WayofTime.alchemicalWizardry.api.alchemy.energy.IReagentHandler;
+import WayofTime.alchemicalWizardry.api.alchemy.energy.Reagent;
+import WayofTime.alchemicalWizardry.api.alchemy.energy.ReagentContainerInfo;
+import WayofTime.alchemicalWizardry.api.alchemy.energy.ReagentRegistry;
+import WayofTime.alchemicalWizardry.api.alchemy.energy.ReagentStack;
+import WayofTime.alchemicalWizardry.api.spell.APISpellHelper;
+import WayofTime.alchemicalWizardry.common.items.armour.OmegaArmour;
+import WayofTime.alchemicalWizardry.common.spell.complex.effect.SpellHelper;
+
 public class RenderHelper {
+
     public static boolean enableItemName = false;
     public static boolean enabled = true;
     public static boolean showInChat = true;
@@ -52,8 +56,7 @@ public class RenderHelper {
 
     public static boolean onTickInGame(Minecraft mc) {
         if (enabled
-                && (mc.inGameHasFocus
-                        || mc.currentScreen == null
+                && (mc.inGameHasFocus || mc.currentScreen == null
                         || (mc.currentScreen instanceof GuiChat && showInChat))
                 && !mc.gameSettings.showDebugInfo) {
             EntityPlayer player = mc.thePlayer;
@@ -71,8 +74,9 @@ public class RenderHelper {
 
                 if (maxAmount > 0) {
                     float val = APISpellHelper.getPlayerCurrentReagentAmount(player);
-                    ReagentStack reagentStack =
-                            new ReagentStack(APISpellHelper.getPlayerReagentType(player), (int) val);
+                    ReagentStack reagentStack = new ReagentStack(
+                            APISpellHelper.getPlayerReagentType(player),
+                            (int) val);
 
                     if (reagentStack != null && reagentStack.amount > 0) {
                         renderTestHUD(mc, reagentStack, maxAmount);
@@ -89,7 +93,7 @@ public class RenderHelper {
             }
 
             float maxHP = APISpellHelper.getCurrentAdditionalMaxHP(player);
-            //            System.out.println("MaxHP: " + maxHP);
+            // System.out.println("MaxHP: " + maxHP);
             if (maxHP > 0) {
                 renderHPHUD(mc, APISpellHelper.getCurrentAdditionalHP(player), maxHP);
             }
@@ -174,8 +178,8 @@ public class RenderHelper {
 
                 IReagentHandler relay = (IReagentHandler) tile;
 
-                ReagentContainerInfo[] infos =
-                        relay.getContainerInfo(ForgeDirection.getOrientation(movingobjectposition.sideHit));
+                ReagentContainerInfo[] infos = relay
+                        .getContainerInfo(ForgeDirection.getOrientation(movingobjectposition.sideHit));
 
                 if (infos != null) {
                     for (ReagentContainerInfo info : infos) {
@@ -203,8 +207,7 @@ public class RenderHelper {
 
     private static int getY(int rowCount, int height) {
         if (alignMode.toLowerCase().contains("middle"))
-            return (scaledResolution.getScaledHeight() / 2)
-                    - ((rowCount * height) / 2)
+            return (scaledResolution.getScaledHeight() / 2) - ((rowCount * height) / 2)
                     + (applyYOffsetToMiddle ? yOffset : 0);
         else if (alignMode.equalsIgnoreCase("bottomleft") || alignMode.equalsIgnoreCase("bottomright"))
             return scaledResolution.getScaledHeight() - (rowCount * height) - yOffset;
@@ -220,8 +223,8 @@ public class RenderHelper {
         return r;
     }
 
-    public static void drawTexturedModalRect(
-            int p_73729_1_, int p_73729_2_, int p_73729_3_, int p_73729_4_, double p_73729_5_, double p_73729_6_) {
+    public static void drawTexturedModalRect(int p_73729_1_, int p_73729_2_, int p_73729_3_, int p_73729_4_,
+            double p_73729_5_, double p_73729_6_) {
         float f = 0.00390625F;
         float f1 = 0.00390625F;
         Tessellator tessellator = Tessellator.instance;
@@ -245,7 +248,11 @@ public class RenderHelper {
                 (p_73729_3_ + p_73729_5_) * f,
                 p_73729_4_ * f1);
         tessellator.addVertexWithUV(
-                (double) p_73729_1_, (double) p_73729_2_, (double) zLevel, (double) (p_73729_3_ * f), p_73729_4_ * f1);
+                (double) p_73729_1_,
+                (double) p_73729_2_,
+                (double) zLevel,
+                (double) (p_73729_3_ * f),
+                p_73729_4_ * f1);
         tessellator.draw();
     }
 
@@ -264,7 +271,10 @@ public class RenderHelper {
 
         ResourceLocation test2 = new ResourceLocation("alchemicalwizardry", "textures/gui/container1.png");
         GL11.glColor4f(
-                reagent.getColourRed() / 255f, reagent.getColourGreen() / 255f, reagent.getColourBlue() / 255f, 1.0F);
+                reagent.getColourRed() / 255f,
+                reagent.getColourGreen() / 255f,
+                reagent.getColourBlue() / 255f,
+                1.0F);
         mc.getTextureManager().bindTexture(test2);
 
         drawTexturedModalRect(x, y + amount, 0, amount, 256, 256 - amount);
@@ -300,8 +310,11 @@ public class RenderHelper {
                 (double) p_94149_3_.getMaxU(),
                 (double) p_94149_3_.getMinV());
         tessellator.addVertexWithUV(
-                (double) p_94149_1_, (double) p_94149_2_, (double) zLevel, (double) p_94149_3_.getMinU(), (double)
-                        p_94149_3_.getMinV());
+                (double) p_94149_1_,
+                (double) p_94149_2_,
+                (double) zLevel,
+                (double) p_94149_3_.getMinU(),
+                (double) p_94149_3_.getMinV());
         tessellator.draw();
     }
 

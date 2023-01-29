@@ -1,11 +1,13 @@
 package WayofTime.alchemicalWizardry.common.summoning.meteor;
 
 import java.util.List;
+
 import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.oredict.OreDictionary;
 
 public class MeteorParadigmComponent {
+
     public String oreDictName;
     public int chance;
 

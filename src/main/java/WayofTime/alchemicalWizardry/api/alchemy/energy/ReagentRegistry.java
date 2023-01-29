@@ -4,9 +4,11 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
+
 import net.minecraft.item.ItemStack;
 
 public class ReagentRegistry {
+
     public static Map<String, Reagent> reagentList = new HashMap();
     public static Map<ItemStack, ReagentStack> itemToReagentMap = new HashMap();
 

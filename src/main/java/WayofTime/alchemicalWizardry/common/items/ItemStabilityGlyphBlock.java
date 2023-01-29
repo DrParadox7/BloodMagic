@@ -5,6 +5,7 @@ import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
 
 public class ItemStabilityGlyphBlock extends ItemBlock {
+
     public ItemStabilityGlyphBlock(Block block) {
         super(block);
         setHasSubtypes(true);

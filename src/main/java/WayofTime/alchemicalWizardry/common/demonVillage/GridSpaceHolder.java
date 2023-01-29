@@ -1,13 +1,15 @@
 package WayofTime.alchemicalWizardry.common.demonVillage;
 
-import WayofTime.alchemicalWizardry.AlchemicalWizardry;
-import WayofTime.alchemicalWizardry.ModBlocks;
-import WayofTime.alchemicalWizardry.common.demonVillage.tileEntity.TEDemonPortal;
 import net.minecraft.block.Block;
 import net.minecraft.world.World;
 import net.minecraftforge.common.util.ForgeDirection;
 
+import WayofTime.alchemicalWizardry.AlchemicalWizardry;
+import WayofTime.alchemicalWizardry.ModBlocks;
+import WayofTime.alchemicalWizardry.common.demonVillage.tileEntity.TEDemonPortal;
+
 public class GridSpaceHolder {
+
     public GridSpace[][] area;
     public int negXRadius; // These variables indicate how much the grid has expanded from the 1x1
     public int posXRadius; // matrix in each direction
@@ -114,9 +116,14 @@ public class GridSpaceHolder {
 
     public boolean doesContainAll(GridSpaceHolder master, int xInit, int zInit, ForgeDirection dir) {
         if (master != null) {
-            if (TEDemonPortal.printDebug)
-                AlchemicalWizardry.logger.info("negXRadius: " + negXRadius + " posXRadius: " + posXRadius
-                        + " negZRadius: " + negZRadius + " posZRadius: " + posZRadius);
+            if (TEDemonPortal.printDebug) AlchemicalWizardry.logger.info(
+                    "negXRadius: " + negXRadius
+                            + " posXRadius: "
+                            + posXRadius
+                            + " negZRadius: "
+                            + negZRadius
+                            + " posZRadius: "
+                            + posZRadius);
             for (int i = -negXRadius; i <= posXRadius; i++) {
                 for (int j = -negZRadius; j <= posZRadius; j++) {
                     GridSpace thisSpace = this.getGridSpace(i, j);
@@ -157,8 +164,8 @@ public class GridSpaceHolder {
         return false;
     }
 
-    public void setAllGridSpaces(
-            int xInit, int zInit, int yLevel, ForgeDirection dir, int type, GridSpaceHolder master) {
+    public void setAllGridSpaces(int xInit, int zInit, int yLevel, ForgeDirection dir, int type,
+            GridSpaceHolder master) {
         if (TEDemonPortal.printDebug)
             AlchemicalWizardry.logger.info("Grid space selected: (" + xInit + "," + zInit + ")");
         if (master != null) {

@@ -1,11 +1,9 @@
 package WayofTime.alchemicalWizardry.common.spell.simple;
 
-import WayofTime.alchemicalWizardry.common.entity.projectile.TeleportProjectile;
-import WayofTime.alchemicalWizardry.common.items.EnergyItems;
-import WayofTime.alchemicalWizardry.common.spell.complex.effect.SpellHelper;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Random;
+
 import net.minecraft.block.Block;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
@@ -17,7 +15,12 @@ import net.minecraft.world.World;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.entity.living.EnderTeleportEvent;
 
+import WayofTime.alchemicalWizardry.common.entity.projectile.TeleportProjectile;
+import WayofTime.alchemicalWizardry.common.items.EnergyItems;
+import WayofTime.alchemicalWizardry.common.spell.complex.effect.SpellHelper;
+
 public class SpellTeleport extends HomSpell {
+
     Random itemRand = new Random();
 
     public SpellTeleport() {
@@ -26,15 +29,15 @@ public class SpellTeleport extends HomSpell {
     }
 
     @Override
-    public ItemStack onOffensiveRangedRightClick(
-            ItemStack par1ItemStack, World par2World, EntityPlayer par3EntityPlayer) {
+    public ItemStack onOffensiveRangedRightClick(ItemStack par1ItemStack, World par2World,
+            EntityPlayer par3EntityPlayer) {
         if (EnergyItems.checkAndSetItemOwner(par1ItemStack, par3EntityPlayer) || par3EntityPlayer.isSneaking()) {
             return par1ItemStack;
         }
 
         if (!par3EntityPlayer.capabilities.isCreativeMode) {
-            EnergyItems.syphonAndDamageWhileInContainer(
-                    par1ItemStack, par3EntityPlayer, this.getOffensiveRangedEnergy());
+            EnergyItems
+                    .syphonAndDamageWhileInContainer(par1ItemStack, par3EntityPlayer, this.getOffensiveRangedEnergy());
         }
 
         par2World.spawnEntityInWorld(new TeleportProjectile(par2World, par3EntityPlayer, 8, true));
@@ -43,15 +46,15 @@ public class SpellTeleport extends HomSpell {
     }
 
     @Override
-    public ItemStack onOffensiveMeleeRightClick(
-            ItemStack par1ItemStack, World par2World, EntityPlayer par3EntityPlayer) {
+    public ItemStack onOffensiveMeleeRightClick(ItemStack par1ItemStack, World par2World,
+            EntityPlayer par3EntityPlayer) {
         if (EnergyItems.checkAndSetItemOwner(par1ItemStack, par3EntityPlayer) || par3EntityPlayer.isSneaking()) {
             return par1ItemStack;
         }
 
         if (!par3EntityPlayer.capabilities.isCreativeMode) {
-            EnergyItems.syphonAndDamageWhileInContainer(
-                    par1ItemStack, par3EntityPlayer, this.getOffensiveMeleeEnergy());
+            EnergyItems
+                    .syphonAndDamageWhileInContainer(par1ItemStack, par3EntityPlayer, this.getOffensiveMeleeEnergy());
         }
 
         par2World.spawnEntityInWorld(new TeleportProjectile(par2World, par3EntityPlayer, 8, false));
@@ -94,8 +97,8 @@ public class SpellTeleport extends HomSpell {
     }
 
     @Override
-    public ItemStack onEnvironmentalRightClick(
-            ItemStack par1ItemStack, World par2World, EntityPlayer par3EntityPlayer) {
+    public ItemStack onEnvironmentalRightClick(ItemStack par1ItemStack, World par2World,
+            EntityPlayer par3EntityPlayer) {
         if (EnergyItems.checkAndSetItemOwner(par1ItemStack, par3EntityPlayer) || par3EntityPlayer.isSneaking()) {
             return par1ItemStack;
         }
@@ -107,13 +110,12 @@ public class SpellTeleport extends HomSpell {
         if (!par2World.isRemote) {
             int d0 = 3;
             AxisAlignedBB axisalignedbb = AxisAlignedBB.getBoundingBox(
-                            par3EntityPlayer.posX,
-                            par3EntityPlayer.posY,
-                            par3EntityPlayer.posZ,
-                            (par3EntityPlayer.posX + 1),
-                            (par3EntityPlayer.posY + 2),
-                            (par3EntityPlayer.posZ + 1))
-                    .expand(d0, d0, d0);
+                    par3EntityPlayer.posX,
+                    par3EntityPlayer.posY,
+                    par3EntityPlayer.posZ,
+                    (par3EntityPlayer.posX + 1),
+                    (par3EntityPlayer.posY + 2),
+                    (par3EntityPlayer.posZ + 1)).expand(d0, d0, d0);
             List list = par3EntityPlayer.worldObj.getEntitiesWithinAABB(EntityLivingBase.class, axisalignedbb);
             Iterator iterator = list.iterator();
 
@@ -177,14 +179,8 @@ public class SpellTeleport extends HomSpell {
         return true;
     }
 
-    private static boolean teleportTo(
-            EntityLivingBase entityLiving,
-            double par1,
-            double par3,
-            double par5,
-            double lastX,
-            double lastY,
-            double lastZ) {
+    private static boolean teleportTo(EntityLivingBase entityLiving, double par1, double par3, double par5,
+            double lastX, double lastY, double lastZ) {
         EnderTeleportEvent event = new EnderTeleportEvent(entityLiving, par1, par3, par5, 0);
 
         if (MinecraftForge.EVENT_BUS.post(event)) {
@@ -213,13 +209,10 @@ public class SpellTeleport extends HomSpell {
             }
 
             if (flag1) {
-                SpellTeleport.moveEntityViaTeleport(
-                        entityLiving, entityLiving.posX, entityLiving.posY, entityLiving.posZ);
+                SpellTeleport
+                        .moveEntityViaTeleport(entityLiving, entityLiving.posX, entityLiving.posY, entityLiving.posZ);
 
-                if (entityLiving
-                                .worldObj
-                                .getCollidingBoundingBoxes(entityLiving, entityLiving.boundingBox)
-                                .isEmpty()
+                if (entityLiving.worldObj.getCollidingBoundingBoxes(entityLiving, entityLiving.boundingBox).isEmpty()
                         && !entityLiving.worldObj.isAnyLiquid(entityLiving.boundingBox)) {
                     flag = true;
                 }
@@ -237,14 +230,11 @@ public class SpellTeleport extends HomSpell {
                 float f = (entityLiving.worldObj.rand.nextFloat() - 0.5F) * 0.2F;
                 float f1 = (entityLiving.worldObj.rand.nextFloat() - 0.5F) * 0.2F;
                 float f2 = (entityLiving.worldObj.rand.nextFloat() - 0.5F) * 0.2F;
-                double d7 = lastX
-                        + (entityLiving.posX - lastX) * d6
+                double d7 = lastX + (entityLiving.posX - lastX) * d6
                         + (entityLiving.worldObj.rand.nextDouble() - 0.5D) * (double) entityLiving.width * 2.0D;
-                double d8 = lastY
-                        + (entityLiving.posY - lastY) * d6
+                double d8 = lastY + (entityLiving.posY - lastY) * d6
                         + entityLiving.worldObj.rand.nextDouble() * (double) entityLiving.height;
-                double d9 = lastZ
-                        + (entityLiving.posZ - lastZ) * d6
+                double d9 = lastZ + (entityLiving.posZ - lastZ) * d6
                         + (entityLiving.worldObj.rand.nextDouble() - 0.5D) * (double) entityLiving.width * 2.0D;
                 entityLiving.worldObj.spawnParticle("portal", d7, d8, d9, (double) f, (double) f1, (double) f2);
             }

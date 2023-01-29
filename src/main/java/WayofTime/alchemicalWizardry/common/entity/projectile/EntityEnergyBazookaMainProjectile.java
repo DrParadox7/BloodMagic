@@ -1,13 +1,15 @@
 package WayofTime.alchemicalWizardry.common.entity.projectile;
 
-import WayofTime.alchemicalWizardry.AlchemicalWizardry;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.world.World;
 
+import WayofTime.alchemicalWizardry.AlchemicalWizardry;
+
 public class EntityEnergyBazookaMainProjectile extends EnergyBlastProjectile {
+
     public EntityEnergyBazookaMainProjectile(World par1World) {
         super(par1World);
     }
@@ -20,27 +22,13 @@ public class EntityEnergyBazookaMainProjectile extends EnergyBlastProjectile {
         super(par1World, par2EntityPlayer, damage);
     }
 
-    public EntityEnergyBazookaMainProjectile(
-            World par1World,
-            EntityLivingBase par2EntityPlayer,
-            int damage,
-            int maxTicksInAir,
-            double posX,
-            double posY,
-            double posZ,
-            float rotationYaw,
-            float rotationPitch) {
+    public EntityEnergyBazookaMainProjectile(World par1World, EntityLivingBase par2EntityPlayer, int damage,
+            int maxTicksInAir, double posX, double posY, double posZ, float rotationYaw, float rotationPitch) {
         super(par1World, par2EntityPlayer, damage, maxTicksInAir, posX, posY, posZ, rotationYaw, rotationPitch);
     }
 
-    public EntityEnergyBazookaMainProjectile(
-            World par1World,
-            EntityLivingBase par2EntityLivingBase,
-            EntityLivingBase par3EntityLivingBase,
-            float par4,
-            float par5,
-            int damage,
-            int maxTicksInAir) {
+    public EntityEnergyBazookaMainProjectile(World par1World, EntityLivingBase par2EntityLivingBase,
+            EntityLivingBase par3EntityLivingBase, float par4, float par5, int damage, int maxTicksInAir) {
         super(par1World, par2EntityLivingBase, par3EntityLivingBase, par4, par5, damage, maxTicksInAir);
     }
 
@@ -95,7 +83,11 @@ public class EntityEnergyBazookaMainProjectile extends EnergyBlastProjectile {
         }
         for (int i = 0; i < 20; i++) {
             EntityEnergyBazookaSecondaryProjectile secProj = new EntityEnergyBazookaSecondaryProjectile(
-                    worldObj, this.posX, this.posY, this.posZ, secondaryDamage);
+                    worldObj,
+                    this.posX,
+                    this.posY,
+                    this.posZ,
+                    secondaryDamage);
             secProj.shootingEntity = this.shootingEntity;
             float xVel = rand.nextFloat() - rand.nextFloat();
             float yVel = rand.nextFloat() - rand.nextFloat();

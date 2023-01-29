@@ -1,7 +1,5 @@
 package WayofTime.alchemicalWizardry.common.entity.projectile;
 
-import WayofTime.alchemicalWizardry.AlchemicalWizardry;
-import WayofTime.alchemicalWizardry.common.spell.complex.effect.SpellHelper;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.potion.PotionEffect;
@@ -9,7 +7,11 @@ import net.minecraft.util.DamageSource;
 import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.world.World;
 
+import WayofTime.alchemicalWizardry.AlchemicalWizardry;
+import WayofTime.alchemicalWizardry.common.spell.complex.effect.SpellHelper;
+
 public class WaterProjectile extends EnergyBlastProjectile {
+
     public WaterProjectile(World par1World) {
         super(par1World);
     }
@@ -22,16 +24,8 @@ public class WaterProjectile extends EnergyBlastProjectile {
         super(par1World, par2EntityPlayer, damage);
     }
 
-    public WaterProjectile(
-            World par1World,
-            EntityLivingBase par2EntityPlayer,
-            int damage,
-            int maxTicksInAir,
-            double posX,
-            double posY,
-            double posZ,
-            float rotationYaw,
-            float rotationPitch) {
+    public WaterProjectile(World par1World, EntityLivingBase par2EntityPlayer, int damage, int maxTicksInAir,
+            double posX, double posY, double posZ, float rotationYaw, float rotationPitch) {
         super(par1World, par2EntityPlayer, damage, maxTicksInAir, posX, posY, posZ, rotationYaw, rotationPitch);
     }
 
@@ -48,8 +42,7 @@ public class WaterProjectile extends EnergyBlastProjectile {
             }
 
             this.onImpact(mop.entityHit);
-        } else if (mop.typeOfHit == MovingObjectPosition.MovingObjectType.BLOCK) {
-        }
+        } else if (mop.typeOfHit == MovingObjectPosition.MovingObjectType.BLOCK) {}
 
         this.setDead();
     }

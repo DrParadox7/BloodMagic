@@ -2,12 +2,14 @@ package WayofTime.alchemicalWizardry.common.achievements;
 
 import java.util.ArrayList;
 import java.util.List;
+
 import net.minecraft.block.Block;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.stats.Achievement;
 
 public class AchievementsMod extends Achievement {
+
     public static List<Achievement> achievements = new ArrayList();
 
     public AchievementsMod(String name, int x, int y, ItemStack icon, Achievement parent) {

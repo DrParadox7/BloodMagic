@@ -1,14 +1,7 @@
 package WayofTime.alchemicalWizardry.common.items.sigil;
 
-import WayofTime.alchemicalWizardry.AlchemicalWizardry;
-import WayofTime.alchemicalWizardry.api.items.interfaces.ArmourUpgrade;
-import WayofTime.alchemicalWizardry.api.items.interfaces.ISigil;
-import WayofTime.alchemicalWizardry.common.items.EnergyBattery;
-import WayofTime.alchemicalWizardry.common.items.EnergyItems;
-import WayofTime.alchemicalWizardry.common.tileEntity.TESocket;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
 import java.util.List;
+
 import net.minecraft.block.Block;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.entity.player.EntityPlayer;
@@ -26,7 +19,17 @@ import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.IFluidHandler;
 
+import WayofTime.alchemicalWizardry.AlchemicalWizardry;
+import WayofTime.alchemicalWizardry.api.items.interfaces.ArmourUpgrade;
+import WayofTime.alchemicalWizardry.api.items.interfaces.ISigil;
+import WayofTime.alchemicalWizardry.common.items.EnergyBattery;
+import WayofTime.alchemicalWizardry.common.items.EnergyItems;
+import WayofTime.alchemicalWizardry.common.tileEntity.TESocket;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
+
 public class SigilLava extends ItemBucket implements ArmourUpgrade, ISigil {
+
     /**
      * field for checking if the bucket has been filled.
      */
@@ -61,8 +64,9 @@ public class SigilLava extends ItemBucket implements ArmourUpgrade, ISigil {
         par3List.add(StatCollector.translateToLocal("tooltip.lavasigil.desc2"));
 
         if (!(par1ItemStack.getTagCompound() == null)) {
-            par3List.add(StatCollector.translateToLocal("tooltip.owner.currentowner") + " "
-                    + par1ItemStack.getTagCompound().getString("ownerName"));
+            par3List.add(
+                    StatCollector.translateToLocal("tooltip.owner.currentowner") + " "
+                            + par1ItemStack.getTagCompound().getString("ownerName"));
         }
     }
 
@@ -74,17 +78,8 @@ public class SigilLava extends ItemBucket implements ArmourUpgrade, ISigil {
     }
 
     @Override
-    public boolean onItemUseFirst(
-            ItemStack stack,
-            EntityPlayer player,
-            World world,
-            int x,
-            int y,
-            int z,
-            int side,
-            float hitX,
-            float hitY,
-            float hitZ) {
+    public boolean onItemUseFirst(ItemStack stack, EntityPlayer player, World world, int x, int y, int z, int side,
+            float hitX, float hitY, float hitZ) {
         if (world.isRemote || !EnergyItems.checkAndSetItemOwner(stack, player) || player.isSneaking()) {
             return false;
         }
@@ -148,33 +143,31 @@ public class SigilLava extends ItemBucket implements ArmourUpgrade, ISigil {
     /**
      * Attempts to place the liquid contained inside the bucket.
      */
-    public boolean tryPlaceContainedLiquid(
-            World par1World, double par2, double par4, double par6, int par8, int par9, int par10) {
-        if (!par1World.isAirBlock(par8, par9, par10)
-                && par1World.getBlock(par8, par9, par10).getMaterial().isSolid()) {
+    public boolean tryPlaceContainedLiquid(World par1World, double par2, double par4, double par6, int par8, int par9,
+            int par10) {
+        if (!par1World.isAirBlock(par8, par9, par10) && par1World.getBlock(par8, par9, par10).getMaterial().isSolid()) {
             return false;
         } else if ((par1World.getBlock(par8, par9, par10) == Blocks.lava
-                        || par1World.getBlock(par8, par9, par10) == Blocks.flowing_lava)
+                || par1World.getBlock(par8, par9, par10) == Blocks.flowing_lava)
                 && par1World.getBlockMetadata(par8, par9, par10) == 0) {
-            return false;
-        } else {
-            par1World.setBlock(par8, par9, par10, this.isFull, 0, 3);
-            return true;
-        }
+                    return false;
+                } else {
+                    par1World.setBlock(par8, par9, par10, this.isFull, 0, 3);
+                    return true;
+                }
     }
 
-    public boolean canPlaceContainedLiquid(
-            World par1World, double par2, double par4, double par6, int par8, int par9, int par10) {
-        if (!par1World.isAirBlock(par8, par9, par10)
-                && par1World.getBlock(par8, par9, par10).getMaterial().isSolid()) {
+    public boolean canPlaceContainedLiquid(World par1World, double par2, double par4, double par6, int par8, int par9,
+            int par10) {
+        if (!par1World.isAirBlock(par8, par9, par10) && par1World.getBlock(par8, par9, par10).getMaterial().isSolid()) {
             return false;
         } else if ((par1World.getBlock(par8, par9, par10) == Blocks.lava
-                        || par1World.getBlock(par8, par9, par10) == Blocks.flowing_lava)
+                || par1World.getBlock(par8, par9, par10) == Blocks.flowing_lava)
                 && par1World.getBlockMetadata(par8, par9, par10) == 0) {
-            return false;
-        } else {
-            return true;
-        }
+                    return false;
+                } else {
+                    return true;
+                }
     }
 
     protected void setEnergyUsed(int par1int) {

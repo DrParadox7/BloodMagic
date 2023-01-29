@@ -1,6 +1,7 @@
 package WayofTime.alchemicalWizardry.api.alchemy.energy;
 
 public class Reagent {
+
     public final String name;
 
     public static final int REAGENT_SIZE = 1000;

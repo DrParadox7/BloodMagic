@@ -1,11 +1,14 @@
 package WayofTime.alchemicalWizardry.api.alchemy;
 
-import WayofTime.alchemicalWizardry.api.items.interfaces.IBloodOrb;
 import java.util.ArrayList;
 import java.util.List;
+
 import net.minecraft.item.ItemStack;
 
+import WayofTime.alchemicalWizardry.api.items.interfaces.IBloodOrb;
+
 public class AlchemyRecipeRegistry {
+
     public static List<AlchemyRecipe> recipes = new ArrayList();
 
     public static void registerRecipe(ItemStack output, int amountNeeded, ItemStack[] recipe, int bloodOrbLevel) {

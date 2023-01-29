@@ -3,6 +3,7 @@ package WayofTime.alchemicalWizardry.common.alchemy;
 import net.minecraft.potion.Potion;
 
 public class CombinedPotionComponent {
+
     public Potion result;
     public Potion pot1;
     public Potion pot2;

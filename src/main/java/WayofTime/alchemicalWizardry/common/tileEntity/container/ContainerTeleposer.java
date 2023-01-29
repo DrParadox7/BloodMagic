@@ -1,7 +1,5 @@
 package WayofTime.alchemicalWizardry.common.tileEntity.container;
 
-import WayofTime.alchemicalWizardry.common.items.TelepositionFocus;
-import WayofTime.alchemicalWizardry.common.tileEntity.TETeleposer;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.inventory.Container;
@@ -9,7 +7,11 @@ import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
 
+import WayofTime.alchemicalWizardry.common.items.TelepositionFocus;
+import WayofTime.alchemicalWizardry.common.tileEntity.TETeleposer;
+
 public class ContainerTeleposer extends Container {
+
     protected TETeleposer tileEntity;
 
     public ContainerTeleposer(InventoryPlayer inventoryPlayer, TETeleposer te) {
@@ -72,6 +74,7 @@ public class ContainerTeleposer extends Container {
     }
 
     private class SlotTeleposer extends Slot {
+
         public SlotTeleposer(IInventory inventory, int slotIndex, int x, int y) {
             super(inventory, slotIndex, x, y);
         }

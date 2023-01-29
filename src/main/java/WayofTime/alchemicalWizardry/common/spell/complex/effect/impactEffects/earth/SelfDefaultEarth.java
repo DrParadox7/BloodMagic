@@ -1,11 +1,12 @@
 package WayofTime.alchemicalWizardry.common.spell.complex.effect.impactEffects.earth;
 
-import WayofTime.alchemicalWizardry.api.spell.SelfSpellEffect;
-import WayofTime.alchemicalWizardry.common.block.BlockTeleposer;
-import WayofTime.alchemicalWizardry.common.spell.complex.effect.SpellHelper;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.Vec3;
 import net.minecraft.world.World;
+
+import WayofTime.alchemicalWizardry.api.spell.SelfSpellEffect;
+import WayofTime.alchemicalWizardry.common.block.BlockTeleposer;
+import WayofTime.alchemicalWizardry.common.spell.complex.effect.SpellHelper;
 
 public class SelfDefaultEarth extends SelfSpellEffect {
 
@@ -33,8 +34,8 @@ public class SelfDefaultEarth extends SelfSpellEffect {
                 for (int j = -1; j >= -vertRange; j--) {
                     if (!world.isAirBlock(posX + i, posY + j, posZ + k)
                             && !SpellHelper.isBlockFluid(world.getBlock(posX + i, posY + j, posZ + k))) {
-                        BlockTeleposer.swapBlocks(
-                                this, world, world, posX + i, posY, posZ + k, posX + i, posY + j, posZ + k);
+                        BlockTeleposer
+                                .swapBlocks(this, world, world, posX + i, posY, posZ + k, posX + i, posY + j, posZ + k);
 
                         break;
                     }

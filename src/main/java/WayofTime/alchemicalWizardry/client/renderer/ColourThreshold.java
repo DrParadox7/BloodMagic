@@ -7,6 +7,7 @@ import java.util.List;
  * https://github.com/bspkrs/bspkrsCore/blob/master/src/main/java/bspkrs/client/util/ColorThreshold.java
  */
 public class ColourThreshold implements Comparable<ColourThreshold> {
+
     public int threshold;
     public String colorCode;
 
@@ -28,8 +29,8 @@ public class ColourThreshold implements Comparable<ColourThreshold> {
     }
 
     /**
-     * Returns the colorCode attached to the first threshold in the list that is
-     * greater than or equal to the value. Expects that the list has been sorted by threshold ascending.
+     * Returns the colorCode attached to the first threshold in the list that is greater than or equal to the value.
+     * Expects that the list has been sorted by threshold ascending.
      */
     public static String getColorCode(List<ColourThreshold> colorList, int value) {
         for (ColourThreshold ct : colorList) if (value <= ct.threshold) return ct.colorCode;

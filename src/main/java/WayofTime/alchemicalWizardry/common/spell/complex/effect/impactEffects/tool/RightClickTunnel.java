@@ -1,9 +1,9 @@
 package WayofTime.alchemicalWizardry.common.spell.complex.effect.impactEffects.tool;
 
-import WayofTime.alchemicalWizardry.common.spell.complex.effect.SpellHelper;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Random;
+
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.MovingObjectPosition;
@@ -11,7 +11,10 @@ import net.minecraft.util.Vec3;
 import net.minecraft.world.World;
 import net.minecraftforge.common.util.ForgeDirection;
 
+import WayofTime.alchemicalWizardry.common.spell.complex.effect.SpellHelper;
+
 public class RightClickTunnel extends RightClickEffect {
+
     Random rand = new Random();
 
     public RightClickTunnel(int power, int potency, int cost) {
@@ -38,7 +41,9 @@ public class RightClickTunnel extends RightClickEffect {
         double initialLength = this.getRandomVectorLength();
 
         Vec3 initialVector = SpellHelper.createVec3(
-                opposite.offsetX * initialLength, opposite.offsetY * initialLength, opposite.offsetZ * initialLength);
+                opposite.offsetX * initialLength,
+                opposite.offsetY * initialLength,
+                opposite.offsetZ * initialLength);
 
         Vec3 lastVec = SpellHelper.createVec3(initialVector.xCoord, initialVector.yCoord, initialVector.zCoord);
         vectorLine.add(initialVector);
@@ -152,7 +157,11 @@ public class RightClickTunnel extends RightClickEffect {
             prevVec = prevVec.addVector(stepLength * normVec.xCoord, stepLength * normVec.yCoord, normVec.zCoord);
 
             this.destroySphereOfMundane(
-                    world, prevVec.xCoord + x, prevVec.yCoord + y, prevVec.zCoord + z, this.getRandomRadius());
+                    world,
+                    prevVec.xCoord + x,
+                    prevVec.yCoord + y,
+                    prevVec.zCoord + z,
+                    this.getRandomRadius());
 
             distanceTravelled = prevVec.lengthVector();
         }

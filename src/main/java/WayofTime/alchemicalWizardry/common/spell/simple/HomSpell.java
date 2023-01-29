@@ -6,6 +6,7 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.world.World;
 
 public abstract class HomSpell implements ISimpleSpell {
+
     private int offensiveRangedEnergy;
     private int offensiveMeleeEnergy;
     private int defensiveEnergy;
@@ -18,20 +19,20 @@ public abstract class HomSpell implements ISimpleSpell {
     }
 
     @Override
-    public abstract ItemStack onOffensiveRangedRightClick(
-            ItemStack par1ItemStack, World par2World, EntityPlayer par3EntityPlayer);
+    public abstract ItemStack onOffensiveRangedRightClick(ItemStack par1ItemStack, World par2World,
+            EntityPlayer par3EntityPlayer);
 
     @Override
-    public abstract ItemStack onOffensiveMeleeRightClick(
-            ItemStack par1ItemStack, World par2World, EntityPlayer par3EntityPlayer);
+    public abstract ItemStack onOffensiveMeleeRightClick(ItemStack par1ItemStack, World par2World,
+            EntityPlayer par3EntityPlayer);
 
     @Override
-    public abstract ItemStack onDefensiveRightClick(
-            ItemStack par1ItemStack, World par2World, EntityPlayer par3EntityPlayer);
+    public abstract ItemStack onDefensiveRightClick(ItemStack par1ItemStack, World par2World,
+            EntityPlayer par3EntityPlayer);
 
     @Override
-    public abstract ItemStack onEnvironmentalRightClick(
-            ItemStack par1ItemStack, World par2World, EntityPlayer par3EntityPlayer);
+    public abstract ItemStack onEnvironmentalRightClick(ItemStack par1ItemStack, World par2World,
+            EntityPlayer par3EntityPlayer);
 
     public int getOffensiveRangedEnergy() {
         return offensiveRangedEnergy;
@@ -103,20 +104,20 @@ public abstract class HomSpell implements ISimpleSpell {
         return par1ItemStack;
     }
 
-    //	@Override
-    //    public void addInformation(ItemStack par1ItemStack, EntityPlayer par2EntityPlayer, List par3List, boolean
+    // @Override
+    // public void addInformation(ItemStack par1ItemStack, EntityPlayer par2EntityPlayer, List par3List, boolean
     // par4)
-    //    {
-    //        if (!(par1ItemStack.getTagCompound() == null))
-    //        {
-    //            if (!par1ItemStack.getTagCompound().getString("ownerName").equals(""))
-    //            {
-    //                par3List.add("Current owner: " + par1ItemStack.getTagCompound().getString("ownerName"));
-    //            }
+    // {
+    // if (!(par1ItemStack.getTagCompound() == null))
+    // {
+    // if (!par1ItemStack.getTagCompound().getString("ownerName").equals(""))
+    // {
+    // par3List.add("Current owner: " + par1ItemStack.getTagCompound().getString("ownerName"));
+    // }
     //
-    //            par3List.add("Current paradigm: " + this.getSpellParadigm(par1ItemStack));
-    //        }
-    //    }
+    // par3List.add("Current paradigm: " + this.getSpellParadigm(par1ItemStack));
+    // }
+    // }
 
     public int getDimensionID(ItemStack itemStack) {
         if (itemStack.getTagCompound() == null) {

@@ -1,12 +1,7 @@
 package WayofTime.alchemicalWizardry.common.items.armour;
 
-import WayofTime.alchemicalWizardry.ModItems;
-import WayofTime.alchemicalWizardry.common.renderer.model.ModelOmegaFire;
-import com.google.common.collect.HashMultimap;
-import com.google.common.collect.Multimap;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
 import java.util.UUID;
+
 import net.minecraft.client.model.ModelBiped;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.enchantment.Enchantment;
@@ -17,7 +12,17 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.IIcon;
 import net.minecraft.world.biome.BiomeGenBase;
 
+import WayofTime.alchemicalWizardry.ModItems;
+import WayofTime.alchemicalWizardry.common.renderer.model.ModelOmegaFire;
+
+import com.google.common.collect.HashMultimap;
+import com.google.common.collect.Multimap;
+
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
+
 public class OmegaArmourFire extends OmegaArmour {
+
     @SideOnly(Side.CLIENT)
     private IIcon helmetIcon;
 
@@ -93,21 +98,17 @@ public class OmegaArmourFire extends OmegaArmour {
         if (biome != null) {
             map.put(
                     SharedMonsterAttributes.maxHealth.getAttributeUnlocalizedName(),
-                    new AttributeModifier(
-                            new UUID(
-                                    895132
-                                    /** Random number **/
-                                    , armorType),
+                    new AttributeModifier(new UUID(895132
+                    /** Random number **/
+                            , armorType),
                             "Health modifier" + armorType,
                             getDefaultArmourBoost() * getHealthBoostModifierForBiome(biome),
                             1));
             map.put(
                     SharedMonsterAttributes.attackDamage.getAttributeUnlocalizedName(),
-                    new AttributeModifier(
-                            new UUID(
-                                    196312
-                                    /** Random number **/
-                                    , armorType),
+                    new AttributeModifier(new UUID(196312
+                    /** Random number **/
+                            , armorType),
                             "Damage modifier" + armorType,
                             getDefaultArmourBoost() * getDamageModifierForBiome(biome),
                             1));

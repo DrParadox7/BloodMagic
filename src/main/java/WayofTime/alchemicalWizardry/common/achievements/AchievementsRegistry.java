@@ -1,26 +1,29 @@
 package WayofTime.alchemicalWizardry.common.achievements;
 
-import WayofTime.alchemicalWizardry.ModBlocks;
-import WayofTime.alchemicalWizardry.ModItems;
-import WayofTime.alchemicalWizardry.common.items.ItemRitualDiviner;
-import WayofTime.alchemicalWizardry.common.items.armour.BoundArmour;
 import java.util.ArrayList;
 import java.util.List;
+
 import net.minecraft.block.Block;
 import net.minecraft.item.Item;
 import net.minecraft.stats.Achievement;
 
+import WayofTime.alchemicalWizardry.ModBlocks;
+import WayofTime.alchemicalWizardry.ModItems;
+import WayofTime.alchemicalWizardry.common.items.ItemRitualDiviner;
+import WayofTime.alchemicalWizardry.common.items.armour.BoundArmour;
+
 public class AchievementsRegistry {
+
     public static final List<Item> craftinglist = new ArrayList<Item>();
     public static final List<Item> pickupList = new ArrayList<Item>();
     public static final List<Block> blockCraftingList = new ArrayList<Block>();
-    //    public final static List<Block> blockPickupList = new ArrayList<Block>();
+    // public final static List<Block> blockPickupList = new ArrayList<Block>();
 
     public static void init() {
         addItemsToCraftingList();
         addBlocksToCraftingList();
         addItemsToPickupList();
-        //        addBlocksToPickupList();
+        // addBlocksToPickupList();
     }
 
     public static void addItemsToCraftingList() {

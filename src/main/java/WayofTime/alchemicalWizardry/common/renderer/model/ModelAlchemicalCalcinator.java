@@ -5,6 +5,7 @@ import net.minecraft.client.model.ModelRenderer;
 import net.minecraft.entity.Entity;
 
 public class ModelAlchemicalCalcinator extends ModelBase {
+
     // fields
     ModelRenderer top1;
     ModelRenderer top2;

@@ -1,14 +1,16 @@
 package WayofTime.alchemicalWizardry.common.spell.complex.effect.impactEffects.ice;
 
-import WayofTime.alchemicalWizardry.api.spell.ExtrapolatedMeleeEntityEffect;
-import WayofTime.alchemicalWizardry.common.spell.complex.effect.SpellHelper;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.util.Vec3;
 import net.minecraft.world.World;
 
+import WayofTime.alchemicalWizardry.api.spell.ExtrapolatedMeleeEntityEffect;
+import WayofTime.alchemicalWizardry.common.spell.complex.effect.SpellHelper;
+
 public class MeleeOffensiveIce extends ExtrapolatedMeleeEntityEffect {
+
     public MeleeOffensiveIce(int power, int potency, int cost) {
         super(power, potency, cost);
         this.setMaxNumberHit(1 + potency);

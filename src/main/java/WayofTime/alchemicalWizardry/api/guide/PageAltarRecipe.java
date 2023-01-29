@@ -1,5 +1,13 @@
 package WayofTime.alchemicalWizardry.api.guide;
 
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.FontRenderer;
+import net.minecraft.init.Blocks;
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
+import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.StatCollector;
+
 import WayofTime.alchemicalWizardry.api.altarRecipeRegistry.AltarRecipe;
 import amerifrance.guideapi.api.abstraction.CategoryAbstract;
 import amerifrance.guideapi.api.abstraction.EntryAbstract;
@@ -9,13 +17,6 @@ import amerifrance.guideapi.api.util.GuiHelper;
 import amerifrance.guideapi.gui.GuiBase;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
-import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.FontRenderer;
-import net.minecraft.init.Blocks;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.StatCollector;
 
 public class PageAltarRecipe extends PageBase {
 
@@ -33,19 +34,10 @@ public class PageAltarRecipe extends PageBase {
 
     @Override
     @SideOnly(Side.CLIENT)
-    public void draw(
-            Book book,
-            CategoryAbstract category,
-            EntryAbstract entry,
-            int guiLeft,
-            int guiTop,
-            int mouseX,
-            int mouseY,
-            GuiBase guiBase,
-            FontRenderer fontRenderer) {
+    public void draw(Book book, CategoryAbstract category, EntryAbstract entry, int guiLeft, int guiTop, int mouseX,
+            int mouseY, GuiBase guiBase, FontRenderer fontRenderer) {
 
-        Minecraft.getMinecraft()
-                .getTextureManager()
+        Minecraft.getMinecraft().getTextureManager()
                 .bindTexture(new ResourceLocation("alchemicalwizardry" + ":textures/gui/guide/altar.png"));
         guiBase.drawTexturedModalRect(guiLeft + 42, guiTop + 53, 0, 87, 146, 104);
 

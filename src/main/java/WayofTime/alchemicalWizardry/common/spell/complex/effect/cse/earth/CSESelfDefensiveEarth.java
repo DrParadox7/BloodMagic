@@ -8,6 +8,7 @@ import WayofTime.alchemicalWizardry.api.spell.SpellParadigmSelf;
 import WayofTime.alchemicalWizardry.common.spell.complex.effect.impactEffects.earth.SelfDefensiveEarth;
 
 public class CSESelfDefensiveEarth extends ComplexSpellEffect {
+
     public CSESelfDefensiveEarth() {
         super(ComplexSpellType.EARTH, ComplexSpellModifier.DEFENSIVE);
     }
@@ -22,9 +23,8 @@ public class CSESelfDefensiveEarth extends ComplexSpellEffect {
     @Override
     public void modifyParadigm(SpellParadigm parad) {
         if (parad instanceof SpellParadigmSelf) {
-            ((SpellParadigmSelf) parad)
-                    .addSelfSpellEffect(new SelfDefensiveEarth(
-                            this.powerEnhancement, this.potencyEnhancement, this.costEnhancement));
+            ((SpellParadigmSelf) parad).addSelfSpellEffect(
+                    new SelfDefensiveEarth(this.powerEnhancement, this.potencyEnhancement, this.costEnhancement));
         }
     }
 
@@ -35,8 +35,7 @@ public class CSESelfDefensiveEarth extends ComplexSpellEffect {
 
     @Override
     public int getCostOfEffect() {
-        return (int) (750
-                * (1.1 * this.powerEnhancement + 1)
+        return (int) (750 * (1.1 * this.powerEnhancement + 1)
                 * (0.5 * this.potencyEnhancement + 1)
                 * Math.pow(0.85, costEnhancement));
     }

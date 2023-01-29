@@ -1,13 +1,15 @@
 package WayofTime.alchemicalWizardry.common.spell.complex.effect.impactEffects.ice;
 
-import WayofTime.alchemicalWizardry.api.spell.ProjectileImpactEffect;
 import net.minecraft.entity.Entity;
 import net.minecraft.init.Blocks;
 import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.world.World;
 import net.minecraftforge.common.util.ForgeDirection;
 
+import WayofTime.alchemicalWizardry.api.spell.ProjectileImpactEffect;
+
 public class ProjectileDefaultIce extends ProjectileImpactEffect {
+
     public ProjectileDefaultIce(int power, int potency, int cost) {
         super(power, potency, cost);
     }

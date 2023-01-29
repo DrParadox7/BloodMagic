@@ -1,11 +1,13 @@
 package WayofTime.alchemicalWizardry.common.tileEntity;
 
-import WayofTime.alchemicalWizardry.api.spell.SpellParadigm;
-import WayofTime.alchemicalWizardry.api.tile.ISpellTile;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraftforge.common.util.ForgeDirection;
 
+import WayofTime.alchemicalWizardry.api.spell.SpellParadigm;
+import WayofTime.alchemicalWizardry.api.tile.ISpellTile;
+
 public abstract class TESpellBlock extends TEOrientable implements ISpellTile {
+
     @Override
     public void modifySpellParadigm(SpellParadigm parad) {
         this.applySpellChange(parad);

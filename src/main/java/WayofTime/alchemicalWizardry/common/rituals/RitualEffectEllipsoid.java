@@ -1,14 +1,8 @@
 package WayofTime.alchemicalWizardry.common.rituals;
 
-import WayofTime.alchemicalWizardry.AlchemicalWizardry;
-import WayofTime.alchemicalWizardry.api.Int3;
-import WayofTime.alchemicalWizardry.api.rituals.IMasterRitualStone;
-import WayofTime.alchemicalWizardry.api.rituals.RitualComponent;
-import WayofTime.alchemicalWizardry.api.rituals.RitualEffect;
-import WayofTime.alchemicalWizardry.api.soulNetwork.SoulNetworkHandler;
-import WayofTime.alchemicalWizardry.common.spell.complex.effect.SpellHelper;
 import java.util.ArrayList;
 import java.util.List;
+
 import net.minecraft.block.Block;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.IInventory;
@@ -20,7 +14,16 @@ import net.minecraft.potion.PotionEffect;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
 
+import WayofTime.alchemicalWizardry.AlchemicalWizardry;
+import WayofTime.alchemicalWizardry.api.Int3;
+import WayofTime.alchemicalWizardry.api.rituals.IMasterRitualStone;
+import WayofTime.alchemicalWizardry.api.rituals.RitualComponent;
+import WayofTime.alchemicalWizardry.api.rituals.RitualEffect;
+import WayofTime.alchemicalWizardry.api.soulNetwork.SoulNetworkHandler;
+import WayofTime.alchemicalWizardry.common.spell.complex.effect.SpellHelper;
+
 public class RitualEffectEllipsoid extends RitualEffect {
+
     @Override
     public void performEffect(IMasterRitualStone ritualStone) {
         String owner = ritualStone.getOwner();
@@ -109,16 +112,16 @@ public class RitualEffectEllipsoid extends RitualEffect {
                 while (i <= xSize) {
                     while (k <= zSize) {
                         if (Math.pow(i * (ySize - 0.50f) * (zSize - 0.50f), 2)
-                                        + Math.pow(j * (xSize - 0.50f) * (zSize - 0.50f), 2)
-                                        + Math.pow(k * (xSize - 0.50f) * (ySize - 0.50f), 2)
+                                + Math.pow(j * (xSize - 0.50f) * (zSize - 0.50f), 2)
+                                + Math.pow(k * (xSize - 0.50f) * (ySize - 0.50f), 2)
                                 <= Math.pow((xSize - 1 + 0.50f) * (ySize - 1 + 0.50f) * (zSize - 1 + 0.50f), 2)) {
                             k++;
                             continue;
                         }
 
                         if (Math.pow(i * (ySize + 0.50f) * (zSize + 0.50f), 2)
-                                        + Math.pow(j * (xSize + 0.50f) * (zSize + 0.50f), 2)
-                                        + Math.pow(k * (xSize + 0.50f) * (ySize + 0.50f), 2)
+                                + Math.pow(j * (xSize + 0.50f) * (zSize + 0.50f), 2)
+                                + Math.pow(k * (xSize + 0.50f) * (ySize + 0.50f), 2)
                                 >= Math.pow((xSize + 0.50f) * (ySize + 0.50f) * (zSize + 0.50f), 2)) {
                             k++;
                             continue;
@@ -139,8 +142,8 @@ public class RitualEffectEllipsoid extends RitualEffect {
                         } else {
                             // This is pulled from the ItemBlock's placing calls
                             int i1 = placedBlock.getMetadata(stack.getItemDamage());
-                            int j1 = placedBlock.field_150939_a.onBlockPlaced(
-                                    world, x + i, y + j, z + k, 0, 0, 0, 0, i1);
+                            int j1 = placedBlock.field_150939_a
+                                    .onBlockPlaced(world, x + i, y + j, z + k, 0, 0, 0, 0, i1);
 
                             if (placedBlock.placeBlockAt(stack, null, world, x + i, y + j, z + k, 0, 0, 0, 0, j1)) {
                                 world.playSoundEffect(
@@ -161,7 +164,7 @@ public class RitualEffectEllipsoid extends RitualEffect {
                                 SoulNetworkHandler.syphonFromNetwork(owner, cost);
                             }
 
-                            //                        	world.setBlock(x + i, y + j, z + k, Blocks.stone);
+                            // world.setBlock(x + i, y + j, z + k, Blocks.stone);
 
                             k++;
                         }

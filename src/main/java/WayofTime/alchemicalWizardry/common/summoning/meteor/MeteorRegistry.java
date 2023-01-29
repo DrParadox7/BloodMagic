@@ -2,11 +2,13 @@ package WayofTime.alchemicalWizardry.common.summoning.meteor;
 
 import java.util.ArrayList;
 import java.util.List;
+
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
 import net.minecraftforge.oredict.OreDictionary;
 
 public class MeteorRegistry {
+
     public static List<MeteorParadigm> paradigmList = new ArrayList<>();
 
     public static void registerMeteorParadigm(MeteorParadigm paradigm) {
@@ -35,8 +37,7 @@ public class MeteorRegistry {
         for (int i = 0; i < paradigmList.size(); i++) {
             ItemStack focusStack = paradigmList.get(i).focusStack;
 
-            if (focusStack != null
-                    && focusStack.getItem() == stack.getItem()
+            if (focusStack != null && focusStack.getItem() == stack.getItem()
                     && (focusStack.getItemDamage() == OreDictionary.WILDCARD_VALUE
                             || focusStack.getItemDamage() == stack.getItemDamage())) {
                 return i;

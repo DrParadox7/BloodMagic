@@ -2,10 +2,12 @@ package WayofTime.alchemicalWizardry.common.spell.simple;
 
 import java.util.ArrayList;
 import java.util.List;
+
 import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
 
 public class HomSpellRegistry {
+
     public static List<HomSpellComponent> spellList = new ArrayList();
 
     public static void registerBasicSpell(ItemStack item, HomSpell spell) {

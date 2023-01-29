@@ -1,11 +1,13 @@
 package WayofTime.alchemicalWizardry.api.event;
 
+import net.minecraft.entity.player.EntityPlayer;
+
 import cpw.mods.fml.common.eventhandler.Cancelable;
 import cpw.mods.fml.common.eventhandler.Event;
-import net.minecraft.entity.player.EntityPlayer;
 
 @Cancelable
 public class SacrificeKnifeUsedEvent extends Event {
+
     public final EntityPlayer player;
     public boolean shouldDrainHealth;
     public boolean shouldFillAltar;

@@ -1,18 +1,7 @@
 package WayofTime.alchemicalWizardry.common.items.sigil;
 
-import WayofTime.alchemicalWizardry.AlchemicalWizardry;
-import WayofTime.alchemicalWizardry.api.alchemy.energy.IReagentHandler;
-import WayofTime.alchemicalWizardry.api.alchemy.energy.ReagentContainerInfo;
-import WayofTime.alchemicalWizardry.api.alchemy.energy.ReagentRegistry;
-import WayofTime.alchemicalWizardry.api.items.interfaces.ArmourUpgrade;
-import WayofTime.alchemicalWizardry.api.items.interfaces.IBindable;
-import WayofTime.alchemicalWizardry.api.items.interfaces.IReagentManipulator;
-import WayofTime.alchemicalWizardry.api.items.interfaces.ISigil;
-import WayofTime.alchemicalWizardry.api.soulNetwork.SoulNetworkHandler;
-import WayofTime.alchemicalWizardry.common.items.EnergyItems;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
 import java.util.List;
+
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
@@ -25,7 +14,21 @@ import net.minecraft.util.StatCollector;
 import net.minecraft.world.World;
 import net.minecraftforge.common.util.ForgeDirection;
 
+import WayofTime.alchemicalWizardry.AlchemicalWizardry;
+import WayofTime.alchemicalWizardry.api.alchemy.energy.IReagentHandler;
+import WayofTime.alchemicalWizardry.api.alchemy.energy.ReagentContainerInfo;
+import WayofTime.alchemicalWizardry.api.alchemy.energy.ReagentRegistry;
+import WayofTime.alchemicalWizardry.api.items.interfaces.ArmourUpgrade;
+import WayofTime.alchemicalWizardry.api.items.interfaces.IBindable;
+import WayofTime.alchemicalWizardry.api.items.interfaces.IReagentManipulator;
+import WayofTime.alchemicalWizardry.api.items.interfaces.ISigil;
+import WayofTime.alchemicalWizardry.api.soulNetwork.SoulNetworkHandler;
+import WayofTime.alchemicalWizardry.common.items.EnergyItems;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
+
 public class SigilDivination extends Item implements ArmourUpgrade, IReagentManipulator, IBindable, ISigil {
+
     public SigilDivination() {
         super();
         this.maxStackSize = 1;
@@ -44,8 +47,9 @@ public class SigilDivination extends Item implements ArmourUpgrade, IReagentMani
         par3List.add(StatCollector.translateToLocal("tooltip.divinationsigil.desc2"));
 
         if (!(par1ItemStack.getTagCompound() == null)) {
-            par3List.add(StatCollector.translateToLocal("tooltip.owner.currentowner") + " "
-                    + par1ItemStack.getTagCompound().getString("ownerName"));
+            par3List.add(
+                    StatCollector.translateToLocal("tooltip.owner.currentowner") + " "
+                            + par1ItemStack.getTagCompound().getString("ownerName"));
         }
     }
 
@@ -69,13 +73,15 @@ public class SigilDivination extends Item implements ArmourUpgrade, IReagentMani
 
         String ownerName = itemTag.getString("ownerName");
 
-        MovingObjectPosition movingobjectposition =
-                this.getMovingObjectPositionFromPlayer(par2World, par3EntityPlayer, false);
+        MovingObjectPosition movingobjectposition = this
+                .getMovingObjectPositionFromPlayer(par2World, par3EntityPlayer, false);
 
         if (movingobjectposition == null) {
             par3EntityPlayer.addChatMessage(
-                    new ChatComponentText(StatCollector.translateToLocal("message.divinationsigil.currentessence") + " "
-                            + SoulNetworkHandler.getCurrentEssence(ownerName) + "LP"));
+                    new ChatComponentText(
+                            StatCollector.translateToLocal("message.divinationsigil.currentessence") + " "
+                                    + SoulNetworkHandler.getCurrentEssence(ownerName)
+                                    + "LP"));
 
             return par1ItemStack;
         } else {
@@ -87,9 +93,11 @@ public class SigilDivination extends Item implements ArmourUpgrade, IReagentMani
                 TileEntity tile = par2World.getTileEntity(x, y, z);
 
                 if (!(tile instanceof IReagentHandler)) {
-                    par3EntityPlayer.addChatMessage(new ChatComponentText(
-                            StatCollector.translateToLocal("message.divinationsigil.currentessence") + " "
-                                    + SoulNetworkHandler.getCurrentEssence(ownerName) + "LP"));
+                    par3EntityPlayer.addChatMessage(
+                            new ChatComponentText(
+                                    StatCollector.translateToLocal("message.divinationsigil.currentessence") + " "
+                                            + SoulNetworkHandler.getCurrentEssence(ownerName)
+                                            + "LP"));
 
                     return par1ItemStack;
                 }
@@ -100,11 +108,14 @@ public class SigilDivination extends Item implements ArmourUpgrade, IReagentMani
                 if (infoList != null) {
                     for (ReagentContainerInfo info : infoList) {
                         if (info != null && info.reagent != null && info.reagent.reagent != null) {
-                            par3EntityPlayer.addChatComponentMessage(new ChatComponentText(
-                                    StatCollector.translateToLocal("message.divinationsigil.reagent") + " "
-                                            + ReagentRegistry.getKeyForReagent(info.reagent.reagent) + ","
-                                            + StatCollector.translateToLocal("message.divinationsigil.amount") + " "
-                                            + info.reagent.amount));
+                            par3EntityPlayer.addChatComponentMessage(
+                                    new ChatComponentText(
+                                            StatCollector.translateToLocal("message.divinationsigil.reagent") + " "
+                                                    + ReagentRegistry.getKeyForReagent(info.reagent.reagent)
+                                                    + ","
+                                                    + StatCollector.translateToLocal("message.divinationsigil.amount")
+                                                    + " "
+                                                    + info.reagent.amount));
                         }
                     }
                 }

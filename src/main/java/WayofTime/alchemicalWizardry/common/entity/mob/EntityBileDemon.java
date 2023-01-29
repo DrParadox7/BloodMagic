@@ -1,8 +1,5 @@
 package WayofTime.alchemicalWizardry.common.entity.mob;
 
-import WayofTime.alchemicalWizardry.AlchemicalWizardry;
-import WayofTime.alchemicalWizardry.ModItems;
-import WayofTime.alchemicalWizardry.common.spell.complex.effect.SpellHelper;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.SharedMonsterAttributes;
@@ -18,7 +15,12 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.DamageSource;
 import net.minecraft.world.World;
 
+import WayofTime.alchemicalWizardry.AlchemicalWizardry;
+import WayofTime.alchemicalWizardry.ModItems;
+import WayofTime.alchemicalWizardry.common.spell.complex.effect.SpellHelper;
+
 public class EntityBileDemon extends EntityDemon {
+
     private static float maxTamedHealth = 100.0F;
     private static float maxUntamedHealth = 200.0F;
     private int attackTimer;
@@ -196,8 +198,8 @@ public class EntityBileDemon extends EntityDemon {
     public boolean attackEntityAsMob(Entity par1Entity) {
         this.attackTimer = 10;
         this.worldObj.setEntityState(this, (byte) 4);
-        boolean flag =
-                par1Entity.attackEntityFrom(DamageSource.causeMobDamage(this), (float) (7 + this.rand.nextInt(15)));
+        boolean flag = par1Entity
+                .attackEntityFrom(DamageSource.causeMobDamage(this), (float) (7 + this.rand.nextInt(15)));
 
         if (flag) {
             par1Entity.motionY += 0.4000000059604645D;
@@ -238,8 +240,8 @@ public class EntityBileDemon extends EntityDemon {
                         this.heal((float) itemfood.func_150905_g(itemstack));
 
                         if (itemstack.stackSize <= 0) {
-                            par1EntityPlayer.inventory.setInventorySlotContents(
-                                    par1EntityPlayer.inventory.currentItem, null);
+                            par1EntityPlayer.inventory
+                                    .setInventorySlotContents(par1EntityPlayer.inventory.currentItem, null);
                         }
 
                         return true;
@@ -338,12 +340,11 @@ public class EntityBileDemon extends EntityDemon {
                 }
             }
 
-            return par1EntityLivingBase instanceof EntityPlayer
-                            && par2EntityLivingBase instanceof EntityPlayer
-                            && !((EntityPlayer) par2EntityLivingBase)
-                                    .canAttackPlayer((EntityPlayer) par1EntityLivingBase)
-                    ? false
-                    : !(par1EntityLivingBase instanceof EntityHorse) || !((EntityHorse) par1EntityLivingBase).isTame();
+            return par1EntityLivingBase instanceof EntityPlayer && par2EntityLivingBase instanceof EntityPlayer
+                    && !((EntityPlayer) par2EntityLivingBase).canAttackPlayer((EntityPlayer) par1EntityLivingBase)
+                            ? false
+                            : !(par1EntityLivingBase instanceof EntityHorse)
+                                    || !((EntityHorse) par1EntityLivingBase).isTame();
         } else {
             return false;
         }

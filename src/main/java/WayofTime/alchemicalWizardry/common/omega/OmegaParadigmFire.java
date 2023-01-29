@@ -1,7 +1,5 @@
 package WayofTime.alchemicalWizardry.common.omega;
 
-import WayofTime.alchemicalWizardry.api.alchemy.energy.ReagentRegistry;
-import WayofTime.alchemicalWizardry.common.items.armour.OmegaArmour;
 import net.minecraft.block.material.Material;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
@@ -10,7 +8,11 @@ import net.minecraft.potion.Potion;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.world.World;
 
+import WayofTime.alchemicalWizardry.api.alchemy.energy.ReagentRegistry;
+import WayofTime.alchemicalWizardry.common.items.armour.OmegaArmour;
+
 public class OmegaParadigmFire extends OmegaParadigm {
+
     public OmegaParadigmFire(OmegaArmour helmet, OmegaArmour chestPiece, OmegaArmour leggings, OmegaArmour boots) {
         super(
                 ReagentRegistry.incendiumReagent,

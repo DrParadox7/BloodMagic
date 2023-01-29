@@ -1,6 +1,5 @@
 package WayofTime.alchemicalWizardry.common.spell.complex.effect.impactEffects.ice;
 
-import WayofTime.alchemicalWizardry.api.spell.ProjectileImpactEffect;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.potion.Potion;
@@ -8,7 +7,10 @@ import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.world.World;
 
+import WayofTime.alchemicalWizardry.api.spell.ProjectileImpactEffect;
+
 public class ProjectileOffensiveIce extends ProjectileImpactEffect {
+
     public ProjectileOffensiveIce(int power, int potency, int cost) {
         super(power, potency, cost);
     }
@@ -16,9 +18,8 @@ public class ProjectileOffensiveIce extends ProjectileImpactEffect {
     @Override
     public void onEntityImpact(Entity mop, Entity proj) {
         if (mop instanceof EntityLivingBase) {
-            ((EntityLivingBase) mop)
-                    .addPotionEffect(new PotionEffect(
-                            Potion.moveSlowdown.id, 60 * (this.powerUpgrades + 1), this.potencyUpgrades));
+            ((EntityLivingBase) mop).addPotionEffect(
+                    new PotionEffect(Potion.moveSlowdown.id, 60 * (this.powerUpgrades + 1), this.potencyUpgrades));
         }
     }
 

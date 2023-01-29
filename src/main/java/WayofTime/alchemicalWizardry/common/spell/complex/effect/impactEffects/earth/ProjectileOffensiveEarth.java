@@ -1,7 +1,5 @@
 package WayofTime.alchemicalWizardry.common.spell.complex.effect.impactEffects.earth;
 
-import WayofTime.alchemicalWizardry.api.spell.ProjectileImpactEffect;
-import WayofTime.alchemicalWizardry.common.spell.complex.effect.SpellHelper;
 import net.minecraft.block.Block;
 import net.minecraft.entity.Entity;
 import net.minecraft.init.Blocks;
@@ -9,7 +7,11 @@ import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.util.Vec3;
 import net.minecraft.world.World;
 
+import WayofTime.alchemicalWizardry.api.spell.ProjectileImpactEffect;
+import WayofTime.alchemicalWizardry.common.spell.complex.effect.SpellHelper;
+
 public class ProjectileOffensiveEarth extends ProjectileImpactEffect {
+
     public ProjectileOffensiveEarth(int power, int potency, int cost) {
         super(power, potency, cost);
     }
@@ -35,8 +37,7 @@ public class ProjectileOffensiveEarth extends ProjectileImpactEffect {
                         if (block == null || block.getBlockHardness(world, posX + i, posY + j, posZ + k) == -1) {
                             continue;
                         }
-                        if (block == Blocks.stone
-                                || block == Blocks.cobblestone
+                        if (block == Blocks.stone || block == Blocks.cobblestone
                                 || block == Blocks.sand
                                 || block == Blocks.gravel
                                 || block == Blocks.grass

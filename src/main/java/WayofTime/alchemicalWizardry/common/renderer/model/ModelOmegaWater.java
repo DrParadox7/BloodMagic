@@ -5,6 +5,7 @@ import net.minecraft.client.model.ModelRenderer;
 import net.minecraft.entity.Entity;
 
 public class ModelOmegaWater extends ModelBiped {
+
     // fields
     ModelRenderer belt;
 

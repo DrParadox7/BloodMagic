@@ -1,6 +1,7 @@
 package WayofTime.alchemicalWizardry.api.spell;
 
 public abstract class ComplexSpellEffect {
+
     public final ComplexSpellType type;
     public final ComplexSpellModifier modifier;
 
@@ -35,52 +36,52 @@ public abstract class ComplexSpellEffect {
 
     public abstract int getCostOfEffect();
 
-    //	public NBTTagCompound getTag()
-    //    {
-    //        NBTTagCompound tag = new NBTTagCompound();
+    // public NBTTagCompound getTag()
+    // {
+    // NBTTagCompound tag = new NBTTagCompound();
     //
-    //        tag.setString("Class", this.getClass().getName());
-    //        tag.setInteger("modifier", modifierState);
-    //        tag.setInteger("power", powerEnhancement);
-    //        tag.setInteger("cost", costEnhancement);
-    //        tag.setInteger("potency", potencyEnhancement);
+    // tag.setString("Class", this.getClass().getName());
+    // tag.setInteger("modifier", modifierState);
+    // tag.setInteger("power", powerEnhancement);
+    // tag.setInteger("cost", costEnhancement);
+    // tag.setInteger("potency", potencyEnhancement);
     //
-    //        return tag;
-    //    }
+    // return tag;
+    // }
     //
-    //    public static SpellEffect getEffectFromTag(NBTTagCompound tag)
-    //    {
-    //        try
-    //        {
-    //            Class clazz = Class.forName(tag.getString("Class"));
-    //            if (clazz != null)
-    //            {
-    //                try
-    //                {
-    //                    Object obj = clazz.newInstance();
-    //                    if (obj instanceof SpellEffect)
-    //                    {
-    //                        SpellEffect eff = (SpellEffect) obj;
+    // public static SpellEffect getEffectFromTag(NBTTagCompound tag)
+    // {
+    // try
+    // {
+    // Class clazz = Class.forName(tag.getString("Class"));
+    // if (clazz != null)
+    // {
+    // try
+    // {
+    // Object obj = clazz.newInstance();
+    // if (obj instanceof SpellEffect)
+    // {
+    // SpellEffect eff = (SpellEffect) obj;
     //
-    //                        eff.modifierState = tag.getInteger("modifier");
-    //                        eff.powerEnhancement = tag.getInteger("power");
-    //                        eff.costEnhancement = tag.getInteger("cost");
-    //                        eff.potencyEnhancement = tag.getInteger("potency");
+    // eff.modifierState = tag.getInteger("modifier");
+    // eff.powerEnhancement = tag.getInteger("power");
+    // eff.costEnhancement = tag.getInteger("cost");
+    // eff.potencyEnhancement = tag.getInteger("potency");
     //
-    //                        return eff;
-    //                    }
-    //                } catch (InstantiationException e)
-    //                {
-    //                    e.printStackTrace();
-    //                } catch (IllegalAccessException e)
-    //                {
-    //                    e.printStackTrace();
-    //                }
-    //            }
-    //        } catch (ClassNotFoundException e)
-    //        {
-    //            e.printStackTrace();
-    //        }
-    //        return null;
-    //    }
+    // return eff;
+    // }
+    // } catch (InstantiationException e)
+    // {
+    // e.printStackTrace();
+    // } catch (IllegalAccessException e)
+    // {
+    // e.printStackTrace();
+    // }
+    // }
+    // } catch (ClassNotFoundException e)
+    // {
+    // e.printStackTrace();
+    // }
+    // return null;
+    // }
 }

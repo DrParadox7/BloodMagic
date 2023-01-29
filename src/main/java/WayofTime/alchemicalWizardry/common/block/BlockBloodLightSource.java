@@ -1,9 +1,8 @@
 package WayofTime.alchemicalWizardry.common.block;
 
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
 import java.util.List;
 import java.util.Random;
+
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.renderer.texture.IIconRegister;
@@ -12,7 +11,11 @@ import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
+
 public class BlockBloodLightSource extends Block {
+
     public BlockBloodLightSource() {
         super(Material.cloth);
         this.setBlockName("blockBloodLightSource");
@@ -58,14 +61,8 @@ public class BlockBloodLightSource extends Block {
     }
 
     @Override
-    public void addCollisionBoxesToList(
-            World par1World,
-            int par2,
-            int par3,
-            int par4,
-            AxisAlignedBB par5AxisAlignedBB,
-            List par6List,
-            Entity par7Entity) {
+    public void addCollisionBoxesToList(World par1World, int par2, int par3, int par4, AxisAlignedBB par5AxisAlignedBB,
+            List par6List, Entity par7Entity) {
         this.setBlockBounds(0.40F, 0.40F, 0.40F, 0.60F, 0.60F, 0.60F);
     }
 

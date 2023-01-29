@@ -1,24 +1,26 @@
 package WayofTime.alchemicalWizardry.common.omega;
 
-import WayofTime.alchemicalWizardry.ModBlocks;
-import WayofTime.alchemicalWizardry.api.Int3;
 import net.minecraft.block.Block;
 import net.minecraft.world.World;
 
+import WayofTime.alchemicalWizardry.ModBlocks;
+import WayofTime.alchemicalWizardry.api.Int3;
+
 public class OmegaStructureHandler {
+
     public static final OmegaStructureParameters emptyParam = new OmegaStructureParameters(0, 0, 0);
 
     public static boolean isStructureIntact(World world, int x, int y, int z) {
         return true;
     }
 
-    public static OmegaStructureParameters getStructureStabilityFactor(
-            World world, int x, int y, int z, int expLim, Int3 offset) {
+    public static OmegaStructureParameters getStructureStabilityFactor(World world, int x, int y, int z, int expLim,
+            Int3 offset) {
         int range = expLim;
 
-        int[][][] boolList = new int[range * 2 + 1][range * 2 + 1]
-                [range * 2
-                        + 1]; // 0 indicates unchecked, 1 indicates checked and is air, -1 indicates checked to be right
+        int[][][] boolList = new int[range * 2 + 1][range * 2 + 1][range * 2 + 1]; // 0 indicates unchecked, 1 indicates
+                                                                                   // checked and is air, -1 indicates
+                                                                                   // checked to be right
         // next to air blocks in question but is NOT air
 
         for (int i = 0; i < 2 * range + 1; i++) {
@@ -43,8 +45,8 @@ public class OmegaStructureHandler {
                                 Block block = world.getBlock(x - range + i - 1, y - range + j, z - range + k);
                                 if (world.isAirBlock(x - range + i - 1, y - range + j, z - range + k)
                                         || block == ModBlocks.blockSpectralContainer) {
-                                    if (i - 1
-                                            == 0) // One of the found air blocks is at the range boundary, and thus the
+                                    if (i - 1 == 0) // One of the found air blocks is at the range boundary, and thus
+                                                    // the
                                     // container is incomplete
                                     {
                                         return emptyParam;
@@ -172,17 +174,25 @@ public class OmegaStructureHandler {
                     int meta = world.getBlockMetadata(x - range + i, y - range + j, z - range + k);
 
                     if (block instanceof IEnchantmentGlyph) {
-                        tally += ((IEnchantmentGlyph) block)
-                                .getAdditionalStabilityForFaceCount(
-                                        world, x - range + i, y - range + j, z - range + k, meta, indTally);
+                        tally += ((IEnchantmentGlyph) block).getAdditionalStabilityForFaceCount(
+                                world,
+                                x - range + i,
+                                y - range + j,
+                                z - range + k,
+                                meta,
+                                indTally);
                         enchantability += ((IEnchantmentGlyph) block)
                                 .getEnchantability(world, x - range + i, y - range + j, z - range + k, meta);
                         enchantmentLevel += ((IEnchantmentGlyph) block)
                                 .getEnchantmentLevel(world, x - range + i, y - range + j, z - range + k, meta);
                     } else if (block instanceof IStabilityGlyph) {
-                        tally += ((IStabilityGlyph) block)
-                                .getAdditionalStabilityForFaceCount(
-                                        world, x - range + i, y - range + j, z - range + k, meta, indTally);
+                        tally += ((IStabilityGlyph) block).getAdditionalStabilityForFaceCount(
+                                world,
+                                x - range + i,
+                                y - range + j,
+                                z - range + k,
+                                meta,
+                                indTally);
                     } else {
                         tally += indTally;
                     }

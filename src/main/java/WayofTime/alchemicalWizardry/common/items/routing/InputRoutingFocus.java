@@ -1,10 +1,12 @@
 package WayofTime.alchemicalWizardry.common.items.routing;
 
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.client.renderer.texture.IIconRegister;
 
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
+
 public class InputRoutingFocus extends RoutingFocus {
+
     public InputRoutingFocus() {
         super();
     }

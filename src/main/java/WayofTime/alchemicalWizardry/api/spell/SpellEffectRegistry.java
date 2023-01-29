@@ -7,6 +7,7 @@ import java.util.Map;
 import java.util.Map.Entry;
 
 public class SpellEffectRegistry {
+
     public static Map<Class<? extends SpellParadigm>, List<ComplexSpellEffect>> effectRegistry = new HashMap();
     public static Map<String, ComplexSpellType> typeRegistry = new HashMap();
     public static Map<String, ComplexSpellModifier> modifierRegistry = new HashMap();
@@ -46,20 +47,15 @@ public class SpellEffectRegistry {
      * @param paraClass
      * @param type
      * @param mod
-     * @return				A copy of the spell effect
+     * @return A copy of the spell effect
      */
-    public static ComplexSpellEffect getSpellEffect(
-            Class<? extends SpellParadigm> paraClass, ComplexSpellType type, ComplexSpellModifier mod) {
+    public static ComplexSpellEffect getSpellEffect(Class<? extends SpellParadigm> paraClass, ComplexSpellType type,
+            ComplexSpellModifier mod) {
         return SpellEffectRegistry.getSpellEffect(paraClass, type, mod, 0, 0, 0);
     }
 
-    public static ComplexSpellEffect getSpellEffect(
-            Class<? extends SpellParadigm> paraClass,
-            ComplexSpellType type,
-            ComplexSpellModifier mod,
-            int power,
-            int potency,
-            int cost) {
+    public static ComplexSpellEffect getSpellEffect(Class<? extends SpellParadigm> paraClass, ComplexSpellType type,
+            ComplexSpellModifier mod, int power, int potency, int cost) {
         if (paraClass == null || type == null || mod == null) {
             return null;
         }

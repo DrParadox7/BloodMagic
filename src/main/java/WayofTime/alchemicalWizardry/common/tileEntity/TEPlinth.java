@@ -1,13 +1,8 @@
 package WayofTime.alchemicalWizardry.common.tileEntity;
 
-import WayofTime.alchemicalWizardry.api.summoningRegistry.SummoningRegistry;
-import WayofTime.alchemicalWizardry.api.summoningRegistry.SummoningRegistryComponent;
-import WayofTime.alchemicalWizardry.common.IDemon;
-import WayofTime.alchemicalWizardry.common.NewPacketHandler;
-import WayofTime.alchemicalWizardry.common.PlinthComponent;
-import WayofTime.alchemicalWizardry.common.items.EnergyBattery;
 import java.util.ArrayList;
 import java.util.List;
+
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemBlock;
@@ -19,7 +14,15 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraftforge.common.util.Constants;
 import net.minecraftforge.oredict.OreDictionary;
 
+import WayofTime.alchemicalWizardry.api.summoningRegistry.SummoningRegistry;
+import WayofTime.alchemicalWizardry.api.summoningRegistry.SummoningRegistryComponent;
+import WayofTime.alchemicalWizardry.common.IDemon;
+import WayofTime.alchemicalWizardry.common.NewPacketHandler;
+import WayofTime.alchemicalWizardry.common.PlinthComponent;
+import WayofTime.alchemicalWizardry.common.items.EnergyBattery;
+
 public class TEPlinth extends TEInventory {
+
     public static final int sizeInv = 1;
 
     private boolean isActive;
@@ -175,21 +178,21 @@ public class TEPlinth extends TEInventory {
                         composeItemsForRingAndParadigm(1, false),
                         composeItemsForRingAndParadigm(2, false),
                         composeItemsForRingAndParadigm(3, false))) {
-                    SummoningRegistryComponent src = SummoningRegistry.getRegistryComponent(
-                            bloodOrbLevel,
-                            composeItemsForRingAndParadigm(1, false),
-                            composeItemsForRingAndParadigm(2, false),
-                            composeItemsForRingAndParadigm(3, false));
-                    isActive = true;
-                    paradigm = false;
-                    progress = 0;
-                    ring1Inv = src.getRingRecipeForRing(1);
-                    ring2Inv = src.getRingRecipeForRing(2);
-                    ring3Inv = src.getRingRecipeForRing(3);
-                } else {
-                    isActive = false;
-                    progress = 0;
-                }
+                            SummoningRegistryComponent src = SummoningRegistry.getRegistryComponent(
+                                    bloodOrbLevel,
+                                    composeItemsForRingAndParadigm(1, false),
+                                    composeItemsForRingAndParadigm(2, false),
+                                    composeItemsForRingAndParadigm(3, false));
+                            isActive = true;
+                            paradigm = false;
+                            progress = 0;
+                            ring1Inv = src.getRingRecipeForRing(1);
+                            ring2Inv = src.getRingRecipeForRing(2);
+                            ring3Inv = src.getRingRecipeForRing(3);
+                        } else {
+                            isActive = false;
+                            progress = 0;
+                        }
             }
         } else {
             if (getStackInSlot(0) != null && getStackInSlot(0).getItem() instanceof EnergyBattery) {
@@ -228,8 +231,8 @@ public class TEPlinth extends TEInventory {
 
                 if (progress >= progressInterval * 18) {
                     int bloodOrbLevel = ((EnergyBattery) getStackInSlot(0).getItem()).getOrbLevel();
-                    EntityLivingBase entity =
-                            SummoningRegistry.getEntity(worldObj, bloodOrbLevel, ring1Inv, ring2Inv, ring3Inv);
+                    EntityLivingBase entity = SummoningRegistry
+                            .getEntity(worldObj, bloodOrbLevel, ring1Inv, ring2Inv, ring3Inv);
 
                     if (entity != null) {
                         entity.setPosition(xCoord + 0.5, yCoord + 1, zCoord + 0.5);
@@ -259,8 +262,8 @@ public class TEPlinth extends TEInventory {
 
             for (PlinthComponent pc : pedestalPositions) {
                 if (i < 6 && pc.getRing() == ring) {
-                    TileEntity tileEntity =
-                            worldObj.getTileEntity(xCoord + pc.xOffset, yCoord + pc.yOffset, zCoord + pc.zOffset);
+                    TileEntity tileEntity = worldObj
+                            .getTileEntity(xCoord + pc.xOffset, yCoord + pc.yOffset, zCoord + pc.zOffset);
 
                     if (tileEntity instanceof TEPedestal) {
                         ((TEPedestal) tileEntity).setInventorySlotContents(0, null);
@@ -274,8 +277,8 @@ public class TEPlinth extends TEInventory {
 
             for (PlinthComponent pc : pedestalPositions) {
                 if (i < 6 && pc.getRing() == ring) {
-                    TileEntity tileEntity =
-                            worldObj.getTileEntity(xCoord + pc.zOffset, yCoord + pc.yOffset, zCoord + pc.xOffset);
+                    TileEntity tileEntity = worldObj
+                            .getTileEntity(xCoord + pc.zOffset, yCoord + pc.yOffset, zCoord + pc.xOffset);
 
                     if (tileEntity instanceof TEPedestal) {
                         ((TEPedestal) tileEntity).setInventorySlotContents(0, null);
@@ -297,8 +300,8 @@ public class TEPlinth extends TEInventory {
 
             for (PlinthComponent pc : pedestalPositions) {
                 if (i < 6 && pc.getRing() == ring) {
-                    TileEntity tileEntity =
-                            worldObj.getTileEntity(xCoord + pc.xOffset, yCoord + pc.yOffset, zCoord + pc.zOffset);
+                    TileEntity tileEntity = worldObj
+                            .getTileEntity(xCoord + pc.xOffset, yCoord + pc.yOffset, zCoord + pc.zOffset);
 
                     if (tileEntity instanceof TEPedestal) {
                         ItemStack possibleItem = ((TEPedestal) tileEntity).getStackInSlot(0);
@@ -329,7 +332,9 @@ public class TEPlinth extends TEInventory {
                                 }
                                 ((TEPedestal) tileEntity).onItemDeletion();
                                 worldObj.markBlockForUpdate(
-                                        xCoord + pc.xOffset, yCoord + pc.yOffset, zCoord + pc.zOffset);
+                                        xCoord + pc.xOffset,
+                                        yCoord + pc.yOffset,
+                                        zCoord + pc.zOffset);
                                 return true;
                             }
                         }
@@ -343,8 +348,8 @@ public class TEPlinth extends TEInventory {
 
             for (PlinthComponent pc : pedestalPositions) {
                 if (i < 6 && pc.getRing() == ring) {
-                    TileEntity tileEntity =
-                            worldObj.getTileEntity(xCoord + pc.zOffset, yCoord + pc.yOffset, zCoord + pc.xOffset);
+                    TileEntity tileEntity = worldObj
+                            .getTileEntity(xCoord + pc.zOffset, yCoord + pc.yOffset, zCoord + pc.xOffset);
 
                     if (tileEntity instanceof TEPedestal) {
                         ItemStack possibleItem = ((TEPedestal) tileEntity).getStackInSlot(0);
@@ -371,7 +376,9 @@ public class TEPlinth extends TEInventory {
                                 ((TEPedestal) tileEntity).decrStackSize(0, 1);
                                 ((TEPedestal) tileEntity).onItemDeletion();
                                 worldObj.markBlockForUpdate(
-                                        xCoord + pc.zOffset, yCoord + pc.yOffset, zCoord + pc.zOffset);
+                                        xCoord + pc.zOffset,
+                                        yCoord + pc.yOffset,
+                                        zCoord + pc.zOffset);
                                 return true;
                             }
                         }
@@ -393,8 +400,8 @@ public class TEPlinth extends TEInventory {
 
             for (PlinthComponent pc : pedestalPositions) {
                 if (i < 6 && pc.getRing() == ring) {
-                    TileEntity tileEntity =
-                            worldObj.getTileEntity(xCoord + pc.xOffset, yCoord + pc.yOffset, zCoord + pc.zOffset);
+                    TileEntity tileEntity = worldObj
+                            .getTileEntity(xCoord + pc.xOffset, yCoord + pc.yOffset, zCoord + pc.zOffset);
 
                     if (tileEntity instanceof TEPedestal) {
                         composed[i] = ((TEPedestal) tileEntity).getStackInSlot(0);
@@ -407,8 +414,8 @@ public class TEPlinth extends TEInventory {
 
             for (PlinthComponent pc : pedestalPositions) {
                 if (i < 6 && pc.getRing() == ring) {
-                    TileEntity tileEntity =
-                            worldObj.getTileEntity(xCoord + pc.zOffset, yCoord + pc.yOffset, zCoord + pc.xOffset);
+                    TileEntity tileEntity = worldObj
+                            .getTileEntity(xCoord + pc.zOffset, yCoord + pc.yOffset, zCoord + pc.xOffset);
 
                     if (tileEntity instanceof TEPedestal) {
                         composed[i] = ((TEPedestal) tileEntity).getStackInSlot(0);
@@ -442,8 +449,10 @@ public class TEPlinth extends TEInventory {
         if (intData.length == 3) {
             for (int i = 0; i < 1; i++) {
                 if (intData[i * 3 + 2] != 0) {
-                    ItemStack is =
-                            new ItemStack(Item.getItemById(intData[i * 3]), intData[i * 3 + 2], intData[i * 3 + 1]);
+                    ItemStack is = new ItemStack(
+                            Item.getItemById(intData[i * 3]),
+                            intData[i * 3 + 2],
+                            intData[i * 3 + 1]);
                     inv[i] = is;
                 } else {
                     inv[i] = null;

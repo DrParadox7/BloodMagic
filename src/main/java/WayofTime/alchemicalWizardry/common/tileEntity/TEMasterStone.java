@@ -1,22 +1,9 @@
 package WayofTime.alchemicalWizardry.common.tileEntity;
 
-import WayofTime.alchemicalWizardry.api.Int3;
-import WayofTime.alchemicalWizardry.api.alchemy.energy.Reagent;
-import WayofTime.alchemicalWizardry.api.alchemy.energy.ReagentContainer;
-import WayofTime.alchemicalWizardry.api.alchemy.energy.ReagentContainerInfo;
-import WayofTime.alchemicalWizardry.api.alchemy.energy.ReagentRegistry;
-import WayofTime.alchemicalWizardry.api.alchemy.energy.ReagentStack;
-import WayofTime.alchemicalWizardry.api.event.RitualActivatedEvent;
-import WayofTime.alchemicalWizardry.api.rituals.IMasterRitualStone;
-import WayofTime.alchemicalWizardry.api.rituals.LocalRitualStorage;
-import WayofTime.alchemicalWizardry.api.rituals.RitualBreakMethod;
-import WayofTime.alchemicalWizardry.api.rituals.Rituals;
-import WayofTime.alchemicalWizardry.api.soulNetwork.SoulNetworkHandler;
-import WayofTime.alchemicalWizardry.common.spell.complex.effect.SpellHelper;
-import cpw.mods.fml.common.eventhandler.Event;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;
+
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
@@ -32,7 +19,23 @@ import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.util.Constants;
 import net.minecraftforge.common.util.ForgeDirection;
 
+import WayofTime.alchemicalWizardry.api.Int3;
+import WayofTime.alchemicalWizardry.api.alchemy.energy.Reagent;
+import WayofTime.alchemicalWizardry.api.alchemy.energy.ReagentContainer;
+import WayofTime.alchemicalWizardry.api.alchemy.energy.ReagentContainerInfo;
+import WayofTime.alchemicalWizardry.api.alchemy.energy.ReagentRegistry;
+import WayofTime.alchemicalWizardry.api.alchemy.energy.ReagentStack;
+import WayofTime.alchemicalWizardry.api.event.RitualActivatedEvent;
+import WayofTime.alchemicalWizardry.api.rituals.IMasterRitualStone;
+import WayofTime.alchemicalWizardry.api.rituals.LocalRitualStorage;
+import WayofTime.alchemicalWizardry.api.rituals.RitualBreakMethod;
+import WayofTime.alchemicalWizardry.api.rituals.Rituals;
+import WayofTime.alchemicalWizardry.api.soulNetwork.SoulNetworkHandler;
+import WayofTime.alchemicalWizardry.common.spell.complex.effect.SpellHelper;
+import cpw.mods.fml.common.eventhandler.Event;
+
 public class TEMasterStone extends TileEntity implements IMasterRitualStone {
+
     private String currentRitualString;
     private boolean isActive;
     private String owner;
@@ -51,9 +54,8 @@ public class TEMasterStone extends TileEntity implements IMasterRitualStone {
     protected Map<Reagent, Integer> attunedTankMap;
 
     public TEMasterStone() {
-        tanks = new ReagentContainer[] {
-            new ReagentContainer(1000), new ReagentContainer(1000), new ReagentContainer(1000)
-        };
+        tanks = new ReagentContainer[] { new ReagentContainer(1000), new ReagentContainer(1000),
+                new ReagentContainer(1000) };
         this.attunedTankMap = new HashMap();
 
         isActive = false;
@@ -192,8 +194,8 @@ public class TEMasterStone extends TileEntity implements IMasterRitualStone {
         }
     }
 
-    public void activateRitual(
-            World world, int crystalLevel, ItemStack activationCrystal, EntityPlayer player, String crystalOwner) {
+    public void activateRitual(World world, int crystalLevel, ItemStack activationCrystal, EntityPlayer player,
+            String crystalOwner) {
         if (world.isRemote) {
             return;
         }
@@ -206,8 +208,13 @@ public class TEMasterStone extends TileEntity implements IMasterRitualStone {
         }
 
         // TODO
-        RitualActivatedEvent event =
-                new RitualActivatedEvent(this, crystalOwner, testRitual, player, activationCrystal, crystalLevel);
+        RitualActivatedEvent event = new RitualActivatedEvent(
+                this,
+                crystalOwner,
+                testRitual,
+                player,
+                activationCrystal,
+                crystalLevel);
         if (MinecraftForge.EVENT_BUS.post(event) || event.getResult() == Event.Result.DENY) {
             player.addChatMessage(new ChatComponentTranslation("message.masterstone.somethingstoppedyou"));
 
@@ -240,8 +247,8 @@ public class TEMasterStone extends TileEntity implements IMasterRitualStone {
 
                 return;
             } else {
-                int drain =
-                        SoulNetworkHandler.syphonFromNetwork(eventOwnerKey, Rituals.getCostForActivation(testRitual));
+                int drain = SoulNetworkHandler
+                        .syphonFromNetwork(eventOwnerKey, Rituals.getCostForActivation(testRitual));
 
                 if (drain > 0) {
                     player.addChatMessage(new ChatComponentTranslation("message.masterstone.energyflows"));
@@ -313,10 +320,19 @@ public class TEMasterStone extends TileEntity implements IMasterRitualStone {
         }
 
         if (worldTime % 100 == 0) {
-            boolean testRunes = Rituals.checkDirectionOfRitualValid(
-                    worldObj, xCoord, yCoord, zCoord, currentRitualString, direction);
+            boolean testRunes = Rituals
+                    .checkDirectionOfRitualValid(worldObj, xCoord, yCoord, zCoord, currentRitualString, direction);
             SpellHelper.sendIndexedParticleToAllAround(
-                    worldObj, xCoord, yCoord, zCoord, 20, worldObj.provider.dimensionId, 1, xCoord, yCoord, zCoord);
+                    worldObj,
+                    xCoord,
+                    yCoord,
+                    zCoord,
+                    20,
+                    worldObj.provider.dimensionId,
+                    1,
+                    xCoord,
+                    yCoord,
+                    zCoord);
 
             if (!testRunes) {
                 Rituals.onRitualBroken(this, currentRitualString, RitualBreakMethod.BREAK_STONE);
@@ -454,8 +470,8 @@ public class TEMasterStone extends TileEntity implements IMasterRitualStone {
                 ReagentStack remainingStack = resource.copy();
                 remainingStack.amount = maxFill - totalFill;
 
-                boolean doesReagentMatch =
-                        tanks[i].getReagent() != null && tanks[i].getReagent().isReagentEqual(remainingStack);
+                boolean doesReagentMatch = tanks[i].getReagent() != null
+                        && tanks[i].getReagent().isReagentEqual(remainingStack);
 
                 if (doesReagentMatch) {
                     totalFill += tanks[i].fill(remainingStack, doFill);

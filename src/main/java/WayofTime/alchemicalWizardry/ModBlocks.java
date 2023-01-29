@@ -1,5 +1,7 @@
 package WayofTime.alchemicalWizardry;
 
+import net.minecraft.block.Block;
+
 import WayofTime.alchemicalWizardry.common.block.ArmourForge;
 import WayofTime.alchemicalWizardry.common.block.BlockAlchemicCalcinator;
 import WayofTime.alchemicalWizardry.common.block.BlockAltar;
@@ -49,15 +51,12 @@ import WayofTime.alchemicalWizardry.common.items.ItemSpellModifierBlock;
 import WayofTime.alchemicalWizardry.common.items.ItemSpellParadigmBlock;
 import WayofTime.alchemicalWizardry.common.items.ItemStabilityGlyphBlock;
 import cpw.mods.fml.common.registry.GameRegistry;
-import net.minecraft.block.Block;
 
 /**
- * Created with IntelliJ IDEA.
- * User: Pokefenn
- * Date: 17/01/14
- * Time: 19:48
+ * Created with IntelliJ IDEA. User: Pokefenn Date: 17/01/14 Time: 19:48
  */
 public class ModBlocks {
+
     public static Block bloodStoneBrick;
     public static Block largeBloodStoneBrick;
     public static BlockAltar blockAltar;
@@ -197,7 +196,9 @@ public class ModBlocks {
         GameRegistry.registerBlock(ModBlocks.blockCrystal, ItemCrystalBlock.class, "blockCrystal");
         GameRegistry.registerBlock(ModBlocks.blockMimic, "blockMimic");
         GameRegistry.registerBlock(
-                ModBlocks.blockEnchantmentGlyph, ItemEnchantmentGlyphBlock.class, "blockEnchantmentGlyph");
+                ModBlocks.blockEnchantmentGlyph,
+                ItemEnchantmentGlyphBlock.class,
+                "blockEnchantmentGlyph");
         GameRegistry.registerBlock(ModBlocks.blockStabilityGlyph, ItemStabilityGlyphBlock.class, "blockStabilityGlyph");
 
         GameRegistry.registerBlock(ModBlocks.blockCrucible, "blockCrucible");

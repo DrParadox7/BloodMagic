@@ -5,6 +5,7 @@ import net.minecraft.client.model.ModelRenderer;
 import net.minecraft.entity.Entity;
 
 public class ModelCrystalBelljar extends ModelBase {
+
     // fields
     ModelRenderer handle1;
     ModelRenderer handle2;

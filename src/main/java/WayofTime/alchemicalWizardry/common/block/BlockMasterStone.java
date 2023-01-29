@@ -1,10 +1,5 @@
 package WayofTime.alchemicalWizardry.common.block;
 
-import WayofTime.alchemicalWizardry.AlchemicalWizardry;
-import WayofTime.alchemicalWizardry.common.items.ActivationCrystal;
-import WayofTime.alchemicalWizardry.common.tileEntity.TEMasterStone;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.block.BlockContainer;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.renderer.texture.IIconRegister;
@@ -15,7 +10,14 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.Explosion;
 import net.minecraft.world.World;
 
+import WayofTime.alchemicalWizardry.AlchemicalWizardry;
+import WayofTime.alchemicalWizardry.common.items.ActivationCrystal;
+import WayofTime.alchemicalWizardry.common.tileEntity.TEMasterStone;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
+
 public class BlockMasterStone extends BlockContainer {
+
     public BlockMasterStone() {
         super(Material.iron);
         setHardness(2.0F);
@@ -50,8 +52,8 @@ public class BlockMasterStone extends BlockContainer {
     }
 
     @Override
-    public boolean onBlockActivated(
-            World world, int x, int y, int z, EntityPlayer player, int idk, float what, float these, float are) {
+    public boolean onBlockActivated(World world, int x, int y, int z, EntityPlayer player, int idk, float what,
+            float these, float are) {
         TEMasterStone tileEntity = (TEMasterStone) world.getTileEntity(x, y, z);
 
         if (tileEntity == null || player.isSneaking()) {
@@ -71,9 +73,13 @@ public class BlockMasterStone extends BlockContainer {
         }
 
         ActivationCrystal acItem = (ActivationCrystal) item;
-        //        tileEntity.setOwner(acItem.getOwnerName(playerItem));
+        // tileEntity.setOwner(acItem.getOwnerName(playerItem));
         tileEntity.activateRitual(
-                world, acItem.getCrystalLevel(playerItem), playerItem, player, acItem.getOwnerName(playerItem));
+                world,
+                acItem.getCrystalLevel(playerItem),
+                playerItem,
+                player,
+                acItem.getOwnerName(playerItem));
         world.markBlockForUpdate(x, y, z);
         return true;
     }

@@ -1,15 +1,18 @@
 package WayofTime.alchemicalWizardry.common.demonVillage;
 
-import WayofTime.alchemicalWizardry.ModBlocks;
-import WayofTime.alchemicalWizardry.api.Int3;
-import WayofTime.alchemicalWizardry.common.demonVillage.tileEntity.TEDemonPortal;
 import java.util.ArrayList;
 import java.util.List;
+
 import net.minecraft.block.Block;
 import net.minecraft.world.World;
 import net.minecraftforge.common.util.ForgeDirection;
 
+import WayofTime.alchemicalWizardry.ModBlocks;
+import WayofTime.alchemicalWizardry.api.Int3;
+import WayofTime.alchemicalWizardry.common.demonVillage.tileEntity.TEDemonPortal;
+
 public class BuildingSchematic {
+
     public String name;
     public int doorX;
     public int doorZ;
@@ -45,14 +48,8 @@ public class BuildingSchematic {
         blockList.add(set);
     }
 
-    public void buildAll(
-            TEDemonPortal teDemonPortal,
-            World world,
-            int xCoord,
-            int yCoord,
-            int zCoord,
-            ForgeDirection dir,
-            boolean populateInventories) {
+    public void buildAll(TEDemonPortal teDemonPortal, World world, int xCoord, int yCoord, int zCoord,
+            ForgeDirection dir, boolean populateInventories) {
         for (BlockSet set : blockList) {
             set.buildAll(teDemonPortal, world, xCoord, yCoord, zCoord, dir, populateInventories, this.buildingTier);
         }
@@ -117,7 +114,7 @@ public class BuildingSchematic {
     }
 
     public void destroyAllInField(World world, int xCoord, int yCoord, int zCoord, ForgeDirection dir) {
-        //        GridSpaceHolder grid = this.createGSH(); //GridSpaceHolder is not aware of the buildings - need to use
+        // GridSpaceHolder grid = this.createGSH(); //GridSpaceHolder is not aware of the buildings - need to use
         // the schematic
 
         List<Int3> positionList = getGriddedPositions(dir);

@@ -1,5 +1,13 @@
 package WayofTime.alchemicalWizardry.common.rituals;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import net.minecraft.block.Block;
+import net.minecraft.block.IGrowable;
+import net.minecraft.world.World;
+import net.minecraftforge.common.IPlantable;
+
 import WayofTime.alchemicalWizardry.AlchemicalWizardry;
 import WayofTime.alchemicalWizardry.api.alchemy.energy.ReagentRegistry;
 import WayofTime.alchemicalWizardry.api.rituals.IMasterRitualStone;
@@ -7,14 +15,9 @@ import WayofTime.alchemicalWizardry.api.rituals.RitualComponent;
 import WayofTime.alchemicalWizardry.api.rituals.RitualEffect;
 import WayofTime.alchemicalWizardry.api.soulNetwork.SoulNetworkHandler;
 import WayofTime.alchemicalWizardry.common.spell.complex.effect.SpellHelper;
-import java.util.ArrayList;
-import java.util.List;
-import net.minecraft.block.Block;
-import net.minecraft.block.IGrowable;
-import net.minecraft.world.World;
-import net.minecraftforge.common.IPlantable;
 
 public class RitualEffectGrowth extends RitualEffect {
+
     private static final int aquasalusDrain = 10;
     private static final int terraeDrain = 20;
     private static final int orbisTerraeDrain = 20;
@@ -34,8 +37,8 @@ public class RitualEffectGrowth extends RitualEffect {
             SoulNetworkHandler.causeNauseaToPlayer(owner);
         } else {
             boolean hasTerrae = this.canDrainReagent(ritualStone, ReagentRegistry.terraeReagent, terraeDrain, false);
-            boolean hasOrbisTerrae =
-                    this.canDrainReagent(ritualStone, ReagentRegistry.orbisTerraeReagent, orbisTerraeDrain, false);
+            boolean hasOrbisTerrae = this
+                    .canDrainReagent(ritualStone, ReagentRegistry.orbisTerraeReagent, orbisTerraeDrain, false);
             boolean hasVirtus = this.canDrainReagent(ritualStone, ReagentRegistry.virtusReagent, virtusDrain, false);
 
             int speed = this.getSpeedForReagents(hasTerrae, hasOrbisTerrae);
@@ -50,10 +53,16 @@ public class RitualEffectGrowth extends RitualEffect {
                         for (int k = -hydrationRange; k <= hydrationRange; k++) {
 
                             if (this.canDrainReagent(
-                                    ritualStone, ReagentRegistry.aquasalusReagent, aquasalusDrain, false)) {
+                                    ritualStone,
+                                    ReagentRegistry.aquasalusReagent,
+                                    aquasalusDrain,
+                                    false)) {
                                 if (SpellHelper.hydrateSoil(world, x + i, y + k, z + j)) {
                                     this.canDrainReagent(
-                                            ritualStone, ReagentRegistry.aquasalusReagent, aquasalusDrain, true);
+                                            ritualStone,
+                                            ReagentRegistry.aquasalusReagent,
+                                            aquasalusDrain,
+                                            true);
                                 }
                             }
                         }
@@ -74,7 +83,16 @@ public class RitualEffectGrowth extends RitualEffect {
                         if (block instanceof IPlantable || block instanceof IGrowable) {
                             {
                                 SpellHelper.sendIndexedParticleToAllAround(
-                                        world, x, y, z, 20, world.provider.dimensionId, 3, x, y, z);
+                                        world,
+                                        x,
+                                        y,
+                                        z,
+                                        20,
+                                        world.provider.dimensionId,
+                                        3,
+                                        x,
+                                        y,
+                                        z);
                                 block.updateTick(world, x + i, y + k, z + j, world.rand);
                                 flag++;
                             }

@@ -2,11 +2,13 @@ package WayofTime.alchemicalWizardry.api.spell;
 
 import java.util.LinkedList;
 import java.util.List;
+
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
 
 public abstract class SpellParadigm {
+
     protected List<SpellEffect> bufferedEffectList = new LinkedList();
 
     public void addBufferedEffect(SpellEffect effect) {

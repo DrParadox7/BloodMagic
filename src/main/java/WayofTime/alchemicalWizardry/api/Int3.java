@@ -3,6 +3,7 @@ package WayofTime.alchemicalWizardry.api;
 import net.minecraft.nbt.NBTTagCompound;
 
 public class Int3 {
+
     public int xCoord;
     public int yCoord;
     public int zCoord;
@@ -28,8 +29,7 @@ public class Int3 {
     @Override
     public boolean equals(Object o) {
         return o instanceof Int3
-                ? ((Int3) o).xCoord == this.xCoord
-                        && ((Int3) o).yCoord == this.yCoord
+                ? ((Int3) o).xCoord == this.xCoord && ((Int3) o).yCoord == this.yCoord
                         && ((Int3) o).zCoord == this.zCoord
                 : false;
     }

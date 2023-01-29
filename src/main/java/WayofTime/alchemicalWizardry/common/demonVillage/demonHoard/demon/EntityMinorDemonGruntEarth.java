@@ -1,7 +1,5 @@
 package WayofTime.alchemicalWizardry.common.demonVillage.demonHoard.demon;
 
-import WayofTime.alchemicalWizardry.AlchemicalWizardry;
-import WayofTime.alchemicalWizardry.common.entity.projectile.ExplosionProjectile;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.potion.Potion;
@@ -9,7 +7,11 @@ import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.DamageSource;
 import net.minecraft.world.World;
 
+import WayofTime.alchemicalWizardry.AlchemicalWizardry;
+import WayofTime.alchemicalWizardry.common.entity.projectile.ExplosionProjectile;
+
 public class EntityMinorDemonGruntEarth extends EntityMinorDemonGrunt {
+
     public EntityMinorDemonGruntEarth(World par1World) {
         super(par1World);
         this.setDemonID(AlchemicalWizardry.entityMinorDemonGruntEarthID);
@@ -34,8 +36,15 @@ public class EntityMinorDemonGruntEarth extends EntityMinorDemonGrunt {
         if (par1EntityLivingBase instanceof IHoardDemon && ((IHoardDemon) par1EntityLivingBase).isSamePortal(this)) {
             return;
         }
-        ExplosionProjectile hol =
-                new ExplosionProjectile(worldObj, this, par1EntityLivingBase, 1.8f, 0f, 15, 600, false);
+        ExplosionProjectile hol = new ExplosionProjectile(
+                worldObj,
+                this,
+                par1EntityLivingBase,
+                1.8f,
+                0f,
+                15,
+                600,
+                false);
         this.worldObj.spawnEntityInWorld(hol);
     }
 }

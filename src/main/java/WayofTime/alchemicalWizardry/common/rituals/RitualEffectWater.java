@@ -1,15 +1,8 @@
 package WayofTime.alchemicalWizardry.common.rituals;
 
-import WayofTime.alchemicalWizardry.AlchemicalWizardry;
-import WayofTime.alchemicalWizardry.api.alchemy.energy.ReagentRegistry;
-import WayofTime.alchemicalWizardry.api.rituals.IMasterRitualStone;
-import WayofTime.alchemicalWizardry.api.rituals.RitualComponent;
-import WayofTime.alchemicalWizardry.api.rituals.RitualEffect;
-import WayofTime.alchemicalWizardry.api.soulNetwork.SoulNetworkHandler;
-import WayofTime.alchemicalWizardry.common.block.BlockSpectralContainer;
-import WayofTime.alchemicalWizardry.common.spell.complex.effect.SpellHelper;
 import java.util.ArrayList;
 import java.util.List;
+
 import net.minecraft.block.Block;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
@@ -23,7 +16,17 @@ import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.IFluidHandler;
 
+import WayofTime.alchemicalWizardry.AlchemicalWizardry;
+import WayofTime.alchemicalWizardry.api.alchemy.energy.ReagentRegistry;
+import WayofTime.alchemicalWizardry.api.rituals.IMasterRitualStone;
+import WayofTime.alchemicalWizardry.api.rituals.RitualComponent;
+import WayofTime.alchemicalWizardry.api.rituals.RitualEffect;
+import WayofTime.alchemicalWizardry.api.soulNetwork.SoulNetworkHandler;
+import WayofTime.alchemicalWizardry.common.block.BlockSpectralContainer;
+import WayofTime.alchemicalWizardry.common.spell.complex.effect.SpellHelper;
+
 public class RitualEffectWater extends RitualEffect {
+
     public static final int aquasalusDrain = 5;
     public static final int offensaDrain = 20;
     public static final int sanctusDrain = 5;
@@ -39,10 +42,10 @@ public class RitualEffectWater extends RitualEffect {
         int y = ritualStone.getYCoord();
         int z = ritualStone.getZCoord();
 
-        boolean hasCrystallos =
-                this.canDrainReagent(ritualStone, ReagentRegistry.crystallosReagent, crystallosDrain, false);
-        boolean hasAquasalus =
-                this.canDrainReagent(ritualStone, ReagentRegistry.aquasalusReagent, aquasalusDrain, false);
+        boolean hasCrystallos = this
+                .canDrainReagent(ritualStone, ReagentRegistry.crystallosReagent, crystallosDrain, false);
+        boolean hasAquasalus = this
+                .canDrainReagent(ritualStone, ReagentRegistry.aquasalusReagent, aquasalusDrain, false);
         boolean hasOffensa = this.canDrainReagent(ritualStone, ReagentRegistry.offensaReagent, offensaDrain, false);
 
         if (hasAquasalus) {
@@ -61,8 +64,8 @@ public class RitualEffectWater extends RitualEffect {
         }
 
         if (hasOffensa) {
-            boolean hasReductus =
-                    this.canDrainReagent(ritualStone, ReagentRegistry.reductusReagent, reductusDrain, false);
+            boolean hasReductus = this
+                    .canDrainReagent(ritualStone, ReagentRegistry.reductusReagent, reductusDrain, false);
             boolean drainReductus = world.getWorldTime() % 100 == 0;
 
             int range = 10;
@@ -75,9 +78,8 @@ public class RitualEffectWater extends RitualEffect {
                         continue;
                     }
 
-                    if (hasReductus
-                            && this.canDrainReagent(
-                                    ritualStone, ReagentRegistry.reductusReagent, reductusDrain, false)) {
+                    if (hasReductus && this
+                            .canDrainReagent(ritualStone, ReagentRegistry.reductusReagent, reductusDrain, false)) {
                         if (livingEntity instanceof EntityPlayer) {
                             if (drainReductus) {
                                 this.canDrainReagent(ritualStone, ReagentRegistry.reductusReagent, reductusDrain, true);
@@ -88,8 +90,8 @@ public class RitualEffectWater extends RitualEffect {
                     }
 
                     if (!livingEntity.isPotionActive(AlchemicalWizardry.customPotionDrowning)) {
-                        livingEntity.addPotionEffect(
-                                new PotionEffect(AlchemicalWizardry.customPotionDrowning.id, 100, 0));
+                        livingEntity
+                                .addPotionEffect(new PotionEffect(AlchemicalWizardry.customPotionDrowning.id, 100, 0));
                         this.canDrainReagent(ritualStone, ReagentRegistry.offensaReagent, offensaDrain, true);
                     }
                 }
@@ -103,8 +105,8 @@ public class RitualEffectWater extends RitualEffect {
                 SoulNetworkHandler.causeNauseaToPlayer(owner);
             } else {
                 for (int i = 0; i < 10; i++) {
-                    SpellHelper.sendIndexedParticleToAllAround(
-                            world, x, y, z, 20, world.provider.dimensionId, 3, x, y, z);
+                    SpellHelper
+                            .sendIndexedParticleToAllAround(world, x, y, z, 20, world.provider.dimensionId, 3, x, y, z);
                 }
 
                 world.setBlock(x, y + 1, z, Blocks.water, 0, 3);
@@ -134,9 +136,11 @@ public class RitualEffectWater extends RitualEffect {
             for (int i = -range; i <= range; i++) {
                 for (int j = -range; j <= range; j++) {
                     for (int k = -range; k <= range; k++) {
-                        hasCrystallos = hasCrystallos
-                                && this.canDrainReagent(
-                                        ritualStone, ReagentRegistry.crystallosReagent, crystallosDrain, false);
+                        hasCrystallos = hasCrystallos && this.canDrainReagent(
+                                ritualStone,
+                                ReagentRegistry.crystallosReagent,
+                                crystallosDrain,
+                                false);
 
                         if (hasCrystallos) {
                             boolean success = false;
@@ -152,7 +156,10 @@ public class RitualEffectWater extends RitualEffect {
 
                             if (success) {
                                 this.canDrainReagent(
-                                        ritualStone, ReagentRegistry.crystallosReagent, crystallosDrain, true);
+                                        ritualStone,
+                                        ReagentRegistry.crystallosReagent,
+                                        crystallosDrain,
+                                        true);
                             }
                         }
                     }

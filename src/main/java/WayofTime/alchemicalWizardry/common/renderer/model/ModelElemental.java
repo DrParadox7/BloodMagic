@@ -6,6 +6,7 @@ import net.minecraft.entity.Entity;
 import net.minecraft.world.World;
 
 public class ModelElemental extends ModelBase {
+
     // fields
     ModelRenderer body;
     ModelRenderer Shape2;

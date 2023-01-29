@@ -1,15 +1,18 @@
 package WayofTime.alchemicalWizardry.common.spell.simple;
 
-import WayofTime.alchemicalWizardry.common.entity.projectile.LightningBoltProjectile;
-import WayofTime.alchemicalWizardry.common.items.EnergyItems;
-import WayofTime.alchemicalWizardry.common.spell.complex.effect.SpellHelper;
 import java.util.Random;
+
 import net.minecraft.entity.effect.EntityLightningBolt;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
 
+import WayofTime.alchemicalWizardry.common.entity.projectile.LightningBoltProjectile;
+import WayofTime.alchemicalWizardry.common.items.EnergyItems;
+import WayofTime.alchemicalWizardry.common.spell.complex.effect.SpellHelper;
+
 public class SpellLightningBolt extends HomSpell {
+
     Random itemRand = new Random();
 
     public SpellLightningBolt() {
@@ -18,15 +21,15 @@ public class SpellLightningBolt extends HomSpell {
     }
 
     @Override
-    public ItemStack onOffensiveRangedRightClick(
-            ItemStack par1ItemStack, World par2World, EntityPlayer par3EntityPlayer) {
+    public ItemStack onOffensiveRangedRightClick(ItemStack par1ItemStack, World par2World,
+            EntityPlayer par3EntityPlayer) {
         if (EnergyItems.checkAndSetItemOwner(par1ItemStack, par3EntityPlayer) || par3EntityPlayer.isSneaking()) {
             return par1ItemStack;
         }
 
         if (!par3EntityPlayer.capabilities.isCreativeMode) {
-            EnergyItems.syphonAndDamageWhileInContainer(
-                    par1ItemStack, par3EntityPlayer, this.getOffensiveRangedEnergy());
+            EnergyItems
+                    .syphonAndDamageWhileInContainer(par1ItemStack, par3EntityPlayer, this.getOffensiveRangedEnergy());
         }
 
         par2World.playSoundAtEntity(par3EntityPlayer, "random.fizz", 0.5F, 0.4F / (itemRand.nextFloat() * 0.4F + 0.8F));
@@ -39,16 +42,16 @@ public class SpellLightningBolt extends HomSpell {
     }
 
     @Override
-    public ItemStack onOffensiveMeleeRightClick(
-            ItemStack par1ItemStack, World par2World, EntityPlayer par3EntityPlayer) {
+    public ItemStack onOffensiveMeleeRightClick(ItemStack par1ItemStack, World par2World,
+            EntityPlayer par3EntityPlayer) {
         // TODO Make it work better...?
         if (EnergyItems.checkAndSetItemOwner(par1ItemStack, par3EntityPlayer) || par3EntityPlayer.isSneaking()) {
             return par1ItemStack;
         }
 
         if (!par3EntityPlayer.capabilities.isCreativeMode) {
-            EnergyItems.syphonAndDamageWhileInContainer(
-                    par1ItemStack, par3EntityPlayer, this.getOffensiveMeleeEnergy());
+            EnergyItems
+                    .syphonAndDamageWhileInContainer(par1ItemStack, par3EntityPlayer, this.getOffensiveMeleeEnergy());
         }
 
         double xCoord = par3EntityPlayer.posX;
@@ -98,11 +101,12 @@ public class SpellLightningBolt extends HomSpell {
         double zCoord = par3EntityPlayer.posZ;
 
         for (int i = 0; i < 5; i++) {
-            par2World.addWeatherEffect(new EntityLightningBolt(
-                    par2World,
-                    xCoord + itemRand.nextInt(64) - 32,
-                    yCoord + itemRand.nextInt(8) - 8,
-                    zCoord + itemRand.nextInt(64) - 32));
+            par2World.addWeatherEffect(
+                    new EntityLightningBolt(
+                            par2World,
+                            xCoord + itemRand.nextInt(64) - 32,
+                            yCoord + itemRand.nextInt(8) - 8,
+                            zCoord + itemRand.nextInt(64) - 32));
         }
 
         for (int i = 0; i < 8; i++) {
@@ -126,8 +130,8 @@ public class SpellLightningBolt extends HomSpell {
     }
 
     @Override
-    public ItemStack onEnvironmentalRightClick(
-            ItemStack par1ItemStack, World par2World, EntityPlayer par3EntityPlayer) {
+    public ItemStack onEnvironmentalRightClick(ItemStack par1ItemStack, World par2World,
+            EntityPlayer par3EntityPlayer) {
         if (!EnergyItems.checkAndSetItemOwner(par1ItemStack, par3EntityPlayer) || par3EntityPlayer.isSneaking()) {
             return par1ItemStack;
         }

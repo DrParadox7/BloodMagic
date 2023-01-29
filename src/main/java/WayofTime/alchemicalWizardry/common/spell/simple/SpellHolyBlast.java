@@ -1,11 +1,9 @@
 package WayofTime.alchemicalWizardry.common.spell.simple;
 
-import WayofTime.alchemicalWizardry.common.entity.projectile.HolyProjectile;
-import WayofTime.alchemicalWizardry.common.items.EnergyItems;
-import WayofTime.alchemicalWizardry.common.spell.complex.effect.SpellHelper;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Random;
+
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
@@ -13,7 +11,12 @@ import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.util.DamageSource;
 import net.minecraft.world.World;
 
+import WayofTime.alchemicalWizardry.common.entity.projectile.HolyProjectile;
+import WayofTime.alchemicalWizardry.common.items.EnergyItems;
+import WayofTime.alchemicalWizardry.common.spell.complex.effect.SpellHelper;
+
 public class SpellHolyBlast extends HomSpell {
+
     Random itemRand = new Random();
 
     public SpellHolyBlast() {
@@ -22,15 +25,15 @@ public class SpellHolyBlast extends HomSpell {
     }
 
     @Override
-    public ItemStack onOffensiveRangedRightClick(
-            ItemStack par1ItemStack, World par2World, EntityPlayer par3EntityPlayer) {
+    public ItemStack onOffensiveRangedRightClick(ItemStack par1ItemStack, World par2World,
+            EntityPlayer par3EntityPlayer) {
         if (!EnergyItems.checkAndSetItemOwner(par1ItemStack, par3EntityPlayer) || par3EntityPlayer.isSneaking()) {
             return par1ItemStack;
         }
 
         if (!par3EntityPlayer.capabilities.isCreativeMode) {
-            EnergyItems.syphonAndDamageWhileInContainer(
-                    par1ItemStack, par3EntityPlayer, this.getOffensiveRangedEnergy());
+            EnergyItems
+                    .syphonAndDamageWhileInContainer(par1ItemStack, par3EntityPlayer, this.getOffensiveRangedEnergy());
         }
 
         par2World.playSoundAtEntity(par3EntityPlayer, "random.fizz", 0.5F, 0.4F / (itemRand.nextFloat() * 0.4F + 0.8F));
@@ -43,15 +46,15 @@ public class SpellHolyBlast extends HomSpell {
     }
 
     @Override
-    public ItemStack onOffensiveMeleeRightClick(
-            ItemStack par1ItemStack, World par2World, EntityPlayer par3EntityPlayer) {
+    public ItemStack onOffensiveMeleeRightClick(ItemStack par1ItemStack, World par2World,
+            EntityPlayer par3EntityPlayer) {
         if (!EnergyItems.checkAndSetItemOwner(par1ItemStack, par3EntityPlayer) || par3EntityPlayer.isSneaking()) {
             return par1ItemStack;
         }
 
         if (!par3EntityPlayer.capabilities.isCreativeMode) {
-            EnergyItems.syphonAndDamageWhileInContainer(
-                    par1ItemStack, par3EntityPlayer, this.getOffensiveMeleeEnergy());
+            EnergyItems
+                    .syphonAndDamageWhileInContainer(par1ItemStack, par3EntityPlayer, this.getOffensiveMeleeEnergy());
         }
 
         int distance = 2;
@@ -62,13 +65,12 @@ public class SpellHolyBlast extends HomSpell {
         double zCoord = par3EntityPlayer.posZ + Math.cos(yaw) * Math.cos(pitch) * distance;
         float d0 = 0.5f;
         AxisAlignedBB axisalignedbb = AxisAlignedBB.getBoundingBox(
-                        par3EntityPlayer.posX - 0.5 + Math.sin(yaw) * Math.cos(pitch) * (-distance),
-                        par3EntityPlayer.posY + par3EntityPlayer.getEyeHeight() + Math.sin(-pitch) * distance,
-                        par3EntityPlayer.posZ - 0.5 + Math.cos(yaw) * Math.cos(pitch) * distance,
-                        par3EntityPlayer.posX + Math.sin(yaw) * Math.cos(pitch) * (-distance) + 0.5,
-                        par3EntityPlayer.posY + par3EntityPlayer.getEyeHeight() + Math.sin(-pitch) * distance + 1,
-                        par3EntityPlayer.posZ + Math.cos(yaw) * Math.cos(pitch) * distance + 0.5)
-                .expand(d0, d0, d0);
+                par3EntityPlayer.posX - 0.5 + Math.sin(yaw) * Math.cos(pitch) * (-distance),
+                par3EntityPlayer.posY + par3EntityPlayer.getEyeHeight() + Math.sin(-pitch) * distance,
+                par3EntityPlayer.posZ - 0.5 + Math.cos(yaw) * Math.cos(pitch) * distance,
+                par3EntityPlayer.posX + Math.sin(yaw) * Math.cos(pitch) * (-distance) + 0.5,
+                par3EntityPlayer.posY + par3EntityPlayer.getEyeHeight() + Math.sin(-pitch) * distance + 1,
+                par3EntityPlayer.posZ + Math.cos(yaw) * Math.cos(pitch) * distance + 0.5).expand(d0, d0, d0);
         List list = par3EntityPlayer.worldObj.getEntitiesWithinAABB(EntityLivingBase.class, axisalignedbb);
         Iterator iterator = list.iterator();
 
@@ -123,16 +125,17 @@ public class SpellHolyBlast extends HomSpell {
 
         if (!par2World.isRemote) {
             for (int i = 0; i < 360; i += 18) {
-                par2World.spawnEntityInWorld(new HolyProjectile(
-                        par2World,
-                        par3EntityPlayer,
-                        8,
-                        3,
-                        par3EntityPlayer.posX,
-                        par3EntityPlayer.posY + (par3EntityPlayer.height / 2),
-                        par3EntityPlayer.posZ,
-                        i,
-                        0));
+                par2World.spawnEntityInWorld(
+                        new HolyProjectile(
+                                par2World,
+                                par3EntityPlayer,
+                                8,
+                                3,
+                                par3EntityPlayer.posX,
+                                par3EntityPlayer.posY + (par3EntityPlayer.height / 2),
+                                par3EntityPlayer.posZ,
+                                i,
+                                0));
             }
         }
 
@@ -140,8 +143,8 @@ public class SpellHolyBlast extends HomSpell {
     }
 
     @Override
-    public ItemStack onEnvironmentalRightClick(
-            ItemStack par1ItemStack, World par2World, EntityPlayer par3EntityPlayer) {
+    public ItemStack onEnvironmentalRightClick(ItemStack par1ItemStack, World par2World,
+            EntityPlayer par3EntityPlayer) {
         if (!EnergyItems.checkAndSetItemOwner(par1ItemStack, par3EntityPlayer) || par3EntityPlayer.isSneaking()) {
             return par1ItemStack;
         }
@@ -152,13 +155,12 @@ public class SpellHolyBlast extends HomSpell {
 
         int d0 = 3;
         AxisAlignedBB axisalignedbb = AxisAlignedBB.getBoundingBox(
-                        par3EntityPlayer.posX,
-                        par3EntityPlayer.posY,
-                        par3EntityPlayer.posZ,
-                        (par3EntityPlayer.posX + 1),
-                        (par3EntityPlayer.posY + 2),
-                        (par3EntityPlayer.posZ + 1))
-                .expand(d0, d0, d0);
+                par3EntityPlayer.posX,
+                par3EntityPlayer.posY,
+                par3EntityPlayer.posZ,
+                (par3EntityPlayer.posX + 1),
+                (par3EntityPlayer.posY + 2),
+                (par3EntityPlayer.posZ + 1)).expand(d0, d0, d0);
         List list = par3EntityPlayer.worldObj.getEntitiesWithinAABB(EntityLivingBase.class, axisalignedbb);
         Iterator iterator = list.iterator();
 

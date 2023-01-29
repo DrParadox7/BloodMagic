@@ -2,9 +2,11 @@ package WayofTime.alchemicalWizardry.api.bindingRegistry;
 
 import java.util.LinkedList;
 import java.util.List;
+
 import net.minecraft.item.ItemStack;
 
 public class BindingRegistry {
+
     public static List<BindingRecipe> bindingRecipes = new LinkedList();
 
     public static void registerRecipe(ItemStack output, ItemStack input) {

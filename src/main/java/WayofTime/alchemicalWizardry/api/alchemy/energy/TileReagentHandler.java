@@ -5,6 +5,7 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraftforge.common.util.ForgeDirection;
 
 public class TileReagentHandler extends TileEntity implements IReagentHandler {
+
     protected ReagentContainer tank = new ReagentContainer(4000);
 
     @Override
@@ -50,6 +51,6 @@ public class TileReagentHandler extends TileEntity implements IReagentHandler {
 
     @Override
     public ReagentContainerInfo[] getContainerInfo(ForgeDirection from) {
-        return new ReagentContainerInfo[] {tank.getInfo()};
+        return new ReagentContainerInfo[] { tank.getInfo() };
     }
 }

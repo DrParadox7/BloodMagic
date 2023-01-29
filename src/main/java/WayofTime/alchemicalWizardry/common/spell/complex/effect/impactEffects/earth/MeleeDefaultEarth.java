@@ -1,12 +1,14 @@
 package WayofTime.alchemicalWizardry.common.spell.complex.effect.impactEffects.earth;
 
-import WayofTime.alchemicalWizardry.api.spell.MeleeSpellCenteredWorldEffect;
 import net.minecraft.block.Block;
 import net.minecraft.entity.item.EntityFallingBlock;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.world.World;
 
+import WayofTime.alchemicalWizardry.api.spell.MeleeSpellCenteredWorldEffect;
+
 public class MeleeDefaultEarth extends MeleeSpellCenteredWorldEffect {
+
     public MeleeDefaultEarth(int power, int potency, int cost) {
         super(power, potency, cost);
         this.setRange(3 * power + 2);
@@ -29,7 +31,12 @@ public class MeleeDefaultEarth extends MeleeSpellCenteredWorldEffect {
                         int meta = world.getBlockMetadata(posX + i, posY + j, posZ + k);
 
                         EntityFallingBlock entity = new EntityFallingBlock(
-                                world, posX + i + 0.5f, posY + j + 0.5f, posZ + k + 0.5f, block, meta);
+                                world,
+                                posX + i + 0.5f,
+                                posY + j + 0.5f,
+                                posZ + k + 0.5f,
+                                block,
+                                meta);
                         world.spawnEntityInWorld(entity);
                     }
                 }

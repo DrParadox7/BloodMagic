@@ -1,9 +1,11 @@
 package WayofTime.alchemicalWizardry.common.tileEntity;
 
-import WayofTime.alchemicalWizardry.api.spell.SpellParadigm;
 import net.minecraft.nbt.NBTTagCompound;
 
+import WayofTime.alchemicalWizardry.api.spell.SpellParadigm;
+
 public class TEConduit extends TESpellBlock {
+
     @Override
     public void readFromNBT(NBTTagCompound par1NBTTagCompound) {
         super.readFromNBT(par1NBTTagCompound);

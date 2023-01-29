@@ -1,12 +1,14 @@
 package WayofTime.alchemicalWizardry.common.harvest;
 
-import WayofTime.alchemicalWizardry.api.harvest.IHarvestHandler;
-import cpw.mods.fml.common.registry.GameRegistry;
 import net.minecraft.block.Block;
 import net.minecraft.item.Item;
 import net.minecraft.world.World;
 
+import WayofTime.alchemicalWizardry.api.harvest.IHarvestHandler;
+import cpw.mods.fml.common.registry.GameRegistry;
+
 public class GenericPamSeedlessFruitHarvestHandler implements IHarvestHandler {
+
     public Block harvestBlock;
     public int harvestMeta;
     public int resetMeta;

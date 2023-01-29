@@ -1,17 +1,21 @@
 package WayofTime.alchemicalWizardry.common.items.potion;
 
-import WayofTime.alchemicalWizardry.AlchemicalWizardry;
-import WayofTime.alchemicalWizardry.api.alchemy.AlchemyRecipeRegistry;
-import WayofTime.alchemicalWizardry.common.ICatalyst;
 import java.util.List;
+
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumChatFormatting;
 import net.minecraft.util.StatCollector;
+
 import org.lwjgl.input.Keyboard;
 
+import WayofTime.alchemicalWizardry.AlchemicalWizardry;
+import WayofTime.alchemicalWizardry.api.alchemy.AlchemyRecipeRegistry;
+import WayofTime.alchemicalWizardry.common.ICatalyst;
+
 public class PowerCatalyst extends Item implements ICatalyst {
+
     private int catalystStrength;
 
     public PowerCatalyst(int catalystStrength) {
@@ -47,9 +51,15 @@ public class PowerCatalyst extends Item implements ICatalyst {
                 }
             }
         } else {
-            par3List.add("-" + StatCollector.translateToLocal("tooltip.alchemy.press") + " " + EnumChatFormatting.BLUE
-                    + StatCollector.translateToLocal("tooltip.alchemy.shift") + EnumChatFormatting.GRAY + " "
-                    + StatCollector.translateToLocal("tooltip.alchemy.forrecipe") + "-");
+            par3List.add(
+                    "-" + StatCollector.translateToLocal("tooltip.alchemy.press")
+                            + " "
+                            + EnumChatFormatting.BLUE
+                            + StatCollector.translateToLocal("tooltip.alchemy.shift")
+                            + EnumChatFormatting.GRAY
+                            + " "
+                            + StatCollector.translateToLocal("tooltip.alchemy.forrecipe")
+                            + "-");
         }
     }
 }

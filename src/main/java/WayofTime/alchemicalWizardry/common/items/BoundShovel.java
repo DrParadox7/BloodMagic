@@ -1,15 +1,8 @@
 package WayofTime.alchemicalWizardry.common.items;
 
-import WayofTime.alchemicalWizardry.AlchemicalWizardry;
-import WayofTime.alchemicalWizardry.api.items.interfaces.IBindable;
-import WayofTime.alchemicalWizardry.common.ItemType;
-import WayofTime.alchemicalWizardry.common.spell.complex.effect.SpellHelper;
-import com.google.common.collect.HashMultiset;
-import com.google.common.collect.Multimap;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
 import java.util.ArrayList;
 import java.util.List;
+
 import net.minecraft.block.Block;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.enchantment.EnchantmentHelper;
@@ -27,7 +20,19 @@ import net.minecraft.util.Vec3;
 import net.minecraft.world.World;
 import net.minecraftforge.common.ForgeHooks;
 
+import WayofTime.alchemicalWizardry.AlchemicalWizardry;
+import WayofTime.alchemicalWizardry.api.items.interfaces.IBindable;
+import WayofTime.alchemicalWizardry.common.ItemType;
+import WayofTime.alchemicalWizardry.common.spell.complex.effect.SpellHelper;
+
+import com.google.common.collect.HashMultiset;
+import com.google.common.collect.Multimap;
+
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
+
 public class BoundShovel extends ItemSpade implements IBindable {
+
     public float efficiencyOnProperMaterial = 12.0F;
     public float damageVsEntity;
 
@@ -69,8 +74,9 @@ public class BoundShovel extends ItemSpade implements IBindable {
             }
 
             if (!par1ItemStack.getTagCompound().getString("ownerName").equals("")) {
-                par3List.add(StatCollector.translateToLocal("tooltip.owner.currentowner") + " "
-                        + par1ItemStack.getTagCompound().getString("ownerName"));
+                par3List.add(
+                        StatCollector.translateToLocal("tooltip.owner.currentowner") + " "
+                                + par1ItemStack.getTagCompound().getString("ownerName"));
             }
         }
     }
@@ -145,13 +151,12 @@ public class BoundShovel extends ItemSpade implements IBindable {
                         float str = func_150893_a(par1ItemStack, block);
 
                         if (str > 1.1f && par2World.canMineBlock(par3EntityPlayer, posX + i, posY + j, posZ + k)) {
-                            if (silkTouch
-                                    && block.canSilkHarvest(
-                                            par2World, par3EntityPlayer, posX + i, posY + j, posZ + k, meta)) {
+                            if (silkTouch && block
+                                    .canSilkHarvest(par2World, par3EntityPlayer, posX + i, posY + j, posZ + k, meta)) {
                                 dropMultiset.add(new ItemType(block, meta));
                             } else {
-                                ArrayList<ItemStack> itemDropList =
-                                        block.getDrops(par2World, posX + i, posY + j, posZ + k, meta, fortuneLvl);
+                                ArrayList<ItemStack> itemDropList = block
+                                        .getDrops(par2World, posX + i, posY + j, posZ + k, meta, fortuneLvl);
 
                                 if (itemDropList != null) {
                                     for (ItemStack stack : itemDropList)
@@ -231,18 +236,12 @@ public class BoundShovel extends ItemSpade implements IBindable {
      * Current implementations of this method in child classes do not use the entry argument beside ev. They just raise
      * the damage on the stack.
      */
-    public boolean hitEntity(
-            ItemStack par1ItemStack, EntityLivingBase par2EntityLivingBase, EntityLivingBase par3EntityLivingBase) {
+    public boolean hitEntity(ItemStack par1ItemStack, EntityLivingBase par2EntityLivingBase,
+            EntityLivingBase par3EntityLivingBase) {
         return getActivated(par1ItemStack);
     }
 
-    public boolean onBlockDestroyed(
-            ItemStack par1ItemStack,
-            World par2World,
-            int par3,
-            int par4,
-            int par5,
-            int par6,
+    public boolean onBlockDestroyed(ItemStack par1ItemStack, World par2World, int par3, int par4, int par5, int par6,
             EntityLivingBase par7EntityLivingBase) {
         return true;
     }

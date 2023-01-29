@@ -1,13 +1,7 @@
 package WayofTime.alchemicalWizardry.common.items;
 
-import WayofTime.alchemicalWizardry.AlchemicalWizardry;
-import WayofTime.alchemicalWizardry.ModItems;
-import WayofTime.alchemicalWizardry.api.items.ShapelessBloodOrbRecipe;
-import WayofTime.alchemicalWizardry.api.sacrifice.IIncense;
-import cpw.mods.fml.common.registry.GameRegistry;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
 import java.util.List;
+
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
@@ -20,8 +14,17 @@ import net.minecraft.util.MathHelper;
 import net.minecraft.util.StatCollector;
 import net.minecraftforge.oredict.OreDictionary;
 
+import WayofTime.alchemicalWizardry.AlchemicalWizardry;
+import WayofTime.alchemicalWizardry.ModItems;
+import WayofTime.alchemicalWizardry.api.items.ShapelessBloodOrbRecipe;
+import WayofTime.alchemicalWizardry.api.sacrifice.IIncense;
+import cpw.mods.fml.common.registry.GameRegistry;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
+
 public class ItemIncense extends Item implements IIncense {
-    private static final String[] ITEM_NAMES = new String[] {"Woodash", "Byrrus", "Livens", "Viridis", "Purpura"};
+
+    private static final String[] ITEM_NAMES = new String[] { "Woodash", "Byrrus", "Livens", "Viridis", "Purpura" };
 
     @SideOnly(Side.CLIENT)
     private IIcon[] icons;
@@ -144,49 +147,54 @@ public class ItemIncense extends Item implements IIncense {
         ItemStack woodashStack = new ItemStack(ModItems.itemIncense, 1, 0);
 
         GameRegistry.addRecipe(woodashStack, "WWW", "WCW", "WWW", 'W', woodStack, 'C', charcoalStack); // WOODASH
-        GameRegistry.addRecipe(new ShapelessBloodOrbRecipe(
-                new ItemStack(ModItems.itemIncense, 1, 1),
-                woodashStack,
-                "dyeRed",
-                "dyeRed",
-                new ItemStack(Items.redstone),
-                leavesStack,
-                leavesStack,
-                new ItemStack(ModItems.apprenticeBloodOrb)));
-        GameRegistry.addRecipe(new ShapelessBloodOrbRecipe(
-                new ItemStack(ModItems.itemIncense, 1, 2),
-                woodashStack,
-                "dyeBlue",
-                "dyeBlue",
-                goldNuggetStack,
-                goldNuggetStack,
-                glowstoneStack,
-                stringStack,
-                stringStack,
-                new ItemStack(ModItems.magicianBloodOrb)));
-        GameRegistry.addRecipe(new ShapelessBloodOrbRecipe(
-                new ItemStack(ModItems.itemIncense, 1, 3),
-                woodashStack,
-                "dyeGreen",
-                "dyeGreen",
-                soulSandStack,
-                gunpowderStack,
-                fermentedEyeStack,
-                new ItemStack(ModItems.masterBloodOrb)));
-        GameRegistry.addRecipe(new ShapelessBloodOrbRecipe(
-                new ItemStack(ModItems.itemIncense, 1, 4),
-                woodashStack,
-                "dyePurple",
-                "dyePurple",
-                quartzStack,
-                netherwartStack,
-                blazePowderStack,
-                fracturedBoneStack,
-                goldNuggetStack,
-                new ItemStack(ModItems.archmageBloodOrb)));
+        GameRegistry.addRecipe(
+                new ShapelessBloodOrbRecipe(
+                        new ItemStack(ModItems.itemIncense, 1, 1),
+                        woodashStack,
+                        "dyeRed",
+                        "dyeRed",
+                        new ItemStack(Items.redstone),
+                        leavesStack,
+                        leavesStack,
+                        new ItemStack(ModItems.apprenticeBloodOrb)));
+        GameRegistry.addRecipe(
+                new ShapelessBloodOrbRecipe(
+                        new ItemStack(ModItems.itemIncense, 1, 2),
+                        woodashStack,
+                        "dyeBlue",
+                        "dyeBlue",
+                        goldNuggetStack,
+                        goldNuggetStack,
+                        glowstoneStack,
+                        stringStack,
+                        stringStack,
+                        new ItemStack(ModItems.magicianBloodOrb)));
+        GameRegistry.addRecipe(
+                new ShapelessBloodOrbRecipe(
+                        new ItemStack(ModItems.itemIncense, 1, 3),
+                        woodashStack,
+                        "dyeGreen",
+                        "dyeGreen",
+                        soulSandStack,
+                        gunpowderStack,
+                        fermentedEyeStack,
+                        new ItemStack(ModItems.masterBloodOrb)));
+        GameRegistry.addRecipe(
+                new ShapelessBloodOrbRecipe(
+                        new ItemStack(ModItems.itemIncense, 1, 4),
+                        woodashStack,
+                        "dyePurple",
+                        "dyePurple",
+                        quartzStack,
+                        netherwartStack,
+                        blazePowderStack,
+                        fracturedBoneStack,
+                        goldNuggetStack,
+                        new ItemStack(ModItems.archmageBloodOrb)));
     }
 
     public enum EnumIncense {
+
         WOODASH(0, 200, 1.0f, 1000, 0.937f, 0.898f, 0.820f),
         RED(200, 600, 1.5f, 1000, 1.0f, 0, 0),
         BLUE(600, 1200, 3.0f, 1000, 0, 0, 1.0f),

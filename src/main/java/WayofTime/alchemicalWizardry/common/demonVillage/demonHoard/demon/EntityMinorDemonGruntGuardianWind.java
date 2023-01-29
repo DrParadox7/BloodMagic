@@ -1,15 +1,17 @@
 package WayofTime.alchemicalWizardry.common.demonVillage.demonHoard.demon;
 
-import WayofTime.alchemicalWizardry.AlchemicalWizardry;
-import WayofTime.alchemicalWizardry.common.entity.projectile.WindGustProjectile;
-import WayofTime.alchemicalWizardry.common.spell.complex.effect.SpellHelper;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.DamageSource;
 import net.minecraft.world.World;
 
+import WayofTime.alchemicalWizardry.AlchemicalWizardry;
+import WayofTime.alchemicalWizardry.common.entity.projectile.WindGustProjectile;
+import WayofTime.alchemicalWizardry.common.spell.complex.effect.SpellHelper;
+
 public class EntityMinorDemonGruntGuardianWind extends EntityMinorDemonGruntGuardian {
+
     public EntityMinorDemonGruntGuardianWind(World par1World) {
         super(par1World);
         this.setDemonID(AlchemicalWizardry.entityMinorDemonGruntGuardianWindID);
@@ -25,7 +27,10 @@ public class EntityMinorDemonGruntGuardianWind extends EntityMinorDemonGruntGuar
 
         if (par1Entity instanceof EntityPlayer) {
             SpellHelper.setPlayerSpeedFromServer(
-                    (EntityPlayer) par1Entity, par1Entity.motionX, par1Entity.motionY + 4, par1Entity.motionZ);
+                    (EntityPlayer) par1Entity,
+                    par1Entity.motionX,
+                    par1Entity.motionY + 4,
+                    par1Entity.motionZ);
         } else if (par1Entity instanceof EntityLivingBase) {
             ((EntityLivingBase) par1Entity).motionY += 4.0D;
         }

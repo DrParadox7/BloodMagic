@@ -2,9 +2,11 @@ package pneumaticCraft.api.recipe;
 
 import java.util.ArrayList;
 import java.util.List;
+
 import net.minecraft.item.ItemStack;
 
 public class PressureChamberRecipe {
+
     public static List<PressureChamberRecipe> chamberRecipes = new ArrayList<PressureChamberRecipe>();
     public static List<IPressureChamberRecipe> specialRecipes = new ArrayList<IPressureChamberRecipe>();
 

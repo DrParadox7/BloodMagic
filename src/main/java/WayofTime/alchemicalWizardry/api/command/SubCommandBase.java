@@ -1,6 +1,7 @@
 package WayofTime.alchemicalWizardry.api.command;
 
 import java.util.Locale;
+
 import net.minecraft.command.ICommand;
 import net.minecraft.command.ICommandSender;
 import net.minecraft.command.PlayerNotFoundException;
@@ -40,21 +41,19 @@ public abstract class SubCommandBase implements ISubCommand {
     @Override
     public void processSubCommand(ICommandSender commandSender, String[] args) {
 
-        if (args.length == 0 && !getSubCommandName().equals("help"))
-            displayErrorString(
-                    commandSender,
-                    String.format(
-                            StatCollector.translateToLocal("commands.format.error"),
-                            capitalizeFirstLetter(getSubCommandName()),
-                            getArgUsage(commandSender)));
+        if (args.length == 0 && !getSubCommandName().equals("help")) displayErrorString(
+                commandSender,
+                String.format(
+                        StatCollector.translateToLocal("commands.format.error"),
+                        capitalizeFirstLetter(getSubCommandName()),
+                        getArgUsage(commandSender)));
 
-        if (isBounded(0, 2, args.length) && args[0].equals("help"))
-            displayHelpString(
-                    commandSender,
-                    String.format(
-                            StatCollector.translateToLocal("commands.format.help"),
-                            capitalizeFirstLetter(getSubCommandName()),
-                            getHelpText()));
+        if (isBounded(0, 2, args.length) && args[0].equals("help")) displayHelpString(
+                commandSender,
+                String.format(
+                        StatCollector.translateToLocal("commands.format.help"),
+                        capitalizeFirstLetter(getSubCommandName()),
+                        getHelpText()));
     }
 
     protected EntityPlayerMP getCommandSenderAsPlayer(ICommandSender commandSender) {
@@ -67,8 +66,7 @@ public abstract class SubCommandBase implements ISubCommand {
 
         if (entityplayermp != null) return entityplayermp;
         else {
-            entityplayermp =
-                    MinecraftServer.getServer().getConfigurationManager().func_152612_a(playerName);
+            entityplayermp = MinecraftServer.getServer().getConfigurationManager().func_152612_a(playerName);
 
             if (entityplayermp == null) throw new PlayerNotFoundException();
             else return entityplayermp;
@@ -84,17 +82,20 @@ public abstract class SubCommandBase implements ISubCommand {
     }
 
     protected void displayHelpString(ICommandSender commandSender, String display, Object... info) {
-        commandSender.addChatMessage(new ChatComponentText(StatCollector.translateToLocalFormatted(display, info))
-                .setChatStyle(new ChatStyle().setColor(EnumChatFormatting.GREEN)));
+        commandSender.addChatMessage(
+                new ChatComponentText(StatCollector.translateToLocalFormatted(display, info))
+                        .setChatStyle(new ChatStyle().setColor(EnumChatFormatting.GREEN)));
     }
 
     protected void displayErrorString(ICommandSender commandSender, String display, Object... info) {
-        commandSender.addChatMessage(new ChatComponentText(StatCollector.translateToLocalFormatted(display, info))
-                .setChatStyle(new ChatStyle().setColor(EnumChatFormatting.RED)));
+        commandSender.addChatMessage(
+                new ChatComponentText(StatCollector.translateToLocalFormatted(display, info))
+                        .setChatStyle(new ChatStyle().setColor(EnumChatFormatting.RED)));
     }
 
     protected void displaySuccessString(ICommandSender commandSender, String display, Object... info) {
-        commandSender.addChatMessage(new ChatComponentText(StatCollector.translateToLocalFormatted(display, info))
-                .setChatStyle(new ChatStyle().setColor(EnumChatFormatting.BLUE)));
+        commandSender.addChatMessage(
+                new ChatComponentText(StatCollector.translateToLocalFormatted(display, info))
+                        .setChatStyle(new ChatStyle().setColor(EnumChatFormatting.BLUE)));
     }
 }

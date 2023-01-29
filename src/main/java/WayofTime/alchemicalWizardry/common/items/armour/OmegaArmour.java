@@ -1,12 +1,5 @@
 package WayofTime.alchemicalWizardry.common.items.armour;
 
-import WayofTime.alchemicalWizardry.api.alchemy.energy.Reagent;
-import WayofTime.alchemicalWizardry.api.soulNetwork.SoulNetworkHandler;
-import WayofTime.alchemicalWizardry.api.spell.APISpellHelper;
-import WayofTime.alchemicalWizardry.common.items.EnergyItems;
-import WayofTime.alchemicalWizardry.common.omega.OmegaParadigm;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -15,6 +8,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Random;
+
 import net.minecraft.client.model.ModelBiped;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentData;
@@ -29,7 +23,16 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.world.World;
 import net.minecraft.world.biome.BiomeGenBase;
 
+import WayofTime.alchemicalWizardry.api.alchemy.energy.Reagent;
+import WayofTime.alchemicalWizardry.api.soulNetwork.SoulNetworkHandler;
+import WayofTime.alchemicalWizardry.api.spell.APISpellHelper;
+import WayofTime.alchemicalWizardry.common.items.EnergyItems;
+import WayofTime.alchemicalWizardry.common.omega.OmegaParadigm;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
+
 public abstract class OmegaArmour extends BoundArmour {
+
     public OmegaParadigm paradigm;
     public Reagent reagent;
     protected boolean storeBiomeID = false;
@@ -126,8 +129,8 @@ public abstract class OmegaArmour extends BoundArmour {
         player.inventory.armorInventory[3 - this.armorType] = stack;
     }
 
-    public ItemStack getSubstituteStack(
-            ItemStack boundStack, int stability, int affinity, int enchantability, int enchantmentLevel, Random rand) {
+    public ItemStack getSubstituteStack(ItemStack boundStack, int stability, int affinity, int enchantability,
+            int enchantmentLevel, Random rand) {
         ItemStack omegaStack = new ItemStack(this);
         if (boundStack != null && boundStack.hasTagCompound()) {
             NBTTagCompound tag = (NBTTagCompound) boundStack.getTagCompound().copy();
@@ -233,7 +236,7 @@ public abstract class OmegaArmour extends BoundArmour {
         }
 
         for (int i = 0; i < 1; i++) {
-            //			omegaStack = EnchantmentHelper.addRandomEnchantment(new Random(), omegaStack, 30);
+            // omegaStack = EnchantmentHelper.addRandomEnchantment(new Random(), omegaStack, 30);
         }
         return omegaStack;
     }
@@ -323,8 +326,7 @@ public abstract class OmegaArmour extends BoundArmour {
 
                 if ((entityLiving instanceof EntityPlayer)) {
                     if (((EntityPlayer) entityLiving).getItemInUseDuration() > 0) {
-                        EnumAction enumaction =
-                                ((EntityPlayer) entityLiving).getItemInUse().getItemUseAction();
+                        EnumAction enumaction = ((EntityPlayer) entityLiving).getItemInUse().getItemUseAction();
                         if (enumaction == EnumAction.block) {
                             this.model.heldItemRight = 3;
                         } else if (enumaction == EnumAction.bow) {

@@ -3,6 +3,7 @@ package WayofTime.alchemicalWizardry.api.alchemy.energy;
 import net.minecraft.nbt.NBTTagCompound;
 
 public class ReagentContainer implements IReagentContainer {
+
     protected ReagentStack reagentStack;
     protected int capacity;
 

@@ -3,6 +3,7 @@ package WayofTime.alchemicalWizardry.common.demonVillage;
 import net.minecraft.world.World;
 
 public class DemonCrosspath {
+
     private int xCoord;
     private int yLevel;
     private int zCoord;

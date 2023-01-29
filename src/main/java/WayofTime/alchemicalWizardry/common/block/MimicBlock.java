@@ -1,9 +1,7 @@
 package WayofTime.alchemicalWizardry.common.block;
 
-import WayofTime.alchemicalWizardry.common.tileEntity.TEMimicBlock;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
 import java.util.Random;
+
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockContainer;
 import net.minecraft.block.material.Material;
@@ -20,13 +18,18 @@ import net.minecraft.util.Vec3;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 
+import WayofTime.alchemicalWizardry.common.tileEntity.TEMimicBlock;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
+
 public class MimicBlock extends BlockContainer {
+
     public MimicBlock() {
         super(Material.water);
         setHardness(2.0F);
         setResistance(5.0F);
         this.setBlockName("blockMimic");
-        //        this.setBlockBounds(0, 0, 0, 0, 0, 0);
+        // this.setBlockBounds(0, 0, 0, 0, 0, 0);
     }
 
     @Override
@@ -156,8 +159,7 @@ public class MimicBlock extends BlockContainer {
         TEMimicBlock tile = (TEMimicBlock) world.getTileEntity(x, y, z);
         Block block = tile.getBlock();
 
-        return block != null
-                ? block.getCollisionBoundingBoxFromPool(world, x, y, z)
+        return block != null ? block.getCollisionBoundingBoxFromPool(world, x, y, z)
                 : super.getCollisionBoundingBoxFromPool(world, x, y, z);
     }
 
@@ -186,19 +188,21 @@ public class MimicBlock extends BlockContainer {
         }
     }
 
-    public static void addHitEffect(
-            TEMimicBlock TE,
-            MovingObjectPosition target,
-            double x,
-            double y,
-            double z,
-            ItemStack itemStack,
-            EffectRenderer effectRenderer) {
-        EntityDiggingFX particle =
-                new EntityDiggingFX(TE.getWorldObj(), x, y, z, 0.0D, 0.0D, 0.0D, TE.getBlock(), TE.getMetaOfMimic());
-        effectRenderer.addEffect(particle.applyColourMultiplier(target.blockX, target.blockY, target.blockZ)
-                .multiplyVelocity(0.2F)
-                .multipleParticleScaleBy(0.6F));
+    public static void addHitEffect(TEMimicBlock TE, MovingObjectPosition target, double x, double y, double z,
+            ItemStack itemStack, EffectRenderer effectRenderer) {
+        EntityDiggingFX particle = new EntityDiggingFX(
+                TE.getWorldObj(),
+                x,
+                y,
+                z,
+                0.0D,
+                0.0D,
+                0.0D,
+                TE.getBlock(),
+                TE.getMetaOfMimic());
+        effectRenderer.addEffect(
+                particle.applyColourMultiplier(target.blockX, target.blockY, target.blockZ).multiplyVelocity(0.2F)
+                        .multipleParticleScaleBy(0.6F));
     }
 
     @Override

@@ -1,5 +1,14 @@
 package WayofTime.alchemicalWizardry.common.rituals;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.item.EntityItem;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.util.AxisAlignedBB;
+import net.minecraft.world.World;
+
 import WayofTime.alchemicalWizardry.AlchemicalWizardry;
 import WayofTime.alchemicalWizardry.api.alchemy.energy.ReagentRegistry;
 import WayofTime.alchemicalWizardry.api.rituals.IMasterRitualStone;
@@ -7,15 +16,9 @@ import WayofTime.alchemicalWizardry.api.rituals.RitualComponent;
 import WayofTime.alchemicalWizardry.api.rituals.RitualEffect;
 import WayofTime.alchemicalWizardry.api.soulNetwork.SoulNetworkHandler;
 import WayofTime.alchemicalWizardry.common.spell.complex.effect.SpellHelper;
-import java.util.ArrayList;
-import java.util.List;
-import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.entity.item.EntityItem;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.util.AxisAlignedBB;
-import net.minecraft.world.World;
 
 public class RitualEffectInterdiction extends RitualEffect {
+
     public static final int aetherDrain = 1;
     public static final int magicalesDrain = 1;
 
@@ -34,12 +37,12 @@ public class RitualEffectInterdiction extends RitualEffect {
         } else {
             int d0 = 5;
 
-            List<EntityLivingBase> list =
-                    SpellHelper.getLivingEntitiesInRange(world, x + 0.5, y + 0.5, z + 0.5, d0, d0);
+            List<EntityLivingBase> list = SpellHelper
+                    .getLivingEntitiesInRange(world, x + 0.5, y + 0.5, z + 0.5, d0, d0);
             boolean flag = false;
 
-            boolean hasOffensa =
-                    this.canDrainReagent(ritualStone, ReagentRegistry.magicalesReagent, magicalesDrain, false);
+            boolean hasOffensa = this
+                    .canDrainReagent(ritualStone, ReagentRegistry.magicalesReagent, magicalesDrain, false);
             boolean playerFlag = false;
 
             for (EntityLivingBase entityLiving : list) {
@@ -54,7 +57,10 @@ public class RitualEffectInterdiction extends RitualEffect {
 
                     if (hasOffensa && entityLiving instanceof EntityPlayer) {
                         SpellHelper.setPlayerSpeedFromServer(
-                                (EntityPlayer) entityLiving, 0.1 * xDif, 0.1 * yDif, 0.1 * zDif);
+                                (EntityPlayer) entityLiving,
+                                0.1 * xDif,
+                                0.1 * yDif,
+                                0.1 * zDif);
                         playerFlag = true;
                     }
                     entityLiving.fallDistance = 0;

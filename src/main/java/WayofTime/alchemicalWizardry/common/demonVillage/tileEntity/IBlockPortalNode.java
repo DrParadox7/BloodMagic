@@ -1,3 +1,4 @@
 package WayofTime.alchemicalWizardry.common.demonVillage.tileEntity;
 
-public interface IBlockPortalNode {}
+public interface IBlockPortalNode {
+}

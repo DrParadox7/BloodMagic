@@ -1,5 +1,18 @@
 package WayofTime.alchemicalWizardry.common.rituals;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
+
+import net.minecraft.entity.effect.EntityLightningBolt;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.EntityPlayerMP;
+import net.minecraft.tileentity.TileEntity;
+import net.minecraft.world.World;
+import net.minecraftforge.common.util.ForgeDirection;
+
 import WayofTime.alchemicalWizardry.AlchemicalWizardry;
 import WayofTime.alchemicalWizardry.api.Int3;
 import WayofTime.alchemicalWizardry.api.alchemy.energy.IReagentHandler;
@@ -17,19 +30,9 @@ import WayofTime.alchemicalWizardry.common.omega.OmegaRegistry;
 import WayofTime.alchemicalWizardry.common.omega.OmegaStructureHandler;
 import WayofTime.alchemicalWizardry.common.omega.OmegaStructureParameters;
 import WayofTime.alchemicalWizardry.common.spell.complex.effect.SpellHelper;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Map.Entry;
-import net.minecraft.entity.effect.EntityLightningBolt;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.entity.player.EntityPlayerMP;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.world.World;
-import net.minecraftforge.common.util.ForgeDirection;
 
 public class RitualEffectOmegaTest extends RitualEffect {
+
     public static final boolean isTesting = false;
     public static final int drainTotal = 32 * 1000;
 
@@ -47,8 +50,8 @@ public class RitualEffectOmegaTest extends RitualEffect {
             return;
         }
 
-        OmegaStructureParameters param =
-                OmegaStructureHandler.getStructureStabilityFactor(world, x, y, z, 5, new Int3(0, 1, 0));
+        OmegaStructureParameters param = OmegaStructureHandler
+                .getStructureStabilityFactor(world, x, y, z, 5, new Int3(0, 1, 0));
         int stab = param.stability;
         int enchantability = param.enchantability;
         int enchantmentLevel = param.enchantmentLevel;
@@ -57,7 +60,7 @@ public class RitualEffectOmegaTest extends RitualEffect {
             return;
         }
 
-        //        System.out.println("Stability: " + stab + ", Enchantability: " + enchantability + ", Enchantment
+        // System.out.println("Stability: " + stab + ", Enchantability: " + enchantability + ", Enchantment
         // Level: " + enchantmentLevel);
 
         double range = 0.5;
@@ -110,9 +113,8 @@ public class RitualEffectOmegaTest extends RitualEffect {
 
         for (EntityPlayer player : playerList) {
             OmegaParadigm waterParadigm = OmegaRegistry.getParadigmForReagent(reagent);
-            if (waterParadigm != null
-                    && waterParadigm.convertPlayerArmour(
-                            player, x, y, z, stab, affinity, enchantability, enchantmentLevel)) {
+            if (waterParadigm != null && waterParadigm
+                    .convertPlayerArmour(player, x, y, z, stab, affinity, enchantability, enchantmentLevel)) {
                 APISpellHelper.setPlayerCurrentReagentAmount(player, tickDuration);
                 APISpellHelper.setPlayerMaxReagentAmount(player, tickDuration);
                 APISpellHelper.setPlayerReagentType(player, reagent);
@@ -134,13 +136,17 @@ public class RitualEffectOmegaTest extends RitualEffect {
                         TileEntity tile = world.getTileEntity(x + jarLoc.xCoord, y + jarLoc.yCoord, z + jarLoc.zCoord);
                         if (tile instanceof IReagentHandler) {
                             IReagentHandler container = (IReagentHandler) tile;
-                            ReagentStack drained =
-                                    container.drain(ForgeDirection.UP, new ReagentStack(reagent, drainLeft), true);
+                            ReagentStack drained = container
+                                    .drain(ForgeDirection.UP, new ReagentStack(reagent, drainLeft), true);
                             if (drained != null) {
                                 drainLeft -= drained.amount;
                                 world.markBlockForUpdate(x + jarLoc.xCoord, y + jarLoc.yCoord, z + jarLoc.zCoord);
-                                world.addWeatherEffect(new EntityLightningBolt(
-                                        world, x + jarLoc.xCoord, y + jarLoc.yCoord, z + jarLoc.zCoord));
+                                world.addWeatherEffect(
+                                        new EntityLightningBolt(
+                                                world,
+                                                x + jarLoc.xCoord,
+                                                y + jarLoc.yCoord,
+                                                z + jarLoc.zCoord));
                             }
                         }
                     }

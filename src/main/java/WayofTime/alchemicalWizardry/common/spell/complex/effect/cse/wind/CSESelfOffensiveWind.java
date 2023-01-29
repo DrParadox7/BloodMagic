@@ -8,6 +8,7 @@ import WayofTime.alchemicalWizardry.api.spell.SpellParadigmSelf;
 import WayofTime.alchemicalWizardry.common.spell.complex.effect.impactEffects.wind.SelfOffensiveWind;
 
 public class CSESelfOffensiveWind extends ComplexSpellEffect {
+
     public CSESelfOffensiveWind() {
         super(ComplexSpellType.WIND, ComplexSpellModifier.OFFENSIVE);
     }
@@ -23,9 +24,8 @@ public class CSESelfOffensiveWind extends ComplexSpellEffect {
     @Override
     public void modifyParadigm(SpellParadigm parad) {
         if (parad instanceof SpellParadigmSelf) {
-            ((SpellParadigmSelf) parad)
-                    .addSelfSpellEffect(new SelfOffensiveWind(
-                            this.powerEnhancement, this.potencyEnhancement, this.costEnhancement));
+            ((SpellParadigmSelf) parad).addSelfSpellEffect(
+                    new SelfOffensiveWind(this.powerEnhancement, this.potencyEnhancement, this.costEnhancement));
         }
     }
 

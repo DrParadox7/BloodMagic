@@ -5,12 +5,13 @@ import net.minecraft.client.model.ModelRenderer;
 import net.minecraft.entity.Entity;
 
 public class ModelOmegaArmour extends ModelBiped {
-    //	ModelRenderer head;
-    //    ModelRenderer body;
-    //    ModelRenderer rightarm;
-    //    ModelRenderer leftarm;
-    //    ModelRenderer rightleg;
-    //    ModelRenderer leftleg;
+
+    // ModelRenderer head;
+    // ModelRenderer body;
+    // ModelRenderer rightarm;
+    // ModelRenderer leftarm;
+    // ModelRenderer rightleg;
+    // ModelRenderer leftleg;
     ModelRenderer leftFacePlate;
     ModelRenderer rightFacePlate;
     ModelRenderer facePlate1;
@@ -90,49 +91,49 @@ public class ModelOmegaArmour extends ModelBiped {
         textureWidth = 128;
         textureHeight = 128;
 
-        //	  boolean addHelmet = true;
-        //	  boolean addChestPiece = true;
-        //	  boolean addLeggings = true;
-        //	  boolean addBoots = true;
+        // boolean addHelmet = true;
+        // boolean addChestPiece = true;
+        // boolean addLeggings = true;
+        // boolean addBoots = true;
 
         /* Duplicate player model */
         {
-            //      head = new ModelRenderer(this, 0, 0);
-            //      head.addBox(-4F, -8F, -4F, 8, 8, 8);
-            //      head.setRotationPoint(0F, 0F, 0F);
-            //      head.setTextureSize(128, 128);
-            //      head.mirror = true;
-            //      setRotation(head, 0F, 0F, 0F);
-            //      body = new ModelRenderer(this, 16, 16);
-            //      body.addBox(-4F, 0F, -2F, 8, 12, 4);
-            //      body.setRotationPoint(0F, 0F, 0F);
-            //      body.setTextureSize(128, 128);
-            //      body.mirror = true;
-            //      setRotation(body, 0F, 0F, 0F);
-            //      rightarm = new ModelRenderer(this, 40, 16);
-            //      rightarm.addBox(-3F, -2F, -2F, 4, 12, 4);
-            //      rightarm.setRotationPoint(0F, 0F, 0F);
-            //      rightarm.setTextureSize(128, 128);
-            //      rightarm.mirror = true;
-            //      setRotation(rightarm, 0F, 0F, 0F);
-            //      leftarm = new ModelRenderer(this, 40, 16);
-            //      leftarm.addBox(-1F, -2F, -2F, 4, 12, 4);
-            //      leftarm.setRotationPoint(0F, 0F, 0F);
-            //      leftarm.setTextureSize(128, 128);
-            //      leftarm.mirror = true;
-            //      setRotation(leftarm, 0F, 0F, 0F);
-            //      rightleg = new ModelRenderer(this, 0, 16);
-            //      rightleg.addBox(-2F, 0F, -2F, 4, 12, 4);
-            //      rightleg.setRotationPoint(-2F, 12F, 0F);
-            //      rightleg.setTextureSize(128, 128);
-            //      rightleg.mirror = true;
-            //      setRotation(rightleg, 0F, 0F, 0F);
-            //      leftleg = new ModelRenderer(this, 0, 16);
-            //      leftleg.addBox(-2F, 0F, -2F, 4, 12, 4);
-            //      leftleg.setRotationPoint(2F, 12F, 0F);
-            //      leftleg.setTextureSize(128, 128);
-            //      leftleg.mirror = true;
-            //      setRotation(leftleg, 0F, 0F, 0F);
+            // head = new ModelRenderer(this, 0, 0);
+            // head.addBox(-4F, -8F, -4F, 8, 8, 8);
+            // head.setRotationPoint(0F, 0F, 0F);
+            // head.setTextureSize(128, 128);
+            // head.mirror = true;
+            // setRotation(head, 0F, 0F, 0F);
+            // body = new ModelRenderer(this, 16, 16);
+            // body.addBox(-4F, 0F, -2F, 8, 12, 4);
+            // body.setRotationPoint(0F, 0F, 0F);
+            // body.setTextureSize(128, 128);
+            // body.mirror = true;
+            // setRotation(body, 0F, 0F, 0F);
+            // rightarm = new ModelRenderer(this, 40, 16);
+            // rightarm.addBox(-3F, -2F, -2F, 4, 12, 4);
+            // rightarm.setRotationPoint(0F, 0F, 0F);
+            // rightarm.setTextureSize(128, 128);
+            // rightarm.mirror = true;
+            // setRotation(rightarm, 0F, 0F, 0F);
+            // leftarm = new ModelRenderer(this, 40, 16);
+            // leftarm.addBox(-1F, -2F, -2F, 4, 12, 4);
+            // leftarm.setRotationPoint(0F, 0F, 0F);
+            // leftarm.setTextureSize(128, 128);
+            // leftarm.mirror = true;
+            // setRotation(leftarm, 0F, 0F, 0F);
+            // rightleg = new ModelRenderer(this, 0, 16);
+            // rightleg.addBox(-2F, 0F, -2F, 4, 12, 4);
+            // rightleg.setRotationPoint(-2F, 12F, 0F);
+            // rightleg.setTextureSize(128, 128);
+            // rightleg.mirror = true;
+            // setRotation(rightleg, 0F, 0F, 0F);
+            // leftleg = new ModelRenderer(this, 0, 16);
+            // leftleg.addBox(-2F, 0F, -2F, 4, 12, 4);
+            // leftleg.setRotationPoint(2F, 12F, 0F);
+            // leftleg.setTextureSize(128, 128);
+            // leftleg.mirror = true;
+            // setRotation(leftleg, 0F, 0F, 0F);
         }
 
         /* Helmet */
@@ -791,7 +792,7 @@ public class ModelOmegaArmour extends ModelBiped {
     }
 
     public void render(Entity entity, float f, float f1, float f2, float f3, float f4, float f5) {
-        //    super.render(entity, f, f1, f2, f3, f4, f5);
+        // super.render(entity, f, f1, f2, f3, f4, f5);
 
         setRotationAngles(f, f1, f2, f3, f4, f5, entity);
 
@@ -802,72 +803,72 @@ public class ModelOmegaArmour extends ModelBiped {
         this.bipedLeftLeg.render(f5);
         this.bipedRightLeg.render(f5);
 
-        //    head.render(f5);
-        //    body.render(f5);
-        //    rightarm.render(f5);
-        //    leftarm.render(f5);
-        //    rightleg.render(f5);
-        //    leftleg.render(f5);
-        //    rightArmMain.render(f5);
-        //    rightKnucklePlate.render(f5);
-        //    rightKnuckleBrace.render(f5);
-        //    rightKnuckle1.render(f5);
-        //    rightKnuckle2.render(f5);
-        //    rightKnuckle3.render(f5);
-        //    rightKnuckle4.render(f5);
-        //    rightKnuckle5.render(f5);
-        //    rightKnuckle6.render(f5);
-        //    rightShoulder1.render(f5);
-        //    rightShoulder2.render(f5);
-        //    rightShoulder3.render(f5);
-        //    mainPlate.render(f5);
-        //    chestPlate1.render(f5);
-        //    chestPlate2.render(f5);
-        //    chestPlate3.render(f5);
-        //    chestPlate4.render(f5);
-        //    chestPlate5.render(f5);
-        //    chestPlate6.render(f5);
-        //    belt.render(f5);
-        //    leftArmMain.render(f5);
-        //    leftKnucklePlate.render(f5);
-        //    leftKnuckleBrace.render(f5);
-        //    leftKnuckle1.render(f5);
-        //    leftKnuckle2.render(f5);
-        //    leftKnuckle3.render(f5);
-        //    leftKnuckle4.render(f5);
-        //    leftKnuckle5.render(f5);
-        //    leftKnuckle6.render(f5);
-        //    leftShoulder1.render(f5);
-        //    leftShoulder2.render(f5);
-        //    leftShoulder3.render(f5);
-        //    leftBootBottom.render(f5);
-        //    leftBootPlate.render(f5);
-        //    leftBootBrace.render(f5);
-        //    leftBootWing1.render(f5);
-        //    leftBootWing2.render(f5);
-        //    rightBootBottom.render(f5);
-        //    rightBootPlate.render(f5);
-        //    rightBootBrace.render(f5);
-        //    rightBootWing1.render(f5);
-        //    rightBootWing2.render(f5);
+        // head.render(f5);
+        // body.render(f5);
+        // rightarm.render(f5);
+        // leftarm.render(f5);
+        // rightleg.render(f5);
+        // leftleg.render(f5);
+        // rightArmMain.render(f5);
+        // rightKnucklePlate.render(f5);
+        // rightKnuckleBrace.render(f5);
+        // rightKnuckle1.render(f5);
+        // rightKnuckle2.render(f5);
+        // rightKnuckle3.render(f5);
+        // rightKnuckle4.render(f5);
+        // rightKnuckle5.render(f5);
+        // rightKnuckle6.render(f5);
+        // rightShoulder1.render(f5);
+        // rightShoulder2.render(f5);
+        // rightShoulder3.render(f5);
+        // mainPlate.render(f5);
+        // chestPlate1.render(f5);
+        // chestPlate2.render(f5);
+        // chestPlate3.render(f5);
+        // chestPlate4.render(f5);
+        // chestPlate5.render(f5);
+        // chestPlate6.render(f5);
+        // belt.render(f5);
+        // leftArmMain.render(f5);
+        // leftKnucklePlate.render(f5);
+        // leftKnuckleBrace.render(f5);
+        // leftKnuckle1.render(f5);
+        // leftKnuckle2.render(f5);
+        // leftKnuckle3.render(f5);
+        // leftKnuckle4.render(f5);
+        // leftKnuckle5.render(f5);
+        // leftKnuckle6.render(f5);
+        // leftShoulder1.render(f5);
+        // leftShoulder2.render(f5);
+        // leftShoulder3.render(f5);
+        // leftBootBottom.render(f5);
+        // leftBootPlate.render(f5);
+        // leftBootBrace.render(f5);
+        // leftBootWing1.render(f5);
+        // leftBootWing2.render(f5);
+        // rightBootBottom.render(f5);
+        // rightBootPlate.render(f5);
+        // rightBootBrace.render(f5);
+        // rightBootWing1.render(f5);
+        // rightBootWing2.render(f5);
         //
-        //    {
-        //	    leftLegSidePlate.render(f5);
-        //	    leftLegMain.render(f5);
-        //	    leftLegPlate1.render(f5);
-        //	    leftLegPlate2.render(f5);
-        //	    leftLegPlate3.render(f5);
-        //	    leftLegPlate4.render(f5);
-        //  	}
+        // {
+        // leftLegSidePlate.render(f5);
+        // leftLegMain.render(f5);
+        // leftLegPlate1.render(f5);
+        // leftLegPlate2.render(f5);
+        // leftLegPlate3.render(f5);
+        // leftLegPlate4.render(f5);
+        // }
         //
-        //    {
-        //    	rightLegSidePlate.render(f5);
-        //        rightLegMain.render(f5);
-        //	    rightLegPlate1.render(f5);
-        //	    rightLegPlate2.render(f5);
-        //	    rightLegPlate3.render(f5);
-        //	    rightLegPlate4.render(f5);
-        //    }
+        // {
+        // rightLegSidePlate.render(f5);
+        // rightLegMain.render(f5);
+        // rightLegPlate1.render(f5);
+        // rightLegPlate2.render(f5);
+        // rightLegPlate3.render(f5);
+        // rightLegPlate4.render(f5);
+        // }
     }
 
     private void setRotation(ModelRenderer model, float x, float y, float z) {

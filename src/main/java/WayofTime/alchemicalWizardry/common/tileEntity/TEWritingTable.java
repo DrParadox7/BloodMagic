@@ -1,5 +1,13 @@
 package WayofTime.alchemicalWizardry.common.tileEntity;
 
+import net.minecraft.inventory.ISidedInventory;
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemBlock;
+import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTTagCompound;
+import net.minecraftforge.common.util.ForgeDirection;
+import net.minecraftforge.oredict.OreDictionary;
+
 import WayofTime.alchemicalWizardry.ModItems;
 import WayofTime.alchemicalWizardry.api.alchemy.AlchemicalPotionCreationHandler;
 import WayofTime.alchemicalWizardry.api.alchemy.AlchemyRecipe;
@@ -14,15 +22,9 @@ import WayofTime.alchemicalWizardry.common.alchemy.CombinedPotionRegistry;
 import WayofTime.alchemicalWizardry.common.alchemy.ICombinationalCatalyst;
 import WayofTime.alchemicalWizardry.common.items.potion.AlchemyFlask;
 import WayofTime.alchemicalWizardry.common.spell.complex.effect.SpellHelper;
-import net.minecraft.inventory.ISidedInventory;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemBlock;
-import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NBTTagCompound;
-import net.minecraftforge.common.util.ForgeDirection;
-import net.minecraftforge.oredict.OreDictionary;
 
 public class TEWritingTable extends TEInventory implements ISidedInventory {
+
     public static final int sizeInv = 7;
 
     private int progress;
@@ -83,8 +85,10 @@ public class TEWritingTable extends TEInventory implements ISidedInventory {
         if (intData.length == 3 * 7) {
             for (int i = 0; i < 7; i++) {
                 if (intData[i * 3 + 2] != 0) {
-                    ItemStack is =
-                            new ItemStack(Item.getItemById(intData[i * 3]), intData[i * 3 + 2], intData[i * 3 + 1]);
+                    ItemStack is = new ItemStack(
+                            Item.getItemById(intData[i * 3]),
+                            intData[i * 3 + 2],
+                            intData[i * 3 + 1]);
                     inv[i] = is;
                 } else {
                     inv[i] = null;
@@ -142,8 +146,7 @@ public class TEWritingTable extends TEInventory implements ISidedInventory {
 
     public int getPotionFlaskPosition() {
         for (int i = 1; i <= 5; i++) {
-            if (inv[i] != null
-                    && !(inv[i].getItem() instanceof ItemBlock)
+            if (inv[i] != null && !(inv[i].getItem() instanceof ItemBlock)
                     && inv[i].getItem() == ModItems.alchemyFlask) {
                 return i;
             }
@@ -357,11 +360,11 @@ public class TEWritingTable extends TEInventory implements ISidedInventory {
                             return;
                         }
 
-                        int potionEffectNumber =
-                                ((AlchemyFlask) flaskStack.getItem()).getNumberOfPotionEffects(flaskStack);
+                        int potionEffectNumber = ((AlchemyFlask) flaskStack.getItem())
+                                .getNumberOfPotionEffects(flaskStack);
                         int potionID = AlchemicalPotionCreationHandler.getPotionIDForStack(ingredientStack);
-                        int tickDuration =
-                                AlchemicalPotionCreationHandler.getPotionTickDurationForStack(ingredientStack);
+                        int tickDuration = AlchemicalPotionCreationHandler
+                                .getPotionTickDurationForStack(ingredientStack);
                         float successChance = ((IBindingAgent) agentStack.getItem())
                                 .getSuccessRateForPotionNumber(potionEffectNumber);
                         if (potionID == -1) {
@@ -466,8 +469,8 @@ public class TEWritingTable extends TEInventory implements ISidedInventory {
                         return;
                     }
                     int potionEffects = ((AlchemyFlask) flaskStack.getItem()).getNumberOfPotionEffects(flaskStack);
-                    int potionFillAmount =
-                            ((IFillingAgent) fillingAgent.getItem()).getFilledAmountForPotionNumber(potionEffects);
+                    int potionFillAmount = ((IFillingAgent) fillingAgent.getItem())
+                            .getFilledAmountForPotionNumber(potionEffects);
                     flaskStack.setItemDamage(Math.max(0, flaskStack.getItemDamage() - potionFillAmount));
                     this.setInventorySlotContents(6, flaskStack);
                     this.decrStackSize(this.getPotionFlaskPosition(), 1);
@@ -545,8 +548,8 @@ public class TEWritingTable extends TEInventory implements ISidedInventory {
             int acceleration = this.getSpeedIncrease();
 
             if (getStackInSlot(6) == null) {
-                if (!SoulNetworkHandler.syphonFromNetworkWhileInContainer(
-                        getStackInSlot(0), amountUsed * acceleration)) {
+                if (!SoulNetworkHandler
+                        .syphonFromNetworkWhileInContainer(getStackInSlot(0), amountUsed * acceleration)) {
                     return;
                 }
 
@@ -585,52 +588,53 @@ public class TEWritingTable extends TEInventory implements ISidedInventory {
             } else if (getStackInSlot(6).getItem() == getResultingItemStack().getItem()
                     && getResultingItemStack().stackSize
                             <= (getStackInSlot(6).getMaxStackSize() - getStackInSlot(6).stackSize)) {
-                if (worldTime % 4 == 0) {
-                    SpellHelper.sendIndexedParticleToAllAround(
-                            worldObj,
-                            xCoord,
-                            yCoord,
-                            zCoord,
-                            20,
-                            worldObj.provider.dimensionId,
-                            1,
-                            xCoord,
-                            yCoord,
-                            zCoord);
-                }
+                                if (worldTime % 4 == 0) {
+                                    SpellHelper.sendIndexedParticleToAllAround(
+                                            worldObj,
+                                            xCoord,
+                                            yCoord,
+                                            zCoord,
+                                            20,
+                                            worldObj.provider.dimensionId,
+                                            1,
+                                            xCoord,
+                                            yCoord,
+                                            zCoord);
+                                }
 
-                if (!SoulNetworkHandler.syphonFromNetworkWhileInContainer(
-                        getStackInSlot(0), amountUsed * acceleration)) {
-                    return;
-                }
+                                if (!SoulNetworkHandler.syphonFromNetworkWhileInContainer(
+                                        getStackInSlot(0),
+                                        amountUsed * acceleration)) {
+                                    return;
+                                }
 
-                progress += acceleration;
+                                progress += acceleration;
 
-                if (progress >= progressNeeded) {
-                    progress = 0;
-                    ItemStack result = getResultingItemStack().copy();
-                    result.stackSize += getStackInSlot(6).stackSize;
-                    this.setInventorySlotContents(6, result);
+                                if (progress >= progressNeeded) {
+                                    progress = 0;
+                                    ItemStack result = getResultingItemStack().copy();
+                                    result.stackSize += getStackInSlot(6).stackSize;
+                                    this.setInventorySlotContents(6, result);
 
-                    ItemStack[] composedRecipe = new ItemStack[5];
+                                    ItemStack[] composedRecipe = new ItemStack[5];
 
-                    for (int i = 0; i < 5; i++) {
-                        composedRecipe[i] = inv[i + 1];
-                    }
+                                    for (int i = 0; i < 5; i++) {
+                                        composedRecipe[i] = inv[i + 1];
+                                    }
 
-                    this.decrementSlots(this.getRecipeForItems(composedRecipe, inv[0]));
+                                    this.decrementSlots(this.getRecipeForItems(composedRecipe, inv[0]));
 
-                    if (worldObj != null) {
-                        worldObj.markBlockForUpdate(xCoord, yCoord, zCoord);
-                    }
-                }
-            }
+                                    if (worldObj != null) {
+                                        worldObj.markBlockForUpdate(xCoord, yCoord, zCoord);
+                                    }
+                                }
+                            }
         }
     }
 
     public void decrementSlots(ItemStack[] recipe) // TODO Fix this. This doesn't work.
-            {
-        boolean[] decrementedList = new boolean[] {false, false, false, false, false};
+    {
+        boolean[] decrementedList = new boolean[] { false, false, false, false, false };
 
         for (int i = 0; i < (Math.min(recipe.length, 5)); i++) {
             ItemStack decStack = recipe[i];
@@ -643,9 +647,8 @@ public class TEWritingTable extends TEInventory implements ISidedInventory {
                 ItemStack testStack = this.getStackInSlot(j + 1);
 
                 if (testStack != null
-                        && (testStack.isItemEqual(decStack)
-                                || (testStack.getItem() == decStack.getItem()
-                                        && decStack.getItemDamage() == OreDictionary.WILDCARD_VALUE))
+                        && (testStack.isItemEqual(decStack) || (testStack.getItem() == decStack.getItem()
+                                && decStack.getItemDamage() == OreDictionary.WILDCARD_VALUE))
                         && !(decrementedList[j])) {
                     if (testStack.getItem().hasContainerItem(testStack)) {
                         this.inv[j + 1] = testStack.getItem().getContainerItem(testStack);
@@ -697,9 +700,9 @@ public class TEWritingTable extends TEInventory implements ISidedInventory {
         ForgeDirection dir = ForgeDirection.getOrientation(side);
         switch (dir) {
             case DOWN:
-                return new int[] {6};
+                return new int[] { 6 };
             default:
-                return new int[] {0, 1, 2, 3, 4, 5};
+                return new int[] { 0, 1, 2, 3, 4, 5 };
         }
     }
 

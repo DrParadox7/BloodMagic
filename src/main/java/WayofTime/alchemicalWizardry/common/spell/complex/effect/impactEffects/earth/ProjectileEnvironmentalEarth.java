@@ -1,8 +1,5 @@
 package WayofTime.alchemicalWizardry.common.spell.complex.effect.impactEffects.earth;
 
-import WayofTime.alchemicalWizardry.api.spell.EntitySpellProjectile;
-import WayofTime.alchemicalWizardry.api.spell.ProjectileUpdateEffect;
-import WayofTime.alchemicalWizardry.common.spell.complex.effect.SpellHelper;
 import net.minecraft.block.Block;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.item.EntityItem;
@@ -10,7 +7,12 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.Vec3;
 import net.minecraft.world.World;
 
+import WayofTime.alchemicalWizardry.api.spell.EntitySpellProjectile;
+import WayofTime.alchemicalWizardry.api.spell.ProjectileUpdateEffect;
+import WayofTime.alchemicalWizardry.common.spell.complex.effect.SpellHelper;
+
 public class ProjectileEnvironmentalEarth extends ProjectileUpdateEffect {
+
     public ProjectileEnvironmentalEarth(int power, int potency, int cost) {
         super(power, potency, cost);
     }
@@ -42,23 +44,25 @@ public class ProjectileEnvironmentalEarth extends ProjectileUpdateEffect {
                         if (!worldObj.isAirBlock(posX + i, posY + j, posZ + k) && blocksBroken < maxBlocks) {
                             Block block = worldObj.getBlock(posX + i, posY + j, posZ + k);
                             int meta = worldObj.getBlockMetadata(posX + i, posY + j, posZ + k);
-                            if (block == null
-                                    || block.getBlockHardness(worldObj, posX + i, posY + j, posZ + k) == -1
+                            if (block == null || block.getBlockHardness(worldObj, posX + i, posY + j, posZ + k) == -1
                                     || SpellHelper.isBlockFluid(block)) {
                                 continue;
                             }
 
-                            if (((EntitySpellProjectile) projectile).getIsSilkTouch()
-                                    && block.canSilkHarvest(
-                                            worldObj,
-                                            ((EntitySpellProjectile) projectile).shootingEntity,
-                                            posX + i,
-                                            posY + j,
-                                            posZ + k,
-                                            meta)) {
+                            if (((EntitySpellProjectile) projectile).getIsSilkTouch() && block.canSilkHarvest(
+                                    worldObj,
+                                    ((EntitySpellProjectile) projectile).shootingEntity,
+                                    posX + i,
+                                    posY + j,
+                                    posZ + k,
+                                    meta)) {
                                 ItemStack stack = new ItemStack(block, 1, meta);
-                                EntityItem itemEntity =
-                                        new EntityItem(worldObj, posX + i + 0.5, posY + j + 0.5, posZ + k + 0.5, stack);
+                                EntityItem itemEntity = new EntityItem(
+                                        worldObj,
+                                        posX + i + 0.5,
+                                        posY + j + 0.5,
+                                        posZ + k + 0.5,
+                                        stack);
                                 worldObj.spawnEntityInWorld(itemEntity);
                                 worldObj.setBlockToAir(posX + i, posY + j, posZ + k);
                             } else {

@@ -1,6 +1,5 @@
 package WayofTime.alchemicalWizardry.common.tileEntity;
 
-import WayofTime.alchemicalWizardry.ModBlocks;
 import net.minecraft.block.Block;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
@@ -11,7 +10,10 @@ import net.minecraft.world.World;
 import net.minecraftforge.common.util.Constants;
 import net.minecraftforge.fluids.IFluidBlock;
 
+import WayofTime.alchemicalWizardry.ModBlocks;
+
 public class TESpectralContainer extends TileEntity {
+
     private ItemStack[] inv;
 
     private int ticksRemaining;

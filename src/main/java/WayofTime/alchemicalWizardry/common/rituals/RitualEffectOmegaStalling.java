@@ -1,5 +1,13 @@
 package WayofTime.alchemicalWizardry.common.rituals;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.tileentity.TileEntity;
+import net.minecraft.tileentity.TileEntityBeacon;
+import net.minecraft.world.World;
+
 import WayofTime.alchemicalWizardry.AlchemicalWizardry;
 import WayofTime.alchemicalWizardry.api.alchemy.energy.Reagent;
 import WayofTime.alchemicalWizardry.api.rituals.IMasterRitualStone;
@@ -10,14 +18,9 @@ import WayofTime.alchemicalWizardry.api.spell.APISpellHelper;
 import WayofTime.alchemicalWizardry.common.omega.OmegaParadigm;
 import WayofTime.alchemicalWizardry.common.omega.OmegaRegistry;
 import WayofTime.alchemicalWizardry.common.spell.complex.effect.SpellHelper;
-import java.util.ArrayList;
-import java.util.List;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.tileentity.TileEntityBeacon;
-import net.minecraft.world.World;
 
 public class RitualEffectOmegaStalling extends RitualEffect {
+
     @Override
     public void performEffect(IMasterRitualStone ritualStone) {
         String owner = ritualStone.getOwner();
@@ -39,8 +42,8 @@ public class RitualEffectOmegaStalling extends RitualEffect {
                 int horizontalRadius = 100;
                 int verticalRadius = 100;
 
-                List<EntityPlayer> playerList = SpellHelper.getPlayersInRange(
-                        world, x + 0.5, y + 0.5, z + 0.5, horizontalRadius, verticalRadius);
+                List<EntityPlayer> playerList = SpellHelper
+                        .getPlayersInRange(world, x + 0.5, y + 0.5, z + 0.5, horizontalRadius, verticalRadius);
 
                 for (EntityPlayer player : playerList) {
                     if (SoulNetworkHandler.canSyphonFromOnlyNetwork(owner, getCostPerRefresh())) {
@@ -49,8 +52,8 @@ public class RitualEffectOmegaStalling extends RitualEffect {
                         if (parad != null) {
                             float costOffset = parad.getCostPerTickOfUse(player);
                             parad.setOmegaStalling(player, 100);
-                            SoulNetworkHandler.syphonFromNetwork(
-                                    owner, (int) (getCostPerRefresh() * Math.min(costOffset, 1)));
+                            SoulNetworkHandler
+                                    .syphonFromNetwork(owner, (int) (getCostPerRefresh() * Math.min(costOffset, 1)));
                         }
                     }
                 }

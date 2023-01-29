@@ -1,12 +1,11 @@
 package WayofTime.alchemicalWizardry.api.spell;
 
-import WayofTime.alchemicalWizardry.api.items.ItemSpellMultiTool;
-import WayofTime.alchemicalWizardry.api.soulNetwork.SoulNetworkHandler;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map.Entry;
 import java.util.Set;
+
 import net.minecraft.block.Block;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
@@ -17,7 +16,11 @@ import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.world.World;
 import net.minecraftforge.common.util.ForgeDirection;
 
+import WayofTime.alchemicalWizardry.api.items.ItemSpellMultiTool;
+import WayofTime.alchemicalWizardry.api.soulNetwork.SoulNetworkHandler;
+
 public class SpellParadigmTool extends SpellParadigm {
+
     private List<ILeftClickEffect> leftClickEffectList;
     private List<IRightClickEffect> rightClickEffectList;
     private List<IToolUpdateEffect> toolUpdateEffectList;
@@ -288,16 +291,8 @@ public class SpellParadigmTool extends SpellParadigm {
         return total;
     }
 
-    public int onBreakBlock(
-            ItemStack container,
-            World world,
-            EntityPlayer player,
-            Block block,
-            int meta,
-            int x,
-            int y,
-            int z,
-            ForgeDirection sideBroken) {
+    public int onBreakBlock(ItemStack container, World world, EntityPlayer player, Block block, int meta, int x, int y,
+            int z, ForgeDirection sideBroken) {
         int total = 0;
         for (IOnBreakBlock effect : this.breakBlockEffectList) {
             total += effect.onBlockBroken(container, world, player, block, meta, x, y, z, sideBroken);
@@ -317,20 +312,20 @@ public class SpellParadigmTool extends SpellParadigm {
         return heldList;
     }
 
-    public int digSurroundingArea(
-            ItemStack container,
-            World world,
-            EntityPlayer player,
-            MovingObjectPosition blockPos,
-            String usedToolClass,
-            float blockHardness,
-            int harvestLvl,
-            ItemSpellMultiTool itemTool) {
+    public int digSurroundingArea(ItemStack container, World world, EntityPlayer player, MovingObjectPosition blockPos,
+            String usedToolClass, float blockHardness, int harvestLvl, ItemSpellMultiTool itemTool) {
         int cost = 0;
 
         for (IDigAreaEffect effect : this.digAreaEffectList) {
             cost += effect.digSurroundingArea(
-                    container, world, player, blockPos, usedToolClass, blockHardness, harvestLvl, itemTool);
+                    container,
+                    world,
+                    player,
+                    blockPos,
+                    usedToolClass,
+                    blockHardness,
+                    harvestLvl,
+                    itemTool);
         }
 
         return cost;

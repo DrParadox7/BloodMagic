@@ -1,8 +1,7 @@
 package WayofTime.alchemicalWizardry.common.items;
 
-import WayofTime.alchemicalWizardry.api.alchemy.energy.ReagentContainer;
-import WayofTime.alchemicalWizardry.api.alchemy.energy.ReagentStack;
 import java.util.List;
+
 import net.minecraft.block.Block;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemBlock;
@@ -13,7 +12,11 @@ import net.minecraft.util.StatCollector;
 import net.minecraft.world.World;
 import net.minecraftforge.common.util.Constants;
 
+import WayofTime.alchemicalWizardry.api.alchemy.energy.ReagentContainer;
+import WayofTime.alchemicalWizardry.api.alchemy.energy.ReagentStack;
+
 public class ItemBlockCrystalBelljar extends ItemBlock {
+
     public ItemBlockCrystalBelljar(Block par1) {
         super(par1);
         this.setHasSubtypes(true);
@@ -57,26 +60,21 @@ public class ItemBlockCrystalBelljar extends ItemBlock {
                     list.add("- Empty");
                 } else {
                     ReagentStack reagentStack = tanks[i].getReagent();
-                    list.add("- " + reagentStack.reagent.name + ": " + reagentStack.amount + "/"
-                            + tanks[i].getCapacity() / 1000 + "k AR");
+                    list.add(
+                            "- " + reagentStack.reagent.name
+                                    + ": "
+                                    + reagentStack.amount
+                                    + "/"
+                                    + tanks[i].getCapacity() / 1000
+                                    + "k AR");
                 }
             }
         }
     }
 
     @Override
-    public boolean placeBlockAt(
-            ItemStack stack,
-            EntityPlayer player,
-            World world,
-            int x,
-            int y,
-            int z,
-            int side,
-            float hitX,
-            float hitY,
-            float hitZ,
-            int metadata) {
+    public boolean placeBlockAt(ItemStack stack, EntityPlayer player, World world, int x, int y, int z, int side,
+            float hitX, float hitY, float hitZ, int metadata) {
         if (!world.setBlock(x, y, z, field_150939_a, metadata, 3)) {
             return false;
         }

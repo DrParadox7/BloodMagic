@@ -2,25 +2,29 @@ package WayofTime.alchemicalWizardry.client.nei;
 
 import static WayofTime.alchemicalWizardry.client.nei.NEIConfig.getBloodOrbs;
 
-import WayofTime.alchemicalWizardry.api.items.ShapedBloodOrbRecipe;
-import WayofTime.alchemicalWizardry.api.items.interfaces.IBloodOrb;
-import codechicken.nei.NEIServerUtils;
-import codechicken.nei.PositionedStack;
-import codechicken.nei.recipe.ShapedRecipeHandler;
 import java.awt.Rectangle;
 import java.util.ArrayList;
 import java.util.List;
+
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.CraftingManager;
 import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.util.StatCollector;
 
+import WayofTime.alchemicalWizardry.api.items.ShapedBloodOrbRecipe;
+import WayofTime.alchemicalWizardry.api.items.interfaces.IBloodOrb;
+import codechicken.nei.NEIServerUtils;
+import codechicken.nei.PositionedStack;
+import codechicken.nei.recipe.ShapedRecipeHandler;
+
 /**
  * NEI Blood Orb Shaped Recipe Handler by joshie *
  */
 public class NEIBloodOrbShapedHandler extends ShapedRecipeHandler {
+
     public class CachedBloodOrbRecipe extends CachedShapedRecipe {
+
         public CachedBloodOrbRecipe(int width, int height, Object[] items, ItemStack out) {
             super(width, height, items, out);
         }
@@ -33,8 +37,11 @@ public class NEIBloodOrbShapedHandler extends ShapedRecipeHandler {
 
                     Object o = items[y * width + x];
                     if (o instanceof ItemStack) {
-                        PositionedStack stack =
-                                new PositionedStack(items[y * width + x], 25 + x * 18, 6 + y * 18, false);
+                        PositionedStack stack = new PositionedStack(
+                                items[y * width + x],
+                                25 + x * 18,
+                                6 + y * 18,
+                                false);
                         stack.setMaxSize(1);
                         ingredients.add(stack);
                     } else if (o instanceof Integer) {
@@ -119,11 +126,10 @@ public class NEIBloodOrbShapedHandler extends ShapedRecipeHandler {
         }
 
         Object[] items = recipe.getInput();
-        for (Object item : items)
-            if (item instanceof List && ((List<?>) item).isEmpty()) // ore
-                // handler,
-                // no ores
-                return null;
+        for (Object item : items) if (item instanceof List && ((List<?>) item).isEmpty()) // ore
+            // handler,
+            // no ores
+            return null;
 
         return new CachedBloodOrbRecipe(width, height, items, recipe.getRecipeOutput());
     }

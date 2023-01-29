@@ -3,27 +3,31 @@ package WayofTime.alchemicalWizardry.common.tweaker;
 import static WayofTime.alchemicalWizardry.common.tweaker.MTHelper.toStack;
 import static WayofTime.alchemicalWizardry.common.tweaker.MTHelper.toStacks;
 
-import WayofTime.alchemicalWizardry.api.alchemy.AlchemyRecipe;
-import WayofTime.alchemicalWizardry.api.alchemy.AlchemyRecipeRegistry;
 import minetweaker.IUndoableAction;
 import minetweaker.MineTweakerAPI;
 import minetweaker.api.item.IItemStack;
+
 import net.minecraft.item.ItemStack;
+
 import stanhebben.zenscript.annotations.ZenClass;
 import stanhebben.zenscript.annotations.ZenMethod;
+import WayofTime.alchemicalWizardry.api.alchemy.AlchemyRecipe;
+import WayofTime.alchemicalWizardry.api.alchemy.AlchemyRecipeRegistry;
 
 /**
  * MineTweaker3 Alchemy Recipe Handler by joshie *
  */
 @ZenClass("mods.bloodmagic.Alchemy")
 public class Alchemy {
+
     @ZenMethod
     public static void addRecipe(IItemStack output, IItemStack[] input, int tier, int lp) {
-        MineTweakerAPI.apply(
-                new Add(new AlchemyRecipe(toStack(output), (int) (((double) lp) / 100), toStacks(input), tier)));
+        MineTweakerAPI
+                .apply(new Add(new AlchemyRecipe(toStack(output), (int) (((double) lp) / 100), toStacks(input), tier)));
     }
 
     private static class Add implements IUndoableAction {
+
         private final AlchemyRecipe recipe;
 
         public Add(AlchemyRecipe recipe) {
@@ -47,14 +51,12 @@ public class Alchemy {
 
         @Override
         public String describe() {
-            return "Adding Alchemy Recipe for "
-                    + ((AlchemyRecipe) recipe).getResult().getDisplayName();
+            return "Adding Alchemy Recipe for " + ((AlchemyRecipe) recipe).getResult().getDisplayName();
         }
 
         @Override
         public String describeUndo() {
-            return "Removing Alchemy Recipe for "
-                    + ((AlchemyRecipe) recipe).getResult().getDisplayName();
+            return "Removing Alchemy Recipe for " + ((AlchemyRecipe) recipe).getResult().getDisplayName();
         }
 
         @Override
@@ -69,6 +71,7 @@ public class Alchemy {
     }
 
     private static class Remove implements IUndoableAction {
+
         private final ItemStack output;
         private AlchemyRecipe recipe;
 

@@ -5,8 +5,9 @@ import net.minecraft.world.World;
 public interface IPollSensorSetting extends ISensorSetting {
 
     /**
-     * The value returned here is the interval between every check in ticks (the interval of calling getRedstoneValue()).
-     * Consider increasing the interval when your sensor method is resource intensive.
+     * The value returned here is the interval between every check in ticks (the interval of calling
+     * getRedstoneValue()). Consider increasing the interval when your sensor method is resource intensive.
+     * 
      * @return
      */
     public int getPollFrequency();
@@ -14,6 +15,7 @@ public interface IPollSensorSetting extends ISensorSetting {
     /**
      * The base method. This method should return the outputted redstone value 0-15 of this sensor. When this sensor is
      * digital, just return 0 or 15.
+     * 
      * @param world
      * @param x
      * @param y

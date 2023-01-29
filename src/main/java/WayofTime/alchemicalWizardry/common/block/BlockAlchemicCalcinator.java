@@ -1,10 +1,7 @@
 package WayofTime.alchemicalWizardry.common.block;
 
-import WayofTime.alchemicalWizardry.AlchemicalWizardry;
-import WayofTime.alchemicalWizardry.api.items.interfaces.IBloodOrb;
-import WayofTime.alchemicalWizardry.api.items.interfaces.IReagentManipulator;
-import WayofTime.alchemicalWizardry.common.tileEntity.TEAlchemicCalcinator;
 import java.util.Random;
+
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockContainer;
 import net.minecraft.block.material.Material;
@@ -16,7 +13,13 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
 
+import WayofTime.alchemicalWizardry.AlchemicalWizardry;
+import WayofTime.alchemicalWizardry.api.items.interfaces.IBloodOrb;
+import WayofTime.alchemicalWizardry.api.items.interfaces.IReagentManipulator;
+import WayofTime.alchemicalWizardry.common.tileEntity.TEAlchemicCalcinator;
+
 public class BlockAlchemicCalcinator extends BlockContainer {
+
     public BlockAlchemicCalcinator() {
         super(Material.rock);
         setHardness(2.0F);
@@ -86,8 +89,7 @@ public class BlockAlchemicCalcinator extends BlockContainer {
                         new ItemStack(item.getItem(), item.stackSize, item.getItemDamage()));
 
                 if (item.hasTagCompound()) {
-                    entityItem.getEntityItem().setTagCompound((NBTTagCompound)
-                            item.getTagCompound().copy());
+                    entityItem.getEntityItem().setTagCompound((NBTTagCompound) item.getTagCompound().copy());
                 }
 
                 float factor = 0.05F;
@@ -101,8 +103,8 @@ public class BlockAlchemicCalcinator extends BlockContainer {
     }
 
     @Override
-    public boolean onBlockActivated(
-            World world, int x, int y, int z, EntityPlayer player, int idk, float what, float these, float are) {
+    public boolean onBlockActivated(World world, int x, int y, int z, EntityPlayer player, int idk, float what,
+            float these, float are) {
         TEAlchemicCalcinator tileEntity = (TEAlchemicCalcinator) world.getTileEntity(x, y, z);
 
         if (tileEntity == null || player.isSneaking()) {

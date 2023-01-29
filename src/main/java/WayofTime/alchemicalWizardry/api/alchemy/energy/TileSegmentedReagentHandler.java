@@ -3,6 +3,7 @@ package WayofTime.alchemicalWizardry.api.alchemy.energy;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;
+
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
 import net.minecraft.tileentity.TileEntity;
@@ -10,6 +11,7 @@ import net.minecraftforge.common.util.Constants;
 import net.minecraftforge.common.util.ForgeDirection;
 
 public class TileSegmentedReagentHandler extends TileEntity implements ISegmentedReagentHandler {
+
     protected ReagentContainer[] tanks;
     protected Map<Reagent, Integer> attunedTankMap;
 
@@ -99,8 +101,7 @@ public class TileSegmentedReagentHandler extends TileEntity implements ISegmente
                 ReagentStack remainingStack = resource.copy();
                 remainingStack.amount = maxFill - totalFill;
 
-                boolean doesReagentMatch = tanks[i].getReagent() == null
-                        ? false
+                boolean doesReagentMatch = tanks[i].getReagent() == null ? false
                         : tanks[i].getReagent().isReagentEqual(remainingStack);
 
                 if (doesReagentMatch) {

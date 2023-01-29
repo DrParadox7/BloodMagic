@@ -1,5 +1,13 @@
 package WayofTime.alchemicalWizardry.common.rituals;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.potion.PotionEffect;
+import net.minecraft.util.AxisAlignedBB;
+import net.minecraft.world.World;
+
 import WayofTime.alchemicalWizardry.AlchemicalWizardry;
 import WayofTime.alchemicalWizardry.api.alchemy.energy.ReagentRegistry;
 import WayofTime.alchemicalWizardry.api.rituals.IMasterRitualStone;
@@ -7,14 +15,9 @@ import WayofTime.alchemicalWizardry.api.rituals.RitualComponent;
 import WayofTime.alchemicalWizardry.api.rituals.RitualEffect;
 import WayofTime.alchemicalWizardry.api.soulNetwork.SoulNetworkHandler;
 import WayofTime.alchemicalWizardry.common.spell.complex.effect.SpellHelper;
-import java.util.ArrayList;
-import java.util.List;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.potion.PotionEffect;
-import net.minecraft.util.AxisAlignedBB;
-import net.minecraft.world.World;
 
 public class RitualEffectFlight extends RitualEffect {
+
     public static final int aetherDrain = 10;
     public static final int reductusDrain = 5;
     public static final int reagentCooldown = 50;
@@ -31,8 +34,8 @@ public class RitualEffectFlight extends RitualEffect {
 
         int range = 20;
         int verticalRange = 30;
-        AxisAlignedBB axis =
-                AxisAlignedBB.getBoundingBox(x, y, z, x + 1, y + 1, z + 1).expand(range, verticalRange, range);
+        AxisAlignedBB axis = AxisAlignedBB.getBoundingBox(x, y, z, x + 1, y + 1, z + 1)
+                .expand(range, verticalRange, range);
         axis.maxY = 256;
         axis.minY = 0;
         List<EntityPlayer> entities = world.getEntitiesWithinAABB(EntityPlayer.class, axis);

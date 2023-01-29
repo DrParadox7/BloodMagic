@@ -1,5 +1,45 @@
 package WayofTime.alchemicalWizardry;
 
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.InputStream;
+import java.lang.reflect.Constructor;
+import java.lang.reflect.Field;
+import java.lang.reflect.Method;
+import java.lang.reflect.Modifier;
+import java.util.HashMap;
+import java.util.List;
+import java.util.zip.ZipEntry;
+import java.util.zip.ZipInputStream;
+
+import net.minecraft.creativetab.CreativeTabs;
+import net.minecraft.init.Blocks;
+import net.minecraft.init.Items;
+import net.minecraft.item.Item;
+import net.minecraft.item.Item.ToolMaterial;
+import net.minecraft.item.ItemArmor.ArmorMaterial;
+import net.minecraft.item.ItemStack;
+import net.minecraft.potion.Potion;
+import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.WeightedRandomChestContent;
+import net.minecraftforge.common.ChestGenHooks;
+import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.common.util.EnumHelper;
+import net.minecraftforge.fluids.Fluid;
+import net.minecraftforge.fluids.FluidContainerRegistry;
+import net.minecraftforge.fluids.FluidRegistry;
+import net.minecraftforge.oredict.OreDictionary;
+import net.minecraftforge.oredict.RecipeSorter;
+import net.minecraftforge.oredict.RecipeSorter.Category;
+
+import org.apache.logging.log4j.Level;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
+import thaumcraft.api.ItemApi;
+import thaumcraft.api.ThaumcraftApi;
+import thaumcraft.api.aspects.Aspect;
+import thaumcraft.api.aspects.AspectList;
 import WayofTime.alchemicalWizardry.api.BlockStack;
 import WayofTime.alchemicalWizardry.api.alchemy.AlchemicalPotionCreationHandler;
 import WayofTime.alchemicalWizardry.api.alchemy.AlchemyRecipeRegistry;
@@ -65,43 +105,6 @@ import cpw.mods.fml.common.event.*;
 import cpw.mods.fml.common.network.NetworkRegistry;
 import cpw.mods.fml.common.registry.EntityRegistry;
 import cpw.mods.fml.common.registry.GameRegistry;
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.InputStream;
-import java.lang.reflect.Constructor;
-import java.lang.reflect.Field;
-import java.lang.reflect.Method;
-import java.lang.reflect.Modifier;
-import java.util.HashMap;
-import java.util.List;
-import java.util.zip.ZipEntry;
-import java.util.zip.ZipInputStream;
-import net.minecraft.creativetab.CreativeTabs;
-import net.minecraft.init.Blocks;
-import net.minecraft.init.Items;
-import net.minecraft.item.Item;
-import net.minecraft.item.Item.ToolMaterial;
-import net.minecraft.item.ItemArmor.ArmorMaterial;
-import net.minecraft.item.ItemStack;
-import net.minecraft.potion.Potion;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.WeightedRandomChestContent;
-import net.minecraftforge.common.ChestGenHooks;
-import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.common.util.EnumHelper;
-import net.minecraftforge.fluids.Fluid;
-import net.minecraftforge.fluids.FluidContainerRegistry;
-import net.minecraftforge.fluids.FluidRegistry;
-import net.minecraftforge.oredict.OreDictionary;
-import net.minecraftforge.oredict.RecipeSorter;
-import net.minecraftforge.oredict.RecipeSorter.Category;
-import org.apache.logging.log4j.Level;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
-import thaumcraft.api.ItemApi;
-import thaumcraft.api.ThaumcraftApi;
-import thaumcraft.api.aspects.Aspect;
-import thaumcraft.api.aspects.AspectList;
 
 @Mod(
         modid = "AWWayofTime",
@@ -110,6 +113,7 @@ import thaumcraft.api.aspects.AspectList;
         dependencies = "after:CodeChickenLib@[1.1.5.7,);" + "after:NotEnoughItems@[2.3.20-GTNH,)",
         guiFactory = "WayofTime.alchemicalWizardry.client.gui.ConfigGuiFactory")
 public class AlchemicalWizardry {
+
     public static boolean parseTextFiles = false;
 
     public static boolean doMeteorsDestroyBlocks = true;
@@ -353,6 +357,7 @@ public class AlchemicalWizardry {
 
     public static Logger logger = LogManager.getLogger("BloodMagic");
     public static CreativeTabs tabBloodMagic = new CreativeTabs("tabBloodMagic") {
+
         @Override
         public ItemStack getIconItemStack() {
             return new ItemStack(ModItems.weakBloodOrb, 1, 0);
@@ -364,10 +369,10 @@ public class AlchemicalWizardry {
         }
     };
 
-    public static ToolMaterial bloodBoundToolMaterial =
-            EnumHelper.addToolMaterial("BoundBlood", 4, 1000, 12.0f, 8.0f, 50);
-    public static ArmorMaterial sanguineArmourArmourMaterial =
-            EnumHelper.addArmorMaterial("SanguineArmour", 33, new int[] {3, 8, 6, 3}, 30);
+    public static ToolMaterial bloodBoundToolMaterial = EnumHelper
+            .addToolMaterial("BoundBlood", 4, 1000, 12.0f, 8.0f, 50);
+    public static ArmorMaterial sanguineArmourArmourMaterial = EnumHelper
+            .addArmorMaterial("SanguineArmour", 33, new int[] { 3, 8, 6, 3 }, 30);
 
     // Dungeon loot chances
     public static int standardBindingAgentDungeonChance;
@@ -405,7 +410,7 @@ public class AlchemicalWizardry {
     public static String entityMinorDemonGruntGuardianEarthID = "AW024";
 
     public static boolean isDemonRitualCreativeOnly = false;
-    public static int[] demonRitualDimensionBlacklist = new int[] {0};
+    public static int[] demonRitualDimensionBlacklist = new int[] { 0 };
 
     public static Fluid lifeEssenceFluid;
 
@@ -427,8 +432,8 @@ public class AlchemicalWizardry {
 
         if (!bmDirectory.exists() && bmDirectory.mkdirs()) {
             try {
-                InputStream in = AlchemicalWizardry.class.getResourceAsStream(
-                        "/assets/alchemicalwizardry/schematics/building/buildings.zip");
+                InputStream in = AlchemicalWizardry.class
+                        .getResourceAsStream("/assets/alchemicalwizardry/schematics/building/buildings.zip");
                 logger.info("none yet!");
                 if (in != null) {
                     logger.info("I have found a zip!");
@@ -450,8 +455,7 @@ public class AlchemicalWizardry {
                         out.close();
                     }
                 }
-            } catch (Exception e) {
-            }
+            } catch (Exception e) {}
         }
 
         TEDemonPortal.loadBuildingList();
@@ -492,7 +496,10 @@ public class AlchemicalWizardry {
         ModItems.registerItems();
 
         RecipeSorter.register(
-                "AWWayofTime:shapedorb", ShapedBloodOrbRecipe.class, Category.SHAPED, "before:minecraft:shapeless");
+                "AWWayofTime:shapedorb",
+                ShapedBloodOrbRecipe.class,
+                Category.SHAPED,
+                "before:minecraft:shapeless");
         RecipeSorter.register(
                 "AWWayofTime:shapelessorb",
                 ShapelessBloodOrbRecipe.class,
@@ -612,33 +619,44 @@ public class AlchemicalWizardry {
         ItemStack magicalesStack = new ItemStack(ModItems.magicales);
         // All crafting goes here
         GameRegistry.addRecipe(
-                sacrificialDaggerStack, "ggg", " dg", "i g", 'g', glassStack, 'd', goldIngotStack, 'i', ironIngotStack);
-        GameRegistry.addRecipe(new ShapedBloodOrbRecipe(
-                lavaCrystalStackCrafted,
-                "glg",
-                "lbl",
-                "odo",
+                sacrificialDaggerStack,
+                "ggg",
+                " dg",
+                "i g",
                 'g',
                 glassStack,
-                'l',
-                lavaBucketStack,
-                'b',
-                weakBloodOrbStack,
                 'd',
-                diamondStack,
-                'o',
-                obsidianStack));
-        GameRegistry.addRecipe(new ShapedBloodOrbRecipe(
-                waterSigilStackCrafted,
-                "www",
-                "wbw",
-                "wow",
-                'w',
-                waterBucketStack,
-                'b',
-                blankSlateStack,
-                'o',
-                weakBloodOrbStack));
+                goldIngotStack,
+                'i',
+                ironIngotStack);
+        GameRegistry.addRecipe(
+                new ShapedBloodOrbRecipe(
+                        lavaCrystalStackCrafted,
+                        "glg",
+                        "lbl",
+                        "odo",
+                        'g',
+                        glassStack,
+                        'l',
+                        lavaBucketStack,
+                        'b',
+                        weakBloodOrbStack,
+                        'd',
+                        diamondStack,
+                        'o',
+                        obsidianStack));
+        GameRegistry.addRecipe(
+                new ShapedBloodOrbRecipe(
+                        waterSigilStackCrafted,
+                        "www",
+                        "wbw",
+                        "wow",
+                        'w',
+                        waterBucketStack,
+                        'b',
+                        blankSlateStack,
+                        'o',
+                        weakBloodOrbStack));
         GameRegistry.addRecipe(
                 lavaSigilStackCrafted,
                 "lml",
@@ -652,19 +670,20 @@ public class AlchemicalWizardry {
                 magmaCreamStack,
                 'c',
                 lavaCrystalStack);
-        GameRegistry.addRecipe(new ShapedBloodOrbRecipe(
-                voidSigilStackCrafted,
-                "ese",
-                "ere",
-                "eoe",
-                'e',
-                emptyBucketStack,
-                'r',
-                reinforcedSlateStack,
-                'o',
-                apprenticeBloodOrbStack,
-                's',
-                stringStack));
+        GameRegistry.addRecipe(
+                new ShapedBloodOrbRecipe(
+                        voidSigilStackCrafted,
+                        "ese",
+                        "ere",
+                        "eoe",
+                        'e',
+                        emptyBucketStack,
+                        'r',
+                        reinforcedSlateStack,
+                        'o',
+                        apprenticeBloodOrbStack,
+                        's',
+                        stringStack));
         GameRegistry.addRecipe(
                 bloodAltarStack,
                 "s s",
@@ -678,17 +697,18 @@ public class AlchemicalWizardry {
                 diamondStack,
                 'g',
                 goldIngotStack);
-        GameRegistry.addRecipe(new ShapedBloodOrbRecipe(
-                bloodRuneCraftedStack,
-                "sss",
-                "ror",
-                "sss",
-                's',
-                stoneStack,
-                'o',
-                weakBloodOrbStack,
-                'r',
-                blankSlateStack));
+        GameRegistry.addRecipe(
+                new ShapedBloodOrbRecipe(
+                        bloodRuneCraftedStack,
+                        "sss",
+                        "ror",
+                        "sss",
+                        's',
+                        stoneStack,
+                        'o',
+                        weakBloodOrbStack,
+                        'r',
+                        blankSlateStack));
         GameRegistry.addRecipe(
                 speedRuneStack,
                 "sbs",
@@ -702,244 +722,271 @@ public class AlchemicalWizardry {
                 bloodRuneStack,
                 'b',
                 blankSlateStack);
-        GameRegistry.addRecipe(new ShapedBloodOrbRecipe(
-                new ItemStack(ModBlocks.bloodRune, 1, 1),
-                "sbs",
-                "bob",
-                "srs",
-                's',
-                stoneStack,
-                'o',
-                magicianBloodOrbStack,
-                'b',
-                emptyBucketStack,
-                'r',
-                new ItemStack(ModItems.imbuedSlate)));
-        GameRegistry.addRecipe(new ShapedBloodOrbRecipe(
-                new ItemStack(ModBlocks.bloodRune, 1, 2),
-                "sbs",
-                "bob",
-                "srs",
-                's',
-                stoneStack,
-                'o',
-                magicianBloodOrbStack,
-                'b',
-                waterBucketStack,
-                'r',
-                new ItemStack(ModItems.imbuedSlate)));
-        GameRegistry.addRecipe(new ShapedBloodOrbRecipe(
-                new ItemStack(ModBlocks.bloodRune, 1, 3),
-                "sws",
-                "ror",
-                "sws",
-                's',
-                stoneStack,
-                'o',
-                new ItemStack(ModItems.masterBloodOrb),
-                'w',
-                weakBloodOrbStack,
-                'r',
-                new ItemStack(ModItems.demonicSlate)));
-        GameRegistry.addRecipe(new ShapedBloodOrbRecipe(
-                new ItemStack(ModBlocks.bloodRune, 1, 4),
-                "srs",
-                "beb",
-                "sos",
-                's',
-                obsidianStack,
-                'o',
-                new ItemStack(ModItems.masterBloodOrb),
-                'r',
-                new ItemStack(ModItems.demonicSlate),
-                'b',
-                emptyBucketStack,
-                'e',
-                new ItemStack(ModBlocks.bloodRune, 1, 1)));
-        GameRegistry.addRecipe(new ShapedBloodOrbRecipe(
-                airSigilStack,
-                "fgf",
-                "fsf",
-                "fof",
-                'f',
-                featherStack,
-                'g',
-                ghastTearStack,
-                's',
-                reinforcedSlateStack,
-                'o',
-                apprenticeBloodOrbStack));
-        GameRegistry.addRecipe(new ShapedBloodOrbRecipe(
-                miningSigilStackCrafted,
-                "sps",
-                "hra",
-                "sos",
-                'o',
-                apprenticeBloodOrbStack,
-                's',
-                stoneStack,
-                'p',
-                ironPickaxeStack,
-                'h',
-                ironShovelStack,
-                'a',
-                ironAxeStack,
-                'r',
-                reinforcedSlateStack));
-        GameRegistry.addRecipe(new ShapedBloodOrbRecipe(
-                runeOfSacrificeStack,
-                "srs",
-                "gog",
-                "srs",
-                's',
-                stoneStack,
-                'g',
-                goldIngotStack,
-                'o',
-                apprenticeBloodOrbStack,
-                'r',
-                reinforcedSlateStack));
-        GameRegistry.addRecipe(new ShapedBloodOrbRecipe(
-                runeOfSelfSacrificeStack,
-                "srs",
-                "gog",
-                "srs",
-                's',
-                stoneStack,
-                'g',
-                glowstoneDustStack,
-                'o',
-                apprenticeBloodOrbStack,
-                'r',
-                reinforcedSlateStack));
-        GameRegistry.addRecipe(new ShapedBloodOrbRecipe(
-                divinationSigilStackCrafted,
-                "ggg",
-                "gsg",
-                "gog",
-                'g',
-                glassStack,
-                's',
-                blankSlateStack,
-                'o',
-                weakBloodOrbStack));
-        GameRegistry.addRecipe(new ShapedBloodOrbRecipe(
-                seerSigilStackCrafted,
-                "gbg",
-                "gsg",
-                "gog",
-                'g',
-                glassStack,
-                's',
-                divinationSigilStackCrafted,
-                'o',
-                apprenticeBloodOrbStack,
-                'b',
-                new ItemStack(ModItems.bucketLife)));
-        GameRegistry.addRecipe(new ShapedBloodOrbRecipe(
-                ritualStoneStackCrafted,
-                "srs",
-                "ror",
-                "srs",
-                's',
-                obsidianStack,
-                'o',
-                apprenticeBloodOrbStack,
-                'r',
-                reinforcedSlateStack));
-        GameRegistry.addRecipe(new ShapedBloodOrbRecipe(
-                masterRitualStoneStack,
-                "brb",
-                "ror",
-                "brb",
-                'b',
-                obsidianStack,
-                'o',
-                magicianBloodOrbStack,
-                'r',
-                ritualStoneStack));
-        GameRegistry.addRecipe(new ShapedBloodOrbRecipe(
-                imperfectRitualStoneStack,
-                "bsb",
-                "sos",
-                "bsb",
-                's',
-                stoneStack,
-                'b',
-                obsidianStack,
-                'o',
-                weakBloodOrbStack));
-        GameRegistry.addRecipe(new ShapedBloodOrbRecipe(
-                sigilOfElementalAffinityStackCrafted,
-                "oao",
-                "wsl",
-                "oro",
-                'o',
-                obsidianStack,
-                'a',
-                airSigilStack,
-                'w',
-                waterSigilStack,
-                'l',
-                lavaSigilStack,
-                'r',
-                magicianBloodOrbStack,
-                's',
-                imbuedSlateStack));
-        GameRegistry.addRecipe(new ShapedBloodOrbRecipe(
-                sigilOfHoldingStack,
-                "asa",
-                "srs",
-                "aoa",
-                'a',
-                blankSlateStack,
-                's',
-                stoneStack,
-                'r',
-                imbuedSlateStack,
-                'o',
-                magicianBloodOrbStack));
         GameRegistry.addRecipe(
-                emptySocketStack, "bgb", "gdg", "bgb", 'b', weakBloodShardStack, 'g', glassStack, 'd', diamondStack);
-        GameRegistry.addRecipe(new ShapedBloodOrbRecipe(
-                armourForgeStack,
-                "sfs",
-                "fof",
-                "sfs",
-                'f',
-                bloodSocketStack,
-                's',
-                stoneStack,
-                'o',
-                magicianBloodOrbStack));
+                new ShapedBloodOrbRecipe(
+                        new ItemStack(ModBlocks.bloodRune, 1, 1),
+                        "sbs",
+                        "bob",
+                        "srs",
+                        's',
+                        stoneStack,
+                        'o',
+                        magicianBloodOrbStack,
+                        'b',
+                        emptyBucketStack,
+                        'r',
+                        new ItemStack(ModItems.imbuedSlate)));
+        GameRegistry.addRecipe(
+                new ShapedBloodOrbRecipe(
+                        new ItemStack(ModBlocks.bloodRune, 1, 2),
+                        "sbs",
+                        "bob",
+                        "srs",
+                        's',
+                        stoneStack,
+                        'o',
+                        magicianBloodOrbStack,
+                        'b',
+                        waterBucketStack,
+                        'r',
+                        new ItemStack(ModItems.imbuedSlate)));
+        GameRegistry.addRecipe(
+                new ShapedBloodOrbRecipe(
+                        new ItemStack(ModBlocks.bloodRune, 1, 3),
+                        "sws",
+                        "ror",
+                        "sws",
+                        's',
+                        stoneStack,
+                        'o',
+                        new ItemStack(ModItems.masterBloodOrb),
+                        'w',
+                        weakBloodOrbStack,
+                        'r',
+                        new ItemStack(ModItems.demonicSlate)));
+        GameRegistry.addRecipe(
+                new ShapedBloodOrbRecipe(
+                        new ItemStack(ModBlocks.bloodRune, 1, 4),
+                        "srs",
+                        "beb",
+                        "sos",
+                        's',
+                        obsidianStack,
+                        'o',
+                        new ItemStack(ModItems.masterBloodOrb),
+                        'r',
+                        new ItemStack(ModItems.demonicSlate),
+                        'b',
+                        emptyBucketStack,
+                        'e',
+                        new ItemStack(ModBlocks.bloodRune, 1, 1)));
+        GameRegistry.addRecipe(
+                new ShapedBloodOrbRecipe(
+                        airSigilStack,
+                        "fgf",
+                        "fsf",
+                        "fof",
+                        'f',
+                        featherStack,
+                        'g',
+                        ghastTearStack,
+                        's',
+                        reinforcedSlateStack,
+                        'o',
+                        apprenticeBloodOrbStack));
+        GameRegistry.addRecipe(
+                new ShapedBloodOrbRecipe(
+                        miningSigilStackCrafted,
+                        "sps",
+                        "hra",
+                        "sos",
+                        'o',
+                        apprenticeBloodOrbStack,
+                        's',
+                        stoneStack,
+                        'p',
+                        ironPickaxeStack,
+                        'h',
+                        ironShovelStack,
+                        'a',
+                        ironAxeStack,
+                        'r',
+                        reinforcedSlateStack));
+        GameRegistry.addRecipe(
+                new ShapedBloodOrbRecipe(
+                        runeOfSacrificeStack,
+                        "srs",
+                        "gog",
+                        "srs",
+                        's',
+                        stoneStack,
+                        'g',
+                        goldIngotStack,
+                        'o',
+                        apprenticeBloodOrbStack,
+                        'r',
+                        reinforcedSlateStack));
+        GameRegistry.addRecipe(
+                new ShapedBloodOrbRecipe(
+                        runeOfSelfSacrificeStack,
+                        "srs",
+                        "gog",
+                        "srs",
+                        's',
+                        stoneStack,
+                        'g',
+                        glowstoneDustStack,
+                        'o',
+                        apprenticeBloodOrbStack,
+                        'r',
+                        reinforcedSlateStack));
+        GameRegistry.addRecipe(
+                new ShapedBloodOrbRecipe(
+                        divinationSigilStackCrafted,
+                        "ggg",
+                        "gsg",
+                        "gog",
+                        'g',
+                        glassStack,
+                        's',
+                        blankSlateStack,
+                        'o',
+                        weakBloodOrbStack));
+        GameRegistry.addRecipe(
+                new ShapedBloodOrbRecipe(
+                        seerSigilStackCrafted,
+                        "gbg",
+                        "gsg",
+                        "gog",
+                        'g',
+                        glassStack,
+                        's',
+                        divinationSigilStackCrafted,
+                        'o',
+                        apprenticeBloodOrbStack,
+                        'b',
+                        new ItemStack(ModItems.bucketLife)));
+        GameRegistry.addRecipe(
+                new ShapedBloodOrbRecipe(
+                        ritualStoneStackCrafted,
+                        "srs",
+                        "ror",
+                        "srs",
+                        's',
+                        obsidianStack,
+                        'o',
+                        apprenticeBloodOrbStack,
+                        'r',
+                        reinforcedSlateStack));
+        GameRegistry.addRecipe(
+                new ShapedBloodOrbRecipe(
+                        masterRitualStoneStack,
+                        "brb",
+                        "ror",
+                        "brb",
+                        'b',
+                        obsidianStack,
+                        'o',
+                        magicianBloodOrbStack,
+                        'r',
+                        ritualStoneStack));
+        GameRegistry.addRecipe(
+                new ShapedBloodOrbRecipe(
+                        imperfectRitualStoneStack,
+                        "bsb",
+                        "sos",
+                        "bsb",
+                        's',
+                        stoneStack,
+                        'b',
+                        obsidianStack,
+                        'o',
+                        weakBloodOrbStack));
+        GameRegistry.addRecipe(
+                new ShapedBloodOrbRecipe(
+                        sigilOfElementalAffinityStackCrafted,
+                        "oao",
+                        "wsl",
+                        "oro",
+                        'o',
+                        obsidianStack,
+                        'a',
+                        airSigilStack,
+                        'w',
+                        waterSigilStack,
+                        'l',
+                        lavaSigilStack,
+                        'r',
+                        magicianBloodOrbStack,
+                        's',
+                        imbuedSlateStack));
+        GameRegistry.addRecipe(
+                new ShapedBloodOrbRecipe(
+                        sigilOfHoldingStack,
+                        "asa",
+                        "srs",
+                        "aoa",
+                        'a',
+                        blankSlateStack,
+                        's',
+                        stoneStack,
+                        'r',
+                        imbuedSlateStack,
+                        'o',
+                        magicianBloodOrbStack));
+        GameRegistry.addRecipe(
+                emptySocketStack,
+                "bgb",
+                "gdg",
+                "bgb",
+                'b',
+                weakBloodShardStack,
+                'g',
+                glassStack,
+                'd',
+                diamondStack);
+        GameRegistry.addRecipe(
+                new ShapedBloodOrbRecipe(
+                        armourForgeStack,
+                        "sfs",
+                        "fof",
+                        "sfs",
+                        'f',
+                        bloodSocketStack,
+                        's',
+                        stoneStack,
+                        'o',
+                        magicianBloodOrbStack));
         GameRegistry.addShapelessRecipe(largeBloodStoneBrickStackCrafted, weakBloodShardStack, stoneStack);
         GameRegistry.addRecipe(bloodStoneBrickStackCrafted, "bb", "bb", 'b', largeBloodStoneBrickStack);
-        GameRegistry.addRecipe(new ShapedBloodOrbRecipe(
-                growthSigilStack,
-                "srs",
-                "rer",
-                "sos",
-                's',
-                saplingStack,
-                'r',
-                reedStack,
-                'o',
-                apprenticeBloodOrbStack,
-                'e',
-                reinforcedSlateStack));
-        GameRegistry.addRecipe(new ShapedBloodOrbRecipe(
-                blockHomHeartStack,
-                "www",
-                "srs",
-                "sos",
-                'w',
-                redWoolStack,
-                's',
-                stoneStack,
-                'r',
-                bloodRuneStack,
-                'o',
-                apprenticeBloodOrbStack));
+        GameRegistry.addRecipe(
+                new ShapedBloodOrbRecipe(
+                        growthSigilStack,
+                        "srs",
+                        "rer",
+                        "sos",
+                        's',
+                        saplingStack,
+                        'r',
+                        reedStack,
+                        'o',
+                        apprenticeBloodOrbStack,
+                        'e',
+                        reinforcedSlateStack));
+        GameRegistry.addRecipe(
+                new ShapedBloodOrbRecipe(
+                        blockHomHeartStack,
+                        "www",
+                        "srs",
+                        "sos",
+                        'w',
+                        redWoolStack,
+                        's',
+                        stoneStack,
+                        'r',
+                        bloodRuneStack,
+                        'o',
+                        apprenticeBloodOrbStack));
         GameRegistry.addShapelessRecipe(
                 new ItemStack(Items.skull, 1, 2),
                 new ItemStack(Items.skull, 1, 1),
@@ -958,16 +1005,17 @@ public class AlchemicalWizardry {
                 new ItemStack(Items.gunpowder),
                 new ItemStack(Blocks.dirt),
                 new ItemStack(Blocks.sand));
-        GameRegistry.addRecipe(new ShapedBloodOrbRecipe(
-                new ItemStack(ModBlocks.blockWritingTable),
-                " s ",
-                "ror",
-                's',
-                new ItemStack(Items.brewing_stand),
-                'r',
-                obsidianStack,
-                'o',
-                weakBloodOrbStack));
+        GameRegistry.addRecipe(
+                new ShapedBloodOrbRecipe(
+                        new ItemStack(ModBlocks.blockWritingTable),
+                        " s ",
+                        "ror",
+                        's',
+                        new ItemStack(Items.brewing_stand),
+                        'r',
+                        obsidianStack,
+                        'o',
+                        weakBloodOrbStack));
         GameRegistry.addRecipe(
                 new ItemStack(ModBlocks.blockPedestal),
                 "ooo",
@@ -992,41 +1040,44 @@ public class AlchemicalWizardry {
                 new ItemStack(Items.nether_wart),
                 redstoneStack,
                 glowstoneDustStack);
-        GameRegistry.addRecipe(new ShapedBloodOrbRecipe(
-                new ItemStack(ModItems.sigilOfHaste),
-                "csc",
-                "sts",
-                "ror",
-                'c',
-                new ItemStack(Items.cookie),
-                's',
-                new ItemStack(Items.sugar),
-                't',
-                ModItems.demonicSlate,
-                'r',
-                obsidianStack,
-                'o',
-                new ItemStack(ModItems.masterBloodOrb)));
-        GameRegistry.addRecipe(new ShapedBloodOrbRecipe(
-                new ItemStack(ModItems.sigilOfWind),
-                "faf",
-                "grg",
-                "fof",
-                'f',
-                featherStack,
-                'g',
-                ghastTearStack,
-                'a',
-                new ItemStack(ModItems.airSigil),
-                'o',
-                new ItemStack(ModItems.masterBloodOrb),
-                'r',
-                ModItems.demonicSlate));
-        GameRegistry.addRecipe(new ShapelessBloodOrbRecipe(
-                new ItemStack(ModItems.weakBloodShard, 5, 0),
-                new ItemStack(ModItems.masterBloodOrb),
-                new ItemStack(ModItems.weakBloodShard),
-                imbuedSlateStack));
+        GameRegistry.addRecipe(
+                new ShapedBloodOrbRecipe(
+                        new ItemStack(ModItems.sigilOfHaste),
+                        "csc",
+                        "sts",
+                        "ror",
+                        'c',
+                        new ItemStack(Items.cookie),
+                        's',
+                        new ItemStack(Items.sugar),
+                        't',
+                        ModItems.demonicSlate,
+                        'r',
+                        obsidianStack,
+                        'o',
+                        new ItemStack(ModItems.masterBloodOrb)));
+        GameRegistry.addRecipe(
+                new ShapedBloodOrbRecipe(
+                        new ItemStack(ModItems.sigilOfWind),
+                        "faf",
+                        "grg",
+                        "fof",
+                        'f',
+                        featherStack,
+                        'g',
+                        ghastTearStack,
+                        'a',
+                        new ItemStack(ModItems.airSigil),
+                        'o',
+                        new ItemStack(ModItems.masterBloodOrb),
+                        'r',
+                        ModItems.demonicSlate));
+        GameRegistry.addRecipe(
+                new ShapelessBloodOrbRecipe(
+                        new ItemStack(ModItems.weakBloodShard, 5, 0),
+                        new ItemStack(ModItems.masterBloodOrb),
+                        new ItemStack(ModItems.weakBloodShard),
+                        imbuedSlateStack));
         GameRegistry.addRecipe(
                 new ItemStack(ModBlocks.blockTeleposer),
                 "ggg",
@@ -1046,19 +1097,20 @@ public class AlchemicalWizardry {
                 new ItemStack(ModItems.demonicTelepositionFocus),
                 new ItemStack(ModItems.reinforcedTelepositionFocus),
                 new ItemStack(ModItems.demonBloodShard));
-        GameRegistry.addRecipe(new ShapedBloodOrbRecipe(
-                new ItemStack(ModItems.sigilOfTheBridge),
-                "nnn",
-                "nsn",
-                "ror",
-                'n',
-                stoneStack,
-                'r',
-                new ItemStack(Blocks.soul_sand),
-                's',
-                imbuedSlateStack,
-                'o',
-                magicianBloodOrbStack));
+        GameRegistry.addRecipe(
+                new ShapedBloodOrbRecipe(
+                        new ItemStack(ModItems.sigilOfTheBridge),
+                        "nnn",
+                        "nsn",
+                        "ror",
+                        'n',
+                        stoneStack,
+                        'r',
+                        new ItemStack(Blocks.soul_sand),
+                        's',
+                        imbuedSlateStack,
+                        'o',
+                        magicianBloodOrbStack));
         GameRegistry.addRecipe(
                 new ItemStack(ModItems.armourInhibitor),
                 " gg",
@@ -1096,47 +1148,50 @@ public class AlchemicalWizardry {
                 new ItemStack(ModItems.demonicSlate),
                 'r',
                 new ItemStack(ModItems.itemRitualDiviner));
-        GameRegistry.addRecipe(new ShapedBloodOrbRecipe(
-                new ItemStack(ModItems.sigilOfMagnetism),
-                "bgb",
-                "gsg",
-                "bob",
-                'b',
-                new ItemStack(Blocks.iron_block),
-                'g',
-                goldIngotStack,
-                's',
-                new ItemStack(ModItems.imbuedSlate),
-                'o',
-                magicianBloodOrbStack));
-        GameRegistry.addRecipe(new ShapedBloodOrbRecipe(
-                new ItemStack(ModItems.energyBazooka),
-                "Ocd",
-                "cb ",
-                "d w",
-                'O',
-                archmageBloodOrbStack,
-                'c',
-                crepitousStack,
-                'b',
-                new ItemStack(ModItems.energyBlaster),
-                'd',
-                diamondStack,
-                'w',
-                new ItemStack(ModItems.weakBloodShard)));
-        GameRegistry.addRecipe(new ShapedBloodOrbRecipe(
-                new ItemStack(ModItems.itemBloodLightSigil),
-                "btb",
-                "sss",
-                "bob",
-                'o',
-                magicianBloodOrbStack,
-                'b',
-                glowstoneBlockStack,
-                't',
-                new ItemStack(Blocks.torch),
-                's',
-                imbuedSlateStack));
+        GameRegistry.addRecipe(
+                new ShapedBloodOrbRecipe(
+                        new ItemStack(ModItems.sigilOfMagnetism),
+                        "bgb",
+                        "gsg",
+                        "bob",
+                        'b',
+                        new ItemStack(Blocks.iron_block),
+                        'g',
+                        goldIngotStack,
+                        's',
+                        new ItemStack(ModItems.imbuedSlate),
+                        'o',
+                        magicianBloodOrbStack));
+        GameRegistry.addRecipe(
+                new ShapedBloodOrbRecipe(
+                        new ItemStack(ModItems.energyBazooka),
+                        "Ocd",
+                        "cb ",
+                        "d w",
+                        'O',
+                        archmageBloodOrbStack,
+                        'c',
+                        crepitousStack,
+                        'b',
+                        new ItemStack(ModItems.energyBlaster),
+                        'd',
+                        diamondStack,
+                        'w',
+                        new ItemStack(ModItems.weakBloodShard)));
+        GameRegistry.addRecipe(
+                new ShapedBloodOrbRecipe(
+                        new ItemStack(ModItems.itemBloodLightSigil),
+                        "btb",
+                        "sss",
+                        "bob",
+                        'o',
+                        magicianBloodOrbStack,
+                        'b',
+                        glowstoneBlockStack,
+                        't',
+                        new ItemStack(Blocks.torch),
+                        's',
+                        imbuedSlateStack));
         GameRegistry.addRecipe(
                 new ItemStack(ModItems.itemKeyOfDiablo),
                 " gw",
@@ -1163,64 +1218,48 @@ public class AlchemicalWizardry {
                 emptyBucketStack,
                 'l',
                 new ItemStack(Items.leather_chestplate));
-        customPotionDrowning = (new PotionDrowning(customPotionDrowningID, true, 0))
-                .setIconIndex(0, 0)
+        customPotionDrowning = (new PotionDrowning(customPotionDrowningID, true, 0)).setIconIndex(0, 0)
                 .setPotionName("Drowning");
-        customPotionBoost = (new PotionBoost(customPotionBoostID, false, 0))
-                .setIconIndex(0, 0)
-                .setPotionName("Boost");
-        customPotionProjProt = (new PotionProjectileProtect(customPotionProjProtID, false, 0))
-                .setIconIndex(0, 0)
+        customPotionBoost = (new PotionBoost(customPotionBoostID, false, 0)).setIconIndex(0, 0).setPotionName("Boost");
+        customPotionProjProt = (new PotionProjectileProtect(customPotionProjProtID, false, 0)).setIconIndex(0, 0)
                 .setPotionName("Whirlwind");
-        customPotionInhibit = (new PotionInhibit(customPotionInhibitID, false, 0))
-                .setIconIndex(0, 0)
+        customPotionInhibit = (new PotionInhibit(customPotionInhibitID, false, 0)).setIconIndex(0, 0)
                 .setPotionName("Inhibit");
-        customPotionFlight = (new PotionFlight(customPotionFlightID, false, 0))
-                .setIconIndex(0, 0)
+        customPotionFlight = (new PotionFlight(customPotionFlightID, false, 0)).setIconIndex(0, 0)
                 .setPotionName("Flight");
         customPotionReciprocation = (new PotionReciprocation(customPotionReciprocationID, false, 0xFFFFFF))
-                .setIconIndex(0, 0)
-                .setPotionName("Reciprocation");
-        customPotionFlameCloak = (new PotionFlameCloak(customPotionFlameCloakID, false, 0)
-                .setIconIndex(0, 0)
+                .setIconIndex(0, 0).setPotionName("Reciprocation");
+        customPotionFlameCloak = (new PotionFlameCloak(customPotionFlameCloakID, false, 0).setIconIndex(0, 0)
                 .setPotionName("Flame Cloak"));
-        customPotionIceCloak = (new PotionIceCloak(customPotionIceCloakID, false, 0)
-                .setIconIndex(0, 0)
+        customPotionIceCloak = (new PotionIceCloak(customPotionIceCloakID, false, 0).setIconIndex(0, 0)
                 .setPotionName("Ice Cloak"));
-        customPotionHeavyHeart = (new PotionHeavyHeart(customPotionHeavyHeartID, true, 0)
-                .setIconIndex(0, 0)
+        customPotionHeavyHeart = (new PotionHeavyHeart(customPotionHeavyHeartID, true, 0).setIconIndex(0, 0)
                 .setPotionName("Heavy Heart"));
-        customPotionFireFuse = (new PotionFireFuse(customPotionFireFuseID, true, 0)
-                .setIconIndex(0, 0)
+        customPotionFireFuse = (new PotionFireFuse(customPotionFireFuseID, true, 0).setIconIndex(0, 0)
                 .setPotionName("Fire Fuse"));
-        customPotionPlanarBinding = (new PotionPlanarBinding(customPotionPlanarBindingID, true, 0)
-                .setIconIndex(0, 0)
+        customPotionPlanarBinding = (new PotionPlanarBinding(customPotionPlanarBindingID, true, 0).setIconIndex(0, 0)
                 .setPotionName("Planar Binding"));
-        customPotionSoulFray = (new PotionSoulFray(customPotionSoulFrayID, true, 0)
-                .setIconIndex(0, 0)
+        customPotionSoulFray = (new PotionSoulFray(customPotionSoulFrayID, true, 0).setIconIndex(0, 0)
                 .setPotionName("Soul Fray"));
         PlayerSacrificeHandler.soulFrayId = customPotionSoulFray;
-        customPotionSoulHarden = (new PotionSoulHarden(customPotionSoulHardenID, false, 0)
-                .setIconIndex(0, 0)
+        customPotionSoulHarden = (new PotionSoulHarden(customPotionSoulHardenID, false, 0).setIconIndex(0, 0)
                 .setPotionName("Soul Harden"));
-        customPotionDeaf =
-                (new PotionDeaf(customPotionDeafID, true, 0).setIconIndex(0, 0).setPotionName("Deafness"));
-        customPotionFeatherFall = (new PotionFeatherFall(customPotionFeatherFallID, false, 0)
-                .setIconIndex(0, 0)
+        customPotionDeaf = (new PotionDeaf(customPotionDeafID, true, 0).setIconIndex(0, 0).setPotionName("Deafness"));
+        customPotionFeatherFall = (new PotionFeatherFall(customPotionFeatherFallID, false, 0).setIconIndex(0, 0)
                 .setPotionName("Feather Fall"));
-        customPotionDemonCloak = (new PotionDemonCloak(customPotionDemonCloakID, false, 0)
-                .setIconIndex(0, 0)
+        customPotionDemonCloak = (new PotionDemonCloak(customPotionDemonCloakID, false, 0).setIconIndex(0, 0)
                 .setPotionName("Demon Cloaking"));
-        customPotionAmphibian = (new PotionAmphibian(customPotionAmphibianID, false, 0)
-                .setIconIndex(0, 0)
+        customPotionAmphibian = (new PotionAmphibian(customPotionAmphibianID, false, 0).setIconIndex(0, 0)
                 .setPotionName("Amphibian"));
 
         ItemStack masterBloodOrbStack = new ItemStack(ModItems.masterBloodOrb);
         ItemStack transcendentBloodOrbStack = new ItemStack(ModItems.transcendentBloodOrb);
 
-        //        ModBlocks.blockLifeEssence.setUnlocalizedName("lifeEssenceBlock");
+        // ModBlocks.blockLifeEssence.setUnlocalizedName("lifeEssenceBlock");
         FluidContainerRegistry.registerFluidContainer(
-                lifeEssenceFluid, new ItemStack(ModItems.bucketLife), FluidContainerRegistry.EMPTY_BUCKET);
+                lifeEssenceFluid,
+                new ItemStack(ModItems.bucketLife),
+                FluidContainerRegistry.EMPTY_BUCKET);
         ModBlocks.blockAltar.setHarvestLevel("pickaxe", 1);
 
         // Register Tile Entity
@@ -1316,313 +1355,205 @@ public class AlchemicalWizardry {
         AlchemyRecipeRegistry.registerRecipe(
                 new ItemStack(ModItems.weakBindingAgent),
                 10,
-                new ItemStack[] {simpleCatalystStack, simpleCatalystStack, new ItemStack(Items.clay_ball)},
+                new ItemStack[] { simpleCatalystStack, simpleCatalystStack, new ItemStack(Items.clay_ball) },
                 2);
         AlchemyRecipeRegistry.registerRecipe(
                 new ItemStack(ModItems.standardBindingAgent),
                 15,
-                new ItemStack[] {
-                    new ItemStack(ModItems.weakBindingAgent), sanctusStack, new ItemStack(ModItems.crystallos)
-                },
+                new ItemStack[] { new ItemStack(ModItems.weakBindingAgent), sanctusStack,
+                        new ItemStack(ModItems.crystallos) },
                 3);
         AlchemyRecipeRegistry.registerRecipe(
                 simpleCatalystStack,
                 2,
-                new ItemStack[] {
-                    sugarStack, redstoneStack, redstoneStack, glowstoneDustStack, new ItemStack(Items.gunpowder)
-                },
+                new ItemStack[] { sugarStack, redstoneStack, redstoneStack, glowstoneDustStack,
+                        new ItemStack(Items.gunpowder) },
                 1);
         AlchemyRecipeRegistry.registerRecipe(
                 new ItemStack(ModItems.incendium),
                 5,
-                new ItemStack[] {
-                    lavaBucketStack,
-                    new ItemStack(Items.blaze_powder),
-                    new ItemStack(Items.blaze_powder),
-                    new ItemStack(Blocks.netherrack),
-                    simpleCatalystStack
-                },
+                new ItemStack[] { lavaBucketStack, new ItemStack(Items.blaze_powder), new ItemStack(Items.blaze_powder),
+                        new ItemStack(Blocks.netherrack), simpleCatalystStack },
                 2);
         AlchemyRecipeRegistry.registerRecipe(
                 new ItemStack(ModItems.aether),
                 5,
-                new ItemStack[] {featherStack, featherStack, glowstoneDustStack, ghastTearStack, simpleCatalystStack},
+                new ItemStack[] { featherStack, featherStack, glowstoneDustStack, ghastTearStack, simpleCatalystStack },
                 2);
         AlchemyRecipeRegistry.registerRecipe(
                 new ItemStack(ModItems.sanctus),
                 5,
-                new ItemStack[] {
-                    glowstoneDustStack,
-                    new ItemStack(Items.gold_nugget),
-                    glowstoneDustStack,
-                    glassStack,
-                    simpleCatalystStack
-                },
+                new ItemStack[] { glowstoneDustStack, new ItemStack(Items.gold_nugget), glowstoneDustStack, glassStack,
+                        simpleCatalystStack },
                 2);
         AlchemyRecipeRegistry.registerRecipe(
                 new ItemStack(ModItems.crepitous),
                 5,
-                new ItemStack[] {
-                    new ItemStack(Items.gunpowder),
-                    new ItemStack(Items.gunpowder),
-                    cobblestoneStack,
-                    cobblestoneStack,
-                    simpleCatalystStack
-                },
+                new ItemStack[] { new ItemStack(Items.gunpowder), new ItemStack(Items.gunpowder), cobblestoneStack,
+                        cobblestoneStack, simpleCatalystStack },
                 2);
         AlchemyRecipeRegistry.registerRecipe(
                 new ItemStack(ModItems.crystallos),
                 5,
-                new ItemStack[] {
-                    new ItemStack(Blocks.ice),
-                    new ItemStack(Blocks.ice),
-                    new ItemStack(Blocks.snow),
-                    new ItemStack(Blocks.snow),
-                    simpleCatalystStack
-                },
+                new ItemStack[] { new ItemStack(Blocks.ice), new ItemStack(Blocks.ice), new ItemStack(Blocks.snow),
+                        new ItemStack(Blocks.snow), simpleCatalystStack },
                 2);
         AlchemyRecipeRegistry.registerRecipe(
                 new ItemStack(ModItems.terrae),
                 5,
-                new ItemStack[] {
-                    new ItemStack(Blocks.dirt),
-                    new ItemStack(Blocks.sand),
-                    obsidianStack,
-                    obsidianStack,
-                    simpleCatalystStack
-                },
+                new ItemStack[] { new ItemStack(Blocks.dirt), new ItemStack(Blocks.sand), obsidianStack, obsidianStack,
+                        simpleCatalystStack },
                 2);
         AlchemyRecipeRegistry.registerRecipe(
                 new ItemStack(ModItems.aquasalus),
                 5,
-                new ItemStack[] {
-                    simpleCatalystStack,
-                    new ItemStack(Items.dye, 1, 0),
-                    new ItemStack(Items.potionitem, 1, 0),
-                    new ItemStack(Items.potionitem, 1, 0),
-                    new ItemStack(Items.potionitem, 1, 0)
-                },
+                new ItemStack[] { simpleCatalystStack, new ItemStack(Items.dye, 1, 0),
+                        new ItemStack(Items.potionitem, 1, 0), new ItemStack(Items.potionitem, 1, 0),
+                        new ItemStack(Items.potionitem, 1, 0) },
                 2);
         AlchemyRecipeRegistry.registerRecipe(
                 new ItemStack(ModItems.tennebrae),
                 5,
-                new ItemStack[] {
-                    simpleCatalystStack,
-                    new ItemStack(Items.coal),
-                    new ItemStack(Items.coal),
-                    new ItemStack(Blocks.obsidian),
-                    new ItemStack(Items.clay_ball)
-                },
+                new ItemStack[] { simpleCatalystStack, new ItemStack(Items.coal), new ItemStack(Items.coal),
+                        new ItemStack(Blocks.obsidian), new ItemStack(Items.clay_ball) },
                 2);
         AlchemyRecipeRegistry.registerRecipe(
                 new ItemStack(ModItems.magicales),
                 5,
-                new ItemStack[] {
-                    redstoneStack,
-                    simpleCatalystStack,
-                    new ItemStack(Items.gunpowder),
-                    new ItemStack(Items.glowstone_dust),
-                    new ItemStack(Items.glowstone_dust)
-                },
+                new ItemStack[] { redstoneStack, simpleCatalystStack, new ItemStack(Items.gunpowder),
+                        new ItemStack(Items.glowstone_dust), new ItemStack(Items.glowstone_dust) },
                 2);
         AlchemyRecipeRegistry.registerRecipe(
                 new ItemStack(ModItems.mundanePowerCatalyst),
                 10,
-                new ItemStack[] {
-                    glowstoneDustStack,
-                    glowstoneDustStack,
-                    glowstoneDustStack,
-                    new ItemStack(ModItems.weakBindingAgent),
-                    simpleCatalystStack
-                },
+                new ItemStack[] { glowstoneDustStack, glowstoneDustStack, glowstoneDustStack,
+                        new ItemStack(ModItems.weakBindingAgent), simpleCatalystStack },
                 3);
         AlchemyRecipeRegistry.registerRecipe(
                 new ItemStack(ModItems.mundaneLengtheningCatalyst),
                 10,
-                new ItemStack[] {
-                    redstoneStack,
-                    redstoneStack,
-                    redstoneStack,
-                    new ItemStack(ModItems.weakBindingAgent),
-                    simpleCatalystStack
-                },
+                new ItemStack[] { redstoneStack, redstoneStack, redstoneStack, new ItemStack(ModItems.weakBindingAgent),
+                        simpleCatalystStack },
                 3);
         AlchemyRecipeRegistry.registerRecipe(
                 new ItemStack(ModItems.averagePowerCatalyst),
                 20,
-                new ItemStack[] {
-                    new ItemStack(ModItems.mundanePowerCatalyst),
-                    new ItemStack(ModItems.mundanePowerCatalyst),
-                    new ItemStack(ModItems.standardBindingAgent)
-                },
+                new ItemStack[] { new ItemStack(ModItems.mundanePowerCatalyst),
+                        new ItemStack(ModItems.mundanePowerCatalyst), new ItemStack(ModItems.standardBindingAgent) },
                 4);
         AlchemyRecipeRegistry.registerRecipe(
                 new ItemStack(ModItems.averageLengtheningCatalyst),
                 20,
-                new ItemStack[] {
-                    new ItemStack(ModItems.mundaneLengtheningCatalyst),
-                    new ItemStack(ModItems.mundaneLengtheningCatalyst),
-                    new ItemStack(ModItems.standardBindingAgent)
-                },
+                new ItemStack[] { new ItemStack(ModItems.mundaneLengtheningCatalyst),
+                        new ItemStack(ModItems.mundaneLengtheningCatalyst),
+                        new ItemStack(ModItems.standardBindingAgent) },
                 4);
         AlchemyRecipeRegistry.registerRecipe(
                 new ItemStack(ModItems.greaterPowerCatalyst),
                 30,
-                new ItemStack[] {
-                    new ItemStack(ModItems.averagePowerCatalyst),
-                    new ItemStack(ModItems.averagePowerCatalyst),
-                    new ItemStack(ModItems.incendium)
-                },
+                new ItemStack[] { new ItemStack(ModItems.averagePowerCatalyst),
+                        new ItemStack(ModItems.averagePowerCatalyst), new ItemStack(ModItems.incendium) },
                 4);
         AlchemyRecipeRegistry.registerRecipe(
                 new ItemStack(ModItems.greaterLengtheningCatalyst),
                 30,
-                new ItemStack[] {
-                    new ItemStack(ModItems.averageLengtheningCatalyst),
-                    new ItemStack(ModItems.averageLengtheningCatalyst),
-                    new ItemStack(ModItems.aquasalus)
-                },
+                new ItemStack[] { new ItemStack(ModItems.averageLengtheningCatalyst),
+                        new ItemStack(ModItems.averageLengtheningCatalyst), new ItemStack(ModItems.aquasalus) },
                 4);
         AlchemyRecipeRegistry.registerRecipe(
                 new ItemStack(ModItems.weakFillingAgent),
                 5,
-                new ItemStack[] {
-                    simpleCatalystStack, new ItemStack(Items.nether_wart), redstoneStack, glowstoneDustStack
-                },
+                new ItemStack[] { simpleCatalystStack, new ItemStack(Items.nether_wart), redstoneStack,
+                        glowstoneDustStack },
                 3);
         AlchemyRecipeRegistry.registerRecipe(
                 new ItemStack(ModItems.standardFillingAgent),
                 10,
-                new ItemStack[] {new ItemStack(ModItems.weakFillingAgent), new ItemStack(ModItems.terrae)},
+                new ItemStack[] { new ItemStack(ModItems.weakFillingAgent), new ItemStack(ModItems.terrae) },
                 3);
         AlchemyRecipeRegistry.registerRecipe(
                 new ItemStack(ModItems.enhancedFillingAgent),
                 25,
-                new ItemStack[] {
-                    new ItemStack(ModItems.standardFillingAgent),
-                    new ItemStack(ModItems.aquasalus),
-                    new ItemStack(ModItems.magicales)
-                },
+                new ItemStack[] { new ItemStack(ModItems.standardFillingAgent), new ItemStack(ModItems.aquasalus),
+                        new ItemStack(ModItems.magicales) },
                 4);
         AlchemyRecipeRegistry.registerRecipe(
                 new ItemStack(ModItems.activationCrystal, 1, 1),
                 100,
-                new ItemStack[] {
-                    new ItemStack(ModItems.activationCrystal, 1, 0),
-                    new ItemStack(ModItems.demonBloodShard),
-                    incendiumStack,
-                    aquasalusStack,
-                    aetherStack
-                },
+                new ItemStack[] { new ItemStack(ModItems.activationCrystal, 1, 0),
+                        new ItemStack(ModItems.demonBloodShard), incendiumStack, aquasalusStack, aetherStack },
                 4);
         AlchemyRecipeRegistry.registerRecipe(
                 new ItemStack(ModItems.activationCrystal, 1, 1),
                 100,
-                new ItemStack[] {
-                    new ItemStack(ModItems.activationCrystal, 1, 0),
-                    new ItemStack(Items.nether_star),
-                    incendiumStack,
-                    aquasalusStack,
-                    aetherStack
-                },
+                new ItemStack[] { new ItemStack(ModItems.activationCrystal, 1, 0), new ItemStack(Items.nether_star),
+                        incendiumStack, aquasalusStack, aetherStack },
                 4);
 
         AlchemyRecipeRegistry.registerRecipe(
                 new ItemStack(Blocks.web),
                 2,
-                new ItemStack[] {
-                    new ItemStack(Items.string),
-                    new ItemStack(Items.string),
-                    new ItemStack(Items.string),
-                    new ItemStack(Items.string),
-                    new ItemStack(Items.string)
-                },
+                new ItemStack[] { new ItemStack(Items.string), new ItemStack(Items.string), new ItemStack(Items.string),
+                        new ItemStack(Items.string), new ItemStack(Items.string) },
                 1);
         AlchemyRecipeRegistry.registerRecipe(
                 new ItemStack(Items.gunpowder, 2, 0),
                 2,
-                new ItemStack[] {gunpowderStack, new ItemStack(Items.coal), new ItemStack(Blocks.sand)},
+                new ItemStack[] { gunpowderStack, new ItemStack(Items.coal), new ItemStack(Blocks.sand) },
                 1);
 
         AlchemyRecipeRegistry.registerRecipe(
                 strengthenedCatalystStackCrafted,
                 10,
-                new ItemStack[] {
-                    simpleCatalystStack,
-                    simpleCatalystStack,
-                    new ItemStack(Items.dye, 1, 15),
-                    new ItemStack(Items.nether_wart)
-                },
+                new ItemStack[] { simpleCatalystStack, simpleCatalystStack, new ItemStack(Items.dye, 1, 15),
+                        new ItemStack(Items.nether_wart) },
                 3);
         AlchemyRecipeRegistry.registerRecipe(
                 offensaStack,
                 10,
-                new ItemStack[] {
-                    strengthenedCatalystStack,
-                    incendiumStack,
-                    new ItemStack(Items.arrow),
-                    new ItemStack(Items.flint),
-                    new ItemStack(Items.arrow)
-                },
+                new ItemStack[] { strengthenedCatalystStack, incendiumStack, new ItemStack(Items.arrow),
+                        new ItemStack(Items.flint), new ItemStack(Items.arrow) },
                 3);
         AlchemyRecipeRegistry.registerRecipe(
                 praesidiumStack,
                 10,
-                new ItemStack[] {
-                    strengthenedCatalystStack, tennebraeStack, ironIngotStack, new ItemStack(Blocks.web), redstoneStack
-                },
+                new ItemStack[] { strengthenedCatalystStack, tennebraeStack, ironIngotStack, new ItemStack(Blocks.web),
+                        redstoneStack },
                 3);
         AlchemyRecipeRegistry.registerRecipe(
                 orbisTerraeStack,
                 10,
-                new ItemStack[] {
-                    strengthenedCatalystStack,
-                    terraeStack,
-                    gunpowderStack,
-                    new ItemStack(Blocks.netherrack),
-                    new ItemStack(Blocks.sand)
-                },
+                new ItemStack[] { strengthenedCatalystStack, terraeStack, gunpowderStack,
+                        new ItemStack(Blocks.netherrack), new ItemStack(Blocks.sand) },
                 3);
         AlchemyRecipeRegistry.registerRecipe(
                 concentratedCatalystStack,
                 10,
-                new ItemStack[] {strengthenedCatalystStack, fracturedBoneStack, goldNuggetStack},
+                new ItemStack[] { strengthenedCatalystStack, fracturedBoneStack, goldNuggetStack },
                 4);
         AlchemyRecipeRegistry.registerRecipe(
                 fracturedBoneStackCrafted,
                 2,
-                new ItemStack[] {
-                    new ItemStack(Items.bone),
-                    new ItemStack(Items.bone),
-                    new ItemStack(Items.bone),
-                    new ItemStack(Items.bone),
-                    gunpowderStack
-                },
+                new ItemStack[] { new ItemStack(Items.bone), new ItemStack(Items.bone), new ItemStack(Items.bone),
+                        new ItemStack(Items.bone), gunpowderStack },
                 1);
         AlchemyRecipeRegistry.registerRecipe(
                 virtusStack,
                 20,
-                new ItemStack[] {
-                    redstoneStack, new ItemStack(Items.coal), strengthenedCatalystStack, redstoneStack, gunpowderStack
-                },
+                new ItemStack[] { redstoneStack, new ItemStack(Items.coal), strengthenedCatalystStack, redstoneStack,
+                        gunpowderStack },
                 3);
         AlchemyRecipeRegistry.registerRecipe(
                 reductusStack,
                 20,
-                new ItemStack[] {
-                    redstoneStack,
-                    goldIngotStack,
-                    strengthenedCatalystStack,
-                    new ItemStack(Blocks.soul_sand),
-                    new ItemStack(Items.carrot)
-                },
+                new ItemStack[] { redstoneStack, goldIngotStack, strengthenedCatalystStack,
+                        new ItemStack(Blocks.soul_sand), new ItemStack(Items.carrot) },
                 3);
         AlchemyRecipeRegistry.registerRecipe(
                 potentiaStack,
                 20,
-                new ItemStack[] {
-                    glowstoneDustStack, strengthenedCatalystStack, lapisStack, lapisStack, new ItemStack(Items.quartz)
-                },
+                new ItemStack[] { glowstoneDustStack, strengthenedCatalystStack, lapisStack, lapisStack,
+                        new ItemStack(Items.quartz) },
                 3);
 
         HomSpellRegistry.registerBasicSpell(new ItemStack(Items.flint_and_steel), new SpellFireBurst());
@@ -1636,155 +1567,114 @@ public class AlchemicalWizardry {
         HomSpellRegistry.registerBasicSpell(new ItemStack(Items.ender_pearl), new SpellTeleport());
         SummoningRegistry.registerSummon(
                 new SummoningHelperAW(entityFallenAngelID),
-                new ItemStack[] {sanctusStack, sanctusStack, sanctusStack, aetherStack, tennebraeStack, terraeStack},
+                new ItemStack[] { sanctusStack, sanctusStack, sanctusStack, aetherStack, tennebraeStack, terraeStack },
                 new ItemStack[] {},
                 new ItemStack[] {},
                 0,
                 4);
         SummoningRegistry.registerSummon(
                 new SummoningHelperAW(entityLowerGuardianID),
-                new ItemStack[] {
-                    cobblestoneStack,
-                    cobblestoneStack,
-                    terraeStack,
-                    tennebraeStack,
-                    new ItemStack(Items.iron_ingot),
-                    new ItemStack(Items.gold_nugget)
-                },
+                new ItemStack[] { cobblestoneStack, cobblestoneStack, terraeStack, tennebraeStack,
+                        new ItemStack(Items.iron_ingot), new ItemStack(Items.gold_nugget) },
                 new ItemStack[] {},
                 new ItemStack[] {},
                 0,
                 4);
         SummoningRegistry.registerSummon(
                 new SummoningHelperAW(entityBileDemonID),
-                new ItemStack[] {
-                    new ItemStack(Items.poisonous_potato),
-                    tennebraeStack,
-                    terraeStack,
-                    new ItemStack(Items.porkchop),
-                    new ItemStack(Items.egg),
-                    new ItemStack(Items.beef)
-                },
-                new ItemStack[] {
-                    crepitousStack, crepitousStack, terraeStack, ironBlockStack, ironBlockStack, diamondStack
-                },
+                new ItemStack[] { new ItemStack(Items.poisonous_potato), tennebraeStack, terraeStack,
+                        new ItemStack(Items.porkchop), new ItemStack(Items.egg), new ItemStack(Items.beef) },
+                new ItemStack[] { crepitousStack, crepitousStack, terraeStack, ironBlockStack, ironBlockStack,
+                        diamondStack },
                 new ItemStack[] {},
                 0,
                 5);
         SummoningRegistry.registerSummon(
                 new SummoningHelperAW(entityWingedFireDemonID),
-                new ItemStack[] {
-                    aetherStack,
-                    incendiumStack,
-                    incendiumStack,
-                    incendiumStack,
-                    tennebraeStack,
-                    new ItemStack(Blocks.netherrack)
-                },
-                new ItemStack[] {
-                    diamondStack,
-                    new ItemStack(Blocks.gold_block),
-                    magicalesStack,
-                    magicalesStack,
-                    new ItemStack(Items.fire_charge),
-                    new ItemStack(Blocks.coal_block)
-                },
+                new ItemStack[] { aetherStack, incendiumStack, incendiumStack, incendiumStack, tennebraeStack,
+                        new ItemStack(Blocks.netherrack) },
+                new ItemStack[] { diamondStack, new ItemStack(Blocks.gold_block), magicalesStack, magicalesStack,
+                        new ItemStack(Items.fire_charge), new ItemStack(Blocks.coal_block) },
                 new ItemStack[] {},
                 0,
                 5);
         SummoningRegistry.registerSummon(
                 new SummoningHelperAW(entitySmallEarthGolemID),
-                new ItemStack[] {new ItemStack(Items.clay_ball), terraeStack, terraeStack},
+                new ItemStack[] { new ItemStack(Items.clay_ball), terraeStack, terraeStack },
                 new ItemStack[] {},
                 new ItemStack[] {},
                 0,
                 4);
         SummoningRegistry.registerSummon(
                 new SummoningHelperAW(entityIceDemonID),
-                new ItemStack[] {
-                    crystallosStack, crystallosStack, aquasalusStack, crystallosStack, sanctusStack, terraeStack
-                },
+                new ItemStack[] { crystallosStack, crystallosStack, aquasalusStack, crystallosStack, sanctusStack,
+                        terraeStack },
                 new ItemStack[] {},
                 new ItemStack[] {},
                 0,
                 4);
         SummoningRegistry.registerSummon(
                 new SummoningHelperAW(entityBoulderFistID),
-                new ItemStack[] {
-                    terraeStack,
-                    sanctusStack,
-                    tennebraeStack,
-                    new ItemStack(Items.bone),
-                    new ItemStack(Items.cooked_beef),
-                    new ItemStack(Items.cooked_beef)
-                },
+                new ItemStack[] { terraeStack, sanctusStack, tennebraeStack, new ItemStack(Items.bone),
+                        new ItemStack(Items.cooked_beef), new ItemStack(Items.cooked_beef) },
                 new ItemStack[] {},
                 new ItemStack[] {},
                 0,
                 4);
         SummoningRegistry.registerSummon(
                 new SummoningHelperAW(entityShadeID),
-                new ItemStack[] {
-                    tennebraeStack,
-                    tennebraeStack,
-                    tennebraeStack,
-                    aetherStack,
-                    glassStack,
-                    new ItemStack(Items.glass_bottle)
-                },
+                new ItemStack[] { tennebraeStack, tennebraeStack, tennebraeStack, aetherStack, glassStack,
+                        new ItemStack(Items.glass_bottle) },
                 new ItemStack[] {},
                 new ItemStack[] {},
                 0,
                 4);
         SummoningRegistry.registerSummon(
                 new SummoningHelperAW(entityAirElementalID),
-                new ItemStack[] {aetherStack, aetherStack, aetherStack, aetherStack, aetherStack, aetherStack},
+                new ItemStack[] { aetherStack, aetherStack, aetherStack, aetherStack, aetherStack, aetherStack },
                 new ItemStack[] {},
                 new ItemStack[] {},
                 0,
                 4);
         SummoningRegistry.registerSummon(
                 new SummoningHelperAW(entityWaterElementalID),
-                new ItemStack[] {
-                    aquasalusStack, aquasalusStack, aquasalusStack, aquasalusStack, aquasalusStack, aquasalusStack
-                },
+                new ItemStack[] { aquasalusStack, aquasalusStack, aquasalusStack, aquasalusStack, aquasalusStack,
+                        aquasalusStack },
                 new ItemStack[] {},
                 new ItemStack[] {},
                 0,
                 4);
         SummoningRegistry.registerSummon(
                 new SummoningHelperAW(entityEarthElementalID),
-                new ItemStack[] {terraeStack, terraeStack, terraeStack, terraeStack, terraeStack, terraeStack},
+                new ItemStack[] { terraeStack, terraeStack, terraeStack, terraeStack, terraeStack, terraeStack },
                 new ItemStack[] {},
                 new ItemStack[] {},
                 0,
                 4);
         SummoningRegistry.registerSummon(
                 new SummoningHelperAW(entityFireElementalID),
-                new ItemStack[] {
-                    incendiumStack, incendiumStack, incendiumStack, incendiumStack, incendiumStack, incendiumStack
-                },
+                new ItemStack[] { incendiumStack, incendiumStack, incendiumStack, incendiumStack, incendiumStack,
+                        incendiumStack },
                 new ItemStack[] {},
                 new ItemStack[] {},
                 0,
                 4);
         SummoningRegistry.registerSummon(
                 new SummoningHelperAW(entityShadeElementalID),
-                new ItemStack[] {
-                    tennebraeStack, tennebraeStack, tennebraeStack, tennebraeStack, tennebraeStack, tennebraeStack
-                },
+                new ItemStack[] { tennebraeStack, tennebraeStack, tennebraeStack, tennebraeStack, tennebraeStack,
+                        tennebraeStack },
                 new ItemStack[] {},
                 new ItemStack[] {},
                 0,
                 4);
         SummoningRegistry.registerSummon(
                 new SummoningHelperAW(entityHolyElementalID),
-                new ItemStack[] {sanctusStack, sanctusStack, sanctusStack, sanctusStack, sanctusStack, sanctusStack},
+                new ItemStack[] { sanctusStack, sanctusStack, sanctusStack, sanctusStack, sanctusStack, sanctusStack },
                 new ItemStack[] {},
                 new ItemStack[] {},
                 0,
                 4);
-        //        SummoningRegistry.registerSummon(new SummoningHelperAW(this.entityMinorDemonGruntID), new
+        // SummoningRegistry.registerSummon(new SummoningHelperAW(this.entityMinorDemonGruntID), new
         // ItemStack[]{incendiumStack, sanctusStack, sanctusStack, sanctusStack, sanctusStack, sanctusStack}, new
         // ItemStack[]{}, new ItemStack[]{}, 0, 4);
 
@@ -1807,57 +1697,87 @@ public class AlchemicalWizardry {
         EntityRegistry.registerModEntity(EntityMinorDemonGruntFire.class, "MinorDemonGruntFire", 35, this, 80, 3, true);
         EntityRegistry.registerModEntity(EntityMinorDemonGruntWind.class, "MinorDemonGruntWind", 36, this, 80, 3, true);
         EntityRegistry.registerModEntity(EntityMinorDemonGruntIce.class, "MinorDemonGruntIce", 37, this, 80, 3, true);
+        EntityRegistry
+                .registerModEntity(EntityMinorDemonGruntEarth.class, "MinorDemonGruntEarth", 38, this, 80, 3, true);
         EntityRegistry.registerModEntity(
-                EntityMinorDemonGruntEarth.class, "MinorDemonGruntEarth", 38, this, 80, 3, true);
+                EntityMinorDemonGruntGuardian.class,
+                "MinorDemonGruntGuardian",
+                39,
+                this,
+                80,
+                3,
+                true);
         EntityRegistry.registerModEntity(
-                EntityMinorDemonGruntGuardian.class, "MinorDemonGruntGuardian", 39, this, 80, 3, true);
+                EntityMinorDemonGruntGuardianFire.class,
+                "MinorDemonGruntGuardianFire",
+                40,
+                this,
+                80,
+                3,
+                true);
         EntityRegistry.registerModEntity(
-                EntityMinorDemonGruntGuardianFire.class, "MinorDemonGruntGuardianFire", 40, this, 80, 3, true);
+                EntityMinorDemonGruntGuardianWind.class,
+                "MinorDemonGruntGuardianWind",
+                41,
+                this,
+                80,
+                3,
+                true);
         EntityRegistry.registerModEntity(
-                EntityMinorDemonGruntGuardianWind.class, "MinorDemonGruntGuardianWind", 41, this, 80, 3, true);
+                EntityMinorDemonGruntGuardianIce.class,
+                "MinorDemonGruntGuardianIce",
+                42,
+                this,
+                80,
+                3,
+                true);
         EntityRegistry.registerModEntity(
-                EntityMinorDemonGruntGuardianIce.class, "MinorDemonGruntGuardianIce", 42, this, 80, 3, true);
-        EntityRegistry.registerModEntity(
-                EntityMinorDemonGruntGuardianEarth.class, "MinorDemonGruntGuardianEarth", 43, this, 80, 3, true);
+                EntityMinorDemonGruntGuardianEarth.class,
+                "MinorDemonGruntGuardianEarth",
+                43,
+                this,
+                80,
+                3,
+                true);
 
-        ChestGenHooks.getInfo(ChestGenHooks.DUNGEON_CHEST)
-                .addItem(new WeightedRandomChestContent(
+        ChestGenHooks.getInfo(ChestGenHooks.DUNGEON_CHEST).addItem(
+                new WeightedRandomChestContent(
                         new ItemStack(ModItems.standardBindingAgent),
                         1,
                         3,
                         this.standardBindingAgentDungeonChance / 5));
-        ChestGenHooks.getInfo(ChestGenHooks.DUNGEON_CHEST)
-                .addItem(new WeightedRandomChestContent(
+        ChestGenHooks.getInfo(ChestGenHooks.DUNGEON_CHEST).addItem(
+                new WeightedRandomChestContent(
                         new ItemStack(ModItems.mundanePowerCatalyst),
                         1,
                         1,
                         this.mundanePowerCatalystDungeonChance / 5));
-        ChestGenHooks.getInfo(ChestGenHooks.DUNGEON_CHEST)
-                .addItem(new WeightedRandomChestContent(
+        ChestGenHooks.getInfo(ChestGenHooks.DUNGEON_CHEST).addItem(
+                new WeightedRandomChestContent(
                         new ItemStack(ModItems.mundaneLengtheningCatalyst),
                         1,
                         1,
                         this.mundaneLengtheningCatalystDungeonChance / 5));
-        ChestGenHooks.getInfo(ChestGenHooks.DUNGEON_CHEST)
-                .addItem(new WeightedRandomChestContent(
+        ChestGenHooks.getInfo(ChestGenHooks.DUNGEON_CHEST).addItem(
+                new WeightedRandomChestContent(
                         new ItemStack(ModItems.averagePowerCatalyst),
                         1,
                         1,
                         this.averagePowerCatalystDungeonChance / 5));
-        ChestGenHooks.getInfo(ChestGenHooks.DUNGEON_CHEST)
-                .addItem(new WeightedRandomChestContent(
+        ChestGenHooks.getInfo(ChestGenHooks.DUNGEON_CHEST).addItem(
+                new WeightedRandomChestContent(
                         new ItemStack(ModItems.averageLengtheningCatalyst),
                         1,
                         1,
                         this.averageLengtheningCatalystDungeonChance / 5));
-        ChestGenHooks.getInfo(ChestGenHooks.DUNGEON_CHEST)
-                .addItem(new WeightedRandomChestContent(
+        ChestGenHooks.getInfo(ChestGenHooks.DUNGEON_CHEST).addItem(
+                new WeightedRandomChestContent(
                         new ItemStack(ModItems.greaterPowerCatalyst),
                         1,
                         1,
                         this.greaterPowerCatalystDungeonChance / 5));
-        ChestGenHooks.getInfo(ChestGenHooks.DUNGEON_CHEST)
-                .addItem(new WeightedRandomChestContent(
+        ChestGenHooks.getInfo(ChestGenHooks.DUNGEON_CHEST).addItem(
+                new WeightedRandomChestContent(
                         new ItemStack(ModItems.greaterLengtheningCatalyst),
                         1,
                         1,
@@ -1906,7 +1826,14 @@ public class AlchemicalWizardry {
         ItemStack enderShardCraftedStack = new ItemStack(ModItems.baseItems, 8, 32);
 
         GameRegistry.addRecipe(
-                new ItemStack(ModBlocks.blockCrystal), "lsl", "sls", "lsl", 'l', lifeShardStack, 's', soulShardStack);
+                new ItemStack(ModBlocks.blockCrystal),
+                "lsl",
+                "sls",
+                "lsl",
+                'l',
+                lifeShardStack,
+                's',
+                soulShardStack);
         GameRegistry.addRecipe(
                 new ItemStack(ModBlocks.blockCrystal, 4, 1),
                 "ss",
@@ -1932,7 +1859,14 @@ public class AlchemicalWizardry {
                 'r',
                 simpleCatalystStack);
         GameRegistry.addRecipe(
-                magicalesCraftedCableStack, "sss", "mmm", "sss", 's', new ItemStack(Items.string), 'm', magicalesStack);
+                magicalesCraftedCableStack,
+                "sss",
+                "mmm",
+                "sss",
+                's',
+                new ItemStack(Items.string),
+                'm',
+                magicalesStack);
         GameRegistry.addRecipe(
                 woodBraceStack,
                 " il",
@@ -1968,66 +1902,70 @@ public class AlchemicalWizardry {
                 's',
                 demonSlateStack);
 
-        GameRegistry.addRecipe(new ShapedBloodOrbRecipe(
-                projectileCoreStack,
-                "mbm",
-                "aca",
-                "mom",
-                'c',
-                emptyCoreStack,
-                'b',
-                weakBloodShardStack,
-                'm',
-                magicalesStack,
-                'o',
-                magicianBloodOrbStack,
-                'a',
-                new ItemStack(Items.arrow)));
-        GameRegistry.addRecipe(new ShapedBloodOrbRecipe(
-                selfCoreStack,
-                "sbs",
-                "ncn",
-                "sos",
-                'c',
-                emptyCoreStack,
-                's',
-                sanctusStack,
-                'b',
-                weakBloodShardStack,
-                'o',
-                magicianBloodOrbStack,
-                'n',
-                glowstoneDustStack));
-        GameRegistry.addRecipe(new ShapedBloodOrbRecipe(
-                meleeCoreStack,
-                "sbs",
-                "ncn",
-                "sos",
-                'c',
-                emptyCoreStack,
-                's',
-                incendiumStack,
-                'b',
-                weakBloodShardStack,
-                'o',
-                magicianBloodOrbStack,
-                'n',
-                new ItemStack(Items.fire_charge)));
-        GameRegistry.addRecipe(new ShapedBloodOrbRecipe(
-                toolCoreStack,
-                "sbs",
-                "ncn",
-                "sos",
-                'c',
-                emptyCoreStack,
-                's',
-                terraeStack,
-                'b',
-                weakBloodShardStack,
-                'o',
-                magicianBloodOrbStack,
-                'n',
-                new ItemStack(Blocks.obsidian)));
+        GameRegistry.addRecipe(
+                new ShapedBloodOrbRecipe(
+                        projectileCoreStack,
+                        "mbm",
+                        "aca",
+                        "mom",
+                        'c',
+                        emptyCoreStack,
+                        'b',
+                        weakBloodShardStack,
+                        'm',
+                        magicalesStack,
+                        'o',
+                        magicianBloodOrbStack,
+                        'a',
+                        new ItemStack(Items.arrow)));
+        GameRegistry.addRecipe(
+                new ShapedBloodOrbRecipe(
+                        selfCoreStack,
+                        "sbs",
+                        "ncn",
+                        "sos",
+                        'c',
+                        emptyCoreStack,
+                        's',
+                        sanctusStack,
+                        'b',
+                        weakBloodShardStack,
+                        'o',
+                        magicianBloodOrbStack,
+                        'n',
+                        glowstoneDustStack));
+        GameRegistry.addRecipe(
+                new ShapedBloodOrbRecipe(
+                        meleeCoreStack,
+                        "sbs",
+                        "ncn",
+                        "sos",
+                        'c',
+                        emptyCoreStack,
+                        's',
+                        incendiumStack,
+                        'b',
+                        weakBloodShardStack,
+                        'o',
+                        magicianBloodOrbStack,
+                        'n',
+                        new ItemStack(Items.fire_charge)));
+        GameRegistry.addRecipe(
+                new ShapedBloodOrbRecipe(
+                        toolCoreStack,
+                        "sbs",
+                        "ncn",
+                        "sos",
+                        'c',
+                        emptyCoreStack,
+                        's',
+                        terraeStack,
+                        'b',
+                        weakBloodShardStack,
+                        'o',
+                        magicianBloodOrbStack,
+                        'n',
+                        new ItemStack(Blocks.obsidian)));
 
         GameRegistry.addRecipe(
                 paradigmBackPlateStack,
@@ -2043,68 +1981,81 @@ public class AlchemicalWizardry {
                 's',
                 reinforcedSlateStack);
         GameRegistry.addRecipe(
-                outputCableStack, " si", "s c", " si", 's', stoneStack, 'i', ironIngotStack, 'c', simpleCatalystStack);
+                outputCableStack,
+                " si",
+                "s c",
+                " si",
+                's',
+                stoneStack,
+                'i',
+                ironIngotStack,
+                'c',
+                simpleCatalystStack);
 
-        GameRegistry.addRecipe(new ShapedBloodOrbRecipe(
-                flameCoreStack,
-                "mdm",
-                "scs",
-                "mom",
-                'm',
-                incendiumStack,
-                'c',
-                emptyCoreStack,
-                'o',
-                magicianBloodOrbStack,
-                'd',
-                diamondStack,
-                's',
-                weakBloodShardStack));
-        GameRegistry.addRecipe(new ShapedBloodOrbRecipe(
-                iceCoreStack,
-                "mdm",
-                "scs",
-                "mom",
-                'm',
-                crystallosStack,
-                'c',
-                emptyCoreStack,
-                'o',
-                magicianBloodOrbStack,
-                'd',
-                diamondStack,
-                's',
-                weakBloodShardStack));
-        GameRegistry.addRecipe(new ShapedBloodOrbRecipe(
-                windCoreStack,
-                "mdm",
-                "scs",
-                "mom",
-                'm',
-                aetherStack,
-                'c',
-                emptyCoreStack,
-                'o',
-                magicianBloodOrbStack,
-                'd',
-                diamondStack,
-                's',
-                weakBloodShardStack));
-        GameRegistry.addRecipe(new ShapedBloodOrbRecipe(
-                earthCoreStack,
-                "mdm",
-                "scs",
-                "mom",
-                'm',
-                terraeStack,
-                'c',
-                emptyCoreStack,
-                'o',
-                magicianBloodOrbStack,
-                'd',
-                diamondStack,
-                's',
-                weakBloodShardStack));
+        GameRegistry.addRecipe(
+                new ShapedBloodOrbRecipe(
+                        flameCoreStack,
+                        "mdm",
+                        "scs",
+                        "mom",
+                        'm',
+                        incendiumStack,
+                        'c',
+                        emptyCoreStack,
+                        'o',
+                        magicianBloodOrbStack,
+                        'd',
+                        diamondStack,
+                        's',
+                        weakBloodShardStack));
+        GameRegistry.addRecipe(
+                new ShapedBloodOrbRecipe(
+                        iceCoreStack,
+                        "mdm",
+                        "scs",
+                        "mom",
+                        'm',
+                        crystallosStack,
+                        'c',
+                        emptyCoreStack,
+                        'o',
+                        magicianBloodOrbStack,
+                        'd',
+                        diamondStack,
+                        's',
+                        weakBloodShardStack));
+        GameRegistry.addRecipe(
+                new ShapedBloodOrbRecipe(
+                        windCoreStack,
+                        "mdm",
+                        "scs",
+                        "mom",
+                        'm',
+                        aetherStack,
+                        'c',
+                        emptyCoreStack,
+                        'o',
+                        magicianBloodOrbStack,
+                        'd',
+                        diamondStack,
+                        's',
+                        weakBloodShardStack));
+        GameRegistry.addRecipe(
+                new ShapedBloodOrbRecipe(
+                        earthCoreStack,
+                        "mdm",
+                        "scs",
+                        "mom",
+                        'm',
+                        terraeStack,
+                        'c',
+                        emptyCoreStack,
+                        'o',
+                        magicianBloodOrbStack,
+                        'd',
+                        diamondStack,
+                        's',
+                        weakBloodShardStack));
 
         GameRegistry.addRecipe(
                 inputCableStack,
@@ -2120,186 +2071,190 @@ public class AlchemicalWizardry {
                 'c',
                 simpleCatalystStack);
 
-        GameRegistry.addRecipe(new ShapedBloodOrbRecipe(
-                defaultCoreStack,
-                "msm",
-                "geg",
-                "mom",
-                'm',
-                strengthenedCatalystStack,
-                'e',
-                emptyCoreStack,
-                'o',
-                magicianBloodOrbStack,
-                's',
-                weakBloodShardStack,
-                'g',
-                goldIngotStack));
-        GameRegistry.addRecipe(new ShapedBloodOrbRecipe(
-                offenseCoreStack,
-                "msm",
-                "geg",
-                "mom",
-                'm',
-                offensaStack,
-                'e',
-                emptyCoreStack,
-                'o',
-                magicianBloodOrbStack,
-                's',
-                weakBloodShardStack,
-                'g',
-                goldIngotStack));
-        GameRegistry.addRecipe(new ShapedBloodOrbRecipe(
-                defensiveCoreStack,
-                "msm",
-                "geg",
-                "mom",
-                'm',
-                praesidiumStack,
-                'e',
-                emptyCoreStack,
-                'o',
-                magicianBloodOrbStack,
-                's',
-                weakBloodShardStack,
-                'g',
-                goldIngotStack));
-        GameRegistry.addRecipe(new ShapedBloodOrbRecipe(
-                environmentalCoreStack,
-                "msm",
-                "geg",
-                "mom",
-                'm',
-                orbisTerraeStack,
-                'e',
-                emptyCoreStack,
-                'o',
-                magicianBloodOrbStack,
-                's',
-                weakBloodShardStack,
-                'g',
-                goldIngotStack));
+        GameRegistry.addRecipe(
+                new ShapedBloodOrbRecipe(
+                        defaultCoreStack,
+                        "msm",
+                        "geg",
+                        "mom",
+                        'm',
+                        strengthenedCatalystStack,
+                        'e',
+                        emptyCoreStack,
+                        'o',
+                        magicianBloodOrbStack,
+                        's',
+                        weakBloodShardStack,
+                        'g',
+                        goldIngotStack));
+        GameRegistry.addRecipe(
+                new ShapedBloodOrbRecipe(
+                        offenseCoreStack,
+                        "msm",
+                        "geg",
+                        "mom",
+                        'm',
+                        offensaStack,
+                        'e',
+                        emptyCoreStack,
+                        'o',
+                        magicianBloodOrbStack,
+                        's',
+                        weakBloodShardStack,
+                        'g',
+                        goldIngotStack));
+        GameRegistry.addRecipe(
+                new ShapedBloodOrbRecipe(
+                        defensiveCoreStack,
+                        "msm",
+                        "geg",
+                        "mom",
+                        'm',
+                        praesidiumStack,
+                        'e',
+                        emptyCoreStack,
+                        'o',
+                        magicianBloodOrbStack,
+                        's',
+                        weakBloodShardStack,
+                        'g',
+                        goldIngotStack));
+        GameRegistry.addRecipe(
+                new ShapedBloodOrbRecipe(
+                        environmentalCoreStack,
+                        "msm",
+                        "geg",
+                        "mom",
+                        'm',
+                        orbisTerraeStack,
+                        'e',
+                        emptyCoreStack,
+                        'o',
+                        magicianBloodOrbStack,
+                        's',
+                        weakBloodShardStack,
+                        'g',
+                        goldIngotStack));
 
-        GameRegistry.addRecipe(new ShapedBloodOrbRecipe(
-                powerCoreStack,
-                "msm",
-                "geg",
-                "mom",
-                'm',
-                virtusStack,
-                'e',
-                emptyCoreStack,
-                'o',
-                masterBloodOrbStack,
-                's',
-                weakBloodShardStack,
-                'g',
-                goldIngotStack));
-        GameRegistry.addRecipe(new ShapedBloodOrbRecipe(
-                costCoreStack,
-                "msm",
-                "geg",
-                "mom",
-                'm',
-                reductusStack,
-                'e',
-                emptyCoreStack,
-                'o',
-                masterBloodOrbStack,
-                's',
-                weakBloodShardStack,
-                'g',
-                goldIngotStack));
-        GameRegistry.addRecipe(new ShapedBloodOrbRecipe(
-                potencyCoreStack,
-                "msm",
-                "geg",
-                "mom",
-                'm',
-                potentiaStack,
-                'e',
-                emptyCoreStack,
-                'o',
-                masterBloodOrbStack,
-                's',
-                weakBloodShardStack,
-                'g',
-                goldIngotStack));
+        GameRegistry.addRecipe(
+                new ShapedBloodOrbRecipe(
+                        powerCoreStack,
+                        "msm",
+                        "geg",
+                        "mom",
+                        'm',
+                        virtusStack,
+                        'e',
+                        emptyCoreStack,
+                        'o',
+                        masterBloodOrbStack,
+                        's',
+                        weakBloodShardStack,
+                        'g',
+                        goldIngotStack));
+        GameRegistry.addRecipe(
+                new ShapedBloodOrbRecipe(
+                        costCoreStack,
+                        "msm",
+                        "geg",
+                        "mom",
+                        'm',
+                        reductusStack,
+                        'e',
+                        emptyCoreStack,
+                        'o',
+                        masterBloodOrbStack,
+                        's',
+                        weakBloodShardStack,
+                        'g',
+                        goldIngotStack));
+        GameRegistry.addRecipe(
+                new ShapedBloodOrbRecipe(
+                        potencyCoreStack,
+                        "msm",
+                        "geg",
+                        "mom",
+                        'm',
+                        potentiaStack,
+                        'e',
+                        emptyCoreStack,
+                        'o',
+                        masterBloodOrbStack,
+                        's',
+                        weakBloodShardStack,
+                        'g',
+                        goldIngotStack));
 
-        GameRegistry.addRecipe(new ShapedBloodOrbRecipe(
-                new ItemStack(ModItems.itemHarvestSigil),
-                "mgm",
-                "gsg",
-                "mom",
-                's',
-                etherealSlateStack,
-                'o',
-                archmageBloodOrbStack,
-                'g',
-                new ItemStack(Items.golden_hoe),
-                'm',
-                new ItemStack(Blocks.dirt)));
-        GameRegistry.addRecipe(new ShapedBloodOrbRecipe(
-                new ItemStack(ModBlocks.bloodRune, 1, 5),
-                "bsb",
-                "grg",
-                "bob",
-                's',
-                etherealSlateStack,
-                'o',
-                archmageBloodOrbStack,
-                'r',
-                speedRuneStack,
-                'b',
-                emptyBucketStack,
-                'g',
-                goldIngotStack));
-        GameRegistry.addRecipe(new ShapedBloodOrbRecipe(
-                new ItemStack(ModItems.itemCompressionSigil),
-                "pop",
-                "csc",
-                "obo",
-                'b',
-                masterBloodOrbStack,
-                'p',
-                new ItemStack(Blocks.piston),
-                'c',
-                new ItemStack(Blocks.crafting_table),
-                's',
-                demonSlateStack,
-                'o',
-                obsidianStack));
+        GameRegistry.addRecipe(
+                new ShapedBloodOrbRecipe(
+                        new ItemStack(ModItems.itemHarvestSigil),
+                        "mgm",
+                        "gsg",
+                        "mom",
+                        's',
+                        etherealSlateStack,
+                        'o',
+                        archmageBloodOrbStack,
+                        'g',
+                        new ItemStack(Items.golden_hoe),
+                        'm',
+                        new ItemStack(Blocks.dirt)));
+        GameRegistry.addRecipe(
+                new ShapedBloodOrbRecipe(
+                        new ItemStack(ModBlocks.bloodRune, 1, 5),
+                        "bsb",
+                        "grg",
+                        "bob",
+                        's',
+                        etherealSlateStack,
+                        'o',
+                        archmageBloodOrbStack,
+                        'r',
+                        speedRuneStack,
+                        'b',
+                        emptyBucketStack,
+                        'g',
+                        goldIngotStack));
+        GameRegistry.addRecipe(
+                new ShapedBloodOrbRecipe(
+                        new ItemStack(ModItems.itemCompressionSigil),
+                        "pop",
+                        "csc",
+                        "obo",
+                        'b',
+                        masterBloodOrbStack,
+                        'p',
+                        new ItemStack(Blocks.piston),
+                        'c',
+                        new ItemStack(Blocks.crafting_table),
+                        's',
+                        demonSlateStack,
+                        'o',
+                        obsidianStack));
 
         AlchemyRecipeRegistry.registerRecipe(
                 crackedRunicPlateStackCrafted,
                 10,
-                new ItemStack[] {imbuedSlateStack, imbuedSlateStack, concentratedCatalystStack},
+                new ItemStack[] { imbuedSlateStack, imbuedSlateStack, concentratedCatalystStack },
                 4);
-        AlchemyRecipeRegistry.registerRecipe(
-                runicPlateStack, 30, new ItemStack[] {crackedRunicPlateStack, terraeStack}, 5);
+        AlchemyRecipeRegistry
+                .registerRecipe(runicPlateStack, 30, new ItemStack[] { crackedRunicPlateStack, terraeStack }, 5);
         AlchemyRecipeRegistry.registerRecipe(
                 imbuedRunicPlateStack,
                 100,
-                new ItemStack[] {magicalesStack, incendiumStack, runicPlateStack, runicPlateStack, aquasalusStack},
+                new ItemStack[] { magicalesStack, incendiumStack, runicPlateStack, runicPlateStack, aquasalusStack },
                 5);
         AlchemyRecipeRegistry.registerRecipe(
                 complexSpellCrystalStack,
                 50,
-                new ItemStack[] {
-                    new ItemStack(ModItems.blankSpell),
-                    weakBloodShardStack,
-                    weakBloodShardStack,
-                    diamondStack,
-                    goldIngotStack
-                },
+                new ItemStack[] { new ItemStack(ModItems.blankSpell), weakBloodShardStack, weakBloodShardStack,
+                        diamondStack, goldIngotStack },
                 3);
         AlchemyRecipeRegistry.registerRecipe(
                 soulRunicPlateStack,
                 150,
-                new ItemStack[] {
-                    imbuedRunicPlateStack, soulShardStack, soulShardStack, weakBloodShardStack, diamondStack
-                },
+                new ItemStack[] { imbuedRunicPlateStack, soulShardStack, soulShardStack, weakBloodShardStack,
+                        diamondStack },
                 6);
 
         GameRegistry.addRecipe(
@@ -2759,36 +2714,38 @@ public class AlchemicalWizardry {
 
         GameRegistry.addShapelessRecipe(new ItemStack(Items.dye, 5, 15), fracturedBoneStack);
 
-        GameRegistry.addRecipe(new ShapedBloodOrbRecipe(
-                new ItemStack(ModItems.itemSigilOfSupression),
-                "wtl",
-                "wvl",
-                "wol",
-                'v',
-                new ItemStack(ModItems.voidSigil),
-                't',
-                new ItemStack(ModBlocks.blockTeleposer),
-                'o',
-                masterBloodOrbStack,
-                'l',
-                lavaBucketStack,
-                'w',
-                waterBucketStack));
-        GameRegistry.addRecipe(new ShapedBloodOrbRecipe(
-                new ItemStack(ModItems.itemSigilOfEnderSeverance),
-                "ptp",
-                "ese",
-                "pop",
-                's',
-                new ItemStack(ModItems.demonicSlate),
-                't',
-                weakBloodShardStack,
-                'o',
-                masterBloodOrbStack,
-                'e',
-                new ItemStack(Items.ender_eye),
-                'p',
-                new ItemStack(Items.ender_pearl)));
+        GameRegistry.addRecipe(
+                new ShapedBloodOrbRecipe(
+                        new ItemStack(ModItems.itemSigilOfSupression),
+                        "wtl",
+                        "wvl",
+                        "wol",
+                        'v',
+                        new ItemStack(ModItems.voidSigil),
+                        't',
+                        new ItemStack(ModBlocks.blockTeleposer),
+                        'o',
+                        masterBloodOrbStack,
+                        'l',
+                        lavaBucketStack,
+                        'w',
+                        waterBucketStack));
+        GameRegistry.addRecipe(
+                new ShapedBloodOrbRecipe(
+                        new ItemStack(ModItems.itemSigilOfEnderSeverance),
+                        "ptp",
+                        "ese",
+                        "pop",
+                        's',
+                        new ItemStack(ModItems.demonicSlate),
+                        't',
+                        weakBloodShardStack,
+                        'o',
+                        masterBloodOrbStack,
+                        'e',
+                        new ItemStack(Items.ender_eye),
+                        'p',
+                        new ItemStack(Items.ender_pearl)));
 
         GameRegistry.addShapelessRecipe(enderShardCraftedStack, weakBloodShardStack, new ItemStack(Items.ender_pearl));
 
@@ -2926,126 +2883,109 @@ public class AlchemicalWizardry {
         AlchemyRecipeRegistry.registerRecipe(
                 new ItemStack(Items.flint, 2, 0),
                 1,
-                new ItemStack[] {new ItemStack(Blocks.gravel), new ItemStack(Items.flint)},
+                new ItemStack[] { new ItemStack(Blocks.gravel), new ItemStack(Items.flint) },
                 1);
         AlchemyRecipeRegistry.registerRecipe(
                 new ItemStack(Blocks.grass),
                 2,
-                new ItemStack[] {
-                    new ItemStack(Blocks.dirt),
-                    new ItemStack(Items.dye, 1, 15),
-                    new ItemStack(Items.wheat_seeds),
-                    new ItemStack(Items.wheat_seeds)
-                },
+                new ItemStack[] { new ItemStack(Blocks.dirt), new ItemStack(Items.dye, 1, 15),
+                        new ItemStack(Items.wheat_seeds), new ItemStack(Items.wheat_seeds) },
                 1);
         AlchemyRecipeRegistry.registerRecipe(
                 new ItemStack(Items.leather, 3, 0),
                 2,
-                new ItemStack[] {
-                    new ItemStack(Items.rotten_flesh),
-                    new ItemStack(Items.rotten_flesh),
-                    new ItemStack(Items.rotten_flesh),
-                    waterBucketStack,
-                    new ItemStack(Items.flint)
-                },
+                new ItemStack[] { new ItemStack(Items.rotten_flesh), new ItemStack(Items.rotten_flesh),
+                        new ItemStack(Items.rotten_flesh), waterBucketStack, new ItemStack(Items.flint) },
                 1);
         AlchemyRecipeRegistry.registerRecipe(
                 new ItemStack(Items.bread),
                 1,
-                new ItemStack[] {new ItemStack(Items.wheat), new ItemStack(Items.sugar)},
+                new ItemStack[] { new ItemStack(Items.wheat), new ItemStack(Items.sugar) },
                 1);
         AlchemyRecipeRegistry.registerRecipe(
                 new ItemStack(Items.fire_charge, 5, 0),
                 3,
-                new ItemStack[] {new ItemStack(Items.coal), new ItemStack(Items.blaze_powder), gunpowderStack},
+                new ItemStack[] { new ItemStack(Items.coal), new ItemStack(Items.blaze_powder), gunpowderStack },
                 1);
         AlchemyRecipeRegistry.registerRecipe(
                 new ItemStack(Blocks.sand, 2, 0),
                 1,
-                new ItemStack[] {new ItemStack(Blocks.cobblestone), gunpowderStack},
+                new ItemStack[] { new ItemStack(Blocks.cobblestone), gunpowderStack },
                 1);
         AlchemyRecipeRegistry.registerRecipe(
                 new ItemStack(Blocks.clay, 4, 0),
                 2,
-                new ItemStack[] {
-                    new ItemStack(Blocks.hardened_clay, 1, craftingConstant),
-                    new ItemStack(Blocks.hardened_clay, 1, craftingConstant),
-                    new ItemStack(Blocks.hardened_clay, 1, craftingConstant),
-                    new ItemStack(Blocks.hardened_clay, 1, craftingConstant),
-                    waterBucketStack
-                },
+                new ItemStack[] { new ItemStack(Blocks.hardened_clay, 1, craftingConstant),
+                        new ItemStack(Blocks.hardened_clay, 1, craftingConstant),
+                        new ItemStack(Blocks.hardened_clay, 1, craftingConstant),
+                        new ItemStack(Blocks.hardened_clay, 1, craftingConstant), waterBucketStack },
                 1);
         AlchemyRecipeRegistry.registerRecipe(
                 new ItemStack(Items.string, 4, 0),
                 1,
-                new ItemStack[] {new ItemStack(Blocks.wool, 1, craftingConstant), new ItemStack(Items.flint)},
+                new ItemStack[] { new ItemStack(Blocks.wool, 1, craftingConstant), new ItemStack(Items.flint) },
                 1);
         AlchemyRecipeRegistry.registerRecipe(
                 new ItemStack(Blocks.gravel, 2, 0),
                 1,
-                new ItemStack[] {new ItemStack(Blocks.stone), gunpowderStack},
+                new ItemStack[] { new ItemStack(Blocks.stone), gunpowderStack },
                 1);
         AlchemyRecipeRegistry.registerRecipe(
-                new ItemStack(Blocks.obsidian), 1, new ItemStack[] {waterBucketStack, lavaBucketStack}, 1);
-        AlchemyRecipeRegistry.registerRecipe(
-                new ItemStack(Items.paper), 1, new ItemStack[] {new ItemStack(Items.reeds)}, 1);
+                new ItemStack(Blocks.obsidian),
+                1,
+                new ItemStack[] { waterBucketStack, lavaBucketStack },
+                1);
+        AlchemyRecipeRegistry
+                .registerRecipe(new ItemStack(Items.paper), 1, new ItemStack[] { new ItemStack(Items.reeds) }, 1);
         AlchemyRecipeRegistry.registerRecipe(
                 new ItemStack(Blocks.soul_sand, 3, 0),
                 3,
-                new ItemStack[] {
-                    new ItemStack(Blocks.sand),
-                    new ItemStack(Blocks.sand),
-                    new ItemStack(Blocks.sand),
-                    waterBucketStack,
-                    weakBloodShardStack
-                },
+                new ItemStack[] { new ItemStack(Blocks.sand), new ItemStack(Blocks.sand), new ItemStack(Blocks.sand),
+                        waterBucketStack, weakBloodShardStack },
                 3);
         AlchemyRecipeRegistry.registerRecipe(
                 new ItemStack(Blocks.mycelium, 1, 0),
                 5,
-                new ItemStack[] {
-                    new ItemStack(Blocks.grass),
-                    new ItemStack(Blocks.brown_mushroom),
-                    new ItemStack(Blocks.red_mushroom)
-                },
+                new ItemStack[] { new ItemStack(Blocks.grass), new ItemStack(Blocks.brown_mushroom),
+                        new ItemStack(Blocks.red_mushroom) },
                 2);
         AlchemyRecipeRegistry.registerRecipe(
-                new ItemStack(Blocks.ice), 2, new ItemStack[] {waterBucketStack, new ItemStack(Items.snowball)}, 1);
+                new ItemStack(Blocks.ice),
+                2,
+                new ItemStack[] { waterBucketStack, new ItemStack(Items.snowball) },
+                1);
         AlchemyRecipeRegistry.registerRecipe(
                 new ItemStack(Items.potionitem, 1, 0),
                 1,
-                new ItemStack[] {new ItemStack(Items.glass_bottle), new ItemStack(Blocks.cactus)},
+                new ItemStack[] { new ItemStack(Items.glass_bottle), new ItemStack(Blocks.cactus) },
                 1);
         AlchemyRecipeRegistry.registerRecipe(
-                waterBucketStack, 1, new ItemStack[] {emptyBucketStack, new ItemStack(Blocks.cactus)}, 1);
+                waterBucketStack,
+                1,
+                new ItemStack[] { emptyBucketStack, new ItemStack(Blocks.cactus) },
+                1);
         AlchemyRecipeRegistry.registerRecipe(
-                new ItemStack(Items.glass_bottle, 3), 1, new ItemStack[] {glassStack, glassStack, glassStack}, 1);
+                new ItemStack(Items.glass_bottle, 3),
+                1,
+                new ItemStack[] { glassStack, glassStack, glassStack },
+                1);
         AlchemyRecipeRegistry.registerRecipe(
                 new ItemStack(Items.ghast_tear, 2),
                 100,
-                new ItemStack[] {
-                    ghastTearStack,
-                    concentratedCatalystStack,
-                    weakBloodShardStack,
-                    new ItemStack(Blocks.soul_sand),
-                    new ItemStack(Blocks.soul_sand)
-                },
+                new ItemStack[] { ghastTearStack, concentratedCatalystStack, weakBloodShardStack,
+                        new ItemStack(Blocks.soul_sand), new ItemStack(Blocks.soul_sand) },
                 5);
         AlchemyRecipeRegistry.registerRecipe(
                 new ItemStack(Items.coal, 5),
                 1,
-                new ItemStack[] {
-                    new ItemStack(Items.coal, 1, 1),
-                    new ItemStack(Items.coal, 1, 1),
-                    new ItemStack(Items.coal, 1, 1),
-                    new ItemStack(Items.coal, 1, 1),
-                    new ItemStack(Items.coal, 1, 1)
-                },
+                new ItemStack[] { new ItemStack(Items.coal, 1, 1), new ItemStack(Items.coal, 1, 1),
+                        new ItemStack(Items.coal, 1, 1), new ItemStack(Items.coal, 1, 1),
+                        new ItemStack(Items.coal, 1, 1) },
                 1);
         AlchemyRecipeRegistry.registerRecipe(
                 new ItemStack(Items.clay_ball, 4),
                 5,
-                new ItemStack[] {new ItemStack(Blocks.sand), waterBucketStack},
+                new ItemStack[] { new ItemStack(Blocks.sand), waterBucketStack },
                 2);
 
         ItemIncense.registerIncenseRecipes();
@@ -3107,13 +3047,13 @@ public class AlchemicalWizardry {
                 }
 
                 if (itemThaumLeggings != null) {
-                    BindingRegistry.registerRecipe(
-                            new ItemStack(ModItems.sanguinePants), new ItemStack(itemThaumLeggings));
+                    BindingRegistry
+                            .registerRecipe(new ItemStack(ModItems.sanguinePants), new ItemStack(itemThaumLeggings));
                 }
 
                 if (itemThaumBoots != null) {
-                    BindingRegistry.registerRecipe(
-                            new ItemStack(ModItems.sanguineBoots), new ItemStack(itemThaumBoots));
+                    BindingRegistry
+                            .registerRecipe(new ItemStack(ModItems.sanguineBoots), new ItemStack(itemThaumBoots));
                 }
 
                 // LogHelper.log(Level.INFO, "Loaded RP2 World addon");
@@ -3129,8 +3069,8 @@ public class AlchemicalWizardry {
             long initialTime = System.nanoTime();
             RecipeHolder.init();
             long finalTime = System.nanoTime();
-            AlchemicalWizardry.logger.info(
-                    "Recipe Holder initialized: took " + (finalTime - initialTime) / 1000000f + "ms.");
+            AlchemicalWizardry.logger
+                    .info("Recipe Holder initialized: took " + (finalTime - initialTime) / 1000000f + "ms.");
 
             ModItems.itemMailCatalogue = new ItemMailOrderCatalogue().setUnlocalizedName("itemMailCatalogue");
             GameRegistry.registerItem(ModItems.itemMailCatalogue, "itemMailCatalogue");
@@ -3154,7 +3094,13 @@ public class AlchemicalWizardry {
 
             if (provenFrame != null) {
                 AltarRecipeRegistry.registerAltarRecipe(
-                        new ItemStack(ModItems.itemBloodFrame), provenFrame, 3, 30000, 20, 20, false);
+                        new ItemStack(ModItems.itemBloodFrame),
+                        provenFrame,
+                        3,
+                        30000,
+                        20,
+                        20,
+                        false);
             }
         } else {
             isForestryLoaded = false;
@@ -3215,58 +3161,20 @@ public class AlchemicalWizardry {
     }
 
     public static void blacklistDemons() {
-        String[] mobs = new String[] {
-            "FallenAngel",
-            "LowerGuardian",
-            "BileDemon",
-            "WingedFireDemon",
-            "SmallEarthGolem",
-            "IceDemon",
-            "BoulderFist",
-            "Shade",
-            "AirElemental",
-            "WaterElemental",
-            "EarthElemental",
-            "FireElemental",
-            "ShadeElemental",
-            "HolyElemental",
-            "MinorDemonGrunt",
-            "MinorDemonGruntFire",
-            "MinorDemonGruntWind",
-            "MinorDemonGruntIce",
-            "MinorDemonGruntEarth",
-            "MinorDemonGruntGuardian",
-            "MinorDemonGruntGuardianFire",
-            "MinorDemonGruntGuardianWind",
-            "MinorDemonGruntGuardianIce",
-            "MinorDemonGruntGuardianEarth"
-        };
-        Class[] mobClasses = new Class[] {
-            EntityFallenAngel.class,
-            EntityLowerGuardian.class,
-            EntityBileDemon.class,
-            EntityWingedFireDemon.class,
-            EntitySmallEarthGolem.class,
-            EntityIceDemon.class,
-            EntityBoulderFist.class,
-            EntityShade.class,
-            EntityAirElemental.class,
-            EntityWaterElemental.class,
-            EntityEarthElemental.class,
-            EntityFireElemental.class,
-            EntityShadeElemental.class,
-            EntityHolyElemental.class,
-            EntityMinorDemonGrunt.class,
-            EntityMinorDemonGruntFire.class,
-            EntityMinorDemonGruntWind.class,
-            EntityMinorDemonGruntIce.class,
-            EntityMinorDemonGruntEarth.class,
-            EntityMinorDemonGruntGuardian.class,
-            EntityMinorDemonGruntGuardianFire.class,
-            EntityMinorDemonGruntGuardianWind.class,
-            EntityMinorDemonGruntGuardianIce.class,
-            EntityMinorDemonGruntGuardianEarth.class
-        };
+        String[] mobs = new String[] { "FallenAngel", "LowerGuardian", "BileDemon", "WingedFireDemon",
+                "SmallEarthGolem", "IceDemon", "BoulderFist", "Shade", "AirElemental", "WaterElemental",
+                "EarthElemental", "FireElemental", "ShadeElemental", "HolyElemental", "MinorDemonGrunt",
+                "MinorDemonGruntFire", "MinorDemonGruntWind", "MinorDemonGruntIce", "MinorDemonGruntEarth",
+                "MinorDemonGruntGuardian", "MinorDemonGruntGuardianFire", "MinorDemonGruntGuardianWind",
+                "MinorDemonGruntGuardianIce", "MinorDemonGruntGuardianEarth" };
+        Class[] mobClasses = new Class[] { EntityFallenAngel.class, EntityLowerGuardian.class, EntityBileDemon.class,
+                EntityWingedFireDemon.class, EntitySmallEarthGolem.class, EntityIceDemon.class, EntityBoulderFist.class,
+                EntityShade.class, EntityAirElemental.class, EntityWaterElemental.class, EntityEarthElemental.class,
+                EntityFireElemental.class, EntityShadeElemental.class, EntityHolyElemental.class,
+                EntityMinorDemonGrunt.class, EntityMinorDemonGruntFire.class, EntityMinorDemonGruntWind.class,
+                EntityMinorDemonGruntIce.class, EntityMinorDemonGruntEarth.class, EntityMinorDemonGruntGuardian.class,
+                EntityMinorDemonGruntGuardianFire.class, EntityMinorDemonGruntGuardianWind.class,
+                EntityMinorDemonGruntGuardianIce.class, EntityMinorDemonGruntGuardianEarth.class };
         if (Loader.isModLoaded("MineFactoryReloaded")) {
             ModContainer bloodMagic = Loader.instance().activeModContainer();
             Method method = null;
@@ -3275,7 +3183,10 @@ public class AlchemicalWizardry {
                 constructor = FMLInterModComms.IMCMessage.class.getDeclaredConstructor(String.class, Object.class);
                 constructor.setAccessible(true);
                 method = FMLInterModComms.class.getDeclaredMethod(
-                        "enqueueMessage", Object.class, String.class, FMLInterModComms.IMCMessage.class);
+                        "enqueueMessage",
+                        Object.class,
+                        String.class,
+                        FMLInterModComms.IMCMessage.class);
                 method.setAccessible(true);
             } catch (Exception e) {
                 logger.log(Level.ERROR, "Grinder Message reflection failed");
@@ -3284,8 +3195,8 @@ public class AlchemicalWizardry {
                 FMLInterModComms.sendMessage("MineFactoryReloaded", "registerAutoSpawnerBlacklist", mobs[i]);
                 if (method == null) continue;
                 try {
-                    FMLInterModComms.IMCMessage message =
-                            constructor.newInstance("registerGrinderBlacklist", mobClasses[i]);
+                    FMLInterModComms.IMCMessage message = constructor
+                            .newInstance("registerGrinderBlacklist", mobClasses[i]);
                     method.invoke(null, bloodMagic, "MineFactoryReloaded", message);
                 } catch (Exception e) {
                     logger.log(Level.ERROR, "Failed to blacklist Grinder for " + mobs[i]);
@@ -3302,17 +3213,14 @@ public class AlchemicalWizardry {
         if (!AlchemicalWizardry.potionDisableRegen)
             AlchemicalPotionCreationHandler.addPotion(new ItemStack(Items.ghast_tear), Potion.regeneration.id, 450);
 
-        if (!AlchemicalWizardry.potionDisableNightVision)
-            AlchemicalPotionCreationHandler.addPotion(
-                    new ItemStack(Items.golden_carrot), Potion.nightVision.id, 2 * 60 * 20);
+        if (!AlchemicalWizardry.potionDisableNightVision) AlchemicalPotionCreationHandler
+                .addPotion(new ItemStack(Items.golden_carrot), Potion.nightVision.id, 2 * 60 * 20);
 
-        if (!AlchemicalWizardry.potionDisableFireResistance)
-            AlchemicalPotionCreationHandler.addPotion(
-                    new ItemStack(Items.magma_cream), Potion.fireResistance.id, 2 * 60 * 20);
+        if (!AlchemicalWizardry.potionDisableFireResistance) AlchemicalPotionCreationHandler
+                .addPotion(new ItemStack(Items.magma_cream), Potion.fireResistance.id, 2 * 60 * 20);
 
-        if (!AlchemicalWizardry.potionDisableWaterBreathing)
-            AlchemicalPotionCreationHandler.addPotion(
-                    new ItemStack(Items.water_bucket), Potion.waterBreathing.id, 2 * 60 * 20);
+        if (!AlchemicalWizardry.potionDisableWaterBreathing) AlchemicalPotionCreationHandler
+                .addPotion(new ItemStack(Items.water_bucket), Potion.waterBreathing.id, 2 * 60 * 20);
 
         if (!AlchemicalWizardry.potionDisableMoveSpeed)
             AlchemicalPotionCreationHandler.addPotion(new ItemStack(Items.sugar), Potion.moveSpeed.id, 2 * 60 * 20);
@@ -3326,13 +3234,11 @@ public class AlchemicalWizardry {
         if (!AlchemicalWizardry.potionDisableBlindness)
             AlchemicalPotionCreationHandler.addPotion(new ItemStack(Items.dye, 1, 0), Potion.blindness.id, 450);
 
-        if (!AlchemicalWizardry.potionDisableWeakness)
-            AlchemicalPotionCreationHandler.addPotion(
-                    new ItemStack(Items.fermented_spider_eye), Potion.weakness.id, 450);
+        if (!AlchemicalWizardry.potionDisableWeakness) AlchemicalPotionCreationHandler
+                .addPotion(new ItemStack(Items.fermented_spider_eye), Potion.weakness.id, 450);
 
-        if (!AlchemicalWizardry.potionDisableStrength)
-            AlchemicalPotionCreationHandler.addPotion(
-                    new ItemStack(Items.blaze_powder), Potion.damageBoost.id, 2 * 60 * 20);
+        if (!AlchemicalWizardry.potionDisableStrength) AlchemicalPotionCreationHandler
+                .addPotion(new ItemStack(Items.blaze_powder), Potion.damageBoost.id, 2 * 60 * 20);
 
         if (!AlchemicalWizardry.potionDisableJumpBoost)
             AlchemicalPotionCreationHandler.addPotion(new ItemStack(ModItems.aether), Potion.jump.id, 2 * 60 * 20);
@@ -3343,65 +3249,75 @@ public class AlchemicalWizardry {
         if (!AlchemicalWizardry.potionDisableMining)
             AlchemicalPotionCreationHandler.addPotion(new ItemStack(Items.redstone), Potion.digSpeed.id, 2 * 60 * 20);
 
-        if (!AlchemicalWizardry.potionDisableDrowning)
-            AlchemicalPotionCreationHandler.addPotion(
-                    new ItemStack(Items.potionitem, 1, 0), AlchemicalWizardry.customPotionDrowning.id, 450);
+        if (!AlchemicalWizardry.potionDisableDrowning) AlchemicalPotionCreationHandler
+                .addPotion(new ItemStack(Items.potionitem, 1, 0), AlchemicalWizardry.customPotionDrowning.id, 450);
 
-        if (!AlchemicalWizardry.potionDisableInvisibility)
-            AlchemicalPotionCreationHandler.addPotion(
-                    new ItemStack(Items.glass_bottle), Potion.invisibility.id, 2 * 60 * 20);
+        if (!AlchemicalWizardry.potionDisableInvisibility) AlchemicalPotionCreationHandler
+                .addPotion(new ItemStack(Items.glass_bottle), Potion.invisibility.id, 2 * 60 * 20);
 
         if (!AlchemicalWizardry.potionDisableResistance)
             AlchemicalPotionCreationHandler.addPotion(new ItemStack(Items.diamond), Potion.resistance.id, 2 * 60 * 20);
 
-        if (!AlchemicalWizardry.potionDisableSaturation)
-            AlchemicalPotionCreationHandler.addPotion(
-                    new ItemStack(Items.poisonous_potato), Potion.field_76443_y.id, 2); // saturation
+        if (!AlchemicalWizardry.potionDisableSaturation) AlchemicalPotionCreationHandler
+                .addPotion(new ItemStack(Items.poisonous_potato), Potion.field_76443_y.id, 2); // saturation
 
-        if (!AlchemicalWizardry.potionDisableHealthBoost)
-            AlchemicalPotionCreationHandler.addPotion(
-                    new ItemStack(ModItems.demonBloodShard), Potion.field_76434_w.id, 4 * 60 * 20); // health boost
+        if (!AlchemicalWizardry.potionDisableHealthBoost) AlchemicalPotionCreationHandler
+                .addPotion(new ItemStack(ModItems.demonBloodShard), Potion.field_76434_w.id, 4 * 60 * 20); // health
+                                                                                                           // boost
 
-        if (!AlchemicalWizardry.potionDisableAbsorption)
-            AlchemicalPotionCreationHandler.addPotion(
-                    new ItemStack(ModItems.weakBloodShard), Potion.field_76444_x.id, 4 * 60 * 20); // Absorption
+        if (!AlchemicalWizardry.potionDisableAbsorption) AlchemicalPotionCreationHandler
+                .addPotion(new ItemStack(ModItems.weakBloodShard), Potion.field_76444_x.id, 4 * 60 * 20); // Absorption
 
-        if (!AlchemicalWizardry.potionDisableBoost)
-            AlchemicalPotionCreationHandler.addPotion(
-                    new ItemStack(ModItems.terrae), AlchemicalWizardry.customPotionBoost.id, 60 * 20);
+        if (!AlchemicalWizardry.potionDisableBoost) AlchemicalPotionCreationHandler
+                .addPotion(new ItemStack(ModItems.terrae), AlchemicalWizardry.customPotionBoost.id, 60 * 20);
 
-        if (!AlchemicalWizardry.potionDisableFlight)
-            AlchemicalPotionCreationHandler.addPotion(
-                    new ItemStack(Items.feather), AlchemicalWizardry.customPotionFlight.id, 60 * 20); // 1 *
+        if (!AlchemicalWizardry.potionDisableFlight) AlchemicalPotionCreationHandler
+                .addPotion(new ItemStack(Items.feather), AlchemicalWizardry.customPotionFlight.id, 60 * 20); // 1 *
 
-        if (!AlchemicalWizardry.potionDisableReciprocation)
-            AlchemicalPotionCreationHandler.addPotion(
-                    new ItemStack(Items.arrow), AlchemicalWizardry.customPotionReciprocation.id, 60 * 20); // 1 *
+        if (!AlchemicalWizardry.potionDisableReciprocation) AlchemicalPotionCreationHandler
+                .addPotion(new ItemStack(Items.arrow), AlchemicalWizardry.customPotionReciprocation.id, 60 * 20); // 1 *
 
-        if (!AlchemicalWizardry.potionDisablePlanarBinding)
-            AlchemicalPotionCreationHandler.addPotion(
-                    new ItemStack(Items.ender_pearl), AlchemicalWizardry.customPotionPlanarBinding.id, 60 * 20); // 1 *
+        if (!AlchemicalWizardry.potionDisablePlanarBinding) AlchemicalPotionCreationHandler
+                .addPotion(new ItemStack(Items.ender_pearl), AlchemicalWizardry.customPotionPlanarBinding.id, 60 * 20); // 1
+                                                                                                                        // *
 
-        if (!AlchemicalWizardry.potionDisableSoulFray)
-            AlchemicalPotionCreationHandler.addPotion(
-                    new ItemStack(Blocks.soul_sand), AlchemicalWizardry.customPotionSoulFray.id, 60 * 20);
+        if (!AlchemicalWizardry.potionDisableSoulFray) AlchemicalPotionCreationHandler
+                .addPotion(new ItemStack(Blocks.soul_sand), AlchemicalWizardry.customPotionSoulFray.id, 60 * 20);
 
-        if (!AlchemicalWizardry.potionDisableSoulHarden)
-            AlchemicalPotionCreationHandler.addPotion(
-                    new ItemStack(ModItems.baseItems, 1, 16), AlchemicalWizardry.customPotionSoulHarden.id, 60 * 20);
+        if (!AlchemicalWizardry.potionDisableSoulHarden) AlchemicalPotionCreationHandler.addPotion(
+                new ItemStack(ModItems.baseItems, 1, 16),
+                AlchemicalWizardry.customPotionSoulHarden.id,
+                60 * 20);
 
-        if (!AlchemicalWizardry.potionDisableDeafness)
-            AlchemicalPotionCreationHandler.addPotion(
-                    new ItemStack(Items.slime_ball), AlchemicalWizardry.customPotionDeaf.id, 60 * 20);
+        if (!AlchemicalWizardry.potionDisableDeafness) AlchemicalPotionCreationHandler
+                .addPotion(new ItemStack(Items.slime_ball), AlchemicalWizardry.customPotionDeaf.id, 60 * 20);
     }
 
     public static void initAltarRecipes() {
         AltarRecipeRegistry.registerAltarRecipe(
-                new ItemStack(ModItems.weakBloodOrb), new ItemStack(Items.diamond), 1, 2000, 2, 1, false);
+                new ItemStack(ModItems.weakBloodOrb),
+                new ItemStack(Items.diamond),
+                1,
+                2000,
+                2,
+                1,
+                false);
         AltarRecipeRegistry.registerAltarRecipe(
-                new ItemStack(ModItems.apprenticeBloodOrb), new ItemStack(Items.emerald), 2, 5000, 5, 5, false);
+                new ItemStack(ModItems.apprenticeBloodOrb),
+                new ItemStack(Items.emerald),
+                2,
+                5000,
+                5,
+                5,
+                false);
         AltarRecipeRegistry.registerAltarRecipe(
-                new ItemStack(ModItems.magicianBloodOrb), new ItemStack(Blocks.gold_block), 3, 25000, 20, 20, false);
+                new ItemStack(ModItems.magicianBloodOrb),
+                new ItemStack(Blocks.gold_block),
+                3,
+                25000,
+                20,
+                20,
+                false);
         AltarRecipeRegistry.registerAltarRecipe(
                 new ItemStack(ModItems.masterBloodOrb),
                 new ItemStack(ModItems.weakBloodShard),
@@ -3435,7 +3351,13 @@ public class AlchemicalWizardry {
         AltarRecipeRegistry.registerAltarOrbRecipe(new ItemStack(ModItems.transcendentBloodOrb), 6, 100);
 
         AltarRecipeRegistry.registerAltarRecipe(
-                new ItemStack(ModItems.telepositionFocus), new ItemStack(Items.ender_pearl), 4, 2000, 10, 10, false);
+                new ItemStack(ModItems.telepositionFocus),
+                new ItemStack(Items.ender_pearl),
+                4,
+                2000,
+                10,
+                10,
+                false);
         AltarRecipeRegistry.registerAltarRecipe(
                 new ItemStack(ModItems.enhancedTelepositionFocus),
                 new ItemStack(ModItems.telepositionFocus),
@@ -3445,7 +3367,13 @@ public class AlchemicalWizardry {
                 15,
                 false);
         AltarRecipeRegistry.registerAltarRecipe(
-                new ItemStack(ModItems.demonicSlate), new ItemStack(ModItems.imbuedSlate), 4, 15000, 20, 20, false);
+                new ItemStack(ModItems.demonicSlate),
+                new ItemStack(ModItems.imbuedSlate),
+                4,
+                15000,
+                20,
+                20,
+                false);
         AltarRecipeRegistry.registerAltarRecipe(
                 new ItemStack(ModItems.baseItems, 1, 27),
                 new ItemStack(ModItems.demonicSlate),
@@ -3455,17 +3383,53 @@ public class AlchemicalWizardry {
                 100,
                 false);
         AltarRecipeRegistry.registerAltarRecipe(
-                new ItemStack(ModItems.duskScribeTool), new ItemStack(Blocks.coal_block), 4, 2000, 20, 10, false);
+                new ItemStack(ModItems.duskScribeTool),
+                new ItemStack(Blocks.coal_block),
+                4,
+                2000,
+                20,
+                10,
+                false);
         AltarRecipeRegistry.registerAltarRecipe(
-                new ItemStack(ModBlocks.bloodSocket), new ItemStack(ModBlocks.emptySocket), 3, 30000, 40, 10, false);
+                new ItemStack(ModBlocks.bloodSocket),
+                new ItemStack(ModBlocks.emptySocket),
+                3,
+                30000,
+                40,
+                10,
+                false);
         AltarRecipeRegistry.registerAltarRecipe(
-                new ItemStack(ModItems.earthScribeTool), new ItemStack(Blocks.obsidian), 3, 1000, 5, 5, false);
+                new ItemStack(ModItems.earthScribeTool),
+                new ItemStack(Blocks.obsidian),
+                3,
+                1000,
+                5,
+                5,
+                false);
         AltarRecipeRegistry.registerAltarRecipe(
-                new ItemStack(ModItems.waterScribeTool), new ItemStack(Blocks.lapis_block), 3, 1000, 5, 5, false);
+                new ItemStack(ModItems.waterScribeTool),
+                new ItemStack(Blocks.lapis_block),
+                3,
+                1000,
+                5,
+                5,
+                false);
         AltarRecipeRegistry.registerAltarRecipe(
-                new ItemStack(ModItems.blankSpell), new ItemStack(Blocks.glass), 2, 1000, 5, 5, false);
+                new ItemStack(ModItems.blankSpell),
+                new ItemStack(Blocks.glass),
+                2,
+                1000,
+                5,
+                5,
+                false);
         AltarRecipeRegistry.registerAltarRecipe(
-                new ItemStack(ModItems.blankSlate), new ItemStack(Blocks.stone), 1, 1000, 5, 5, false);
+                new ItemStack(ModItems.blankSlate),
+                new ItemStack(Blocks.stone),
+                1,
+                1000,
+                5,
+                5,
+                false);
         AltarRecipeRegistry.registerAltarRecipe(
                 new ItemStack(ModItems.activationCrystal),
                 new ItemStack(ModItems.lavaCrystal),
@@ -3475,21 +3439,69 @@ public class AlchemicalWizardry {
                 10,
                 false);
         AltarRecipeRegistry.registerAltarRecipe(
-                new ItemStack(ModItems.fireScribeTool), new ItemStack(Items.magma_cream), 3, 1000, 5, 5, false);
+                new ItemStack(ModItems.fireScribeTool),
+                new ItemStack(Items.magma_cream),
+                3,
+                1000,
+                5,
+                5,
+                false);
         AltarRecipeRegistry.registerAltarRecipe(
-                new ItemStack(ModItems.airScribeTool), new ItemStack(Items.ghast_tear), 3, 1000, 5, 5, false);
+                new ItemStack(ModItems.airScribeTool),
+                new ItemStack(Items.ghast_tear),
+                3,
+                1000,
+                5,
+                5,
+                false);
         AltarRecipeRegistry.registerAltarRecipe(
-                new ItemStack(ModItems.imbuedSlate), new ItemStack(ModItems.reinforcedSlate), 3, 5000, 15, 10, false);
+                new ItemStack(ModItems.imbuedSlate),
+                new ItemStack(ModItems.reinforcedSlate),
+                3,
+                5000,
+                15,
+                10,
+                false);
         AltarRecipeRegistry.registerAltarRecipe(
-                new ItemStack(ModItems.daggerOfSacrifice), new ItemStack(Items.iron_sword), 2, 3000, 5, 5, false);
+                new ItemStack(ModItems.daggerOfSacrifice),
+                new ItemStack(Items.iron_sword),
+                2,
+                3000,
+                5,
+                5,
+                false);
         AltarRecipeRegistry.registerAltarRecipe(
-                new ItemStack(ModItems.alchemyFlask), new ItemStack(Items.glass_bottle), 2, 2000, 5, 5, false);
+                new ItemStack(ModItems.alchemyFlask),
+                new ItemStack(Items.glass_bottle),
+                2,
+                2000,
+                5,
+                5,
+                false);
         AltarRecipeRegistry.registerAltarRecipe(
-                new ItemStack(ModItems.reinforcedSlate), new ItemStack(ModItems.blankSlate), 2, 2000, 5, 5, false);
+                new ItemStack(ModItems.reinforcedSlate),
+                new ItemStack(ModItems.blankSlate),
+                2,
+                2000,
+                5,
+                5,
+                false);
         AltarRecipeRegistry.registerAltarRecipe(
-                new ItemStack(ModItems.bucketLife), new ItemStack(Items.bucket), 1, 1000, 5, 0, false);
+                new ItemStack(ModItems.bucketLife),
+                new ItemStack(Items.bucket),
+                1,
+                1000,
+                5,
+                0,
+                false);
         AltarRecipeRegistry.registerAltarRecipe(
-                new ItemStack(ModItems.dawnScribeTool), new ItemStack(Blocks.glowstone), 6, 20000, 50, 35, false);
+                new ItemStack(ModItems.dawnScribeTool),
+                new ItemStack(Blocks.glowstone),
+                6,
+                20000,
+                50,
+                35,
+                false);
     }
 
     public static void initRituals() {
@@ -4093,10 +4105,9 @@ public class AlchemicalWizardry {
         BindingRegistry.registerRecipe(new ItemStack(ModItems.boundAxe), new ItemStack(Items.diamond_axe));
         BindingRegistry.registerRecipe(new ItemStack(ModItems.boundShovel), new ItemStack(Items.diamond_shovel));
         BindingRegistry.registerRecipe(new ItemStack(ModItems.energySword), new ItemStack(Items.diamond_sword));
-        BindingRegistry.registerRecipe(
-                new ItemStack(ModItems.energyBlaster), new ItemStack(ModItems.apprenticeBloodOrb));
-        BindingRegistry.registerRecipe(
-                new ItemStack(Items.baked_potato), new ItemStack(Items.potato)); // <---Shhhhhh....
+        BindingRegistry
+                .registerRecipe(new ItemStack(ModItems.energyBlaster), new ItemStack(ModItems.apprenticeBloodOrb));
+        BindingRegistry.registerRecipe(new ItemStack(Items.baked_potato), new ItemStack(Items.potato)); // <---Shhhhhh....
 
         UnbindingRegistry.addAllUnbindingRecipesFromBinding();
     }
@@ -4108,31 +4119,41 @@ public class AlchemicalWizardry {
     }
 
     public static void initCombinedAlchemyPotionRecipes() {
-        CombinedPotionRegistry.registerCombinedPotionRecipe(
-                customPotionFlameCloak, Potion.moveSpeed, Potion.regeneration);
+        CombinedPotionRegistry
+                .registerCombinedPotionRecipe(customPotionFlameCloak, Potion.moveSpeed, Potion.regeneration);
     }
 
     public static void initReagentRegistries() {
         ReagentRegistry.registerItemAndReagent(
-                new ItemStack(ModItems.sanctus), new ReagentStack(ReagentRegistry.sanctusReagent, 1000));
+                new ItemStack(ModItems.sanctus),
+                new ReagentStack(ReagentRegistry.sanctusReagent, 1000));
         ReagentRegistry.registerItemAndReagent(
-                new ItemStack(ModItems.incendium), new ReagentStack(ReagentRegistry.incendiumReagent, 1000));
+                new ItemStack(ModItems.incendium),
+                new ReagentStack(ReagentRegistry.incendiumReagent, 1000));
         ReagentRegistry.registerItemAndReagent(
-                new ItemStack(ModItems.aquasalus), new ReagentStack(ReagentRegistry.aquasalusReagent, 1000));
+                new ItemStack(ModItems.aquasalus),
+                new ReagentStack(ReagentRegistry.aquasalusReagent, 1000));
         ReagentRegistry.registerItemAndReagent(
-                new ItemStack(ModItems.magicales), new ReagentStack(ReagentRegistry.magicalesReagent, 1000));
+                new ItemStack(ModItems.magicales),
+                new ReagentStack(ReagentRegistry.magicalesReagent, 1000));
         ReagentRegistry.registerItemAndReagent(
-                new ItemStack(ModItems.aether), new ReagentStack(ReagentRegistry.aetherReagent, 1000));
+                new ItemStack(ModItems.aether),
+                new ReagentStack(ReagentRegistry.aetherReagent, 1000));
         ReagentRegistry.registerItemAndReagent(
-                new ItemStack(ModItems.crepitous), new ReagentStack(ReagentRegistry.crepitousReagent, 1000));
+                new ItemStack(ModItems.crepitous),
+                new ReagentStack(ReagentRegistry.crepitousReagent, 1000));
         ReagentRegistry.registerItemAndReagent(
-                new ItemStack(ModItems.crystallos), new ReagentStack(ReagentRegistry.crystallosReagent, 1000));
+                new ItemStack(ModItems.crystallos),
+                new ReagentStack(ReagentRegistry.crystallosReagent, 1000));
         ReagentRegistry.registerItemAndReagent(
-                new ItemStack(ModItems.terrae), new ReagentStack(ReagentRegistry.terraeReagent, 1000));
+                new ItemStack(ModItems.terrae),
+                new ReagentStack(ReagentRegistry.terraeReagent, 1000));
         ReagentRegistry.registerItemAndReagent(
-                new ItemStack(ModItems.tennebrae), new ReagentStack(ReagentRegistry.tenebraeReagent, 1000));
+                new ItemStack(ModItems.tennebrae),
+                new ReagentStack(ReagentRegistry.tenebraeReagent, 1000));
         ReagentRegistry.registerItemAndReagent(
-                new ItemStack(ModItems.baseAlchemyItems, 1, 0), new ReagentStack(ReagentRegistry.offensaReagent, 1000));
+                new ItemStack(ModItems.baseAlchemyItems, 1, 0),
+                new ReagentStack(ReagentRegistry.offensaReagent, 1000));
         ReagentRegistry.registerItemAndReagent(
                 new ItemStack(ModItems.baseAlchemyItems, 1, 1),
                 new ReagentStack(ReagentRegistry.praesidiumReagent, 1000));
@@ -4140,7 +4161,8 @@ public class AlchemicalWizardry {
                 new ItemStack(ModItems.baseAlchemyItems, 1, 2),
                 new ReagentStack(ReagentRegistry.orbisTerraeReagent, 1000));
         ReagentRegistry.registerItemAndReagent(
-                new ItemStack(ModItems.baseAlchemyItems, 1, 6), new ReagentStack(ReagentRegistry.virtusReagent, 1000));
+                new ItemStack(ModItems.baseAlchemyItems, 1, 6),
+                new ReagentStack(ReagentRegistry.virtusReagent, 1000));
         ReagentRegistry.registerItemAndReagent(
                 new ItemStack(ModItems.baseAlchemyItems, 1, 7),
                 new ReagentStack(ReagentRegistry.reductusReagent, 1000));
@@ -4256,8 +4278,11 @@ public class AlchemicalWizardry {
 
     public void initCompressionHandlers() {
         StorageBlockCraftingManager.getInstance().addStorageBlockRecipes();
-        CompressionRegistry.registerHandler(new BaseCompressionHandler(
-                new ItemStack(Items.glowstone_dust, 4, 0), new ItemStack(Blocks.glowstone), 64));
+        CompressionRegistry.registerHandler(
+                new BaseCompressionHandler(
+                        new ItemStack(Items.glowstone_dust, 4, 0),
+                        new ItemStack(Blocks.glowstone),
+                        64));
         CompressionRegistry.registerHandler(
                 new BaseCompressionHandler(new ItemStack(Items.snowball, 4, 0), new ItemStack(Blocks.snow), 8));
         CompressionRegistry.registerHandler(new AdvancedCompressionHandler());

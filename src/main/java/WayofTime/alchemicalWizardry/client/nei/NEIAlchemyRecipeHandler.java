@@ -2,16 +2,10 @@ package WayofTime.alchemicalWizardry.client.nei;
 
 import static WayofTime.alchemicalWizardry.client.nei.NEIConfig.getBloodOrbs;
 
-import WayofTime.alchemicalWizardry.api.alchemy.AlchemyRecipe;
-import WayofTime.alchemicalWizardry.api.alchemy.AlchemyRecipeRegistry;
-import WayofTime.alchemicalWizardry.api.items.interfaces.IBloodOrb;
-import WayofTime.alchemicalWizardry.common.tileEntity.gui.GuiWritingTable;
-import codechicken.nei.NEIServerUtils;
-import codechicken.nei.PositionedStack;
-import codechicken.nei.recipe.TemplateRecipeHandler;
 import java.awt.Rectangle;
 import java.util.ArrayList;
 import java.util.List;
+
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.item.Item;
@@ -19,12 +13,23 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.StatCollector;
 
+import WayofTime.alchemicalWizardry.api.alchemy.AlchemyRecipe;
+import WayofTime.alchemicalWizardry.api.alchemy.AlchemyRecipeRegistry;
+import WayofTime.alchemicalWizardry.api.items.interfaces.IBloodOrb;
+import WayofTime.alchemicalWizardry.common.tileEntity.gui.GuiWritingTable;
+import codechicken.nei.NEIServerUtils;
+import codechicken.nei.PositionedStack;
+import codechicken.nei.recipe.TemplateRecipeHandler;
+
 /**
  * NEI Alchemy Recipe Handler by joshie *
  */
 public class NEIAlchemyRecipeHandler extends TemplateRecipeHandler {
+
     public class CachedAlchemyRecipe extends CachedRecipe {
+
         public class BloodOrbs {
+
             public PositionedStack stack;
 
             public BloodOrbs(ItemStack orb) {

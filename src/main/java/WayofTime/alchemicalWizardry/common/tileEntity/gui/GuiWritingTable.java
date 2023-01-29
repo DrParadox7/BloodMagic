@@ -1,14 +1,17 @@
 package WayofTime.alchemicalWizardry.common.tileEntity.gui;
 
-import WayofTime.alchemicalWizardry.common.tileEntity.TEWritingTable;
-import WayofTime.alchemicalWizardry.common.tileEntity.container.ContainerWritingTable;
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.StatCollector;
+
 import org.lwjgl.opengl.GL11;
 
+import WayofTime.alchemicalWizardry.common.tileEntity.TEWritingTable;
+import WayofTime.alchemicalWizardry.common.tileEntity.container.ContainerWritingTable;
+
 public class GuiWritingTable extends GuiContainer {
+
     public GuiWritingTable(InventoryPlayer inventoryPlayer, TEWritingTable tileEntity) {
         super(new ContainerWritingTable(inventoryPlayer, tileEntity));
         xSize = 176;

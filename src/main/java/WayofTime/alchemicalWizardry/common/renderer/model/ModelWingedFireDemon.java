@@ -6,6 +6,7 @@ import net.minecraft.entity.Entity;
 import net.minecraft.util.MathHelper;
 
 public class ModelWingedFireDemon extends ModelBase {
+
     // fields
     ModelRenderer leftLegPlate;
     ModelRenderer leftLeg;

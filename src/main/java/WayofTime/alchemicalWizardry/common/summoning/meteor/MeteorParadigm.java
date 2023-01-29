@@ -1,18 +1,21 @@
 package WayofTime.alchemicalWizardry.common.summoning.meteor;
 
-import WayofTime.alchemicalWizardry.AlchemicalWizardry;
-import cpw.mods.fml.common.Optional;
-import gregtech.common.blocks.GT_TileEntity_Ores;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
+
 import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
 
+import WayofTime.alchemicalWizardry.AlchemicalWizardry;
+import cpw.mods.fml.common.Optional;
+import gregtech.common.blocks.GT_TileEntity_Ores;
+
 public class MeteorParadigm {
+
     public List<MeteorParadigmComponent> componentList = new ArrayList<>();
     public ItemStack focusStack;
     public int radius;
@@ -105,30 +108,29 @@ public class MeteorParadigm {
                         if (randNum < 0) {
                             ItemStack blockStack = mpc.getValidBlockParadigm();
                             if (blockStack != null && blockStack.getItem() instanceof ItemBlock) {
-                                ((ItemBlock) blockStack.getItem())
-                                        .placeBlockAt(
-                                                blockStack,
-                                                null,
-                                                world,
-                                                x + i,
-                                                y + j,
-                                                z + k,
-                                                0,
-                                                0,
-                                                0,
-                                                0,
-                                                blockStack.getItemDamage());
+                                ((ItemBlock) blockStack.getItem()).placeBlockAt(
+                                        blockStack,
+                                        null,
+                                        world,
+                                        x + i,
+                                        y + j,
+                                        z + k,
+                                        0,
+                                        0,
+                                        0,
+                                        0,
+                                        blockStack.getItemDamage());
                                 if (AlchemicalWizardry.isGregTechLoaded)
                                     setGTOresNaturalIfNeeded(world, x + i, y + j, z + k);
                                 world.markBlockForUpdate(x + i, y + j, z + k);
                                 hasPlacedBlock = true;
                                 break;
                             }
-                            //                            world.setBlock(x + i, y + j, z + k,
+                            // world.setBlock(x + i, y + j, z + k,
                             // Block.getBlockById(Item.getIdFromItem(blockStack.getItem())), blockStack.getItemDamage(),
                             // 3);
-                            //                            hasPlacedBlock = true;
-                            //                            break;
+                            // hasPlacedBlock = true;
+                            // break;
                         }
                     }
 

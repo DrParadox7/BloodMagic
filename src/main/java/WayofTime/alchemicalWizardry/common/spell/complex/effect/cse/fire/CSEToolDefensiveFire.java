@@ -8,6 +8,7 @@ import WayofTime.alchemicalWizardry.api.spell.SpellParadigmTool;
 import WayofTime.alchemicalWizardry.common.spell.complex.effect.SpellHelper;
 
 public class CSEToolDefensiveFire extends ComplexSpellEffect {
+
     public CSEToolDefensiveFire() {
         super(ComplexSpellType.FIRE, ComplexSpellModifier.DEFENSIVE);
     }
@@ -27,9 +28,9 @@ public class CSEToolDefensiveFire extends ComplexSpellEffect {
 
             ((SpellParadigmTool) parad).addDuration("defFire", 1200 * this.powerEnhancement);
 
-            ((SpellParadigmTool) parad)
-                    .addToolString(
-                            "defFire", "Unbreaking" + " " + SpellHelper.getNumeralForInt(this.powerEnhancement + 1));
+            ((SpellParadigmTool) parad).addToolString(
+                    "defFire",
+                    "Unbreaking" + " " + SpellHelper.getNumeralForInt(this.powerEnhancement + 1));
         }
     }
 
@@ -40,8 +41,7 @@ public class CSEToolDefensiveFire extends ComplexSpellEffect {
 
     @Override
     public int getCostOfEffect() {
-        return (int) (500
-                * (1 + this.powerEnhancement * 0.5f)
+        return (int) (500 * (1 + this.powerEnhancement * 0.5f)
                 * (1 + this.potencyEnhancement)
                 * Math.pow(0.85, costEnhancement));
     }

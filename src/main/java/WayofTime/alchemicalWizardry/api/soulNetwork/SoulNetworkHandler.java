@@ -1,11 +1,5 @@
 package WayofTime.alchemicalWizardry.api.soulNetwork;
 
-import WayofTime.alchemicalWizardry.api.event.AddToNetworkEvent;
-import WayofTime.alchemicalWizardry.api.event.ItemBindEvent;
-import WayofTime.alchemicalWizardry.api.event.ItemDrainInContainerEvent;
-import WayofTime.alchemicalWizardry.api.event.ItemDrainNetworkEvent;
-import cpw.mods.fml.common.eventhandler.Event;
-import cpw.mods.fml.common.eventhandler.Event.Result;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
@@ -16,11 +10,18 @@ import net.minecraft.util.DamageSource;
 import net.minecraft.world.World;
 import net.minecraftforge.common.MinecraftForge;
 
+import WayofTime.alchemicalWizardry.api.event.AddToNetworkEvent;
+import WayofTime.alchemicalWizardry.api.event.ItemBindEvent;
+import WayofTime.alchemicalWizardry.api.event.ItemDrainInContainerEvent;
+import WayofTime.alchemicalWizardry.api.event.ItemDrainNetworkEvent;
+import cpw.mods.fml.common.eventhandler.Event;
+import cpw.mods.fml.common.eventhandler.Event.Result;
+
 public class SoulNetworkHandler {
+
     public static boolean syphonFromNetworkWhileInContainer(ItemStack ist, int damageToBeDone) {
         String ownerName = "";
-        if (ist.getTagCompound() != null
-                && !(ist.getTagCompound().getString("ownerName").equals(""))) {
+        if (ist.getTagCompound() != null && !(ist.getTagCompound().getString("ownerName").equals(""))) {
             ownerName = ist.getTagCompound().getString("ownerName");
         }
 
@@ -86,8 +87,7 @@ public class SoulNetworkHandler {
     }
 
     public static int syphonFromNetwork(ItemStack ist, int damageToBeDone) {
-        if (ist.getTagCompound() != null
-                && !(ist.getTagCompound().getString("ownerName").equals(""))) {
+        if (ist.getTagCompound() != null && !(ist.getTagCompound().getString("ownerName").equals(""))) {
             String ownerName = ist.getTagCompound().getString("ownerName");
 
             return syphonFromNetwork(ownerName, damageToBeDone);
@@ -119,11 +119,11 @@ public class SoulNetworkHandler {
     }
 
     /**
-     * Master method used to syphon from the player's network, and will damage them accordingly if they do not have enough LP.
-     * Does not drain on the client side.
+     * Master method used to syphon from the player's network, and will damage them accordingly if they do not have
+     * enough LP. Does not drain on the client side.
      *
-     * @param ist            Owned itemStack
-     * @param player         Player using the item
+     * @param ist    Owned itemStack
+     * @param player Player using the item
      * @param drain
      * @return True if the action should be executed and false if it should not. Always returns false if client-sided.
      */
@@ -132,8 +132,7 @@ public class SoulNetworkHandler {
             return false;
         }
 
-        if (ist.getTagCompound() != null
-                && !(ist.getTagCompound().getString("ownerName").equals(""))) {
+        if (ist.getTagCompound() != null && !(ist.getTagCompound().getString("ownerName").equals(""))) {
             String ownerName = ist.getTagCompound().getString("ownerName");
 
             ItemDrainNetworkEvent event = new ItemDrainNetworkEvent(player, ownerName, ist, drain);
@@ -147,9 +146,8 @@ public class SoulNetworkHandler {
                 hurtPlayer(player, event.damageAmount);
             }
 
-            return (event.getResult()
-                    != Event.Result
-                            .DENY); // The event has been told to prevent the action but allow all repercussions of
+            return (event.getResult() != Event.Result.DENY); // The event has been told to prevent the action but allow
+                                                             // all repercussions of
             // using the item.
         }
 
@@ -184,8 +182,7 @@ public class SoulNetworkHandler {
     }
 
     public static boolean canSyphonFromOnlyNetwork(ItemStack ist, int damageToBeDone) {
-        if (ist.getTagCompound() != null
-                && !(ist.getTagCompound().getString("ownerName").equals(""))) {
+        if (ist.getTagCompound() != null && !(ist.getTagCompound().getString("ownerName").equals(""))) {
             String ownerName = ist.getTagCompound().getString("ownerName");
 
             return canSyphonFromOnlyNetwork(ownerName, damageToBeDone);
@@ -322,8 +319,7 @@ public class SoulNetworkHandler {
     }
 
     public static boolean checkAndSetItemPlayer(ItemStack item, EntityPlayer player) {
-        if (item.hasTagCompound()
-                && !item.getTagCompound().getString("ownerName").equals("")) return true;
+        if (item.hasTagCompound() && !item.getTagCompound().getString("ownerName").equals("")) return true;
 
         ItemBindEvent event = new ItemBindEvent(player, SoulNetworkHandler.getUsername(player), item);
 
@@ -359,8 +355,7 @@ public class SoulNetworkHandler {
     }
 
     public static void causeNauseaToPlayer(ItemStack stack) {
-        if (stack.getTagCompound() != null
-                && !(stack.getTagCompound().getString("ownerName").equals(""))) {
+        if (stack.getTagCompound() != null && !(stack.getTagCompound().getString("ownerName").equals(""))) {
             String ownerName = stack.getTagCompound().getString("ownerName");
 
             SoulNetworkHandler.causeNauseaToPlayer(ownerName);

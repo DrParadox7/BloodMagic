@@ -1,5 +1,13 @@
 package WayofTime.alchemicalWizardry.common.rituals;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.potion.PotionEffect;
+import net.minecraft.world.World;
+
 import WayofTime.alchemicalWizardry.AlchemicalWizardry;
 import WayofTime.alchemicalWizardry.api.alchemy.energy.ReagentRegistry;
 import WayofTime.alchemicalWizardry.api.rituals.IMasterRitualStone;
@@ -7,14 +15,9 @@ import WayofTime.alchemicalWizardry.api.rituals.RitualComponent;
 import WayofTime.alchemicalWizardry.api.rituals.RitualEffect;
 import WayofTime.alchemicalWizardry.api.soulNetwork.SoulNetworkHandler;
 import WayofTime.alchemicalWizardry.common.spell.complex.effect.SpellHelper;
-import java.util.ArrayList;
-import java.util.List;
-import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.potion.PotionEffect;
-import net.minecraft.world.World;
 
 public class RitualEffectLeap extends RitualEffect {
+
     public static final int aetherDrain = 10;
     public static final int terraeDrain = 10;
     public static final int reductusDrain = 10;
@@ -33,8 +36,8 @@ public class RitualEffectLeap extends RitualEffect {
 
         double range = 2.0;
 
-        List<EntityLivingBase> livingList =
-                SpellHelper.getLivingEntitiesInRange(world, x + 0.5, y + 0.5, z + 0.5, range, range);
+        List<EntityLivingBase> livingList = SpellHelper
+                .getLivingEntitiesInRange(world, x + 0.5, y + 0.5, z + 0.5, range, range);
 
         if (livingList == null) {
             return;
@@ -45,10 +48,10 @@ public class RitualEffectLeap extends RitualEffect {
         } else {
             boolean hasAether = this.canDrainReagent(ritualStone, ReagentRegistry.aetherReagent, aetherDrain, false);
             boolean hasTerrae = this.canDrainReagent(ritualStone, ReagentRegistry.terraeReagent, terraeDrain, false);
-            boolean hasReductus =
-                    this.canDrainReagent(ritualStone, ReagentRegistry.reductusReagent, reductusDrain, false);
-            boolean hasTenebrae =
-                    this.canDrainReagent(ritualStone, ReagentRegistry.tenebraeReagent, tenebraeDrain, false);
+            boolean hasReductus = this
+                    .canDrainReagent(ritualStone, ReagentRegistry.reductusReagent, reductusDrain, false);
+            boolean hasTenebrae = this
+                    .canDrainReagent(ritualStone, ReagentRegistry.tenebraeReagent, tenebraeDrain, false);
             boolean hasSanctus = this.canDrainReagent(ritualStone, ReagentRegistry.sanctusReagent, sanctusDrain, false);
 
             int direction = ritualStone.getDirection();

@@ -3,6 +3,7 @@ package WayofTime.alchemicalWizardry.common.spell.complex.effect.impactEffects.t
 import WayofTime.alchemicalWizardry.api.spell.IRightClickEffect;
 
 public abstract class RightClickEffect implements IRightClickEffect {
+
     protected int powerUpgrades;
     protected int potencyUpgrades;
     protected int costUpgrades;

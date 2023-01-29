@@ -8,6 +8,7 @@ import WayofTime.alchemicalWizardry.api.spell.SpellParadigmSelf;
 import WayofTime.alchemicalWizardry.common.spell.complex.effect.impactEffects.fire.SelfOffensiveFire;
 
 public class CSESelfOffensiveFire extends ComplexSpellEffect {
+
     public CSESelfOffensiveFire() {
         super(ComplexSpellType.FIRE, ComplexSpellModifier.OFFENSIVE);
     }
@@ -35,7 +36,8 @@ public class CSESelfOffensiveFire extends ComplexSpellEffect {
 
     @Override
     public int getCostOfEffect() {
-        return (int)
-                (300 * (3 * powerEnhancement + 1) * (2 * potencyEnhancement + 1) * Math.pow(0.85, costEnhancement));
+        return (int) (300 * (3 * powerEnhancement + 1)
+                * (2 * potencyEnhancement + 1)
+                * Math.pow(0.85, costEnhancement));
     }
 }

@@ -1,10 +1,5 @@
 package WayofTime.alchemicalWizardry.common.entity.mob;
 
-import WayofTime.alchemicalWizardry.AlchemicalWizardry;
-import WayofTime.alchemicalWizardry.ModItems;
-import WayofTime.alchemicalWizardry.common.EntityAITargetAggro;
-import WayofTime.alchemicalWizardry.common.entity.projectile.HolyProjectile;
-import WayofTime.alchemicalWizardry.common.spell.complex.effect.SpellHelper;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.SharedMonsterAttributes;
@@ -20,9 +15,19 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.DamageSource;
 import net.minecraft.world.World;
 
+import WayofTime.alchemicalWizardry.AlchemicalWizardry;
+import WayofTime.alchemicalWizardry.ModItems;
+import WayofTime.alchemicalWizardry.common.EntityAITargetAggro;
+import WayofTime.alchemicalWizardry.common.entity.projectile.HolyProjectile;
+import WayofTime.alchemicalWizardry.common.spell.complex.effect.SpellHelper;
+
 public class EntityShade extends EntityDemon {
-    private EntityAIAttackOnCollide aiAttackOnCollide =
-            new EntityAIAttackOnCollide(this, EntityPlayer.class, 1.2D, false);
+
+    private EntityAIAttackOnCollide aiAttackOnCollide = new EntityAIAttackOnCollide(
+            this,
+            EntityPlayer.class,
+            1.2D,
+            false);
 
     private static float maxTamedHealth = 50.0F;
     private static float maxUntamedHealth = 100.0F;
@@ -231,8 +236,8 @@ public class EntityShade extends EntityDemon {
                         this.heal((float) itemfood.func_150905_g(itemstack));
 
                         if (itemstack.stackSize <= 0) {
-                            par1EntityPlayer.inventory.setInventorySlotContents(
-                                    par1EntityPlayer.inventory.currentItem, null);
+                            par1EntityPlayer.inventory
+                                    .setInventorySlotContents(par1EntityPlayer.inventory.currentItem, null);
                         }
 
                         return true;
@@ -260,8 +265,8 @@ public class EntityShade extends EntityDemon {
             }
 
             if (itemstack.stackSize <= 0) {
-                par1EntityPlayer.inventory.setInventorySlotContents(
-                        par1EntityPlayer.inventory.currentItem, (ItemStack) null);
+                par1EntityPlayer.inventory
+                        .setInventorySlotContents(par1EntityPlayer.inventory.currentItem, (ItemStack) null);
             }
 
             if (!this.worldObj.isRemote) {
@@ -331,12 +336,11 @@ public class EntityShade extends EntityDemon {
                 }
             }
 
-            return par1EntityLivingBase instanceof EntityPlayer
-                            && par2EntityLivingBase instanceof EntityPlayer
-                            && !((EntityPlayer) par2EntityLivingBase)
-                                    .canAttackPlayer((EntityPlayer) par1EntityLivingBase)
-                    ? false
-                    : !(par1EntityLivingBase instanceof EntityHorse) || !((EntityHorse) par1EntityLivingBase).isTame();
+            return par1EntityLivingBase instanceof EntityPlayer && par2EntityLivingBase instanceof EntityPlayer
+                    && !((EntityPlayer) par2EntityLivingBase).canAttackPlayer((EntityPlayer) par1EntityLivingBase)
+                            ? false
+                            : !(par1EntityLivingBase instanceof EntityHorse)
+                                    || !((EntityHorse) par1EntityLivingBase).isTame();
         } else {
             return false;
         }

@@ -1,20 +1,23 @@
 package WayofTime.alchemicalWizardry.common.renderer.projectile;
 
-import WayofTime.alchemicalWizardry.common.entity.projectile.*;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.entity.Render;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.IProjectile;
 import net.minecraft.util.ResourceLocation;
+
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL12;
 
+import WayofTime.alchemicalWizardry.common.entity.projectile.*;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
+
 @SideOnly(Side.CLIENT)
 public class RenderEnergyBlastProjectile extends Render {
-    public void doRenderEnergyBlastProjectile(
-            Entity entityShot, double par2, double par4, double par6, float par8, float par9) {
+
+    public void doRenderEnergyBlastProjectile(Entity entityShot, double par2, double par4, double par6, float par8,
+            float par9) {
         GL11.glPushMatrix();
         GL11.glTranslatef((float) par2, (float) par4, (float) par6);
         GL11.glEnable(GL12.GL_RESCALE_NORMAL);

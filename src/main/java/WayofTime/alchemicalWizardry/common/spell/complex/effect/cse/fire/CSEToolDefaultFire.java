@@ -8,6 +8,7 @@ import WayofTime.alchemicalWizardry.api.spell.SpellParadigmTool;
 import WayofTime.alchemicalWizardry.common.spell.complex.effect.impactEffects.fire.ToolDefaultFire;
 
 public class CSEToolDefaultFire extends ComplexSpellEffect {
+
     public CSEToolDefaultFire() {
         super(ComplexSpellType.FIRE, ComplexSpellModifier.DEFAULT);
     }
@@ -23,9 +24,8 @@ public class CSEToolDefaultFire extends ComplexSpellEffect {
     @Override
     public void modifyParadigm(SpellParadigm parad) {
         if (parad instanceof SpellParadigmTool) {
-            ((SpellParadigmTool) parad)
-                    .addItemManipulatorEffect(
-                            new ToolDefaultFire(powerEnhancement, potencyEnhancement, costEnhancement));
+            ((SpellParadigmTool) parad).addItemManipulatorEffect(
+                    new ToolDefaultFire(powerEnhancement, potencyEnhancement, costEnhancement));
         }
     }
 

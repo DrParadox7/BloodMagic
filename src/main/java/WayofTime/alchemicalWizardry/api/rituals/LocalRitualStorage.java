@@ -1,14 +1,16 @@
 package WayofTime.alchemicalWizardry.api.rituals;
 
-import WayofTime.alchemicalWizardry.api.Int3;
 import net.minecraft.nbt.NBTTagCompound;
 
+import WayofTime.alchemicalWizardry.api.Int3;
+
 /**
- * This class is used to pass ritual-specific data into the RitualEffect from the containing Master Ritual Stone. This is basically used as auxillarary storage,
- * for when simply storing to NBT becomes... difficult.
+ * This class is used to pass ritual-specific data into the RitualEffect from the containing Master Ritual Stone. This
+ * is basically used as auxillarary storage, for when simply storing to NBT becomes... difficult.
  *
  */
 public class LocalRitualStorage {
+
     public int xCoord;
     public int yCoord;
     public int zCoord;

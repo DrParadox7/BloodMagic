@@ -1,18 +1,10 @@
 package WayofTime.alchemicalWizardry.common.rituals;
 
-import WayofTime.alchemicalWizardry.AlchemicalWizardry;
-import WayofTime.alchemicalWizardry.api.Int3;
-import WayofTime.alchemicalWizardry.api.alchemy.energy.ReagentRegistry;
-import WayofTime.alchemicalWizardry.api.rituals.IMasterRitualStone;
-import WayofTime.alchemicalWizardry.api.rituals.RitualComponent;
-import WayofTime.alchemicalWizardry.api.rituals.RitualEffect;
-import WayofTime.alchemicalWizardry.api.soulNetwork.SoulNetworkHandler;
-import WayofTime.alchemicalWizardry.common.ItemType;
-import WayofTime.alchemicalWizardry.common.block.BlockTeleposer;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockOre;
 import net.minecraft.block.BlockRedstoneOre;
@@ -22,7 +14,18 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.world.World;
 import net.minecraftforge.oredict.OreDictionary;
 
+import WayofTime.alchemicalWizardry.AlchemicalWizardry;
+import WayofTime.alchemicalWizardry.api.Int3;
+import WayofTime.alchemicalWizardry.api.alchemy.energy.ReagentRegistry;
+import WayofTime.alchemicalWizardry.api.rituals.IMasterRitualStone;
+import WayofTime.alchemicalWizardry.api.rituals.RitualComponent;
+import WayofTime.alchemicalWizardry.api.rituals.RitualEffect;
+import WayofTime.alchemicalWizardry.api.soulNetwork.SoulNetworkHandler;
+import WayofTime.alchemicalWizardry.common.ItemType;
+import WayofTime.alchemicalWizardry.common.block.BlockTeleposer;
+
 public class RitualEffectMagnetic extends RitualEffect {
+
     private static final int potentiaDrain = 10;
     private static final int terraeDrain = 10;
     private static final int orbisTerraeDrain = 10;
@@ -70,8 +73,8 @@ public class RitualEffectMagnetic extends RitualEffect {
         }
 
         boolean hasTerrae = this.canDrainReagent(ritualStone, ReagentRegistry.terraeReagent, terraeDrain, false);
-        boolean hasOrbisTerrae =
-                this.canDrainReagent(ritualStone, ReagentRegistry.orbisTerraeReagent, orbisTerraeDrain, false);
+        boolean hasOrbisTerrae = this
+                .canDrainReagent(ritualStone, ReagentRegistry.orbisTerraeReagent, orbisTerraeDrain, false);
 
         int radius = this.getRadiusForReagents(hasTerrae, hasOrbisTerrae);
 
@@ -83,8 +86,7 @@ public class RitualEffectMagnetic extends RitualEffect {
             int zRep = 0;
             boolean replace = false;
 
-            outer:
-            for (int j = 1; j <= 3; j++) {
+            outer: for (int j = 1; j <= 3; j++) {
                 for (int i = -1; i <= 1; i++) {
                     for (int k = -1; k <= 1; k++) {
                         if ((!replace) && world.isAirBlock(x + i, y + j, z + k)) {
@@ -124,7 +126,10 @@ public class RitualEffectMagnetic extends RitualEffect {
 
                                 if (hasPotentia) {
                                     this.canDrainReagent(
-                                            ritualStone, ReagentRegistry.potentiaReagent, potentiaDrain, true);
+                                            ritualStone,
+                                            ReagentRegistry.potentiaReagent,
+                                            potentiaDrain,
+                                            true);
                                 }
 
                                 if (hasTerrae) {
@@ -133,7 +138,10 @@ public class RitualEffectMagnetic extends RitualEffect {
 
                                 if (hasOrbisTerrae) {
                                     this.canDrainReagent(
-                                            ritualStone, ReagentRegistry.orbisTerraeReagent, orbisTerraeDrain, true);
+                                            ritualStone,
+                                            ReagentRegistry.orbisTerraeReagent,
+                                            orbisTerraeDrain,
+                                            true);
                                 }
 
                                 this.setLastPosition(ritualStone.getCustomRitualTag(), new Int3(i, j, k));

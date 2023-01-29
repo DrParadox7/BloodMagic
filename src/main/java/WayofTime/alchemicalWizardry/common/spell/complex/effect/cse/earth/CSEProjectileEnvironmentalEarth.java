@@ -8,6 +8,7 @@ import WayofTime.alchemicalWizardry.api.spell.SpellParadigmProjectile;
 import WayofTime.alchemicalWizardry.common.spell.complex.effect.impactEffects.earth.ProjectileEnvironmentalEarth;
 
 public class CSEProjectileEnvironmentalEarth extends ComplexSpellEffect {
+
     public CSEProjectileEnvironmentalEarth() {
         super(ComplexSpellType.EARTH, ComplexSpellModifier.ENVIRONMENTAL);
     }
@@ -22,9 +23,11 @@ public class CSEProjectileEnvironmentalEarth extends ComplexSpellEffect {
     @Override
     public void modifyParadigm(SpellParadigm parad) {
         if (parad instanceof SpellParadigmProjectile) {
-            ((SpellParadigmProjectile) parad)
-                    .addUpdateEffect(new ProjectileEnvironmentalEarth(
-                            this.powerEnhancement, this.potencyEnhancement, this.costEnhancement));
+            ((SpellParadigmProjectile) parad).addUpdateEffect(
+                    new ProjectileEnvironmentalEarth(
+                            this.powerEnhancement,
+                            this.potencyEnhancement,
+                            this.costEnhancement));
         }
     }
 
@@ -35,8 +38,7 @@ public class CSEProjectileEnvironmentalEarth extends ComplexSpellEffect {
 
     @Override
     public int getCostOfEffect() {
-        return (int) (10
-                * 2
+        return (int) (10 * 2
                 * (0.1d * (this.potencyEnhancement + 1))
                 * Math.pow(3.47, this.potencyEnhancement)
                 * Math.pow(0.85, costEnhancement));

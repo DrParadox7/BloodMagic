@@ -2,11 +2,13 @@ package pneumaticCraft.api.recipe;
 
 import java.util.ArrayList;
 import java.util.List;
+
 import net.minecraft.block.Block;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 
 public class AssemblyRecipe {
+
     public static List<AssemblyRecipe> drillRecipes = new ArrayList<AssemblyRecipe>();
     public static List<AssemblyRecipe> laserRecipes = new ArrayList<AssemblyRecipe>();
     public static List<AssemblyRecipe> drillLaserRecipes = new ArrayList<AssemblyRecipe>();

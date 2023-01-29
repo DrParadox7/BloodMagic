@@ -1,20 +1,23 @@
 package WayofTime.alchemicalWizardry.common.renderer.block;
 
-import WayofTime.alchemicalWizardry.api.alchemy.energy.Reagent;
-import WayofTime.alchemicalWizardry.api.alchemy.energy.ReagentContainerInfo;
-import WayofTime.alchemicalWizardry.api.alchemy.energy.ReagentStack;
-import WayofTime.alchemicalWizardry.common.renderer.model.ModelCrystalBelljar;
-import WayofTime.alchemicalWizardry.common.tileEntity.TEBellJar;
-import cpw.mods.fml.client.FMLClientHandler;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.MathHelper;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.common.util.ForgeDirection;
+
 import org.lwjgl.opengl.GL11;
 
+import WayofTime.alchemicalWizardry.api.alchemy.energy.Reagent;
+import WayofTime.alchemicalWizardry.api.alchemy.energy.ReagentContainerInfo;
+import WayofTime.alchemicalWizardry.api.alchemy.energy.ReagentStack;
+import WayofTime.alchemicalWizardry.common.renderer.model.ModelCrystalBelljar;
+import WayofTime.alchemicalWizardry.common.tileEntity.TEBellJar;
+import cpw.mods.fml.client.FMLClientHandler;
+
 public class RenderCrystalBelljar extends TileEntitySpecialRenderer {
+
     private ModelCrystalBelljar modelConduit = new ModelCrystalBelljar();
 
     private ResourceLocation resourceLocation = new ResourceLocation("alchemicalwizardry:textures/models/Reagent.png");
@@ -52,8 +55,8 @@ public class RenderCrystalBelljar extends TileEntitySpecialRenderer {
         }
     }
 
-    private void renderTankContents(
-            double x, double y, double z, int colourRed, int colourGreen, int colourBlue, int colourIntensity) {
+    private void renderTankContents(double x, double y, double z, int colourRed, int colourGreen, int colourBlue,
+            int colourIntensity) {
         GL11.glPushMatrix();
         float f1 = 1.0f;
         Tessellator tessellator = Tessellator.instance;

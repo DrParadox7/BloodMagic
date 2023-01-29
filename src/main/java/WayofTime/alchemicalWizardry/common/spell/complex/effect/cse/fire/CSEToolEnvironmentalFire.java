@@ -9,6 +9,7 @@ import WayofTime.alchemicalWizardry.common.spell.complex.effect.SpellHelper;
 import WayofTime.alchemicalWizardry.common.spell.complex.effect.impactEffects.fire.ToolEnvironmentalFire;
 
 public class CSEToolEnvironmentalFire extends ComplexSpellEffect {
+
     public CSEToolEnvironmentalFire() {
         super(ComplexSpellType.FIRE, ComplexSpellModifier.ENVIRONMENTAL);
     }
@@ -24,13 +25,12 @@ public class CSEToolEnvironmentalFire extends ComplexSpellEffect {
     @Override
     public void modifyParadigm(SpellParadigm parad) {
         if (parad instanceof SpellParadigmTool) {
-            ((SpellParadigmTool) parad)
-                    .addBlockBreakEffect(new ToolEnvironmentalFire(
-                            this.powerEnhancement, this.potencyEnhancement, this.costEnhancement));
+            ((SpellParadigmTool) parad).addBlockBreakEffect(
+                    new ToolEnvironmentalFire(this.powerEnhancement, this.potencyEnhancement, this.costEnhancement));
 
-            ((SpellParadigmTool) parad)
-                    .addToolString(
-                            "envFire", "Magma Plume" + " " + SpellHelper.getNumeralForInt(this.powerEnhancement + 1));
+            ((SpellParadigmTool) parad).addToolString(
+                    "envFire",
+                    "Magma Plume" + " " + SpellHelper.getNumeralForInt(this.powerEnhancement + 1));
         }
     }
 

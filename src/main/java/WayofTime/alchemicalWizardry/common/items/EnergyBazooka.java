@@ -1,10 +1,7 @@
 package WayofTime.alchemicalWizardry.common.items;
 
-import WayofTime.alchemicalWizardry.AlchemicalWizardry;
-import WayofTime.alchemicalWizardry.common.entity.projectile.EntityEnergyBazookaMainProjectile;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
 import java.util.List;
+
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
@@ -15,7 +12,13 @@ import net.minecraft.util.StatCollector;
 import net.minecraft.util.Vec3;
 import net.minecraft.world.World;
 
+import WayofTime.alchemicalWizardry.AlchemicalWizardry;
+import WayofTime.alchemicalWizardry.common.entity.projectile.EntityEnergyBazookaMainProjectile;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
+
 public class EnergyBazooka extends EnergyItems {
+
     @SideOnly(Side.CLIENT)
     private IIcon activeIcon;
 
@@ -107,8 +110,7 @@ public class EnergyBazooka extends EnergyItems {
         }
         if (!EnergyItems.checkAndSetItemOwner(par1ItemStack, par3EntityPlayer) || par3EntityPlayer.isSneaking()) {
             this.setActivated(par1ItemStack, !getActivated(par1ItemStack));
-            par1ItemStack
-                    .getTagCompound()
+            par1ItemStack.getTagCompound()
                     .setInteger("worldTimeDelay", (int) (par2World.getWorldTime() - 1) % maxDelayAfterActivation);
             return par1ItemStack;
         }
@@ -184,7 +186,7 @@ public class EnergyBazooka extends EnergyItems {
                 break;
         }
         if (par2World.getWorldTime() % maxDelayAfterActivation
-                        == par1ItemStack.getTagCompound().getInteger("worldTimeDelay")
+                == par1ItemStack.getTagCompound().getInteger("worldTimeDelay")
                 && par1ItemStack.getTagCompound().getBoolean("isActive")) {
             if (!par3EntityPlayer.capabilities.isCreativeMode) {
                 if (!EnergyItems.syphonBatteries(par1ItemStack, par3EntityPlayer, lpPerActivation)) {
@@ -198,7 +200,7 @@ public class EnergyBazooka extends EnergyItems {
 
     @Override
     @SideOnly(Side.CLIENT)
-    @SuppressWarnings({"unchecked", "rawtypes"})
+    @SuppressWarnings({ "unchecked", "rawtypes" })
     public void addInformation(ItemStack par1ItemStack, EntityPlayer par2EntityPlayer, List par3List, boolean par4) {
         par3List.add(StatCollector.translateToLocal("tooltip.energybazooka.desc"));
         par3List.add(StatCollector.translateToLocal("tooltip.alchemy.damage") + " " + this.damage);
@@ -209,8 +211,9 @@ public class EnergyBazooka extends EnergyItems {
                 par3List.add(StatCollector.translateToLocal("tooltip.sigil.state.deactivated"));
             }
             if (!par1ItemStack.getTagCompound().getString("ownerName").equals("")) {
-                par3List.add(StatCollector.translateToLocal("tooltip.owner.currentowner") + " "
-                        + par1ItemStack.getTagCompound().getString("ownerName"));
+                par3List.add(
+                        StatCollector.translateToLocal("tooltip.owner.currentowner") + " "
+                                + par1ItemStack.getTagCompound().getString("ownerName"));
             }
         }
     }

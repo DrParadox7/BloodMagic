@@ -1,13 +1,15 @@
 package WayofTime.alchemicalWizardry.common.entity.projectile;
 
-import WayofTime.alchemicalWizardry.common.summoning.meteor.MeteorRegistry;
 import net.minecraft.entity.Entity;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.world.World;
 
+import WayofTime.alchemicalWizardry.common.summoning.meteor.MeteorRegistry;
+
 public class EntityMeteor extends EnergyBlastProjectile {
+
     private int meteorID;
 
     public boolean hasTerrae;
@@ -65,9 +67,12 @@ public class EntityMeteor extends EnergyBlastProjectile {
             this.onImpact(mop.entityHit);
         } else if (mop.typeOfHit == MovingObjectPosition.MovingObjectType.BLOCK) {
             MeteorRegistry.createMeteorImpact(
-                    worldObj, mop.blockX, mop.blockY, mop.blockZ, this.meteorID, new boolean[] {
-                        hasTerrae, hasOrbisTerrae, hasCrystallos, hasIncendium, hasTennebrae
-                    });
+                    worldObj,
+                    mop.blockX,
+                    mop.blockY,
+                    mop.blockZ,
+                    this.meteorID,
+                    new boolean[] { hasTerrae, hasOrbisTerrae, hasCrystallos, hasIncendium, hasTennebrae });
         }
 
         this.setDead();
@@ -76,9 +81,12 @@ public class EntityMeteor extends EnergyBlastProjectile {
     @Override
     public void onImpact(Entity mop) {
         MeteorRegistry.createMeteorImpact(
-                worldObj, (int) this.posX, (int) this.posY, (int) this.posZ, meteorID, new boolean[] {
-                    hasTerrae, hasOrbisTerrae, hasCrystallos, hasIncendium, hasTennebrae
-                });
+                worldObj,
+                (int) this.posX,
+                (int) this.posY,
+                (int) this.posZ,
+                meteorID,
+                new boolean[] { hasTerrae, hasOrbisTerrae, hasCrystallos, hasIncendium, hasTennebrae });
 
         this.setDead();
     }

@@ -1,14 +1,8 @@
 package WayofTime.alchemicalWizardry.common.rituals;
 
-import WayofTime.alchemicalWizardry.AlchemicalWizardry;
-import WayofTime.alchemicalWizardry.api.alchemy.energy.ReagentRegistry;
-import WayofTime.alchemicalWizardry.api.rituals.IMasterRitualStone;
-import WayofTime.alchemicalWizardry.api.rituals.RitualComponent;
-import WayofTime.alchemicalWizardry.api.rituals.RitualEffect;
-import WayofTime.alchemicalWizardry.api.soulNetwork.SoulNetworkHandler;
-import WayofTime.alchemicalWizardry.common.spell.complex.effect.SpellHelper;
 import java.util.ArrayList;
 import java.util.List;
+
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
@@ -16,7 +10,16 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
 import net.minecraftforge.common.util.ForgeDirection;
 
+import WayofTime.alchemicalWizardry.AlchemicalWizardry;
+import WayofTime.alchemicalWizardry.api.alchemy.energy.ReagentRegistry;
+import WayofTime.alchemicalWizardry.api.rituals.IMasterRitualStone;
+import WayofTime.alchemicalWizardry.api.rituals.RitualComponent;
+import WayofTime.alchemicalWizardry.api.rituals.RitualEffect;
+import WayofTime.alchemicalWizardry.api.soulNetwork.SoulNetworkHandler;
+import WayofTime.alchemicalWizardry.common.spell.complex.effect.SpellHelper;
+
 public class RitualEffectItemSuction extends RitualEffect {
+
     public static final int reductusDrain = 1;
 
     public static final int timeDelayMin = 60;
@@ -49,8 +52,8 @@ public class RitualEffectItemSuction extends RitualEffect {
         } else {
             List<EntityItem> itemDropList = SpellHelper.getItemsInRange(world, x + 0.5f, y + 0.5f, z + 0.5f, 10, 10);
 
-            boolean hasReductus =
-                    this.canDrainReagent(ritualStone, ReagentRegistry.reductusReagent, reductusDrain, false);
+            boolean hasReductus = this
+                    .canDrainReagent(ritualStone, ReagentRegistry.reductusReagent, reductusDrain, false);
 
             int count = 0;
 
@@ -67,8 +70,8 @@ public class RitualEffectItemSuction extends RitualEffect {
                     ItemStack copyStack = itemEntity.getEntityItem().copy();
 
                     int pastAmount = copyStack.stackSize;
-                    ItemStack newStack =
-                            SpellHelper.insertStackIntoInventory(copyStack, tileEntity, ForgeDirection.DOWN);
+                    ItemStack newStack = SpellHelper
+                            .insertStackIntoInventory(copyStack, tileEntity, ForgeDirection.DOWN);
 
                     if (newStack != null && newStack.stackSize < pastAmount) {
                         count++;

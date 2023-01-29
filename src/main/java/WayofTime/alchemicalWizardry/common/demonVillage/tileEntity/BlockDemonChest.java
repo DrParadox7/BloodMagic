@@ -1,13 +1,15 @@
 package WayofTime.alchemicalWizardry.common.demonVillage.tileEntity;
 
-import WayofTime.alchemicalWizardry.AlchemicalWizardry;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockChest;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
 
+import WayofTime.alchemicalWizardry.AlchemicalWizardry;
+
 public class BlockDemonChest extends BlockChest implements IBlockPortalNode {
+
     public BlockDemonChest() {
         super(0);
         this.setHardness(2.5F).setStepSound(soundTypeWood).setBlockName("demonChest");

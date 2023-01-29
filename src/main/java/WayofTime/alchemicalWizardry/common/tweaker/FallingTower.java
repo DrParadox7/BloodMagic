@@ -2,22 +2,26 @@ package WayofTime.alchemicalWizardry.common.tweaker;
 
 import static WayofTime.alchemicalWizardry.common.tweaker.MTHelper.toStack;
 
-import WayofTime.alchemicalWizardry.common.summoning.meteor.MeteorParadigm;
-import WayofTime.alchemicalWizardry.common.summoning.meteor.MeteorRegistry;
 import java.util.Iterator;
+
 import minetweaker.IUndoableAction;
 import minetweaker.MineTweakerAPI;
 import minetweaker.api.item.IItemStack;
+
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.oredict.OreDictionary;
+
 import stanhebben.zenscript.annotations.ZenClass;
 import stanhebben.zenscript.annotations.ZenMethod;
+import WayofTime.alchemicalWizardry.common.summoning.meteor.MeteorParadigm;
+import WayofTime.alchemicalWizardry.common.summoning.meteor.MeteorRegistry;
 
 /**
  * MineTweaker3 Falling Tower Paradigm Handler by hilburn *
  */
 @ZenClass("mods.bloodmagic.FallingTower")
 public class FallingTower {
+
     @ZenMethod
     public static void addFocus(IItemStack stack, int radius, String[] components) {
         MineTweakerAPI.apply(new Add(toStack(stack), radius, 10000, components));
@@ -44,6 +48,7 @@ public class FallingTower {
     }
 
     private static class Add implements IUndoableAction {
+
         private MeteorParadigm paradigm;
 
         public Add(ItemStack stack, int radius, int cost, String[] components) {
@@ -83,6 +88,7 @@ public class FallingTower {
     }
 
     private static class Remove implements IUndoableAction {
+
         private final ItemStack focus;
         private MeteorParadigm paradigm;
 
@@ -92,7 +98,7 @@ public class FallingTower {
 
         @Override
         public void apply() {
-            for (Iterator<MeteorParadigm> itr = MeteorRegistry.paradigmList.iterator(); itr.hasNext(); ) {
+            for (Iterator<MeteorParadigm> itr = MeteorRegistry.paradigmList.iterator(); itr.hasNext();) {
                 MeteorParadigm paradigm = itr.next();
                 if (OreDictionary.itemMatches(paradigm.focusStack, focus, false)) {
                     this.paradigm = paradigm;

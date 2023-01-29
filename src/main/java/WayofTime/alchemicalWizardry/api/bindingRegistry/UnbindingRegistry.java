@@ -3,11 +3,13 @@ package WayofTime.alchemicalWizardry.api.bindingRegistry;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
+
 import net.minecraft.block.Block;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 
 public class UnbindingRegistry {
+
     public static List<UnbindingRecipe> unbindingRecipes = new LinkedList<UnbindingRecipe>();
 
     public static void addAllUnbindingRecipesFromBinding() {

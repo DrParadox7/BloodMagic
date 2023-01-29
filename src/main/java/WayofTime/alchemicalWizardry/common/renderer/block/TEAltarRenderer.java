@@ -1,7 +1,5 @@
 package WayofTime.alchemicalWizardry.common.renderer.block;
 
-import WayofTime.alchemicalWizardry.common.renderer.model.ModelBloodAltar;
-import WayofTime.alchemicalWizardry.common.tileEntity.TEAltar;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.entity.RenderItem;
 import net.minecraft.client.renderer.entity.RenderManager;
@@ -11,14 +9,20 @@ import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraftforge.common.util.ForgeDirection;
+
 import org.lwjgl.opengl.GL11;
 
+import WayofTime.alchemicalWizardry.common.renderer.model.ModelBloodAltar;
+import WayofTime.alchemicalWizardry.common.tileEntity.TEAltar;
+
 public class TEAltarRenderer extends TileEntitySpecialRenderer {
+
     private ModelBloodAltar modelBloodAltar = new ModelBloodAltar();
     private final RenderItem customRenderItem;
 
     public TEAltarRenderer() {
         customRenderItem = new RenderItem() {
+
             @Override
             public boolean shouldBob() {
                 return false;
@@ -110,8 +114,8 @@ public class TEAltarRenderer extends TileEntitySpecialRenderer {
         return scaleFactor;
     }
 
-    private void translateGhostItemByOrientation(
-            ItemStack ghostItemStack, double x, double y, double z, ForgeDirection forgeDirection) {
+    private void translateGhostItemByOrientation(ItemStack ghostItemStack, double x, double y, double z,
+            ForgeDirection forgeDirection) {
         if (ghostItemStack != null) {
             if (ghostItemStack.getItem() instanceof ItemBlock) {
                 switch (forgeDirection) {

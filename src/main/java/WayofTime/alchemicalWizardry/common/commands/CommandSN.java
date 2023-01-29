@@ -1,14 +1,17 @@
 package WayofTime.alchemicalWizardry.common.commands;
 
-import WayofTime.alchemicalWizardry.api.soulNetwork.SoulNetworkHandler;
 import java.util.List;
+
 import net.minecraft.command.CommandBase;
 import net.minecraft.command.CommandException;
 import net.minecraft.command.ICommandSender;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.server.MinecraftServer;
 
+import WayofTime.alchemicalWizardry.api.soulNetwork.SoulNetworkHandler;
+
 public class CommandSN extends CommandBase {
+
     public CommandSN() {}
 
     @Override
@@ -91,7 +94,14 @@ public class CommandSN extends CommandBase {
             return getListOfStringsMatchingLastWord(astring, this.getPlayer());
         } else if (astring.length == 2) {
             return getListOfStringsMatchingLastWord(
-                    astring, "add", "subtract", "fill", "empty", "get", "fillMax", "create");
+                    astring,
+                    "add",
+                    "subtract",
+                    "fill",
+                    "empty",
+                    "get",
+                    "fillMax",
+                    "create");
         }
 
         return null;

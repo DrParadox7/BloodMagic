@@ -1,11 +1,5 @@
 package WayofTime.alchemicalWizardry.common.renderer.block;
 
-import WayofTime.alchemicalWizardry.api.alchemy.energy.Reagent;
-import WayofTime.alchemicalWizardry.api.alchemy.energy.ReagentContainerInfo;
-import WayofTime.alchemicalWizardry.api.alchemy.energy.ReagentStack;
-import WayofTime.alchemicalWizardry.common.renderer.model.ModelAlchemicalCalcinator;
-import WayofTime.alchemicalWizardry.common.tileEntity.TEAlchemicCalcinator;
-import cpw.mods.fml.client.FMLClientHandler;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.entity.RenderItem;
@@ -17,9 +11,18 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.common.util.ForgeDirection;
+
 import org.lwjgl.opengl.GL11;
 
+import WayofTime.alchemicalWizardry.api.alchemy.energy.Reagent;
+import WayofTime.alchemicalWizardry.api.alchemy.energy.ReagentContainerInfo;
+import WayofTime.alchemicalWizardry.api.alchemy.energy.ReagentStack;
+import WayofTime.alchemicalWizardry.common.renderer.model.ModelAlchemicalCalcinator;
+import WayofTime.alchemicalWizardry.common.tileEntity.TEAlchemicCalcinator;
+import cpw.mods.fml.client.FMLClientHandler;
+
 public class RenderAlchemicCalcinator extends TileEntitySpecialRenderer {
+
     private final RenderItem customRenderItem;
     private ModelAlchemicalCalcinator modelConduit = new ModelAlchemicalCalcinator();
 
@@ -27,6 +30,7 @@ public class RenderAlchemicCalcinator extends TileEntitySpecialRenderer {
 
     public RenderAlchemicCalcinator() {
         customRenderItem = new RenderItem() {
+
             @Override
             public boolean shouldBob() {
                 return false;
@@ -134,8 +138,8 @@ public class RenderAlchemicCalcinator extends TileEntitySpecialRenderer {
         }
     }
 
-    private void renderTankContents(
-            double x, double y, double z, int colourRed, int colourGreen, int colourBlue, int colourIntensity) {
+    private void renderTankContents(double x, double y, double z, int colourRed, int colourGreen, int colourBlue,
+            int colourIntensity) {
         GL11.glPushMatrix();
         Tessellator tessellator = Tessellator.instance;
         this.bindTexture(resourceLocation);
@@ -304,8 +308,8 @@ public class RenderAlchemicCalcinator extends TileEntitySpecialRenderer {
         }
     }
 
-    private void translateGhostItemByOrientation(
-            ItemStack ghostItemStack, double x, double y, double z, ForgeDirection forgeDirection) {
+    private void translateGhostItemByOrientation(ItemStack ghostItemStack, double x, double y, double z,
+            ForgeDirection forgeDirection) {
         if (ghostItemStack != null) {
             if (ghostItemStack.getItem() instanceof ItemBlock) {
                 switch (forgeDirection) {
@@ -343,8 +347,7 @@ public class RenderAlchemicCalcinator extends TileEntitySpecialRenderer {
                         return;
                     }
 
-                    default: {
-                    }
+                    default: {}
                 }
             } else {
                 switch (forgeDirection) {
@@ -382,8 +385,7 @@ public class RenderAlchemicCalcinator extends TileEntitySpecialRenderer {
                         return;
                     }
 
-                    default: {
-                    }
+                    default: {}
                 }
             }
         }

@@ -1,6 +1,7 @@
 package WayofTime.alchemicalWizardry.common;
 
 import java.util.Objects;
+
 import net.minecraft.block.Block;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -12,6 +13,7 @@ import net.minecraft.nbt.NBTTagCompound;
  * @author ljfa-ag
  */
 public class ItemType {
+
     public final Item item;
     public final int meta;
     public final NBTTagCompound nbtTag;

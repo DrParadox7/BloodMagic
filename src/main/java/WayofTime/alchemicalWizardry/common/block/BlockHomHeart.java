@@ -1,10 +1,5 @@
 package WayofTime.alchemicalWizardry.common.block;
 
-import WayofTime.alchemicalWizardry.AlchemicalWizardry;
-import WayofTime.alchemicalWizardry.common.items.BlankSpell;
-import WayofTime.alchemicalWizardry.common.tileEntity.TEHomHeart;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.block.BlockContainer;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.renderer.texture.IIconRegister;
@@ -15,7 +10,14 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.IIcon;
 import net.minecraft.world.World;
 
+import WayofTime.alchemicalWizardry.AlchemicalWizardry;
+import WayofTime.alchemicalWizardry.common.items.BlankSpell;
+import WayofTime.alchemicalWizardry.common.tileEntity.TEHomHeart;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
+
 public class BlockHomHeart extends BlockContainer {
+
     @SideOnly(Side.CLIENT)
     private IIcon bottomIcon;
 
@@ -55,8 +57,8 @@ public class BlockHomHeart extends BlockContainer {
     }
 
     @Override
-    public boolean onBlockActivated(
-            World world, int x, int y, int z, EntityPlayer player, int idk, float what, float these, float are) {
+    public boolean onBlockActivated(World world, int x, int y, int z, EntityPlayer player, int idk, float what,
+            float these, float are) {
         TEHomHeart tileEntity = (TEHomHeart) world.getTileEntity(x, y, z);
 
         if (tileEntity == null || player.isSneaking()) {

@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
+
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
 
@@ -13,6 +14,7 @@ import net.minecraft.world.World;
  *
  */
 public class CompressionRegistry {
+
     public static List<CompressionHandler> compressionRegistry = new ArrayList();
     public static Map<ItemStack, Integer> thresholdMap = new HashMap();
 
@@ -22,6 +24,7 @@ public class CompressionRegistry {
 
     /**
      * Registers an item so that it only compresses while above this threshold
+     * 
      * @param stack
      * @param threshold
      */
@@ -52,8 +55,7 @@ public class CompressionRegistry {
 
     public static boolean areItemStacksEqual(ItemStack stack, ItemStack compressedStack) {
         return stack.isItemEqual(compressedStack)
-                && (stack.getTagCompound() == null
-                        ? compressedStack.getTagCompound() == null
+                && (stack.getTagCompound() == null ? compressedStack.getTagCompound() == null
                         : stack.getTagCompound().equals(compressedStack.getTagCompound()));
     }
 }

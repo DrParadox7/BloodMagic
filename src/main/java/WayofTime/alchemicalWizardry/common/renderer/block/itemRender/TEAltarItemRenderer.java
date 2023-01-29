@@ -1,14 +1,17 @@
 package WayofTime.alchemicalWizardry.common.renderer.block.itemRender;
 
-import WayofTime.alchemicalWizardry.common.renderer.model.ModelBloodAltar;
-import cpw.mods.fml.client.FMLClientHandler;
 import net.minecraft.client.renderer.RenderBlocks;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.client.IItemRenderer;
+
 import org.lwjgl.opengl.GL11;
 
+import WayofTime.alchemicalWizardry.common.renderer.model.ModelBloodAltar;
+import cpw.mods.fml.client.FMLClientHandler;
+
 public class TEAltarItemRenderer implements IItemRenderer {
+
     private ModelBloodAltar modelBloodAltar;
 
     public TEAltarItemRenderer() {

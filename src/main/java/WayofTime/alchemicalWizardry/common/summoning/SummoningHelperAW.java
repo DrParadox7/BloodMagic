@@ -1,5 +1,9 @@
 package WayofTime.alchemicalWizardry.common.summoning;
 
+import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.passive.EntityPig;
+import net.minecraft.world.World;
+
 import WayofTime.alchemicalWizardry.AlchemicalWizardry;
 import WayofTime.alchemicalWizardry.api.summoningRegistry.SummoningHelper;
 import WayofTime.alchemicalWizardry.common.demonVillage.demonHoard.demon.EntityMinorDemonGrunt;
@@ -21,11 +25,9 @@ import WayofTime.alchemicalWizardry.common.entity.mob.EntityShadeElemental;
 import WayofTime.alchemicalWizardry.common.entity.mob.EntitySmallEarthGolem;
 import WayofTime.alchemicalWizardry.common.entity.mob.EntityWaterElemental;
 import WayofTime.alchemicalWizardry.common.entity.mob.EntityWingedFireDemon;
-import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.entity.passive.EntityPig;
-import net.minecraft.world.World;
 
 public class SummoningHelperAW extends SummoningHelper {
+
     public SummoningHelperAW(String id) {
         super(id);
     }

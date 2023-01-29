@@ -1,12 +1,8 @@
 package WayofTime.alchemicalWizardry.common.items.sigil;
 
-import WayofTime.alchemicalWizardry.AlchemicalWizardry;
-import WayofTime.alchemicalWizardry.api.Int3;
-import WayofTime.alchemicalWizardry.api.items.interfaces.ISigil;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
 import java.util.ArrayList;
 import java.util.List;
+
 import net.minecraft.block.Block;
 import net.minecraft.block.material.MaterialLiquid;
 import net.minecraft.client.renderer.texture.IIconRegister;
@@ -23,7 +19,14 @@ import net.minecraft.world.World;
 import net.minecraftforge.common.util.ForgeDirection;
 import net.minecraftforge.fluids.*;
 
+import WayofTime.alchemicalWizardry.AlchemicalWizardry;
+import WayofTime.alchemicalWizardry.api.Int3;
+import WayofTime.alchemicalWizardry.api.items.interfaces.ISigil;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
+
 public class SigilFluid extends Item implements IFluidContainerItem, ISigil {
+
     private int capacity = 128 * 1000;
     private static final int STATE_SYPHON = 0;
     private static final int STATE_FORCE_SYPHON = 1;
@@ -297,8 +300,7 @@ public class SigilFluid extends Item implements IFluidContainerItem, ISigil {
                     }
                     if (world.getBlock(x + i - range, y + j - range, z + k - range) != null
                             && world.getBlock(x + i - range, y + j - range, z + k - range)
-                                            .getMaterial()
-                                    instanceof MaterialLiquid) {
+                                    .getMaterial() instanceof MaterialLiquid) {
                         // world.setBlockToAir(x+i-range, y+j-range, z+k-range);
                         Block block = world.getBlock(x + i - range, y + j - range, z + k - range);
                         if (block == null) {
@@ -306,8 +308,8 @@ public class SigilFluid extends Item implements IFluidContainerItem, ISigil {
                         }
                         Fluid fluid = FluidRegistry.lookupFluidForBlock(block);
 
-                        AlchemicalWizardry.logger.info(
-                                "x: " + (i - range) + " y: " + (j - range) + " z: " + (k - range));
+                        AlchemicalWizardry.logger
+                                .info("x: " + (i - range) + " y: " + (j - range) + " z: " + (k - range));
 
                         if (fluid == null || world.getBlockMetadata(x + i - range, y + j - range, z + k - range) != 0) {
                             continue;
@@ -373,8 +375,7 @@ public class SigilFluid extends Item implements IFluidContainerItem, ISigil {
 
                         this.fill(container, new FluidStack(fluid, 1000), true);
 
-                        if (!player.capabilities.isCreativeMode) {
-                        } else {
+                        if (!player.capabilities.isCreativeMode) {} else {
                             return container;
                         }
                     }
@@ -393,8 +394,9 @@ public class SigilFluid extends Item implements IFluidContainerItem, ISigil {
 
             float f = 1.0F;
             double d0 = player.prevPosX + (player.posX - player.prevPosX) * (double) f;
-            double d1 =
-                    player.prevPosY + (player.posY - player.prevPosY) * (double) f + 1.62D - (double) player.yOffset;
+            double d1 = player.prevPosY + (player.posY - player.prevPosY) * (double) f
+                    + 1.62D
+                    - (double) player.yOffset;
             double d2 = player.prevPosZ + (player.posZ - player.prevPosZ) * (double) f;
             boolean flag = false;
             MovingObjectPosition movingobjectposition = this.getMovingObjectPositionFromPlayer(world, player, flag);
@@ -454,40 +456,39 @@ public class SigilFluid extends Item implements IFluidContainerItem, ISigil {
         return container;
     }
 
-    public boolean tryPlaceContainedLiquid(
-            World par1World, Block block, double par2, double par4, double par6, int par8, int par9, int par10) {
-        if (!par1World.isAirBlock(par8, par9, par10)
-                && par1World.getBlock(par8, par9, par10).func_149730_j()) {
+    public boolean tryPlaceContainedLiquid(World par1World, Block block, double par2, double par4, double par6,
+            int par8, int par9, int par10) {
+        if (!par1World.isAirBlock(par8, par9, par10) && par1World.getBlock(par8, par9, par10).func_149730_j()) {
             return false;
         } else if ((par1World.getBlock(par8, par9, par10).getMaterial() instanceof MaterialLiquid
                 && (par1World.getBlockMetadata(par8, par9, par10) == 0))) {
-            return false;
-        } else {
-            if ((block == Blocks.water || block == Blocks.flowing_water) && par1World.provider.isHellWorld) {
-                par1World.playSoundEffect(
-                        par2 + 0.5D,
-                        par4 + 0.5D,
-                        par6 + 0.5D,
-                        "random.fizz",
-                        0.5F,
-                        2.6F + (par1World.rand.nextFloat() - par1World.rand.nextFloat()) * 0.8F);
+                    return false;
+                } else {
+                    if ((block == Blocks.water || block == Blocks.flowing_water) && par1World.provider.isHellWorld) {
+                        par1World.playSoundEffect(
+                                par2 + 0.5D,
+                                par4 + 0.5D,
+                                par6 + 0.5D,
+                                "random.fizz",
+                                0.5F,
+                                2.6F + (par1World.rand.nextFloat() - par1World.rand.nextFloat()) * 0.8F);
 
-                for (int l = 0; l < 8; ++l) {
-                    par1World.spawnParticle(
-                            "largesmoke",
-                            (double) par8 + Math.random(),
-                            (double) par9 + Math.random(),
-                            (double) par10 + Math.random(),
-                            0.0D,
-                            0.0D,
-                            0.0D);
+                        for (int l = 0; l < 8; ++l) {
+                            par1World.spawnParticle(
+                                    "largesmoke",
+                                    (double) par8 + Math.random(),
+                                    (double) par9 + Math.random(),
+                                    (double) par10 + Math.random(),
+                                    0.0D,
+                                    0.0D,
+                                    0.0D);
+                        }
+                    } else {
+                        par1World.setBlock(par8, par9, par10, block, 0, 3);
+                    }
+
+                    return true;
                 }
-            } else {
-                par1World.setBlock(par8, par9, par10, block, 0, 3);
-            }
-
-            return true;
-        }
     }
 
     public ItemStack fillSelectedTank(ItemStack container, World world, EntityPlayer player) {
@@ -539,20 +540,18 @@ public class SigilFluid extends Item implements IFluidContainerItem, ISigil {
                 TileEntity tile = world.getTileEntity(i, j, k);
 
                 if (tile instanceof IFluidHandler) {
-                    FluidStack fluidAmount = ((IFluidHandler) tile)
-                            .drain(
-                                    ForgeDirection.getOrientation(movingobjectposition.sideHit),
-                                    this.getCapacity(container),
-                                    false);
+                    FluidStack fluidAmount = ((IFluidHandler) tile).drain(
+                            ForgeDirection.getOrientation(movingobjectposition.sideHit),
+                            this.getCapacity(container),
+                            false);
 
                     int amount = this.fill(container, fluidAmount, false);
 
                     if (amount > 0) {
-                        ((IFluidHandler) tile)
-                                .drain(
-                                        ForgeDirection.getOrientation(movingobjectposition.sideHit),
-                                        this.getCapacity(container),
-                                        true);
+                        ((IFluidHandler) tile).drain(
+                                ForgeDirection.getOrientation(movingobjectposition.sideHit),
+                                this.getCapacity(container),
+                                true);
 
                         this.fill(container, fluidAmount, true);
                     }
@@ -584,13 +583,11 @@ public class SigilFluid extends Item implements IFluidContainerItem, ISigil {
         }
 
         if (!doFill) {
-            if (container.getTagCompound() == null
-                    || !container.getTagCompound().hasKey("Fluid")) {
+            if (container.getTagCompound() == null || !container.getTagCompound().hasKey("Fluid")) {
                 return Math.min(capacity, resource.amount);
             }
 
-            FluidStack stack =
-                    FluidStack.loadFluidStackFromNBT(container.getTagCompound().getCompoundTag("Fluid"));
+            FluidStack stack = FluidStack.loadFluidStackFromNBT(container.getTagCompound().getCompoundTag("Fluid"));
 
             if (stack == null || stack.amount <= 0) {
                 return Math.min(capacity, resource.amount);
@@ -658,8 +655,7 @@ public class SigilFluid extends Item implements IFluidContainerItem, ISigil {
             return null;
         }
 
-        FluidStack stack =
-                FluidStack.loadFluidStackFromNBT(container.getTagCompound().getCompoundTag("Fluid"));
+        FluidStack stack = FluidStack.loadFluidStackFromNBT(container.getTagCompound().getCompoundTag("Fluid"));
         if (stack == null) {
             return null;
         }

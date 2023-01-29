@@ -1,5 +1,16 @@
 package WayofTime.alchemicalWizardry.common.rituals;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import net.minecraft.block.Block;
+import net.minecraft.init.Blocks;
+import net.minecraft.inventory.IInventory;
+import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.tileentity.TileEntity;
+import net.minecraft.world.World;
+
 import WayofTime.alchemicalWizardry.AlchemicalWizardry;
 import WayofTime.alchemicalWizardry.api.Int3;
 import WayofTime.alchemicalWizardry.api.alchemy.energy.ReagentRegistry;
@@ -9,18 +20,10 @@ import WayofTime.alchemicalWizardry.api.rituals.RitualEffect;
 import WayofTime.alchemicalWizardry.api.soulNetwork.SoulNetworkHandler;
 import WayofTime.alchemicalWizardry.common.block.BlockTeleposer;
 import WayofTime.alchemicalWizardry.common.spell.complex.effect.SpellHelper;
-import java.util.ArrayList;
-import java.util.List;
-import net.minecraft.block.Block;
-import net.minecraft.init.Blocks;
-import net.minecraft.inventory.IInventory;
-import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.world.World;
 
 public class RitualEffectSphereCreator extends RitualEffect {
-    //    private static final int potentiaDrain = 10;
+
+    // private static final int potentiaDrain = 10;
     public static int MAX_RADIUS = 32;
     private static final int terraeDrain = 1;
 
@@ -34,7 +37,7 @@ public class RitualEffectSphereCreator extends RitualEffect {
         int y = ritualStone.getYCoord();
         int z = ritualStone.getZCoord();
 
-        //        boolean hasPotentia = this.canDrainReagent(ritualStone, ReagentRegistry.potentiaReagent,
+        // boolean hasPotentia = this.canDrainReagent(ritualStone, ReagentRegistry.potentiaReagent,
         // potentiaDrain, false);
 
         if (world.getWorldTime() % 1 != 0) {
@@ -121,8 +124,8 @@ public class RitualEffectSphereCreator extends RitualEffect {
                             continue;
                         }
 
-                        if (BlockTeleposer.swapBlocks(
-                                this, world, world, x + i, yN + j, z + k, x + i, yP + j, z + k, false, 2)) {
+                        if (BlockTeleposer
+                                .swapBlocks(this, world, world, x + i, yN + j, z + k, x + i, yP + j, z + k, false, 2)) {
                             SoulNetworkHandler.syphonFromNetwork(owner, this.getCostPerRefresh());
                             if (this.canDrainReagent(ritualStone, ReagentRegistry.terraeReagent, terraeDrain, true)) {
                                 world.setBlock(x + i, yN + j, z + k, Blocks.dirt, 0, 2);
@@ -140,8 +143,8 @@ public class RitualEffectSphereCreator extends RitualEffect {
                 }
                 j = -radius;
                 i++;
-                //                this.setLastPosition(ritualStone.getCustomRitualTag(), new Int3(i, j, k));
-                //                return;
+                // this.setLastPosition(ritualStone.getCustomRitualTag(), new Int3(i, j, k));
+                // return;
             }
 
             ritualStone.setActive(false);

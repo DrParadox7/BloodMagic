@@ -8,6 +8,7 @@ import WayofTime.alchemicalWizardry.api.spell.SpellParadigmTool;
 import WayofTime.alchemicalWizardry.common.spell.complex.effect.impactEffects.wind.ToolEnvironmentalWind;
 
 public class CSEToolEnvironmentalWind extends ComplexSpellEffect {
+
     public CSEToolEnvironmentalWind() {
         super(ComplexSpellType.WIND, ComplexSpellModifier.ENVIRONMENTAL);
     }
@@ -23,9 +24,8 @@ public class CSEToolEnvironmentalWind extends ComplexSpellEffect {
     @Override
     public void modifyParadigm(SpellParadigm parad) {
         if (parad instanceof SpellParadigmTool) {
-            ((SpellParadigmTool) parad)
-                    .addBlockBreakEffect(new ToolEnvironmentalWind(
-                            this.powerEnhancement, this.potencyEnhancement, this.costEnhancement));
+            ((SpellParadigmTool) parad).addBlockBreakEffect(
+                    new ToolEnvironmentalWind(this.powerEnhancement, this.potencyEnhancement, this.costEnhancement));
         }
     }
 

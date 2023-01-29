@@ -1,5 +1,7 @@
 package WayofTime.alchemicalWizardry.common;
 
+import net.minecraft.world.World;
+
 import WayofTime.alchemicalWizardry.AlchemicalWizardry;
 import WayofTime.alchemicalWizardry.api.spell.EntitySpellProjectile;
 import WayofTime.alchemicalWizardry.common.entity.mob.BookEntityItem;
@@ -23,9 +25,9 @@ import WayofTime.alchemicalWizardry.common.tileEntity.TEAltar;
 import WayofTime.alchemicalWizardry.common.tileEntity.TEMasterStone;
 import cpw.mods.fml.common.registry.EntityRegistry;
 import cpw.mods.fml.common.registry.GameRegistry;
-import net.minecraft.world.World;
 
 public class CommonProxy {
+
     // Client stuff
     public void registerRenderers() {
         // Nothing here as the server doesn't render graphics!
@@ -54,25 +56,73 @@ public class CommonProxy {
 
     public void registerEntityTrackers() {
         EntityRegistry.registerModEntity(
-                EnergyBlastProjectile.class, "energyBlastProjectile", 0, AlchemicalWizardry.instance, 128, 5, true);
+                EnergyBlastProjectile.class,
+                "energyBlastProjectile",
+                0,
+                AlchemicalWizardry.instance,
+                128,
+                5,
+                true);
         EntityRegistry.registerModEntity(
-                FireProjectile.class, "fireProjectile", 1, AlchemicalWizardry.instance, 128, 5, true);
+                FireProjectile.class,
+                "fireProjectile",
+                1,
+                AlchemicalWizardry.instance,
+                128,
+                5,
+                true);
+        EntityRegistry
+                .registerModEntity(IceProjectile.class, "iceProjectile", 2, AlchemicalWizardry.instance, 128, 5, true);
         EntityRegistry.registerModEntity(
-                IceProjectile.class, "iceProjectile", 2, AlchemicalWizardry.instance, 128, 5, true);
+                ExplosionProjectile.class,
+                "explosionProjectile",
+                3,
+                AlchemicalWizardry.instance,
+                128,
+                5,
+                true);
         EntityRegistry.registerModEntity(
-                ExplosionProjectile.class, "explosionProjectile", 3, AlchemicalWizardry.instance, 128, 5, true);
+                HolyProjectile.class,
+                "holyProjectile",
+                4,
+                AlchemicalWizardry.instance,
+                128,
+                5,
+                true);
         EntityRegistry.registerModEntity(
-                HolyProjectile.class, "holyProjectile", 4, AlchemicalWizardry.instance, 128, 5, true);
+                WindGustProjectile.class,
+                "windGustProjectile",
+                5,
+                AlchemicalWizardry.instance,
+                128,
+                5,
+                true);
         EntityRegistry.registerModEntity(
-                WindGustProjectile.class, "windGustProjectile", 5, AlchemicalWizardry.instance, 128, 5, true);
+                LightningBoltProjectile.class,
+                "lightningBoltProjectile",
+                6,
+                AlchemicalWizardry.instance,
+                128,
+                5,
+                true);
         EntityRegistry.registerModEntity(
-                LightningBoltProjectile.class, "lightningBoltProjectile", 6, AlchemicalWizardry.instance, 128, 5, true);
+                WaterProjectile.class,
+                "waterProjectile",
+                7,
+                AlchemicalWizardry.instance,
+                128,
+                5,
+                true);
+        EntityRegistry
+                .registerModEntity(MudProjectile.class, "mudProjectile", 8, AlchemicalWizardry.instance, 128, 5, true);
         EntityRegistry.registerModEntity(
-                WaterProjectile.class, "waterProjectile", 7, AlchemicalWizardry.instance, 128, 5, true);
-        EntityRegistry.registerModEntity(
-                MudProjectile.class, "mudProjectile", 8, AlchemicalWizardry.instance, 128, 5, true);
-        EntityRegistry.registerModEntity(
-                TeleportProjectile.class, "teleportProjectile", 9, AlchemicalWizardry.instance, 128, 5, true);
+                TeleportProjectile.class,
+                "teleportProjectile",
+                9,
+                AlchemicalWizardry.instance,
+                128,
+                5,
+                true);
         EntityRegistry.registerModEntity(
                 EntityEnergyBazookaMainProjectile.class,
                 "energyBazookaMain",
@@ -99,13 +149,37 @@ public class CommonProxy {
                 true);
         EntityRegistry.registerModEntity(EntityMeteor.class, "meteor", 13, AlchemicalWizardry.instance, 120, 3, true);
         EntityRegistry.registerModEntity(
-                EntitySpellProjectile.class, "spellProjectile", 14, AlchemicalWizardry.instance, 128, 3, true);
+                EntitySpellProjectile.class,
+                "spellProjectile",
+                14,
+                AlchemicalWizardry.instance,
+                128,
+                3,
+                true);
         EntityRegistry.registerModEntity(
-                EntityParticleBeam.class, "particleBeam", 15, AlchemicalWizardry.instance, 120, 3, true);
+                EntityParticleBeam.class,
+                "particleBeam",
+                15,
+                AlchemicalWizardry.instance,
+                120,
+                3,
+                true);
         EntityRegistry.registerModEntity(
-                MailOrderEntityItem.class, "catalogueEntityItem", 16, AlchemicalWizardry.instance, 120, 3, true);
+                MailOrderEntityItem.class,
+                "catalogueEntityItem",
+                16,
+                AlchemicalWizardry.instance,
+                120,
+                3,
+                true);
         EntityRegistry.registerModEntity(
-                BookEntityItem.class, "bookEntityItem", 17, AlchemicalWizardry.instance, 120, 3, true);
+                BookEntityItem.class,
+                "bookEntityItem",
+                17,
+                AlchemicalWizardry.instance,
+                120,
+                3,
+                true);
     }
 
     public void registerTickHandlers() {}

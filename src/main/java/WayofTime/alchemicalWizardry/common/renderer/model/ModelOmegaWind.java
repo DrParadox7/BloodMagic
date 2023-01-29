@@ -5,10 +5,10 @@ import net.minecraft.client.model.ModelRenderer;
 import net.minecraft.entity.Entity;
 
 /**
- * OmegaWind.tcn - TechneToTabulaImporter
- * Created using Tabula 4.1.0
+ * OmegaWind.tcn - TechneToTabulaImporter Created using Tabula 4.1.0
  */
 public class ModelOmegaWind extends ModelBiped {
+
     public ModelRenderer facePlate1;
     public ModelRenderer facePlate2;
     public ModelRenderer facePlate3;

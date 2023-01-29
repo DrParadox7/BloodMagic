@@ -1,6 +1,7 @@
 package WayofTime.alchemicalWizardry.api.spell;
 
 public abstract class ProjectileUpdateEffect implements IProjectileUpdateEffect {
+
     protected int powerUpgrades;
     protected int potencyUpgrades;
     protected int costUpgrades;

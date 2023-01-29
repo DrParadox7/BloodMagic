@@ -8,6 +8,7 @@ import WayofTime.alchemicalWizardry.api.spell.SpellParadigmSelf;
 import WayofTime.alchemicalWizardry.common.spell.complex.effect.impactEffects.wind.SelfEnvironmentalWind;
 
 public class CSESelfEnvironmentalWind extends ComplexSpellEffect {
+
     public CSESelfEnvironmentalWind() {
         super(ComplexSpellType.WIND, ComplexSpellModifier.ENVIRONMENTAL);
     }
@@ -23,9 +24,8 @@ public class CSESelfEnvironmentalWind extends ComplexSpellEffect {
     @Override
     public void modifyParadigm(SpellParadigm parad) {
         if (parad instanceof SpellParadigmSelf) {
-            ((SpellParadigmSelf) parad)
-                    .addSelfSpellEffect(new SelfEnvironmentalWind(
-                            this.powerEnhancement, this.potencyEnhancement, this.costEnhancement));
+            ((SpellParadigmSelf) parad).addSelfSpellEffect(
+                    new SelfEnvironmentalWind(this.powerEnhancement, this.potencyEnhancement, this.costEnhancement));
         }
     }
 
@@ -36,8 +36,7 @@ public class CSESelfEnvironmentalWind extends ComplexSpellEffect {
 
     @Override
     public int getCostOfEffect() {
-        return (int) (500
-                * (0.7d * this.powerEnhancement + 1)
+        return (int) (500 * (0.7d * this.powerEnhancement + 1)
                 * (0.2 * this.potencyEnhancement + 1)
                 * Math.pow(0.85, costEnhancement));
     }

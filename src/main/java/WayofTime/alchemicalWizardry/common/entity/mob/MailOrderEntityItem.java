@@ -1,17 +1,19 @@
 package WayofTime.alchemicalWizardry.common.entity.mob;
 
-import WayofTime.alchemicalWizardry.AlchemicalWizardry;
-import WayofTime.alchemicalWizardry.common.book.BloodMagicGuide;
-import amerifrance.guideapi.api.GuideRegistry;
-import cpw.mods.fml.common.Optional;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.effect.EntityLightningBolt;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
+
 import pneumaticCraft.api.PneumaticRegistry;
+import WayofTime.alchemicalWizardry.AlchemicalWizardry;
+import WayofTime.alchemicalWizardry.common.book.BloodMagicGuide;
+import amerifrance.guideapi.api.GuideRegistry;
+import cpw.mods.fml.common.Optional;
 
 public class MailOrderEntityItem extends EntityItem {
+
     public MailOrderEntityItem(World par1World, double par2, double par4, double par6) {
         super(par1World, par2, par4, par6);
         this.isImmuneToFire = true;
@@ -22,8 +24,7 @@ public class MailOrderEntityItem extends EntityItem {
         this(par1World, par2, par4, par6);
         this.setEntityItemStack(par8ItemStack);
         this.isImmuneToFire = true;
-        this.lifespan = (par8ItemStack.getItem() == null
-                ? 6000
+        this.lifespan = (par8ItemStack.getItem() == null ? 6000
                 : par8ItemStack.getItem().getEntityLifespan(par8ItemStack, par1World));
     }
 
@@ -68,12 +69,11 @@ public class MailOrderEntityItem extends EntityItem {
 
     @Optional.Method(modid = "PneumaticCraft")
     public void deliverItemViaDrone(double x, double y, double z) {
-        PneumaticRegistry.getInstance()
-                .deliverItemsAmazonStyle(
-                        worldObj,
-                        (int) x,
-                        (int) y,
-                        (int) z,
-                        GuideRegistry.getItemStackForBook(BloodMagicGuide.bloodMagicGuide));
+        PneumaticRegistry.getInstance().deliverItemsAmazonStyle(
+                worldObj,
+                (int) x,
+                (int) y,
+                (int) z,
+                GuideRegistry.getItemStackForBook(BloodMagicGuide.bloodMagicGuide));
     }
 }

@@ -1,10 +1,10 @@
 package WayofTime.alchemicalWizardry.api;
 
 /*
- *  Created in Scala by Alex-Hawks
- *  Translated and implemented by Arcaratus
+ * Created in Scala by Alex-Hawks Translated and implemented by Arcaratus
  */
 public class Vector3 {
+
     public int x, y, z;
 
     public Vector3(int x, int y, int z) {
@@ -28,12 +28,10 @@ public class Vector3 {
 
     @Override
     public boolean equals(Object object) {
-        return object == this
-                || object instanceof Vector3
-                        && canEqual(this)
-                        && this.x == ((Vector3) object).x
-                        && this.y == ((Vector3) object).y
-                        && this.z == ((Vector3) object).z;
+        return object == this || object instanceof Vector3 && canEqual(this)
+                && this.x == ((Vector3) object).x
+                && this.y == ((Vector3) object).y
+                && this.z == ((Vector3) object).z;
     }
 
     @Override

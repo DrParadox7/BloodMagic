@@ -1,14 +1,11 @@
 package WayofTime.alchemicalWizardry.api.items;
 
-import WayofTime.alchemicalWizardry.api.soulNetwork.SoulNetworkHandler;
-import WayofTime.alchemicalWizardry.api.spell.APISpellHelper;
-import WayofTime.alchemicalWizardry.api.spell.SpellEffect;
-import WayofTime.alchemicalWizardry.api.spell.SpellParadigmTool;
 import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Random;
 import java.util.Set;
+
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.renderer.texture.IIconRegister;
@@ -28,7 +25,13 @@ import net.minecraftforge.common.DimensionManager;
 import net.minecraftforge.common.util.Constants;
 import net.minecraftforge.common.util.ForgeDirection;
 
+import WayofTime.alchemicalWizardry.api.soulNetwork.SoulNetworkHandler;
+import WayofTime.alchemicalWizardry.api.spell.APISpellHelper;
+import WayofTime.alchemicalWizardry.api.spell.SpellEffect;
+import WayofTime.alchemicalWizardry.api.spell.SpellParadigmTool;
+
 public class ItemSpellMultiTool extends Item {
+
     private static final String harvestLevelSuffix = "harvestLvl";
     private static final String digLevelSuffix = "digLvl";
     private static final String tagName = "BloodMagicTool";
@@ -47,12 +50,11 @@ public class ItemSpellMultiTool extends Item {
     }
 
     @Override
-    public boolean hitEntity(
-            ItemStack par1ItemStack, EntityLivingBase par2EntityLivingBase, EntityLivingBase par3EntityLivingBase) {
+    public boolean hitEntity(ItemStack par1ItemStack, EntityLivingBase par2EntityLivingBase,
+            EntityLivingBase par3EntityLivingBase) {
         float damage = this.getCustomItemAttack(par1ItemStack);
 
-        float f = (float) par3EntityLivingBase
-                .getEntityAttribute(SharedMonsterAttributes.attackDamage)
+        float f = (float) par3EntityLivingBase.getEntityAttribute(SharedMonsterAttributes.attackDamage)
                 .getAttributeValue();
 
         SpellParadigmTool parad = this.loadParadigmFromStack(par1ItemStack);
@@ -70,8 +72,8 @@ public class ItemSpellMultiTool extends Item {
         damage *= f;
 
         if (par3EntityLivingBase instanceof EntityPlayer) {
-            par2EntityLivingBase.attackEntityFrom(
-                    DamageSource.causePlayerDamage((EntityPlayer) par3EntityLivingBase), damage);
+            par2EntityLivingBase
+                    .attackEntityFrom(DamageSource.causePlayerDamage((EntityPlayer) par3EntityLivingBase), damage);
         } else {
             par2EntityLivingBase.attackEntityFrom(DamageSource.causeMobDamage(par3EntityLivingBase), damage);
         }
@@ -163,7 +165,14 @@ public class ItemSpellMultiTool extends Item {
                             int cost = 0;
 
                             cost += parad.digSurroundingArea(
-                                    stack, world, player, mop, localToolClass, localHardness, toolLevel, this);
+                                    stack,
+                                    world,
+                                    player,
+                                    mop,
+                                    localToolClass,
+                                    localHardness,
+                                    toolLevel,
+                                    this);
 
                             cost += parad.onBreakBlock(
                                     stack,
@@ -192,28 +201,20 @@ public class ItemSpellMultiTool extends Item {
             }
         }
 
-        //        if (!world.isRemote)
-        //            world.playAuxSFX(2001, x, y, z, Block.getIdFromBlock(block) + (meta << 12));
+        // if (!world.isRemote)
+        // world.playAuxSFX(2001, x, y, z, Block.getIdFromBlock(block) + (meta << 12));
         return true;
     }
 
     public Material[] getMaterialsForToolclass(String toolClass) {
         if ("pickaxe".equals(toolClass)) {
-            return new Material[] {
-                Material.rock,
-                Material.iron,
-                Material.ice,
-                Material.glass,
-                Material.piston,
-                Material.anvil,
-                Material.circuits
-            };
+            return new Material[] { Material.rock, Material.iron, Material.ice, Material.glass, Material.piston,
+                    Material.anvil, Material.circuits };
         } else if ("shovel".equals(toolClass)) {
-            return new Material[] {
-                Material.grass, Material.ground, Material.sand, Material.snow, Material.craftedSnow, Material.clay
-            };
+            return new Material[] { Material.grass, Material.ground, Material.sand, Material.snow, Material.craftedSnow,
+                    Material.clay };
         } else if ("axe".equals(toolClass)) {
-            return new Material[] {Material.wood, Material.vine, Material.circuits, Material.cactus};
+            return new Material[] { Material.wood, Material.vine, Material.circuits, Material.cactus };
         }
         return new Material[0];
     }
@@ -483,8 +484,7 @@ public class ItemSpellMultiTool extends Item {
 
     public ItemStack getContainedCrystal(ItemStack container) {
         if (container.hasTagCompound()) {
-            NBTTagCompound tag =
-                    container.getTagCompound().getCompoundTag(tagName).getCompoundTag("heldItem");
+            NBTTagCompound tag = container.getTagCompound().getCompoundTag(tagName).getCompoundTag("heldItem");
 
             return ItemStack.loadItemStackFromNBT(tag);
         } else {

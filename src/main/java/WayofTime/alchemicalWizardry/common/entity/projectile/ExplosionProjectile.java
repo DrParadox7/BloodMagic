@@ -8,6 +8,7 @@ import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.world.World;
 
 public class ExplosionProjectile extends EnergyBlastProjectile {
+
     protected boolean causesEnvDamage;
 
     public ExplosionProjectile(World par1World) {
@@ -23,29 +24,14 @@ public class ExplosionProjectile extends EnergyBlastProjectile {
         causesEnvDamage = flag;
     }
 
-    public ExplosionProjectile(
-            World par1World,
-            EntityLivingBase par2EntityPlayer,
-            int damage,
-            int maxTicksInAir,
-            double posX,
-            double posY,
-            double posZ,
-            float rotationYaw,
-            float rotationPitch,
-            boolean flag) {
+    public ExplosionProjectile(World par1World, EntityLivingBase par2EntityPlayer, int damage, int maxTicksInAir,
+            double posX, double posY, double posZ, float rotationYaw, float rotationPitch, boolean flag) {
         super(par1World, par2EntityPlayer, damage, maxTicksInAir, posX, posY, posZ, rotationYaw, rotationPitch);
         causesEnvDamage = flag;
     }
 
-    public ExplosionProjectile(
-            World par1World,
-            EntityLivingBase par2EntityLivingBase,
-            EntityLivingBase par3EntityLivingBase,
-            float par4,
-            float par5,
-            int damage,
-            int maxTicksInAir,
+    public ExplosionProjectile(World par1World, EntityLivingBase par2EntityLivingBase,
+            EntityLivingBase par3EntityLivingBase, float par4, float par5, int damage, int maxTicksInAir,
             boolean flag) {
         super(par1World, par2EntityLivingBase, par3EntityLivingBase, par4, par5, damage, maxTicksInAir);
         causesEnvDamage = flag;

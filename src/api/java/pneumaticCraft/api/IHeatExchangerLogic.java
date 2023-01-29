@@ -6,8 +6,8 @@ import net.minecraftforge.common.util.ForgeDirection;
 
 /**
  * DO NOT IMPLEMENT THIS CLASS YOURSELF! Use PneumaticRegistry.getInstance().getHeatExchangerLogic() !
- * @author MineMaarten
- * www.minemaarten.com
+ * 
+ * @author MineMaarten www.minemaarten.com
  */
 public interface IHeatExchangerLogic {
 
@@ -17,22 +17,26 @@ public interface IHeatExchangerLogic {
     public void update();
 
     /**
-     * When called (preferably on tile entity load and neighbor block/tile entity change) this will add all IHeatExchanger neighbor TileEntities as connected heat exchangers.
-     * It will also take care of blocks like Lava.
+     * When called (preferably on tile entity load and neighbor block/tile entity change) this will add all
+     * IHeatExchanger neighbor TileEntities as connected heat exchangers. It will also take care of blocks like Lava.
      *
-     * You don't _have_ to call this method, if this heat exchanger is not connected to the outside world (for example the heat of the liquid
-     * plastic in the Plastic Mixer).
+     * You don't _have_ to call this method, if this heat exchanger is not connected to the outside world (for example
+     * the heat of the liquid plastic in the Plastic Mixer).
+     * 
      * @param world
      * @param x
      * @param y
      * @param z
-     * @param validSides Can be left out as vararg, meaning every side can be connected. When one or more sides are specified this will constrain
-     * this heat exchanger to only connect to other heat exchangers on these sides.
+     * @param validSides Can be left out as vararg, meaning every side can be connected. When one or more sides are
+     *                   specified this will constrain this heat exchanger to only connect to other heat exchangers on
+     *                   these sides.
      */
     public void initializeAsHull(World world, int x, int y, int z, ForgeDirection... validSides);
 
     /**
-     * When called, this will connect these two heat exchangers. You should only call this on one of the two heat exchangers.
+     * When called, this will connect these two heat exchangers. You should only call this on one of the two heat
+     * exchangers.
+     * 
      * @param exchanger
      */
     public void addConnectedExchanger(IHeatExchangerLogic exchanger);
@@ -41,6 +45,7 @@ public interface IHeatExchangerLogic {
 
     /**
      * A heat exchanger starts with 295 degrees Kelvin (20 degrees Celcius) by default.
+     * 
      * @param temperature in degrees Kelvin
      */
     public void setTemperature(double temperature);
@@ -49,6 +54,7 @@ public interface IHeatExchangerLogic {
 
     /**
      * The higher the thermal resistance, the slower the heat disperses.
+     * 
      * @param thermalResistance By default it's 1.
      */
     public void setThermalResistance(double thermalResistance);
@@ -56,8 +62,9 @@ public interface IHeatExchangerLogic {
     public double getThermalResistance();
 
     /**
-     * The higher the capacity, the more heat can be 'stored'. This means that an object with a high capacity can heat up an object with a lower
-     * capacity without losing any significant amount of temperature.
+     * The higher the capacity, the more heat can be 'stored'. This means that an object with a high capacity can heat
+     * up an object with a lower capacity without losing any significant amount of temperature.
+     * 
      * @param capacity
      */
     public void setThermalCapacity(double capacity);
@@ -70,6 +77,7 @@ public interface IHeatExchangerLogic {
 
     /**
      * Adds heat (= deltaT * Thermal Capacity) to this exchanger. negative values will remove heat.
+     * 
      * @param amount
      */
     public void addHeat(double amount);

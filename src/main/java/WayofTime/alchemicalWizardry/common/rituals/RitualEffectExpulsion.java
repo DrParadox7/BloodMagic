@@ -1,18 +1,9 @@
 package WayofTime.alchemicalWizardry.common.rituals;
 
-import WayofTime.alchemicalWizardry.AlchemicalWizardry;
-import WayofTime.alchemicalWizardry.api.alchemy.energy.ReagentRegistry;
-import WayofTime.alchemicalWizardry.api.items.interfaces.IBindable;
-import WayofTime.alchemicalWizardry.api.rituals.IMasterRitualStone;
-import WayofTime.alchemicalWizardry.api.rituals.RitualComponent;
-import WayofTime.alchemicalWizardry.api.rituals.RitualEffect;
-import WayofTime.alchemicalWizardry.api.soulNetwork.SoulNetworkHandler;
-import WayofTime.alchemicalWizardry.common.items.EnergyItems;
-import WayofTime.alchemicalWizardry.common.spell.complex.effect.SpellHelper;
-import WayofTime.alchemicalWizardry.common.spell.simple.SpellTeleport;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
+
 import net.minecraft.block.Block;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
@@ -26,7 +17,19 @@ import net.minecraft.world.World;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.entity.living.EnderTeleportEvent;
 
+import WayofTime.alchemicalWizardry.AlchemicalWizardry;
+import WayofTime.alchemicalWizardry.api.alchemy.energy.ReagentRegistry;
+import WayofTime.alchemicalWizardry.api.items.interfaces.IBindable;
+import WayofTime.alchemicalWizardry.api.rituals.IMasterRitualStone;
+import WayofTime.alchemicalWizardry.api.rituals.RitualComponent;
+import WayofTime.alchemicalWizardry.api.rituals.RitualEffect;
+import WayofTime.alchemicalWizardry.api.soulNetwork.SoulNetworkHandler;
+import WayofTime.alchemicalWizardry.common.items.EnergyItems;
+import WayofTime.alchemicalWizardry.common.spell.complex.effect.SpellHelper;
+import WayofTime.alchemicalWizardry.common.spell.simple.SpellTeleport;
+
 public class RitualEffectExpulsion extends RitualEffect {
+
     public static final int virtusDrain = 10;
     public static final int potentiaDrain = 10;
     public static final int tennebraeDrain = 5;
@@ -45,13 +48,13 @@ public class RitualEffectExpulsion extends RitualEffect {
             SoulNetworkHandler.causeNauseaToPlayer(owner);
         } else {
             boolean hasVirtus = this.canDrainReagent(ritualStone, ReagentRegistry.virtusReagent, virtusDrain, false);
-            boolean hasPotentia =
-                    this.canDrainReagent(ritualStone, ReagentRegistry.potentiaReagent, potentiaDrain, false);
+            boolean hasPotentia = this
+                    .canDrainReagent(ritualStone, ReagentRegistry.potentiaReagent, potentiaDrain, false);
 
             int teleportDistance = hasVirtus ? 300 : 100;
             int range = hasPotentia ? 50 : 25;
-            List<EntityPlayer> playerList =
-                    SpellHelper.getPlayersInRange(world, x + 0.5, y + 0.5, z + 0.5, range, range);
+            List<EntityPlayer> playerList = SpellHelper
+                    .getPlayersInRange(world, x + 0.5, y + 0.5, z + 0.5, range, range);
             boolean flag = false;
 
             TileEntity tile = world.getTileEntity(x, y + 1, z);
@@ -70,8 +73,7 @@ public class RitualEffectExpulsion extends RitualEffect {
                         boolean test = false;
                         for (int i = 0; i < inventoryTile.getSizeInventory(); i++) {
                             ItemStack stack = inventoryTile.getStackInSlot(i);
-                            if (stack != null
-                                    && stack.getItem() instanceof IBindable
+                            if (stack != null && stack.getItem() instanceof IBindable
                                     && EnergyItems.getOwnerName(stack).equals(playerString)) {
                                 test = true;
                             }
@@ -98,17 +100,17 @@ public class RitualEffectExpulsion extends RitualEffect {
             }
         }
 
-        boolean hasTennebrae =
-                this.canDrainReagent(ritualStone, ReagentRegistry.tenebraeReagent, tennebraeDrain, false);
+        boolean hasTennebrae = this
+                .canDrainReagent(ritualStone, ReagentRegistry.tenebraeReagent, tennebraeDrain, false);
         if (hasTennebrae && SoulNetworkHandler.canSyphonFromOnlyNetwork(owner, 1000)) {
             boolean hasVirtus = this.canDrainReagent(ritualStone, ReagentRegistry.virtusReagent, virtusDrain, false);
-            boolean hasPotentia =
-                    this.canDrainReagent(ritualStone, ReagentRegistry.potentiaReagent, potentiaDrain, false);
+            boolean hasPotentia = this
+                    .canDrainReagent(ritualStone, ReagentRegistry.potentiaReagent, potentiaDrain, false);
 
             int teleportDistance = hasVirtus ? 300 : 100;
             int range = hasPotentia ? 50 : 25;
-            List<EntityLivingBase> livingList =
-                    SpellHelper.getLivingEntitiesInRange(world, x + 0.5, y + 0.5, z + 0.5, range, range);
+            List<EntityLivingBase> livingList = SpellHelper
+                    .getLivingEntitiesInRange(world, x + 0.5, y + 0.5, z + 0.5, range, range);
             boolean flag = false;
 
             for (EntityLivingBase livingEntity : livingList) {
@@ -169,14 +171,8 @@ public class RitualEffectExpulsion extends RitualEffect {
         return true;
     }
 
-    public boolean teleportTo(
-            EntityLivingBase entityLiving,
-            double par1,
-            double par3,
-            double par5,
-            double lastX,
-            double lastY,
-            double lastZ) {
+    public boolean teleportTo(EntityLivingBase entityLiving, double par1, double par3, double par5, double lastX,
+            double lastY, double lastZ) {
         EnderTeleportEvent event = new EnderTeleportEvent(entityLiving, par1, par3, par5, 0);
 
         if (MinecraftForge.EVENT_BUS.post(event)) {
@@ -208,13 +204,10 @@ public class RitualEffectExpulsion extends RitualEffect {
             }
 
             if (flag1) {
-                SpellTeleport.moveEntityViaTeleport(
-                        entityLiving, entityLiving.posX, entityLiving.posY, entityLiving.posZ);
+                SpellTeleport
+                        .moveEntityViaTeleport(entityLiving, entityLiving.posX, entityLiving.posY, entityLiving.posZ);
 
-                if (entityLiving
-                                .worldObj
-                                .getCollidingBoundingBoxes(entityLiving, entityLiving.boundingBox)
-                                .isEmpty()
+                if (entityLiving.worldObj.getCollidingBoundingBoxes(entityLiving, entityLiving.boundingBox).isEmpty()
                         && !entityLiving.worldObj.isAnyLiquid(entityLiving.boundingBox)) {
                     flag = true;
                 }
@@ -232,14 +225,11 @@ public class RitualEffectExpulsion extends RitualEffect {
                 float f = (entityLiving.worldObj.rand.nextFloat() - 0.5F) * 0.2F;
                 float f1 = (entityLiving.worldObj.rand.nextFloat() - 0.5F) * 0.2F;
                 float f2 = (entityLiving.worldObj.rand.nextFloat() - 0.5F) * 0.2F;
-                double d7 = d3
-                        + (entityLiving.posX - d3) * d6
+                double d7 = d3 + (entityLiving.posX - d3) * d6
                         + (entityLiving.worldObj.rand.nextDouble() - 0.5D) * (double) entityLiving.width * 2.0D;
-                double d8 = d4
-                        + (entityLiving.posY - d4) * d6
+                double d8 = d4 + (entityLiving.posY - d4) * d6
                         + entityLiving.worldObj.rand.nextDouble() * (double) entityLiving.height;
-                double d9 = d5
-                        + (entityLiving.posZ - d5) * d6
+                double d9 = d5 + (entityLiving.posZ - d5) * d6
                         + (entityLiving.worldObj.rand.nextDouble() - 0.5D) * (double) entityLiving.width * 2.0D;
                 entityLiving.worldObj.spawnParticle("portal", d7, d8, d9, (double) f, (double) f1, (double) f2);
             }

@@ -14,6 +14,7 @@ import net.minecraftforge.common.util.Constants;
  * @author ljfa-ag
  */
 public abstract class TEInventory extends TileEntity implements IInventory {
+
     protected ItemStack[] inv;
 
     public TEInventory(int size) {

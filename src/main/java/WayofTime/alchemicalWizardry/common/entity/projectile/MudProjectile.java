@@ -1,6 +1,5 @@
 package WayofTime.alchemicalWizardry.common.entity.projectile;
 
-import WayofTime.alchemicalWizardry.common.spell.complex.effect.SpellHelper;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.nbt.NBTTagCompound;
@@ -10,7 +9,10 @@ import net.minecraft.util.DamageSource;
 import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.world.World;
 
+import WayofTime.alchemicalWizardry.common.spell.complex.effect.SpellHelper;
+
 public class MudProjectile extends EnergyBlastProjectile {
+
     private boolean doesBlindness; // True for when it applies blindness, false for slowness
 
     public MudProjectile(World par1World) {
@@ -26,30 +28,14 @@ public class MudProjectile extends EnergyBlastProjectile {
         doesBlindness = flag;
     }
 
-    public MudProjectile(
-            World par1World,
-            EntityLivingBase par2EntityPlayer,
-            int damage,
-            int maxTicksInAir,
-            double posX,
-            double posY,
-            double posZ,
-            float rotationYaw,
-            float rotationPitch,
-            boolean flag) {
+    public MudProjectile(World par1World, EntityLivingBase par2EntityPlayer, int damage, int maxTicksInAir, double posX,
+            double posY, double posZ, float rotationYaw, float rotationPitch, boolean flag) {
         super(par1World, par2EntityPlayer, damage, maxTicksInAir, posX, posY, posZ, rotationYaw, rotationPitch);
         doesBlindness = flag;
     }
 
-    public MudProjectile(
-            World par1World,
-            EntityLivingBase par2EntityLivingBase,
-            EntityLivingBase par3EntityLivingBase,
-            float par4,
-            float par5,
-            int damage,
-            int maxTicksInAir,
-            boolean flag) {
+    public MudProjectile(World par1World, EntityLivingBase par2EntityLivingBase, EntityLivingBase par3EntityLivingBase,
+            float par4, float par5, int damage, int maxTicksInAir, boolean flag) {
         super(par1World, par2EntityLivingBase, par3EntityLivingBase, par4, par5, damage, maxTicksInAir);
         doesBlindness = flag;
     }
@@ -67,8 +53,7 @@ public class MudProjectile extends EnergyBlastProjectile {
             }
 
             this.onImpact(mop.entityHit);
-        } else if (mop.typeOfHit == MovingObjectPosition.MovingObjectType.BLOCK) {
-        }
+        } else if (mop.typeOfHit == MovingObjectPosition.MovingObjectType.BLOCK) {}
 
         this.setDead();
     }

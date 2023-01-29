@@ -3,6 +3,7 @@ package WayofTime.alchemicalWizardry.api.alchemy.energy;
 import net.minecraftforge.common.util.ForgeDirection;
 
 public interface IReagentHandler {
+
     int fill(ForgeDirection from, ReagentStack resource, boolean doFill);
 
     ReagentStack drain(ForgeDirection from, ReagentStack resource, boolean doDrain);

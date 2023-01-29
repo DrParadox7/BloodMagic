@@ -1,10 +1,12 @@
 package WayofTime.alchemicalWizardry.common.spell.complex.effect.impactEffects.fire;
 
-import WayofTime.alchemicalWizardry.common.spell.complex.effect.impactEffects.tool.LeftClickEffect;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.item.ItemStack;
 
+import WayofTime.alchemicalWizardry.common.spell.complex.effect.impactEffects.tool.LeftClickEffect;
+
 public class ToolOffensiveFire extends LeftClickEffect {
+
     public ToolOffensiveFire(int power, int potency, int cost) {
         super(power, potency, cost);
     }

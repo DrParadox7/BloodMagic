@@ -1,13 +1,8 @@
 package WayofTime.alchemicalWizardry.common.tileEntity;
 
-import WayofTime.alchemicalWizardry.api.soulNetwork.SoulNetworkHandler;
-import WayofTime.alchemicalWizardry.common.NewPacketHandler;
-import WayofTime.alchemicalWizardry.common.block.BlockTeleposer;
-import WayofTime.alchemicalWizardry.common.items.EnergyItems;
-import WayofTime.alchemicalWizardry.common.items.TelepositionFocus;
-import WayofTime.alchemicalWizardry.common.spell.complex.effect.SpellHelper;
 import java.util.Iterator;
 import java.util.List;
+
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -16,7 +11,15 @@ import net.minecraft.network.Packet;
 import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.world.World;
 
+import WayofTime.alchemicalWizardry.api.soulNetwork.SoulNetworkHandler;
+import WayofTime.alchemicalWizardry.common.NewPacketHandler;
+import WayofTime.alchemicalWizardry.common.block.BlockTeleposer;
+import WayofTime.alchemicalWizardry.common.items.EnergyItems;
+import WayofTime.alchemicalWizardry.common.items.TelepositionFocus;
+import WayofTime.alchemicalWizardry.common.spell.complex.effect.SpellHelper;
+
 public class TETeleposer extends TEInventory {
+
     public static final int sizeInv = 1;
 
     private int resultID;
@@ -83,27 +86,24 @@ public class TETeleposer extends TEInventory {
                 int yf = focusItem.yCoord(focus);
                 int zf = focusItem.zCoord(focus);
                 World worldF = focusItem.getWorld(focus);
-                int damage = (int) (0.5f
-                        * Math.sqrt((xCoord - xf) * (xCoord - xf)
-                                + (yCoord - yf + 1) * (yCoord - yf + 1)
+                int damage = (int) (0.5f * Math.sqrt(
+                        (xCoord - xf) * (xCoord - xf) + (yCoord - yf + 1) * (yCoord - yf + 1)
                                 + (zCoord - zf) * (zCoord - zf)));
                 int focusLevel = focusItem.getFocusLevel();
                 int transportCount = 0;
                 int entityCount = 0;
 
-                if (worldF != null
-                        && worldF.getTileEntity(xf, yf, zf) instanceof TETeleposer
+                if (worldF != null && worldF.getTileEntity(xf, yf, zf) instanceof TETeleposer
                         && !worldF.getTileEntity(xf, yf, zf).equals(this)) {
                     // Prime the teleportation
                     int d0 = focusLevel - 1;
                     AxisAlignedBB axisalignedbb1 = AxisAlignedBB.getBoundingBox(
-                                    (double) this.xCoord - 0.5,
-                                    (double) this.yCoord + d0 + 0.5,
-                                    (double) this.zCoord - 0.5,
-                                    (double) (this.xCoord + 0.5),
-                                    (double) (this.yCoord + 1.5 + d0),
-                                    (double) (this.zCoord + 0.5))
-                            .expand(d0, d0, d0);
+                            (double) this.xCoord - 0.5,
+                            (double) this.yCoord + d0 + 0.5,
+                            (double) this.zCoord - 0.5,
+                            (double) (this.xCoord + 0.5),
+                            (double) (this.yCoord + 1.5 + d0),
+                            (double) (this.zCoord + 0.5)).expand(d0, d0, d0);
                     axisalignedbb1.maxY = Math.min((double) this.worldObj.getHeight(), this.yCoord + 2 + d0 + d0);
                     List list1 = this.worldObj.getEntitiesWithinAABB(EntityLivingBase.class, axisalignedbb1);
                     Iterator iterator1 = list1.iterator();
@@ -114,8 +114,8 @@ public class TETeleposer extends TEInventory {
                         entityCount++;
                     }
 
-                    AxisAlignedBB axisalignedbb2 = AxisAlignedBB.getBoundingBox(
-                                    xf - 0.5, yf + d0 + 0.5, zf - 0.5, xf + 0.5, yf + 1.5 + d0, zf + 0.5)
+                    AxisAlignedBB axisalignedbb2 = AxisAlignedBB
+                            .getBoundingBox(xf - 0.5, yf + d0 + 0.5, zf - 0.5, xf + 0.5, yf + 1.5 + d0, zf + 0.5)
                             .expand(d0, d0, d0);
                     List list2 = worldF.getEntitiesWithinAABB(EntityLivingBase.class, axisalignedbb2);
                     Iterator iterator2 = list2.iterator();
@@ -192,8 +192,8 @@ public class TETeleposer extends TEInventory {
                                         entityplayer1.posY - this.yCoord + yf,
                                         entityplayer1.posZ - this.zCoord + zf,
                                         entityplayer1);
-                                //                                entityplayer1.worldObj = worldF;
-                                //                                entityplayer1.setPositionAndUpdate(entityplayer1.posX
+                                // entityplayer1.worldObj = worldF;
+                                // entityplayer1.setPositionAndUpdate(entityplayer1.posX
                                 // - this.xCoord + xf, entityplayer1.posY - this.yCoord + yf, entityplayer1.posZ -
                                 // this.zCoord + zf);
                             }
@@ -207,8 +207,8 @@ public class TETeleposer extends TEInventory {
                                         entityplayer2.posY + this.yCoord - yf,
                                         entityplayer2.posZ + this.zCoord - zf,
                                         entityplayer2);
-                                //                                entityplayer2.worldObj = worldF;
-                                //                                entityplayer2.setPositionAndUpdate(entityplayer2.posX
+                                // entityplayer2.worldObj = worldF;
+                                // entityplayer2.setPositionAndUpdate(entityplayer2.posX
                                 // + this.xCoord - xf, entityplayer2.posY + this.yCoord - yf, entityplayer2.posZ +
                                 // this.zCoord - zf);
                             }
@@ -242,8 +242,10 @@ public class TETeleposer extends TEInventory {
         if (intData.length == 3) {
             for (int i = 0; i < 1; i++) {
                 if (intData[i * 3 + 2] != 0) {
-                    ItemStack is =
-                            new ItemStack(Item.getItemById(intData[i * 3]), intData[i * 3 + 2], intData[i * 3 + 1]);
+                    ItemStack is = new ItemStack(
+                            Item.getItemById(intData[i * 3]),
+                            intData[i * 3 + 2],
+                            intData[i * 3 + 1]);
                     inv[i] = is;
                 } else {
                     inv[i] = null;

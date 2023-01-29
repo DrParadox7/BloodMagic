@@ -1,7 +1,8 @@
 package WayofTime.alchemicalWizardry.api;
 
-import cpw.mods.fml.common.registry.GameData;
 import net.minecraft.block.Block;
+
+import cpw.mods.fml.common.registry.GameData;
 
 /**
  * A Block with a set metadata. Similar to an ItemStack.

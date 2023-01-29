@@ -1,9 +1,5 @@
 package WayofTime.alchemicalWizardry.common.omega;
 
-import WayofTime.alchemicalWizardry.AlchemicalWizardry;
-import WayofTime.alchemicalWizardry.api.alchemy.energy.ReagentRegistry;
-import WayofTime.alchemicalWizardry.common.items.armour.OmegaArmour;
-import WayofTime.alchemicalWizardry.common.tileEntity.TEMimicBlock;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
@@ -13,7 +9,13 @@ import net.minecraft.potion.Potion;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.world.World;
 
+import WayofTime.alchemicalWizardry.AlchemicalWizardry;
+import WayofTime.alchemicalWizardry.api.alchemy.energy.ReagentRegistry;
+import WayofTime.alchemicalWizardry.common.items.armour.OmegaArmour;
+import WayofTime.alchemicalWizardry.common.tileEntity.TEMimicBlock;
+
 public class OmegaParadigmWater extends OmegaParadigm {
+
     public OmegaParadigmWater(OmegaArmour helmet, OmegaArmour chestPiece, OmegaArmour leggings, OmegaArmour boots) {
         super(
                 ReagentRegistry.aquasalusReagent,
@@ -68,7 +70,14 @@ public class OmegaParadigmWater extends OmegaParadigm {
             for (int j = -range; j <= range; j++) {
                 for (int k = -range; k <= range; k++) {
                     TEMimicBlock.createMimicBlockAtLocation(
-                            world, x + i, y + j, z + k, 300, Blocks.water, 0, ReagentRegistry.aquasalusReagent);
+                            world,
+                            x + i,
+                            y + j,
+                            z + k,
+                            300,
+                            Blocks.water,
+                            0,
+                            ReagentRegistry.aquasalusReagent);
                 }
             }
         }

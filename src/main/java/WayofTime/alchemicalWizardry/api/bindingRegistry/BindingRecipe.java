@@ -3,6 +3,7 @@ package WayofTime.alchemicalWizardry.api.bindingRegistry;
 import net.minecraft.item.ItemStack;
 
 public class BindingRecipe {
+
     public ItemStack requiredItem;
     public ItemStack outputItem;
 

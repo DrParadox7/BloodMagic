@@ -6,6 +6,7 @@ import net.minecraft.entity.ai.EntityAIBase;
 import net.minecraft.util.MathHelper;
 
 public class EntityAIOccasionalRangedAttack extends EntityAIBase {
+
     /** The entity the AI instance has been applied to */
     private final EntityLiving entityHost;
     /** The entity (as a RangedAttackMob) the AI instance has been applied to. */
@@ -26,21 +27,15 @@ public class EntityAIOccasionalRangedAttack extends EntityAIBase {
 
     private float field_96562_i;
     private float field_82642_h;
-    private static final String __OBFID = "CL_00001609";
     private double range;
 
-    public EntityAIOccasionalRangedAttack(
-            IOccasionalRangedAttackMob p_i1649_1_, double p_i1649_2_, int p_i1649_4_, float p_i1649_5_, double range) {
+    public EntityAIOccasionalRangedAttack(IOccasionalRangedAttackMob p_i1649_1_, double p_i1649_2_, int p_i1649_4_,
+            float p_i1649_5_, double range) {
         this(p_i1649_1_, p_i1649_2_, p_i1649_4_, p_i1649_4_, p_i1649_5_, range);
     }
 
-    public EntityAIOccasionalRangedAttack(
-            IOccasionalRangedAttackMob p_i1650_1_,
-            double p_i1650_2_,
-            int p_i1650_4_,
-            int p_i1650_5_,
-            float p_i1650_6_,
-            double range) {
+    public EntityAIOccasionalRangedAttack(IOccasionalRangedAttackMob p_i1650_1_, double p_i1650_2_, int p_i1650_4_,
+            int p_i1650_5_, float p_i1650_6_, double range) {
         this.rangedAttackTime = -1;
 
         if (!(p_i1650_1_ instanceof EntityLivingBase)) {
@@ -106,8 +101,8 @@ public class EntityAIOccasionalRangedAttack extends EntityAIBase {
      * Updates the task
      */
     public void updateTask() {
-        double d0 = this.entityHost.getDistanceSq(
-                this.attackTarget.posX, this.attackTarget.boundingBox.minY, this.attackTarget.posZ);
+        double d0 = this.entityHost
+                .getDistanceSq(this.attackTarget.posX, this.attackTarget.boundingBox.minY, this.attackTarget.posZ);
         boolean flag = this.entityHost.getEntitySenses().canSee(this.attackTarget);
 
         if (flag) {

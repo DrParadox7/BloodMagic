@@ -1,13 +1,16 @@
 package WayofTime.alchemicalWizardry.client.renderer;
 
-import WayofTime.alchemicalWizardry.BloodMagicConfiguration;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.RenderHelper;
 import net.minecraft.client.renderer.entity.RenderItem;
 import net.minecraft.item.ItemStack;
+
 import org.lwjgl.opengl.GL11;
 
+import WayofTime.alchemicalWizardry.BloodMagicConfiguration;
+
 public class HUDElement {
+
     public final ItemStack itemStack;
     public final int iconW;
     public final int iconH;
@@ -49,8 +52,7 @@ public class HUDElement {
     }
 
     private void initSize() {
-        elementH = enableItemName
-                ? Math.max(Minecraft.getMinecraft().fontRenderer.FONT_HEIGHT * 2, iconH)
+        elementH = enableItemName ? Math.max(Minecraft.getMinecraft().fontRenderer.FONT_HEIGHT * 2, iconH)
                 : Math.max(mc.fontRenderer.FONT_HEIGHT, iconH);
 
         if (itemStack != null) {
@@ -69,24 +71,18 @@ public class HUDElement {
                 boolean thresholdPercent = true;
 
                 if (showSpecialValue) {
-                    itemDamage = "\247"
-                            + ColourThreshold.getColorCode(
-                                    BloodMagicConfiguration.colorList,
-                                    (thresholdPercent ? damage * 100 / maxDamage : damage))
-                            + this.value;
-                } else if (showValue)
-                    itemDamage = "\247"
-                            + ColourThreshold.getColorCode(
-                                    BloodMagicConfiguration.colorList,
-                                    (thresholdPercent ? damage * 100 / maxDamage : damage))
-                            + damage + (showMaxDamage ? "/" + maxDamage : "");
-                else if (showPercent)
-                    itemDamage = "\247"
-                            + ColourThreshold.getColorCode(
-                                    BloodMagicConfiguration.colorList,
-                                    (thresholdPercent ? damage * 100 / maxDamage : damage))
-                            + (damage * 100 / maxDamage)
-                            + "%";
+                    itemDamage = "\247" + ColourThreshold.getColorCode(
+                            BloodMagicConfiguration.colorList,
+                            (thresholdPercent ? damage * 100 / maxDamage : damage)) + this.value;
+                } else if (showValue) itemDamage = "\247"
+                        + ColourThreshold.getColorCode(
+                                BloodMagicConfiguration.colorList,
+                                (thresholdPercent ? damage * 100 / maxDamage : damage))
+                        + damage
+                        + (showMaxDamage ? "/" + maxDamage : "");
+                else if (showPercent) itemDamage = "\247" + ColourThreshold.getColorCode(
+                        BloodMagicConfiguration.colorList,
+                        (thresholdPercent ? damage * 100 / maxDamage : damage)) + (damage * 100 / maxDamage) + "%";
             }
 
             itemDamageW = mc.fontRenderer.getStringWidth(HUDUtils.stripCtrl(itemDamage));
@@ -94,8 +90,7 @@ public class HUDElement {
 
             if (enableItemName) {
                 itemName = itemStack.getDisplayName();
-                elementW = padW
-                        + iconW
+                elementW = padW + iconW
                         + padW
                         + Math.max(mc.fontRenderer.getStringWidth(HUDUtils.stripCtrl(itemName)), itemDamageW);
             }
@@ -115,16 +110,25 @@ public class HUDElement {
         boolean toRight = true;
         if (toRight) {
             itemRenderer.renderItemAndEffectIntoGUI(
-                    mc.fontRenderer, mc.getTextureManager(), itemStack, x - (iconW + padW), y);
+                    mc.fontRenderer,
+                    mc.getTextureManager(),
+                    itemStack,
+                    x - (iconW + padW),
+                    y);
             HUDUtils.renderItemOverlayIntoGUI(
-                    mc.fontRenderer, itemStack, x - (iconW + padW), y, showDamageOverlay, showItemCount);
+                    mc.fontRenderer,
+                    itemStack,
+                    x - (iconW + padW),
+                    y,
+                    showDamageOverlay,
+                    showItemCount);
 
             RenderHelper.disableStandardItemLighting();
             GL11.glDisable(32826 /* GL_RESCALE_NORMAL_EXT */);
             GL11.glDisable(GL11.GL_BLEND);
 
-            mc.fontRenderer.drawStringWithShadow(
-                    itemName + "\247r", x - (padW + iconW + padW) - itemNameW, y, 0xffffff);
+            mc.fontRenderer
+                    .drawStringWithShadow(itemName + "\247r", x - (padW + iconW + padW) - itemNameW, y, 0xffffff);
             mc.fontRenderer.drawStringWithShadow(
                     itemDamage + "\247r",
                     x - (padW + iconW + padW) - itemDamageW,

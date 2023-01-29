@@ -1,17 +1,19 @@
 package WayofTime.alchemicalWizardry.common.tweaker;
 
-import WayofTime.alchemicalWizardry.api.harvest.HarvestRegistry;
-import WayofTime.alchemicalWizardry.api.harvest.IHarvestHandler;
-import WayofTime.alchemicalWizardry.common.harvest.GenericItemStackHarvestHandler;
 import minetweaker.IUndoableAction;
 import minetweaker.MineTweakerAPI;
 import minetweaker.api.item.IItemStack;
+
 import net.minecraft.block.Block;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.common.IPlantable;
+
 import stanhebben.zenscript.annotations.ZenClass;
 import stanhebben.zenscript.annotations.ZenMethod;
+import WayofTime.alchemicalWizardry.api.harvest.HarvestRegistry;
+import WayofTime.alchemicalWizardry.api.harvest.IHarvestHandler;
+import WayofTime.alchemicalWizardry.common.harvest.GenericItemStackHarvestHandler;
 
 /**
  * MineTweaker3 Harvest Moon Handler by hilburn *
@@ -28,8 +30,7 @@ public class HarvestMoon {
     public static void addHarvestable(IItemStack block, int meta, IItemStack seed) {
         ItemStack seedStack = MTHelper.toStack(seed);
         Block plantBlock = Block.getBlockFromItem(MTHelper.toStack(block).getItem());
-        if (!(plantBlock == null
-                || plantBlock == Blocks.air
+        if (!(plantBlock == null || plantBlock == Blocks.air
                 || seedStack == null
                 || !(seedStack.getItem() instanceof IPlantable))) {
             MineTweakerAPI.apply(new Add(plantBlock, meta, seedStack));
@@ -39,6 +40,7 @@ public class HarvestMoon {
     }
 
     private static class Add implements IUndoableAction {
+
         private IHarvestHandler handler;
         private String name;
 

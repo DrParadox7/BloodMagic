@@ -1,6 +1,5 @@
 package WayofTime.alchemicalWizardry.common.entity.mob;
 
-import WayofTime.alchemicalWizardry.AlchemicalWizardry;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.monster.IMob;
@@ -8,7 +7,10 @@ import net.minecraft.potion.Potion;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.world.World;
 
+import WayofTime.alchemicalWizardry.AlchemicalWizardry;
+
 public class EntityShadeElemental extends EntityElemental implements IMob {
+
     public EntityShadeElemental(World world) {
         super(world, AlchemicalWizardry.entityShadeElementalID);
     }

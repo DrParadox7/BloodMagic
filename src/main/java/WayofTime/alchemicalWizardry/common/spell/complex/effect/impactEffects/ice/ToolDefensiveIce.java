@@ -1,8 +1,7 @@
 package WayofTime.alchemicalWizardry.common.spell.complex.effect.impactEffects.ice;
 
-import WayofTime.alchemicalWizardry.common.spell.complex.effect.SpellHelper;
-import WayofTime.alchemicalWizardry.common.spell.complex.effect.impactEffects.tool.SummonToolEffect;
 import java.util.List;
+
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.init.Blocks;
@@ -13,7 +12,11 @@ import net.minecraft.util.Vec3;
 import net.minecraft.world.World;
 import net.minecraftforge.common.util.ForgeDirection;
 
+import WayofTime.alchemicalWizardry.common.spell.complex.effect.SpellHelper;
+import WayofTime.alchemicalWizardry.common.spell.complex.effect.impactEffects.tool.SummonToolEffect;
+
 public class ToolDefensiveIce extends SummonToolEffect {
+
     public ToolDefensiveIce(int power, int potency, int cost) {
         super(power, potency, cost);
     }
@@ -22,8 +25,8 @@ public class ToolDefensiveIce extends SummonToolEffect {
     public int onSummonTool(ItemStack toolStack, World world, Entity entity) {
         int horizRadius = this.powerUpgrades * 2 + 2;
         int vertRadius = this.powerUpgrades * 3 + 2;
-        List<Entity> entityList =
-                SpellHelper.getEntitiesInRange(world, entity.posX, entity.posY, entity.posZ, horizRadius, vertRadius);
+        List<Entity> entityList = SpellHelper
+                .getEntitiesInRange(world, entity.posX, entity.posY, entity.posZ, horizRadius, vertRadius);
 
         for (Entity ent : entityList) {
             if (ent instanceof EntityLivingBase && !ent.equals(entity)) {

@@ -1,8 +1,5 @@
 package WayofTime.alchemicalWizardry.common.renderer.block;
 
-import WayofTime.alchemicalWizardry.common.renderer.model.ModelPedestal;
-import WayofTime.alchemicalWizardry.common.tileEntity.TEPedestal;
-import cpw.mods.fml.client.FMLClientHandler;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.entity.RenderItem;
 import net.minecraft.client.renderer.entity.RenderManager;
@@ -13,14 +10,21 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.common.util.ForgeDirection;
+
 import org.lwjgl.opengl.GL11;
 
+import WayofTime.alchemicalWizardry.common.renderer.model.ModelPedestal;
+import WayofTime.alchemicalWizardry.common.tileEntity.TEPedestal;
+import cpw.mods.fml.client.FMLClientHandler;
+
 public class RenderPedestal extends TileEntitySpecialRenderer {
+
     private ModelPedestal modelPedestal = new ModelPedestal();
     private final RenderItem customRenderItem;
 
     public RenderPedestal() {
         customRenderItem = new RenderItem() {
+
             @Override
             public boolean shouldBob() {
                 return false;
@@ -125,8 +129,8 @@ public class RenderPedestal extends TileEntitySpecialRenderer {
         return scaleFactor;
     }
 
-    private void translateGhostItemByOrientation(
-            ItemStack ghostItemStack, double x, double y, double z, ForgeDirection forgeDirection) {
+    private void translateGhostItemByOrientation(ItemStack ghostItemStack, double x, double y, double z,
+            ForgeDirection forgeDirection) {
         if (ghostItemStack != null) {
             if (ghostItemStack.getItem() instanceof ItemBlock) {
                 switch (forgeDirection) {
@@ -164,8 +168,7 @@ public class RenderPedestal extends TileEntitySpecialRenderer {
                         return;
                     }
 
-                    default: {
-                    }
+                    default: {}
                 }
             } else {
                 switch (forgeDirection) {
@@ -203,8 +206,7 @@ public class RenderPedestal extends TileEntitySpecialRenderer {
                         return;
                     }
 
-                    default: {
-                    }
+                    default: {}
                 }
             }
         }

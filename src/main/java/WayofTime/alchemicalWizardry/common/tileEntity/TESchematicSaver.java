@@ -1,19 +1,23 @@
 package WayofTime.alchemicalWizardry.common.tileEntity;
 
-import WayofTime.alchemicalWizardry.AlchemicalWizardry;
-import WayofTime.alchemicalWizardry.ModBlocks;
-import WayofTime.alchemicalWizardry.common.demonVillage.BuildingSchematic;
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.Writer;
 import java.util.Random;
+
 import net.minecraft.block.Block;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.tileentity.TileEntity;
 
+import WayofTime.alchemicalWizardry.AlchemicalWizardry;
+import WayofTime.alchemicalWizardry.ModBlocks;
+import WayofTime.alchemicalWizardry.common.demonVillage.BuildingSchematic;
+
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+
 public class TESchematicSaver extends TileEntity {
+
     public Block targetBlock = ModBlocks.largeBloodStoneBrick;
 
     public void rightClickBlock(EntityPlayer player, int side) {

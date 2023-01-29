@@ -1,10 +1,7 @@
 package WayofTime.alchemicalWizardry.common.items;
 
-import WayofTime.alchemicalWizardry.AlchemicalWizardry;
-import WayofTime.alchemicalWizardry.api.soulNetwork.LifeEssenceNetwork;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
 import java.util.List;
+
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
@@ -14,7 +11,13 @@ import net.minecraft.world.World;
 import net.minecraft.world.WorldProvider;
 import net.minecraftforge.common.DimensionManager;
 
+import WayofTime.alchemicalWizardry.AlchemicalWizardry;
+import WayofTime.alchemicalWizardry.api.soulNetwork.LifeEssenceNetwork;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
+
 public class LavaCrystal extends EnergyItems {
+
     public LavaCrystal() {
         super();
         setMaxStackSize(1);
@@ -59,21 +62,21 @@ public class LavaCrystal extends EnergyItems {
         par3List.add(StatCollector.translateToLocal("tooltip.lavacrystal.desc2"));
 
         if (!(par1ItemStack.getTagCompound() == null)) {
-            par3List.add(StatCollector.translateToLocal("tooltip.owner.currentowner") + " "
-                    + par1ItemStack.getTagCompound().getString("ownerName"));
+            par3List.add(
+                    StatCollector.translateToLocal("tooltip.owner.currentowner") + " "
+                            + par1ItemStack.getTagCompound().getString("ownerName"));
         }
     }
 
     public boolean hasEnoughEssence(ItemStack itemStack) {
-        if (itemStack.getTagCompound() != null
-                && !(itemStack.getTagCompound().getString("ownerName").equals(""))) {
+        if (itemStack.getTagCompound() != null && !(itemStack.getTagCompound().getString("ownerName").equals(""))) {
             String ownerName = itemStack.getTagCompound().getString("ownerName");
 
             if (MinecraftServer.getServer() == null) {
                 return false;
             }
 
-            //            World world = MinecraftServer.getServer().worldServers[0];
+            // World world = MinecraftServer.getServer().worldServers[0];
             WorldProvider provider = DimensionManager.getProvider(0);
             if (provider == null || provider.worldObj == null) {
                 return false;

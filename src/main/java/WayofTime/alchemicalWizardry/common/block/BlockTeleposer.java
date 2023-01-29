@@ -1,17 +1,7 @@
 package WayofTime.alchemicalWizardry.common.block;
 
-import WayofTime.alchemicalWizardry.AlchemicalWizardry;
-import WayofTime.alchemicalWizardry.api.event.TeleposeEvent;
-import WayofTime.alchemicalWizardry.api.soulNetwork.SoulNetworkHandler;
-import WayofTime.alchemicalWizardry.common.demonVillage.tileEntity.TEDemonPortal;
-import WayofTime.alchemicalWizardry.common.items.TelepositionFocus;
-import WayofTime.alchemicalWizardry.common.tileEntity.TETeleposer;
-import codechicken.multipart.MultipartHelper;
-import codechicken.multipart.TileMultipart;
-import cpw.mods.fml.common.Optional;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
 import java.util.Random;
+
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockContainer;
 import net.minecraft.block.BlockMobSpawner;
@@ -29,7 +19,20 @@ import net.minecraft.util.IIcon;
 import net.minecraft.world.World;
 import net.minecraftforge.common.MinecraftForge;
 
+import WayofTime.alchemicalWizardry.AlchemicalWizardry;
+import WayofTime.alchemicalWizardry.api.event.TeleposeEvent;
+import WayofTime.alchemicalWizardry.api.soulNetwork.SoulNetworkHandler;
+import WayofTime.alchemicalWizardry.common.demonVillage.tileEntity.TEDemonPortal;
+import WayofTime.alchemicalWizardry.common.items.TelepositionFocus;
+import WayofTime.alchemicalWizardry.common.tileEntity.TETeleposer;
+import codechicken.multipart.MultipartHelper;
+import codechicken.multipart.TileMultipart;
+import cpw.mods.fml.common.Optional;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
+
 public class BlockTeleposer extends BlockContainer {
+
     @SideOnly(Side.CLIENT)
     private IIcon topIcon;
 
@@ -69,8 +72,8 @@ public class BlockTeleposer extends BlockContainer {
     }
 
     @Override
-    public boolean onBlockActivated(
-            World world, int x, int y, int z, EntityPlayer player, int idk, float what, float these, float are) {
+    public boolean onBlockActivated(World world, int x, int y, int z, EntityPlayer player, int idk, float what,
+            float these, float are) {
         ItemStack playerItem = player.getCurrentEquippedItem();
 
         if (playerItem != null) {
@@ -124,8 +127,7 @@ public class BlockTeleposer extends BlockContainer {
                         new ItemStack(item.getItem(), item.stackSize, item.getItemDamage()));
 
                 if (item.hasTagCompound()) {
-                    entityItem.getEntityItem().setTagCompound((NBTTagCompound)
-                            item.getTagCompound().copy());
+                    entityItem.getEntityItem().setTagCompound((NBTTagCompound) item.getTagCompound().copy());
                 }
 
                 float factor = 0.05F;
@@ -143,28 +145,18 @@ public class BlockTeleposer extends BlockContainer {
         return new TETeleposer();
     }
 
-    public static boolean swapBlocks(
-            Object caller, World worldI, World worldF, int xi, int yi, int zi, int xf, int yf, int zf) {
+    public static boolean swapBlocks(Object caller, World worldI, World worldF, int xi, int yi, int zi, int xf, int yf,
+            int zf) {
         return swapBlocks(caller, worldI, worldF, xi, yi, zi, xf, yf, zf, true, 3);
     }
 
-    public static boolean swapBlocksWithoutSound(
-            Object caller, World worldI, World worldF, int xi, int yi, int zi, int xf, int yf, int zf) {
+    public static boolean swapBlocksWithoutSound(Object caller, World worldI, World worldF, int xi, int yi, int zi,
+            int xf, int yf, int zf) {
         return swapBlocks(caller, worldI, worldF, xi, yi, zi, xf, yf, zf, false, 3);
     }
 
-    public static boolean swapBlocks(
-            Object caller,
-            World worldI,
-            World worldF,
-            int xi,
-            int yi,
-            int zi,
-            int xf,
-            int yf,
-            int zf,
-            boolean doSound,
-            int flag) {
+    public static boolean swapBlocks(Object caller, World worldI, World worldF, int xi, int yi, int zi, int xf, int yf,
+            int zf, boolean doSound, int flag) {
         TileEntity tileEntityI = worldI.getTileEntity(xi, yi, zi);
         TileEntity tileEntityF = worldF.getTileEntity(xf, yf, zf);
 

@@ -8,6 +8,7 @@ import WayofTime.alchemicalWizardry.api.spell.SpellParadigmSelf;
 import WayofTime.alchemicalWizardry.common.spell.complex.effect.impactEffects.fire.SelfEnvironmentalFire;
 
 public class CSESelfEnvironmentalFire extends ComplexSpellEffect {
+
     public CSESelfEnvironmentalFire() {
         super(ComplexSpellType.FIRE, ComplexSpellModifier.ENVIRONMENTAL);
     }
@@ -23,9 +24,8 @@ public class CSESelfEnvironmentalFire extends ComplexSpellEffect {
     @Override
     public void modifyParadigm(SpellParadigm parad) {
         if (parad instanceof SpellParadigmSelf) {
-            ((SpellParadigmSelf) parad)
-                    .addSelfSpellEffect(
-                            new SelfEnvironmentalFire(powerEnhancement, potencyEnhancement, costEnhancement));
+            ((SpellParadigmSelf) parad).addSelfSpellEffect(
+                    new SelfEnvironmentalFire(powerEnhancement, potencyEnhancement, costEnhancement));
         }
     }
 

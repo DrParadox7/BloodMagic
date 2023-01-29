@@ -8,6 +8,7 @@ import WayofTime.alchemicalWizardry.api.spell.SpellParadigmMelee;
 import WayofTime.alchemicalWizardry.common.spell.complex.effect.impactEffects.fire.MeleeOffensiveFire;
 
 public class CSEMeleeOffensiveFire extends ComplexSpellEffect {
+
     public CSEMeleeOffensiveFire() {
         super(ComplexSpellType.FIRE, ComplexSpellModifier.OFFENSIVE);
     }
@@ -35,7 +36,8 @@ public class CSEMeleeOffensiveFire extends ComplexSpellEffect {
 
     @Override
     public int getCostOfEffect() {
-        return (int)
-                (500 * (1 + this.potencyEnhancement) * (this.powerEnhancement + 1) * Math.pow(0.85, costEnhancement));
+        return (int) (500 * (1 + this.potencyEnhancement)
+                * (this.powerEnhancement + 1)
+                * Math.pow(0.85, costEnhancement));
     }
 }

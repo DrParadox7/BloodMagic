@@ -5,6 +5,7 @@ import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
 
 public class ItemSpellEnhancementBlock extends ItemBlock {
+
     public ItemSpellEnhancementBlock(Block par1) {
         super(par1);
         setHasSubtypes(true);

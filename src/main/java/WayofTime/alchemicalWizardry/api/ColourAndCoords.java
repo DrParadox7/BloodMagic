@@ -3,6 +3,7 @@ package WayofTime.alchemicalWizardry.api;
 import net.minecraft.nbt.NBTTagCompound;
 
 public class ColourAndCoords {
+
     public int colourRed;
     public int colourGreen;
     public int colourBlue;

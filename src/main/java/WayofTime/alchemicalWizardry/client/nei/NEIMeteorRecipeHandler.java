@@ -1,5 +1,21 @@
 package WayofTime.alchemicalWizardry.client.nei;
 
+import java.awt.*;
+import java.text.DecimalFormat;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Comparator;
+import java.util.List;
+import java.util.stream.Collectors;
+
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.resources.I18n;
+import net.minecraft.init.Blocks;
+import net.minecraft.item.ItemStack;
+import net.minecraft.util.ResourceLocation;
+
+import org.lwjgl.opengl.GL11;
+
 import WayofTime.alchemicalWizardry.common.summoning.meteor.MeteorParadigm;
 import WayofTime.alchemicalWizardry.common.summoning.meteor.MeteorParadigmComponent;
 import WayofTime.alchemicalWizardry.common.summoning.meteor.MeteorRegistry;
@@ -8,21 +24,9 @@ import codechicken.nei.NEIServerUtils;
 import codechicken.nei.PositionedStack;
 import codechicken.nei.recipe.GuiRecipe;
 import codechicken.nei.recipe.TemplateRecipeHandler;
-import java.awt.*;
-import java.text.DecimalFormat;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Comparator;
-import java.util.List;
-import java.util.stream.Collectors;
-import net.minecraft.client.Minecraft;
-import net.minecraft.client.resources.I18n;
-import net.minecraft.init.Blocks;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.ResourceLocation;
-import org.lwjgl.opengl.GL11;
 
 public class NEIMeteorRecipeHandler extends TemplateRecipeHandler {
+
     public class CachedMeteorRecipe extends CachedRecipe {
 
         private final List<PositionedStack> input = new ArrayList<>();
@@ -155,11 +159,9 @@ public class NEIMeteorRecipeHandler extends TemplateRecipeHandler {
         CachedMeteorRecipe meteorRecipe = (CachedMeteorRecipe) this.arecipes.get(recipe);
         int cost = meteorRecipe.getCost();
         int radius = meteorRecipe.getRadius();
-        Minecraft.getMinecraft()
-                .fontRenderer
+        Minecraft.getMinecraft().fontRenderer
                 .drawString(I18n.format("nei.recipe.meteor.cost", String.format("%,d", cost)), 2, 168, 0x000000);
-        Minecraft.getMinecraft()
-                .fontRenderer
+        Minecraft.getMinecraft().fontRenderer
                 .drawString(I18n.format("nei.recipe.meteor.radius", radius), 2, 179, 0x000000);
     }
 
@@ -198,8 +200,7 @@ public class NEIMeteorRecipeHandler extends TemplateRecipeHandler {
     }
 
     private List<MeteorParadigm> getSortedMeteors() {
-        return MeteorRegistry.paradigmList.stream()
-                .sorted(Comparator.comparing(m -> m.cost))
+        return MeteorRegistry.paradigmList.stream().sorted(Comparator.comparing(m -> m.cost))
                 .collect(Collectors.toList());
     }
 

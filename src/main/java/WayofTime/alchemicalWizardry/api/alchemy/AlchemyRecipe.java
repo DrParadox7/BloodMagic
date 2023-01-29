@@ -5,6 +5,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraftforge.oredict.OreDictionary;
 
 public class AlchemyRecipe {
+
     private ItemStack output;
     private ItemStack[] recipe;
     private int bloodOrbLevel;
@@ -85,7 +86,7 @@ public class AlchemyRecipe {
                 }
 
                 if ((checkedItemStack.getItemDamage() == recipeItemStack.getItemDamage()
-                                || OreDictionary.WILDCARD_VALUE == recipeItemStack.getItemDamage())
+                        || OreDictionary.WILDCARD_VALUE == recipeItemStack.getItemDamage())
                         && checkedItemStack.getItem() == recipeItemStack.getItem()) {
                     test = true;
                     checkList[j] = true;
