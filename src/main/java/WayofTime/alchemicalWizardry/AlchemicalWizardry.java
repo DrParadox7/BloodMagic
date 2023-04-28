@@ -36,10 +36,6 @@ import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import thaumcraft.api.ItemApi;
-import thaumcraft.api.ThaumcraftApi;
-import thaumcraft.api.aspects.Aspect;
-import thaumcraft.api.aspects.AspectList;
 import WayofTime.alchemicalWizardry.api.BlockStack;
 import WayofTime.alchemicalWizardry.api.alchemy.AlchemicalPotionCreationHandler;
 import WayofTime.alchemicalWizardry.api.alchemy.AlchemyRecipeRegistry;
@@ -118,7 +114,6 @@ import WayofTime.alchemicalWizardry.common.items.ItemIncense;
 import WayofTime.alchemicalWizardry.common.items.ItemMailOrderCatalogue;
 import WayofTime.alchemicalWizardry.common.items.ItemRitualDiviner;
 import WayofTime.alchemicalWizardry.common.items.armour.OmegaArmour;
-import WayofTime.alchemicalWizardry.common.items.forestry.ItemBloodFrame;
 import WayofTime.alchemicalWizardry.common.items.sigil.holding.HoldingPacketHandler;
 import WayofTime.alchemicalWizardry.common.items.thaumcraft.ItemSanguineArmour;
 import WayofTime.alchemicalWizardry.common.omega.OmegaParadigmEarth;
@@ -297,6 +292,10 @@ import cpw.mods.fml.common.event.FMLServerStartingEvent;
 import cpw.mods.fml.common.network.NetworkRegistry;
 import cpw.mods.fml.common.registry.EntityRegistry;
 import cpw.mods.fml.common.registry.GameRegistry;
+import thaumcraft.api.ItemApi;
+import thaumcraft.api.ThaumcraftApi;
+import thaumcraft.api.aspects.Aspect;
+import thaumcraft.api.aspects.AspectList;
 
 @Mod(
         modid = "AWWayofTime",
@@ -3276,27 +3275,6 @@ public class AlchemicalWizardry {
                     new ItemStack(Blocks.glass, 1, OreDictionary.WILDCARD_VALUE));
 
             registerBMBook();
-        }
-
-        if (Loader.isModLoaded("Forestry")) {
-            isForestryLoaded = true;
-
-            ModItems.itemBloodFrame = new ItemBloodFrame().setUnlocalizedName("bloodFrame");
-
-            ItemStack provenFrame = GameRegistry.findItemStack("Forestry", "frameImpregnated", 1);
-
-            if (provenFrame != null) {
-                AltarRecipeRegistry.registerAltarRecipe(
-                        new ItemStack(ModItems.itemBloodFrame),
-                        provenFrame,
-                        3,
-                        30000,
-                        20,
-                        20,
-                        false);
-            }
-        } else {
-            isForestryLoaded = false;
         }
 
         if (Loader.isModLoaded("harvestcraft")) {
