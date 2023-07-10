@@ -70,7 +70,7 @@ public class SacrificialDagger extends Item
     {
         int usageCount = this.getMaxItemUseDuration(stack) - itemInUseCount;
         int hpCount = (int) Math.min(((usageCount * 0.35)), player.getMaxHealth());
-        System.out.println("itemusecount: " + (this.getMaxItemUseDuration(stack) - itemInUseCount) + ", hpCount: " + hpCount);
+        //System.out.println("itemusecount: " + (this.getMaxItemUseDuration(stack) - itemInUseCount) + ", hpCount: " + hpCount);
 
         if (this.canUseForSacrifice(stack)) {
             PlayerSacrificeHandler.sacrificePlayerHealth(player);
