@@ -3,6 +3,12 @@ package WayofTime.alchemicalWizardry.common.rituals;
 import java.util.ArrayList;
 import java.util.List;
 
+import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.util.AxisAlignedBB;
+import net.minecraft.util.DamageSource;
+import net.minecraft.world.World;
+
 import WayofTime.alchemicalWizardry.AlchemicalWizardry;
 import WayofTime.alchemicalWizardry.api.alchemy.energy.ReagentRegistry;
 import WayofTime.alchemicalWizardry.api.rituals.IMasterRitualStone;
@@ -10,14 +16,9 @@ import WayofTime.alchemicalWizardry.api.rituals.RitualComponent;
 import WayofTime.alchemicalWizardry.api.rituals.RitualEffect;
 import WayofTime.alchemicalWizardry.api.soulNetwork.SoulNetworkHandler;
 import WayofTime.alchemicalWizardry.api.tile.IBloodAltar;
-import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.util.AxisAlignedBB;
-import net.minecraft.util.DamageSource;
-import net.minecraft.world.World;
 
-public class RitualEffectWellOfSuffering extends RitualEffect
-{
+public class RitualEffectWellOfSuffering extends RitualEffect {
+
     public static final int timeDelay = 25;
     public static final int amount = AlchemicalWizardry.lpPerSacrificeWellOfSuffering;
 
@@ -28,8 +29,7 @@ public class RitualEffectWellOfSuffering extends RitualEffect
     private static final int sanctusDrain = 20;
 
     @Override
-    public void performEffect(IMasterRitualStone ritualStone)
-    {
+    public void performEffect(IMasterRitualStone ritualStone) {
         String owner = ritualStone.getOwner();
 
         int currentEssence = SoulNetworkHandler.getCurrentEssence(owner);
@@ -38,22 +38,17 @@ public class RitualEffectWellOfSuffering extends RitualEffect
         int y = ritualStone.getYCoord();
         int z = ritualStone.getZCoord();
 
-        if (world.getWorldTime() % this.timeDelay != 0)
-        {
+        if (world.getWorldTime() % this.timeDelay != 0) {
             return;
         }
 
         IBloodAltar tileAltar = null;
         boolean testFlag = false;
 
-        for (int i = -5; i <= 5; i++)
-        {
-            for (int j = -5; j <= 5; j++)
-            {
-                for (int k = -10; k <= 10; k++)
-                {
-                    if (world.getTileEntity(x + i, y + k, z + j) instanceof IBloodAltar)
-                    {
+        for (int i = -5; i <= 5; i++) {
+            for (int j = -5; j <= 5; j++) {
+                for (int k = -10; k <= 10; k++) {
+                    if (world.getTileEntity(x + i, y + k, z + j) instanceof IBloodAltar) {
                         tileAltar = (IBloodAltar) world.getTileEntity(x + i, y + k, z + j);
                         testFlag = true;
                     }
@@ -61,8 +56,7 @@ public class RitualEffectWellOfSuffering extends RitualEffect
             }
         }
 
-        if (!testFlag)
-        {
+        if (!testFlag) {
             return;
         }
 
@@ -70,39 +64,41 @@ public class RitualEffectWellOfSuffering extends RitualEffect
 
         int d0 = 10;
         int vertRange = hasPotentia ? 20 : 10;
-        AxisAlignedBB axisalignedbb = AxisAlignedBB.getBoundingBox((double) x, (double) y, (double) z, (double) (x + 1), (double) (y + 1), (double) (z + 1)).expand(d0, vertRange, d0);
+        AxisAlignedBB axisalignedbb = AxisAlignedBB.getBoundingBox(
+                (double) x,
+                (double) y,
+                (double) z,
+                (double) (x + 1),
+                (double) (y + 1),
+                (double) (z + 1)).expand(d0, vertRange, d0);
         List<EntityLivingBase> list = world.getEntitiesWithinAABB(EntityLivingBase.class, axisalignedbb);
 
         int entityCount = 0;
-        boolean hasTennebrae = this.canDrainReagent(ritualStone, ReagentRegistry.tenebraeReagent, tennebraeDrain, false);
+        boolean hasTennebrae = this
+                .canDrainReagent(ritualStone, ReagentRegistry.tenebraeReagent, tennebraeDrain, false);
         boolean hasOffensa = this.canDrainReagent(ritualStone, ReagentRegistry.offensaReagent, offensaDrain, false);
         boolean hasSanctus = this.canDrainReagent(ritualStone, ReagentRegistry.sanctusReagent, sanctusDrain, false);
 
-        if (currentEssence < this.getCostPerRefresh() * list.size())
-        {
+        if (currentEssence < this.getCostPerRefresh() * list.size()) {
             SoulNetworkHandler.causeNauseaToPlayer(owner);
-        } else
-        {
-            for (EntityLivingBase livingEntity : list)
-            {
-                if (!livingEntity.isEntityAlive() || livingEntity instanceof EntityPlayer || AlchemicalWizardry.wellBlacklist.contains(livingEntity.getClass()))
-                {
+        } else {
+            for (EntityLivingBase livingEntity : list) {
+                if (!livingEntity.isEntityAlive() || livingEntity instanceof EntityPlayer
+                        || AlchemicalWizardry.wellBlacklist.contains(livingEntity.getClass())) {
                     continue;
                 }
 
-
-                if (hasSanctus && livingEntity.getHealth() < (livingEntity.getMaxHealth() * 0.7))
-                {
+                if (hasSanctus && livingEntity.getHealth() < (livingEntity.getMaxHealth() * 0.7)) {
                     this.canDrainReagent(ritualStone, ReagentRegistry.sanctusReagent, sanctusDrain, true);
                     continue;
                 }
 
-                hasOffensa = hasOffensa && this.canDrainReagent(ritualStone, ReagentRegistry.offensaReagent, offensaDrain, true);
+                hasOffensa = hasOffensa
+                        && this.canDrainReagent(ritualStone, ReagentRegistry.offensaReagent, offensaDrain, true);
 
-                if (livingEntity.attackEntityFrom(DamageSource.outOfWorld, hasOffensa ? 2 : 1))
-                {
-                	hasTennebrae = hasTennebrae && this.canDrainReagent(ritualStone, ReagentRegistry.tenebraeReagent, tennebraeDrain, true);
-
+                if (livingEntity.attackEntityFrom(DamageSource.outOfWorld, hasOffensa ? 2 : 1)) {
+                    hasTennebrae = hasTennebrae
+                            && this.canDrainReagent(ritualStone, ReagentRegistry.tenebraeReagent, tennebraeDrain, true);
 
                     entityCount++;
                     tileAltar.sacrificialDaggerCall(this.amount * (hasTennebrae ? 2 : 1) * (hasOffensa ? 2 : 1), true);
@@ -111,22 +107,19 @@ public class RitualEffectWellOfSuffering extends RitualEffect
 
             SoulNetworkHandler.syphonFromNetwork(owner, this.getCostPerRefresh() * entityCount);
 
-            if(hasPotentia)
-            {
-            	this.canDrainReagent(ritualStone, ReagentRegistry.potentiaReagent, potentiaDrain, true);
+            if (hasPotentia) {
+                this.canDrainReagent(ritualStone, ReagentRegistry.potentiaReagent, potentiaDrain, true);
             }
         }
     }
 
     @Override
-    public int getCostPerRefresh()
-    {
+    public int getCostPerRefresh() {
         return AlchemicalWizardry.ritualCostSuffering[1];
     }
 
     @Override
-    public List<RitualComponent> getRitualComponentList()
-    {
+    public List<RitualComponent> getRitualComponentList() {
         ArrayList<RitualComponent> wellOfSufferingRitual = new ArrayList();
         wellOfSufferingRitual.add(new RitualComponent(1, 0, 1, RitualComponent.FIRE));
         wellOfSufferingRitual.add(new RitualComponent(-1, 0, 1, RitualComponent.FIRE));

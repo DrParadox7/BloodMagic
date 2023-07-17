@@ -13,10 +13,9 @@ import minetweaker.util.IEventHandler;
 /**
  * MineTweaker3 Integration by joshie *
  */
-public class MineTweakerIntegration 
-{
-    public static void register() 
-    {
+public class MineTweakerIntegration {
+
+    public static void register() {
         MineTweakerAPI.registerClass(Alchemy.class);
         MineTweakerAPI.registerClass(Binding.class);
         MineTweakerAPI.registerClass(BloodAltar.class);

@@ -2,15 +2,6 @@ package WayofTime.alchemicalWizardry.common.items;
 
 import java.util.List;
 
-import WayofTime.alchemicalWizardry.AlchemicalWizardry;
-import WayofTime.alchemicalWizardry.api.sacrifice.PlayerSacrificeHandler;
-import WayofTime.alchemicalWizardry.api.tile.IBloodAltar;
-import WayofTime.alchemicalWizardry.common.IDemon;
-import WayofTime.alchemicalWizardry.common.demonVillage.demonHoard.demon.IHoardDemon;
-import WayofTime.alchemicalWizardry.common.spell.complex.effect.SpellHelper;
-import com.google.common.collect.Multimap;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.renderer.texture.IIconRegister;
@@ -29,10 +20,20 @@ import net.minecraft.util.DamageSource;
 import net.minecraft.util.StatCollector;
 import net.minecraft.world.World;
 
-public class DaggerOfSacrifice extends EnergyItems
-{
-    public DaggerOfSacrifice()
-    {
+import com.google.common.collect.Multimap;
+
+import WayofTime.alchemicalWizardry.AlchemicalWizardry;
+import WayofTime.alchemicalWizardry.api.sacrifice.PlayerSacrificeHandler;
+import WayofTime.alchemicalWizardry.api.tile.IBloodAltar;
+import WayofTime.alchemicalWizardry.common.IDemon;
+import WayofTime.alchemicalWizardry.common.demonVillage.demonHoard.demon.IHoardDemon;
+import WayofTime.alchemicalWizardry.common.spell.complex.effect.SpellHelper;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
+
+public class DaggerOfSacrifice extends EnergyItems {
+
+    public DaggerOfSacrifice() {
         super();
         this.maxStackSize = 1;
         setCreativeTab(AlchemicalWizardry.tabBloodMagic);
@@ -43,79 +44,87 @@ public class DaggerOfSacrifice extends EnergyItems
 
     @Override
     @SideOnly(Side.CLIENT)
-    public void registerIcons(IIconRegister iconRegister)
-    {
+    public void registerIcons(IIconRegister iconRegister) {
         this.itemIcon = iconRegister.registerIcon("AlchemicalWizardry:DaggerOfSacrifice");
     }
+
     @Override
-    public void onUpdate(ItemStack stack, World world, Entity entity, int par4, boolean par5)
-    {
-        if(!world.isRemote && entity instanceof EntityPlayer)
-        {
-            this.setUseForSacrifice(stack, this.isPlayerPreparedForSacrifice(world, (EntityPlayer)entity));
+    public void onUpdate(ItemStack stack, World world, Entity entity, int par4, boolean par5) {
+        if (!world.isRemote && entity instanceof EntityPlayer) {
+            this.setUseForSacrifice(stack, this.isPlayerPreparedForSacrifice(world, (EntityPlayer) entity));
         }
     }
+
     @Override
-    public boolean hitEntity(ItemStack par1ItemStack, EntityLivingBase par2EntityLivingBase, EntityLivingBase par3EntityLivingBase)
-    {
-        if (par3EntityLivingBase == null || par2EntityLivingBase == null || par3EntityLivingBase.worldObj.isRemote || (par3EntityLivingBase instanceof EntityPlayer && SpellHelper.isFakePlayer(par3EntityLivingBase.worldObj, (EntityPlayer) par3EntityLivingBase)))
-        {
+    public boolean hitEntity(ItemStack par1ItemStack, EntityLivingBase par2EntityLivingBase,
+            EntityLivingBase par3EntityLivingBase) {
+        if (par3EntityLivingBase == null || par2EntityLivingBase == null
+                || par3EntityLivingBase.worldObj.isRemote
+                || (par3EntityLivingBase instanceof EntityPlayer && SpellHelper
+                        .isFakePlayer(par3EntityLivingBase.worldObj, (EntityPlayer) par3EntityLivingBase))) {
             return false;
         }
 
-        if(par2EntityLivingBase instanceof IHoardDemon)
-        {
-        	return false;
+        if (par2EntityLivingBase instanceof IHoardDemon) {
+            return false;
         }
 
-        if (par2EntityLivingBase.isChild() || par2EntityLivingBase instanceof EntityPlayer || par2EntityLivingBase instanceof IBossDisplayData)
-        {
+        if (par2EntityLivingBase.isChild() || par2EntityLivingBase instanceof EntityPlayer
+                || par2EntityLivingBase instanceof IBossDisplayData) {
             return false;
         }
 
         World world = par2EntityLivingBase.worldObj;
 
-        if (par2EntityLivingBase.isDead || par2EntityLivingBase.getHealth() < 0.5f)
-        {
+        if (par2EntityLivingBase.isDead || par2EntityLivingBase.getHealth() < 0.5f) {
             return false;
         }
 
-        if(par2EntityLivingBase instanceof IDemon)
-        {
-        	((IDemon)par2EntityLivingBase).setDropCrystal(false);
-        	this.findAndNotifyAltarOfDemon(world, par2EntityLivingBase);
+        if (par2EntityLivingBase instanceof IDemon) {
+            ((IDemon) par2EntityLivingBase).setDropCrystal(false);
+            this.findAndNotifyAltarOfDemon(world, par2EntityLivingBase);
         }
 
-        int lifePerHp = AlchemicalWizardry.lpPerHpCustom.containsKey(par2EntityLivingBase.getClass()) ?
-                          AlchemicalWizardry.lpPerHpCustom.get(par2EntityLivingBase.getClass()) :
-                          AlchemicalWizardry.lpPerHpBase;
+        int lifePerHp = AlchemicalWizardry.lpPerHpCustom.containsKey(par2EntityLivingBase.getClass())
+                ? AlchemicalWizardry.lpPerHpCustom.get(par2EntityLivingBase.getClass())
+                : AlchemicalWizardry.lpPerHpBase;
 
         // Only count for HP without modifiers
         double hpCap = par2EntityLivingBase.getEntityAttribute(SharedMonsterAttributes.maxHealth).getBaseValue();
         double hpMob = Math.min((par2EntityLivingBase).getHealth() + 2, hpCap);
-        float incenseModifier = PlayerSacrificeHandler.getModifier(PlayerSacrificeHandler.getPlayerIncense((EntityPlayer) par3EntityLivingBase));
+        float incenseModifier = PlayerSacrificeHandler
+                .getModifier(PlayerSacrificeHandler.getPlayerIncense((EntityPlayer) par3EntityLivingBase));
 
         int lifeEssence = (int) (hpMob * lifePerHp * incenseModifier);
 
-        if (lifePerHp < 1 || par3EntityLivingBase.isPotionActive(AlchemicalWizardry.customPotionSoulFray))
-        {
+        if (lifePerHp < 1 || par3EntityLivingBase.isPotionActive(AlchemicalWizardry.customPotionSoulFray)) {
             return false;
         }
 
-        if (findAndFillAltar(par2EntityLivingBase.worldObj, par2EntityLivingBase, lifeEssence))
-        {
+        if (findAndFillAltar(par2EntityLivingBase.worldObj, par2EntityLivingBase, lifeEssence)) {
             double posX = par2EntityLivingBase.posX;
             double posY = par2EntityLivingBase.posY;
             double posZ = par2EntityLivingBase.posZ;
 
-            for (int i = 0; i < 8; i++)
-            {
-                SpellHelper.sendIndexedParticleToAllAround(world, posX, posY, posZ, 20, world.provider.dimensionId, 1, posX, posY, posZ);
+            for (int i = 0; i < 8; i++) {
+                SpellHelper.sendIndexedParticleToAllAround(
+                        world,
+                        posX,
+                        posY,
+                        posZ,
+                        20,
+                        world.provider.dimensionId,
+                        1,
+                        posX,
+                        posY,
+                        posZ);
             }
             if (!par3EntityLivingBase.isPotionActive(AlchemicalWizardry.customPotionSoulFray)) {
                 if (hpMob > 20) {
-                    int soulFrayDuration = Math.min((int)(hpMob * 20), 6000);
-                    par3EntityLivingBase.addPotionEffect(new PotionEffect(new PotionEffect(AlchemicalWizardry.customPotionSoulFray.id, soulFrayDuration, 0)));
+                    int soulFrayDuration = Math.min((int) (hpMob * 20), 6000);
+                    par3EntityLivingBase.addPotionEffect(
+                            new PotionEffect(
+                                    new PotionEffect(AlchemicalWizardry.customPotionSoulFray.id, soulFrayDuration, 0)));
                 }
                 par2EntityLivingBase.setHealth(-1);
                 par2EntityLivingBase.onDeath(DamageSource.generic);
@@ -126,53 +135,50 @@ public class DaggerOfSacrifice extends EnergyItems
         return false;
     }
 
-    public float func_82803_g()
-    {
+    public float func_82803_g() {
         return 4.0F;
     }
+
     @Override
-    public void addInformation(ItemStack par1ItemStack, EntityPlayer par2EntityPlayer, List par3List, boolean par4)
-    {
+    public void addInformation(ItemStack par1ItemStack, EntityPlayer par2EntityPlayer, List par3List, boolean par4) {
         par3List.add(StatCollector.translateToLocal("tooltip.caution.desc1"));
         par3List.add(StatCollector.translateToLocal("tooltip.caution.desc2"));
     }
 
     @Override
-    public float func_150893_a(ItemStack par1ItemStack, Block par2Block)
-    {
-        if (par2Block == Blocks.web)
-        {
+    public float func_150893_a(ItemStack par1ItemStack, Block par2Block) {
+        if (par2Block == Blocks.web) {
             return 15.0F;
-        } else
-        {
+        } else {
             Material material = par2Block.getMaterial();
-            return material != Material.plants && material != Material.vine && material != Material.coral && material != Material.leaves && material != Material.gourd ? 1.0F : 1.5F;
+            return material != Material.plants && material != Material.vine
+                    && material != Material.coral
+                    && material != Material.leaves
+                    && material != Material.gourd ? 1.0F : 1.5F;
         }
     }
 
     @Override
-    public boolean getIsRepairable(ItemStack par1ItemStack, ItemStack par2ItemStack)
-    {
+    public boolean getIsRepairable(ItemStack par1ItemStack, ItemStack par2ItemStack) {
         return false;
     }
 
     @Override
-    public Multimap getItemAttributeModifiers()
-    {
+    public Multimap getItemAttributeModifiers() {
         Multimap multimap = super.getItemAttributeModifiers();
-        multimap.put(SharedMonsterAttributes.attackDamage.getAttributeUnlocalizedName(), new AttributeModifier(field_111210_e, "Tool modifier", 1.0d, 0));
+        multimap.put(
+                SharedMonsterAttributes.attackDamage.getAttributeUnlocalizedName(),
+                new AttributeModifier(field_111210_e, "Tool modifier", 1.0d, 0));
         return multimap;
     }
 
-    public boolean findAndNotifyAltarOfDemon(World world, EntityLivingBase sacrifice)
-    {
+    public boolean findAndNotifyAltarOfDemon(World world, EntityLivingBase sacrifice) {
         int posX = (int) Math.round(sacrifice.posX - 0.5f);
         int posY = (int) sacrifice.posY;
         int posZ = (int) Math.round(sacrifice.posZ - 0.5f);
         IBloodAltar altarEntity = this.getAltar(world, posX, posY, posZ);
 
-        if (altarEntity == null)
-        {
+        if (altarEntity == null) {
             return false;
         }
 
@@ -181,15 +187,13 @@ public class DaggerOfSacrifice extends EnergyItems
         return true;
     }
 
-    public boolean findAndFillAltar(World world, EntityLivingBase sacrifice, int amount)
-    {
+    public boolean findAndFillAltar(World world, EntityLivingBase sacrifice, int amount) {
         int posX = (int) Math.round(sacrifice.posX - 0.5f);
         int posY = (int) sacrifice.posY;
         int posZ = (int) Math.round(sacrifice.posZ - 0.5f);
         IBloodAltar altarEntity = this.getAltar(world, posX, posY, posZ);
 
-        if (altarEntity == null)
-        {
+        if (altarEntity == null) {
             return false;
         }
 
@@ -198,20 +202,15 @@ public class DaggerOfSacrifice extends EnergyItems
         return true;
     }
 
-    public IBloodAltar getAltar(World world, int x, int y, int z)
-    {
+    public IBloodAltar getAltar(World world, int x, int y, int z) {
         TileEntity tileEntity;
 
-        for (int i = -2; i <= 2; i++)
-        {
-            for (int j = -2; j <= 2; j++)
-            {
-                for (int k = -2; k <= 1; k++)
-                {
+        for (int i = -2; i <= 2; i++) {
+            for (int j = -2; j <= 2; j++) {
+                for (int k = -2; k <= 1; k++) {
                     tileEntity = world.getTileEntity(i + x, k + y, j + z);
 
-                    if ((tileEntity instanceof IBloodAltar))
-                    {
+                    if ((tileEntity instanceof IBloodAltar)) {
                         return (IBloodAltar) tileEntity;
                     }
                 }
@@ -220,23 +219,20 @@ public class DaggerOfSacrifice extends EnergyItems
 
         return null;
     }
-    public boolean isPlayerPreparedForSacrifice(World world, EntityPlayer player)
-    {
+
+    public boolean isPlayerPreparedForSacrifice(World world, EntityPlayer player) {
         return !world.isRemote && (PlayerSacrificeHandler.getPlayerIncense(player) > 0);
     }
 
-    public boolean canUseForSacrifice(ItemStack stack)
-    {
+    public boolean canUseForSacrifice(ItemStack stack) {
         NBTTagCompound tag = stack.getTagCompound();
 
         return tag != null && tag.getBoolean("sacrifice");
     }
 
-    public void setUseForSacrifice(ItemStack stack, boolean sacrifice)
-    {
+    public void setUseForSacrifice(ItemStack stack, boolean sacrifice) {
         NBTTagCompound tag = stack.getTagCompound();
-        if(tag == null)
-        {
+        if (tag == null) {
             tag = new NBTTagCompound();
             stack.setTagCompound(tag);
         }
@@ -246,8 +242,7 @@ public class DaggerOfSacrifice extends EnergyItems
 
     @Override
     @SideOnly(Side.CLIENT)
-    public boolean hasEffect(ItemStack stack, int pass)
-    {
+    public boolean hasEffect(ItemStack stack, int pass) {
         return this.canUseForSacrifice(stack) || super.hasEffect(stack, pass);
     }
 }
