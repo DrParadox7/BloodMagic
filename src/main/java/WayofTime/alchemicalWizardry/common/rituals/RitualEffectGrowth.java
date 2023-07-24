@@ -50,20 +50,17 @@ public class RitualEffectGrowth extends RitualEffect {
                 int hydrationRange = hasVirtus ? 4 : 1;
                 for (int i = -hydrationRange; i <= hydrationRange; i++) {
                     for (int j = -hydrationRange; j <= hydrationRange; j++) {
-                        for (int k = -hydrationRange; k <= hydrationRange; k++) {
-
-                            if (this.canDrainReagent(
-                                    ritualStone,
-                                    ReagentRegistry.aquasalusReagent,
-                                    aquasalusDrain,
-                                    false)) {
-                                if (SpellHelper.hydrateSoil(world, x + i, y + k, z + j)) {
-                                    this.canDrainReagent(
-                                            ritualStone,
-                                            ReagentRegistry.aquasalusReagent,
-                                            aquasalusDrain,
-                                            true);
-                                }
+                        if (this.canDrainReagent(
+                                ritualStone,
+                                ReagentRegistry.aquasalusReagent,
+                                aquasalusDrain,
+                                false)) {
+                            if (SpellHelper.hydrateSoil(world, x + i, y + 1, z + j)) {
+                                this.canDrainReagent(
+                                        ritualStone,
+                                        ReagentRegistry.aquasalusReagent,
+                                        aquasalusDrain,
+                                        true);
                             }
                         }
                     }
@@ -75,27 +72,23 @@ public class RitualEffectGrowth extends RitualEffect {
             int range = hasVirtus ? 4 : 1;
             for (int i = -range; i <= range; i++) {
                 for (int j = -range; j <= range; j++) {
+                    Block block = world.getBlock(x + i, y + 2, z + j);
 
-                    for (int k = -range; k <= range; k++) {
-
-                        Block block = world.getBlock(x + i, y + k, z + j);
-
-                        if (block instanceof IPlantable || block instanceof IGrowable) {
-                            {
-                                SpellHelper.sendIndexedParticleToAllAround(
-                                        world,
-                                        x,
-                                        y,
-                                        z,
-                                        20,
-                                        world.provider.dimensionId,
-                                        3,
-                                        x,
-                                        y,
-                                        z);
-                                block.updateTick(world, x + i, y + k, z + j, world.rand);
-                                flag++;
-                            }
+                    if (block instanceof IPlantable || block instanceof IGrowable) {
+                        {
+                            SpellHelper.sendIndexedParticleToAllAround(
+                                    world,
+                                    x,
+                                    y,
+                                    z,
+                                    20,
+                                    world.provider.dimensionId,
+                                    3,
+                                    x,
+                                    y,
+                                    z);
+                            block.updateTick(world, x + i, y + 2, z + j, world.rand);
+                            flag++;
                         }
                     }
                 }
