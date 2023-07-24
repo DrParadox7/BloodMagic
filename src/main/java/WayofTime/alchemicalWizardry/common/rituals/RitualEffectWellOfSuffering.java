@@ -96,7 +96,7 @@ public class RitualEffectWellOfSuffering extends RitualEffect {
                     livingEntity.setHealth(-1);
                     livingEntity.onDeath(DamageSource.generic);
 
-                    tileAltar.sacrificialDaggerCall(lpValue * 10, true);
+                    tileAltar.sacrificialDaggerCall(lpValue * 15, true);
                 }
 
                 hasTennebrae = hasTennebrae
