@@ -1,7 +1,11 @@
 package WayofTime.alchemicalWizardry.common.rituals;
 
+import java.util.ArrayDeque;
 import java.util.ArrayList;
+import java.util.BitSet;
 import java.util.List;
+import java.util.Queue;
+import java.util.function.BiConsumer;
 
 import net.minecraft.block.Block;
 import net.minecraft.entity.effect.EntityLightningBolt;
@@ -24,6 +28,7 @@ import WayofTime.alchemicalWizardry.api.rituals.IMasterRitualStone;
 import WayofTime.alchemicalWizardry.api.rituals.RitualComponent;
 import WayofTime.alchemicalWizardry.api.rituals.RitualEffect;
 import WayofTime.alchemicalWizardry.api.soulNetwork.SoulNetworkHandler;
+import WayofTime.alchemicalWizardry.common.NewPacketHandler;
 import WayofTime.alchemicalWizardry.common.spell.complex.effect.SpellHelper;
 import WayofTime.alchemicalWizardry.common.tileEntity.TEPlinth;
 
@@ -75,61 +80,38 @@ public class RitualEffectBiomeChanger extends RitualEffect {
             }
 
             boolList[range][range] = true;
-            boolean isReady = false;
 
-            while (!isReady) {
-                isReady = true;
+            Queue<Integer> BFSqueue = new ArrayDeque<>();
+            BFSqueue.add(x);
+            BFSqueue.add(z);
 
-                for (int i = 0; i < 2 * range + 1; i++) {
-                    for (int j = 0; j < 2 * range + 1; j++) {
-                        if (boolList[i][j]) {
-                            if (i - 1 >= 0 && !boolList[i - 1][j]) {
-                                Block block = world.getBlock(x - range + i - 1, y + 1, z - range + j);
+            BiConsumer<Integer, Integer> tryEnqueue = (nextX, nextZ) -> {
+                if (Math.abs(nextX - x) > range || Math.abs(nextZ - z) > range) return;
+                if (boolList[nextX - (x - range)][nextZ - (z - range)]) return;
 
-                                if (!ModBlocks.largeBloodStoneBrick.equals(block)
-                                        && !ModBlocks.bloodStoneBrick.equals(block)) {
-                                    boolList[i - 1][j] = true;
-                                    isReady = false;
-                                }
-                            }
+                Block block = world.getBlock(nextX, y + 1, nextZ);
+                if (block == null || block.equals(ModBlocks.bloodStoneBrick)
+                        || block.equals(ModBlocks.largeBloodStoneBrick))
+                    return;
 
-                            if (j - 1 >= 0 && !boolList[i][j - 1]) {
-                                Block block = world.getBlock(x - range + i, y + 1, z - range + j - 1);
+                boolList[nextX - (x - range)][nextZ - (z - range)] = true;
+                BFSqueue.add(nextX);
+                BFSqueue.add(nextZ);
+            };
 
-                                if (!ModBlocks.largeBloodStoneBrick.equals(block)
-                                        && !ModBlocks.bloodStoneBrick.equals(block)) {
-                                    boolList[i][j - 1] = true;
-                                    isReady = false;
-                                }
-                            }
+            while (!BFSqueue.isEmpty()) {
+                Integer curX = BFSqueue.remove();
+                Integer curZ = BFSqueue.remove();
 
-                            if (i + 1 <= 2 * range && !boolList[i + 1][j]) {
-                                Block block = world.getBlock(x - range + i + 1, y + 1, z - range + j);
-
-                                if (!ModBlocks.largeBloodStoneBrick.equals(block)
-                                        && !ModBlocks.bloodStoneBrick.equals(block)) {
-                                    boolList[i + 1][j] = true;
-                                    isReady = false;
-                                }
-                            }
-
-                            if (j + 1 <= 2 * range && !boolList[i][j + 1]) {
-                                Block block = world.getBlock(x - range + i, y + 1, z - range + j + 1);
-
-                                if (!ModBlocks.largeBloodStoneBrick.equals(block)
-                                        && !ModBlocks.bloodStoneBrick.equals(block)) {
-                                    boolList[i][j + 1] = true;
-                                    isReady = false;
-                                }
-                            }
-                        }
-                    }
-                }
+                tryEnqueue.accept(curX + 1, curZ);
+                tryEnqueue.accept(curX, curZ + 1);
+                tryEnqueue.accept(curX - 1, curZ);
+                tryEnqueue.accept(curX, curZ - 1);
             }
 
             float temperature = 0.5f;
             float humidity = 0.5f;
-            float acceptableRange = 0.1f;
+            float acceptableRange = 0.0999f;
             int biomeSkip = 0;
 
             for (int i = -1; i <= 1; i++) {
@@ -240,25 +222,41 @@ public class RitualEffectBiomeChanger extends RitualEffect {
                 biomeID = 1;
             }
 
-            for (int i = 0; i < 2 * range + 1; i++) {
-                for (int j = 0; j < 2 * range + 1; j++) {
-                    if (boolList[i][j]) {
-                        Chunk chunk = world.getChunkFromBlockCoords(x - range + i, z - range + j);
-                        byte[] byteArray = chunk.getBiomeArray();
-                        int moduX = (x - range + i) % 16;
-                        int moduZ = (z - range + j) % 16;
+            List<Chunk> chunkList = new ArrayList<>();
 
-                        if (moduX < 0) {
-                            moduX = moduX + 16;
+            for (int chunkX = (x - range) >> 4; chunkX <= (x + range) >> 4; ++chunkX) {
+                for (int chunkZ = (z - range) >> 4; chunkZ <= (z + range) >> 4; ++chunkZ) {
+                    chunkList.add(world.getChunkFromChunkCoords(chunkX, chunkZ));
+                }
+            }
+
+            for (Chunk chunk : chunkList) {
+                byte[] byteArray = chunk.getBiomeArray();
+                BitSet mask = new BitSet();
+                boolean changed = false;
+
+                for (int cZ = 0; cZ < 16; ++cZ) {
+                    int offsetZ = (chunk.zPosition << 4 | cZ) - (z - range);
+                    if (0 <= offsetZ && offsetZ < 2 * range + 1) {
+                        for (int cX = 0; cX < 16; ++cX) {
+                            int offsetX = (chunk.xPosition << 4 | cX) - (x - range);
+                            if (0 <= offsetX && offsetX < 2 * range + 1) {
+                                if (boolList[offsetX][offsetZ]) {
+                                    mask.set(cZ << 4 | cX, true);
+                                    byteArray[cZ << 4 | cX] = (byte) biomeID;
+                                    changed = true;
+                                }
+                            }
                         }
-
-                        if (moduZ < 0) {
-                            moduZ = moduZ + 16;
-                        }
-
-                        byteArray[moduZ * 16 + moduX] = (byte) biomeID;
-                        chunk.setBiomeArray(byteArray);
                     }
+                }
+
+                if (changed) {
+                    chunk.setBiomeArray(byteArray);
+                    NewPacketHandler.INSTANCE.sendToDimension(
+                            NewPacketHandler
+                                    .getGaiaBiomeChangePacket(chunk.xPosition, chunk.zPosition, (byte) biomeID, mask),
+                            world.provider.dimensionId);
                 }
             }
 
