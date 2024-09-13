@@ -38,7 +38,7 @@ public class RitualEffectWellOfSuffering extends RitualEffect {
         int y = ritualStone.getYCoord();
         int z = ritualStone.getZCoord();
 
-        if (world.getWorldTime() % this.timeDelay != 0) {
+        if (world.getWorldTime() % timeDelay != 0) {
             return;
         }
 
@@ -64,13 +64,8 @@ public class RitualEffectWellOfSuffering extends RitualEffect {
 
         int d0 = 10;
         int vertRange = hasPotentia ? 20 : 10;
-        AxisAlignedBB axisalignedbb = AxisAlignedBB.getBoundingBox(
-                (double) x,
-                (double) y,
-                (double) z,
-                (double) (x + 1),
-                (double) (y + 1),
-                (double) (z + 1)).expand(d0, vertRange, d0);
+        AxisAlignedBB axisalignedbb = AxisAlignedBB.getBoundingBox(x, y, z, (x + 1), (y + 1), (z + 1))
+                .expand(d0, vertRange, d0);
         List<EntityLivingBase> list = world.getEntitiesWithinAABB(EntityLivingBase.class, axisalignedbb);
 
         int entityCount = 0;
@@ -129,7 +124,7 @@ public class RitualEffectWellOfSuffering extends RitualEffect {
 
     @Override
     public List<RitualComponent> getRitualComponentList() {
-        ArrayList<RitualComponent> wellOfSufferingRitual = new ArrayList();
+        ArrayList<RitualComponent> wellOfSufferingRitual = new ArrayList<>();
         wellOfSufferingRitual.add(new RitualComponent(1, 0, 1, RitualComponent.FIRE));
         wellOfSufferingRitual.add(new RitualComponent(-1, 0, 1, RitualComponent.FIRE));
         wellOfSufferingRitual.add(new RitualComponent(1, 0, -1, RitualComponent.FIRE));
