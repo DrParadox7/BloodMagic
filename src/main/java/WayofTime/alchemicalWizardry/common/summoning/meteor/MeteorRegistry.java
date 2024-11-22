@@ -3,6 +3,7 @@ package WayofTime.alchemicalWizardry.common.summoning.meteor;
 import java.util.ArrayList;
 import java.util.List;
 
+import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
 import net.minecraftforge.oredict.OreDictionary;
@@ -15,10 +16,20 @@ public class MeteorRegistry {
         paradigmList.add(paradigm);
     }
 
-    public static void registerMeteorParadigm(ItemStack stack, String[] oreList, int radius, int cost) {
-        if (stack != null && oreList != null) {
-            MeteorParadigm meteor = new MeteorParadigm(stack, radius, cost);
-            meteor.parseStringArray(oreList);
+    public static void registerMeteorParadigm(ItemStack stack, String[] componentList, int radius, int cost) {
+        registerMeteorParadigm(stack, componentList, radius, cost, null, 0);
+    }
+
+    public static void registerMeteorParadigm(ItemStack stack, String[] componentList, int radius, int cost,
+            String[] fillerList, int fillerChance) {
+        if (stack != null && componentList != null) {
+            MeteorParadigm meteor = new MeteorParadigm(stack, radius, cost, fillerChance);
+            meteor.componentList = MeteorParadigm.parseStringArray(componentList);
+            if (fillerList != null && fillerList.length > 0) {
+                meteor.fillerList = MeteorParadigm.parseStringArray(fillerList);
+            } else {
+                meteor.fillerList.add(new MeteorParadigmComponent(new ItemStack(Blocks.stone), 1));
+            }
             paradigmList.add(meteor);
         }
     }

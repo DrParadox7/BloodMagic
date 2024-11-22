@@ -4,16 +4,16 @@ import net.minecraft.item.ItemStack;
 
 public class MeteorParadigmComponent {
 
-    protected int chance;
+    protected int weight;
     protected ItemStack itemStack;
 
-    public MeteorParadigmComponent(ItemStack stack, int chance) {
+    public MeteorParadigmComponent(ItemStack stack, int weight) {
         this.itemStack = stack;
-        this.chance = chance;
+        this.weight = weight;
     }
 
-    public int getChance() {
-        return this.chance;
+    public int getWeight() {
+        return this.weight;
     }
 
     public ItemStack getValidBlockParadigm() {

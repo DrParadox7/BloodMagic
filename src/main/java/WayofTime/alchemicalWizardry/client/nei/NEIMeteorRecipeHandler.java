@@ -31,6 +31,7 @@ public class NEIMeteorRecipeHandler extends TemplateRecipeHandler {
 
         private final List<PositionedStack> input = new ArrayList<>();
         private final List<PositionedStack> outputs = new ArrayList<>();
+        private final List<PositionedStack> filler = new ArrayList<>();
         private final int cost;
         private final int radius;
         private Point focus;
@@ -40,9 +41,13 @@ public class NEIMeteorRecipeHandler extends TemplateRecipeHandler {
             int row = 0;
             int col = 0;
 
-            float totalMeteorWeight = meteor.getTotalMeteorWeight();
+            float totalComponentWeight = meteor.getTotalListWeight(meteor.componentList);
+            int fillerChance = meteor.fillerChance;
             List<MeteorParadigmComponent> sortedComponents = new ArrayList<>(meteor.componentList);
-            sortedComponents.sort(Comparator.comparingInt(c -> -c.getChance()));
+            sortedComponents.sort(Comparator.comparingInt(c -> -c.getWeight()));
+
+            float fillerRatio = (float) (fillerChance / 100.0);
+            float componentRatio = 1 - fillerRatio;
 
             for (MeteorParadigmComponent component : sortedComponents) {
                 ItemStack stack = component.getValidBlockParadigm();
@@ -50,7 +55,7 @@ public class NEIMeteorRecipeHandler extends TemplateRecipeHandler {
                 int yPos = 37 + 18 * row;
 
                 List<String> tooltips = new ArrayList<>();
-                float chance = component.getChance() / totalMeteorWeight;
+                float chance = component.getWeight() / totalComponentWeight * componentRatio;
                 tooltips.add(I18n.format("nei.recipe.meteor.chance", getFormattedChance(chance)));
                 tooltips.add(I18n.format("nei.recipe.meteor.amount", getEstimatedAmount(chance, meteor.radius)));
                 this.outputs.add(new TooltipStack(stack, xPos, yPos, tooltips));
@@ -61,10 +66,45 @@ public class NEIMeteorRecipeHandler extends TemplateRecipeHandler {
                     row++;
                 }
 
-                if (focusStack != null && matchItem(focusStack, stack)) {
+                if (matchItem(focusStack, stack)) {
                     this.focus = new Point(xPos - 1, yPos - 1);
                 }
             }
+
+            if (fillerChance > 0) {
+                if (col != 0) {
+                    col = 0;
+                    row++;
+                }
+
+                List<MeteorParadigmComponent> sortedFiller = new ArrayList<>(meteor.fillerList);
+                sortedFiller.sort(Comparator.comparingInt(c -> -c.getWeight()));
+                float totalFillerWeight = meteor.getTotalListWeight(meteor.fillerList);
+
+                for (MeteorParadigmComponent filler : sortedFiller) {
+                    ItemStack stack = filler.getValidBlockParadigm();
+                    int xPos = 3 + 18 * col;
+                    int yPos = 37 + 18 * row;
+
+                    List<String> tooltips = new ArrayList<>();
+                    float chance = filler.getWeight() / totalFillerWeight * fillerRatio;
+                    tooltips.add(I18n.format("nei.recipe.meteor.chance", getFormattedChance(chance)));
+                    tooltips.add(I18n.format("nei.recipe.meteor.amount", getEstimatedAmount(chance, meteor.radius)));
+                    tooltips.add(I18n.format("nei.recipe.meteor.filler"));
+                    this.outputs.add(new TooltipStack(stack, xPos, yPos, tooltips));
+
+                    col++;
+                    if (col > 8) {
+                        col = 0;
+                        row++;
+                    }
+
+                    if (matchItem(focusStack, stack)) {
+                        this.focus = new Point(xPos - 1, yPos - 1);
+                    }
+                }
+            }
+
             this.radius = meteor.radius;
             this.cost = meteor.cost;
         }
@@ -113,6 +153,9 @@ public class NEIMeteorRecipeHandler extends TemplateRecipeHandler {
     public void loadCraftingRecipes(ItemStack result) {
         for (MeteorParadigm meteor : getSortedMeteors()) {
             if (meteor.componentList.stream().anyMatch(m -> matchItem(result, m.getValidBlockParadigm()))) {
+                arecipes.add(new CachedMeteorRecipe(meteor, result));
+            }
+            if (meteor.fillerList.stream().anyMatch(m -> matchItem(result, m.getValidBlockParadigm()))) {
                 arecipes.add(new CachedMeteorRecipe(meteor, result));
             }
         }
@@ -205,6 +248,6 @@ public class NEIMeteorRecipeHandler extends TemplateRecipeHandler {
     }
 
     private int getEstimatedAmount(float chance, int radius) {
-        return (int) Math.ceil(4f / 3 * Math.PI * Math.pow(radius, 3) * chance);
+        return (int) Math.ceil(4f / 3 * Math.PI * Math.pow(radius + 0.5, 3) * chance);
     }
 }
