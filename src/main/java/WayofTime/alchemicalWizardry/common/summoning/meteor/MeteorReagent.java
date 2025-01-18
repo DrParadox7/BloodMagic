@@ -11,6 +11,6 @@ public class MeteorReagent {
     public int fillerChanceChange = 0;
     public int rawFillerChanceChange = 0;
     public String[] filler = {};
-    public List<MeteorParadigmComponent> parsedFiller = new ArrayList<>();
+    public transient List<MeteorParadigmComponent> parsedFiller = new ArrayList<>();
 
 }
