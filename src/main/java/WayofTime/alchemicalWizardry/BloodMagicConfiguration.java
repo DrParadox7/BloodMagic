@@ -29,6 +29,7 @@ import WayofTime.alchemicalWizardry.common.AlchemicalWizardryEventHooks;
 import WayofTime.alchemicalWizardry.common.demonVillage.DemonVillagePath;
 import WayofTime.alchemicalWizardry.common.demonVillage.tileEntity.TEDemonPortal;
 import WayofTime.alchemicalWizardry.common.items.armour.BoundArmour;
+import WayofTime.alchemicalWizardry.common.summoning.meteor.MeteorComponent;
 import cpw.mods.fml.common.FMLCommonHandler;
 import cpw.mods.fml.common.registry.GameRegistry;
 import cpw.mods.fml.relauncher.Side;
@@ -102,6 +103,23 @@ public class BloodMagicConfiguration {
 
         AlchemicalWizardry.doMeteorsDestroyBlocks = config.get("meteor", "doMeteorsDestroyBlocks", true)
                 .getBoolean(true);
+        AlchemicalWizardry.defaultMeteorCost = config.getInt(
+                "defaultMeteorCost",
+                "meteor",
+                1000000,
+                0,
+                Integer.MAX_VALUE,
+                "The default LP cost to use for meteors if the \"cost\" property is not present in its config file.\n");
+        AlchemicalWizardry.defaultMeteorBlock = config.getString(
+                "defaultMeteorBlock",
+                "meteor",
+                "",
+                "The block to use for filler in meteors if none is provided in the meteor's config file and "
+                        + "that\nmeteor's fillerChance is greater than 0. Also used as a fallback for empty ore "
+                        + "lists in meteor configs.\nSpecify the block with the "
+                        + "format:\n\"modId:itemName:meta\"\nDefaults to minecraft:stone:0 if no block is provided or "
+                        + "the provided block cannot be found.");
+        MeteorComponent.setDefaultMeteorBlock();
         AlchemicalWizardry.allowedCrushedOresArray = config.get(
                 "oreCrushing",
                 "allowedOres",
