@@ -672,10 +672,19 @@ public class BloodMagicConfiguration {
                         new BlockStack(ModBlocks.bloodRune, 4), new BlockStack(ModBlocks.bloodRune, 5) });
         AlchemicalWizardry.specialAltarBlock = getAltarRunesForTier(
                 "specialBlocks",
-                new BlockStack[] { new BlockStack(Blocks.stonebrick, 0), new BlockStack(Blocks.glowstone, 0),
-                        new BlockStack(Blocks.stonebrick, 0), new BlockStack(ModBlocks.largeBloodStoneBrick, 0),
-                        new BlockStack(Blocks.beacon, 0), new BlockStack(Blocks.stonebrick, 0),
-                        new BlockStack(ModBlocks.blockCrystal, 0) });
+                new BlockStack[] { new BlockStack(Blocks.air, 0), new BlockStack(Blocks.glowstone, 0),
+                        new BlockStack(Blocks.air, 0), new BlockStack(ModBlocks.largeBloodStoneBrick, 0),
+                        new BlockStack(Blocks.beacon, 0), new BlockStack(Blocks.air, 0),
+                        new BlockStack(ModBlocks.blockCrystal, 0) },
+                "Set the special blocks for the altar with the format mod:block(:meta) in the following order:\n"
+                        + "Tier 3 pillar\n"
+                        + "Tier 3 cap\n"
+                        + "Tier 4 pillar\n"
+                        + "Tier 4 cap\n"
+                        + "Tier 5 beacon\n"
+                        + "Tier 6 pillar\n"
+                        + "Tier 6 cap\n"
+                        + "Set any of these to minecraft:air to allow for that component to be any block EXCEPT air (e.g., let any block be used for a pillar).");
         config.save();
     }
 
@@ -815,12 +824,16 @@ public class BloodMagicConfiguration {
     }
 
     private static BlockStack[] getAltarRunesForTier(String tierName, BlockStack[] defaultValues) {
+        return getAltarRunesForTier(tierName, defaultValues, "");
+    }
+
+    private static BlockStack[] getAltarRunesForTier(String tierName, BlockStack[] defaultValues, String comment) {
         String[] defaultNames = new String[defaultValues.length];
         for (int i = 0; i < defaultValues.length; i++) {
             defaultNames[i] = Block.blockRegistry.getNameForObject(defaultValues[i].getBlock()) + ":"
                     + defaultValues[i].getMeta();
         }
-        Property property = config.get("rune overrides", tierName, defaultNames);
+        Property property = config.get("rune overrides", tierName, defaultNames, comment);
         String[] names = property.getStringList();
         if (names.length != defaultNames.length) {
             property.set(defaultNames);
