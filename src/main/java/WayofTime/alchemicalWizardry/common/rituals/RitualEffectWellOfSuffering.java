@@ -38,7 +38,7 @@ public class RitualEffectWellOfSuffering extends RitualEffect {
         int y = ritualStone.getYCoord();
         int z = ritualStone.getZCoord();
 
-        if (world.getWorldTime() % timeDelay != 0) {
+        if (world.getTotalWorldTime() % timeDelay != 0) {
             return;
         }
 
