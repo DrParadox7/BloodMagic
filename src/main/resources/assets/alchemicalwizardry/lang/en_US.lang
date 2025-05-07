@@ -645,3 +645,10 @@ option.bm.chemistrySet=Alchemical Chemistry Set
 
 # Death messages
 death.attack.bloodMagic=%1$s has been sacrificed in a ritual.
+
+# StructureLib
+structurelib.bloodmagic.altar.1=Blood Altar
+structurelib.bloodmagic.altar.2=Hold 1-6 Hologram Projectors to determine the tier
+structurelib.bloodmagic.altar.3=Tier %s pillars accept any block
+structurelib.bloodmagic.altar.4=Tier %s caps accept any block
+structurelib.bloodmagic.altar.5=Tier 5 beacons accept any block
