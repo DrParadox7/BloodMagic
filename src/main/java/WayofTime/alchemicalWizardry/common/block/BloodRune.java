@@ -97,27 +97,14 @@ public class BloodRune extends Block {
     @Override
     @SideOnly(Side.CLIENT)
     public IIcon getIcon(int side, int meta) {
-        switch (meta) {
-            case 0:
-                return blockIcon;
-
-            case 1:
-                return altarCapacityRuneIcon;
-
-            case 2:
-                return dislocationRuneIcon;
-
-            case 3:
-                return this.orbCapacityRuneIcon;
-
-            case 4:
-                return this.betterCapacityRuneIcon;
-
-            case 5:
-                return this.accelerationRuneIcon;
-            default:
-                return blockIcon;
-        }
+        return switch (meta) {
+            case 1 -> altarCapacityRuneIcon;
+            case 2 -> dislocationRuneIcon;
+            case 3 -> this.orbCapacityRuneIcon;
+            case 4 -> this.betterCapacityRuneIcon;
+            case 5 -> this.accelerationRuneIcon;
+            default -> blockIcon;
+        };
     }
 
     @Override
