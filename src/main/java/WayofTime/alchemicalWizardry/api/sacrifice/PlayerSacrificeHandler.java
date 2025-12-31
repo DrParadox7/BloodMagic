@@ -47,18 +47,22 @@ public class PlayerSacrificeHandler {
 
         if (amount >= 0) {
             float health = player.getHealth();
-            float maxHealth = player.getMaxHealth();
+            float minHealth = (float) (Math.max(player.getMaxHealth() * 0.1, 1));
 
-            if (health > maxHealth / 10.0) {
-                float sacrificedHealth = health - maxHealth / 10.0f;
-                soulFrayDuration = (int) (10 * sacrificedHealth * (1 - (amount / 4000)));
+            if (health > minHealth) {
+                DamageSourceBloodMagic damageSrc = DamageSourceBloodMagic.INSTANCE;
+                float sacrificedHealth = health - (player.getMaxHealth() - minHealth);
 
                 if (findAndFillAltar(
                         player.getEntityWorld(),
                         player,
                         (int) (sacrificedHealth * AlchemicalWizardry.lpPerSacrificeIncense * getModifier(amount)))) {
-                    player.setHealth(maxHealth / 10.0f);
+
+                    player.hurtResistantTime = 0;
+                    player.attackEntityFrom(damageSrc, sacrificedHealth);
                     setPlayerIncense(player, 0);
+
+                    soulFrayDuration = (int) (10 * sacrificedHealth * (1 - (amount / 4000)));
                     player.addPotionEffect(new PotionEffect(soulFrayId.id, soulFrayDuration));
 
                     return true;
