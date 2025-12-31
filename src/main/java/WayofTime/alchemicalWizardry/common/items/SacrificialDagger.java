@@ -93,16 +93,17 @@ public class SacrificialDagger extends Item {
                 return;
             }
 
-            if (evt.shouldDrainHealth && !player.capabilities.isCreativeMode) {
-                if (!world.isRemote && player.getHealth() <= hpCount) {
-                    DamageSourceBloodMagic damageSrc = DamageSourceBloodMagic.INSTANCE;
-                    player.hurtResistantTime = 0;
-                    player.attackEntityFrom(damageSrc, Float.MAX_VALUE);
-                }
-                player.setHealth(player.getHealth() - hpCount);
+            if (!world.isRemote && evt.shouldDrainHealth && !player.capabilities.isCreativeMode) {
+                DamageSourceBloodMagic damageSrc = DamageSourceBloodMagic.INSTANCE;
+
+                hpCount = (int) Math.min(player.getHealth(), hpCount);
+
                 player.addPotionEffect(
                         new PotionEffect(
                                 new PotionEffect(AlchemicalWizardry.customPotionSoulFray.id, (1 + hpCount * 10), 0)));
+
+                player.hurtResistantTime = 0;
+                player.attackEntityFrom(damageSrc, player.getHealth() - hpCount);
             }
 
             if (!evt.shouldFillAltar) {
